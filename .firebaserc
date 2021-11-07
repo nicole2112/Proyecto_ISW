@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fundacion-padrino": {
+      "hosting": {
+        "Proyecto-ISW": [
+          "fundacion-padrino"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fundacion-padrino"
+  }
+}

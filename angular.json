@@ -14,9 +14,9 @@
       "sourceRoot": "src",
       "prefix": "app",
       "i18n": {
-        "sourceLocale":"en-US",
+        "sourceLocale": "en-US",
         "locales": {
-          "es":"src/i18n/messages.es.xlf"
+          "es": "src/i18n/messages.es.xlf"
         }
       },
       "architect": {
@@ -39,8 +39,10 @@
             "scripts": []
           },
           "configurations": {
-            "es":{
-              "localize": ["es"]
+            "es": {
+              "localize": [
+                "es"
+              ]
             },
             "production": {
               "budgets": [
@@ -80,7 +82,7 @@
             "production": {
               "browserTarget": "Proyecto-ISW:build:production"
             },
-            "es":{
+            "es": {
               "browserTarget": "Proyecto-ISW:build:build:es"
             },
             "development": {
@@ -110,6 +112,16 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "Proyecto-ISW:build:production",
+            "firebaseProject": "fundacion-padrino",
+            "firebaseHostingSite": "fundacion-padrino"
           }
         }
       }
