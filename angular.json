@@ -86,7 +86,7 @@
               "browserTarget": "Proyecto-ISW:build:production"
             },
             "es": {
-              "browserTarget": "Proyecto-ISW:build:build:es"
+              "browserTarget": "Proyecto-ISW:build:es"
             },
             "development": {
               "browserTarget": "Proyecto-ISW:build:development"
