@@ -1,3 +1,4 @@
+npm install jquery
 npm install bootstrap
 ng add @angular/localize    (i18n para lenguajes)
 
