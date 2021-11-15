@@ -8,11 +8,11 @@ import { provideAuth,getAuth } from '@angular/fire/auth';//firebase
 import { provideDatabase,getDatabase } from '@angular/fire/database';//firebase
 import { provideStorage,getStorage } from '@angular/fire/storage';//firebase
 import { HomeComponent } from './landing-page/home.component';
-import { QuienesSomosComponent } from './about-us/quienes-somos.component';
 import { NavbarComponent } from './nav/navbar.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutes } from './routes';
 import { QueHacemosComponent } from './about-us/que-hacemos.component';
+import { QuienesSomosComponent } from './about-us/quienes-somos.component';
 import { ProgramasComponent } from './programs/programas.component';
 
 @NgModule({
