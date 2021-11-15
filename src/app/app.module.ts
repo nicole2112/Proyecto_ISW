@@ -13,7 +13,13 @@ import { RouterModule } from '@angular/router';
 import { AppRoutes } from './routes';
 import { QueHacemosComponent } from './about-us/que-hacemos.component';
 import { QuienesSomosComponent } from './about-us/quienes-somos.component';
+import { HeroesComponent } from './heroes/heroes.component';
 import { ProgramasComponent } from './programs/programas.component';
+import { DonationsComponent } from './donations/donations.component';
+import { TestimoniesComponent } from './testimonies/testimonies.component';
+import { BlogComponent } from './blog/blog.component';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -22,7 +28,11 @@ import { ProgramasComponent } from './programs/programas.component';
     HomeComponent,
     QuienesSomosComponent,
     QueHacemosComponent,
-    ProgramasComponent
+    ProgramasComponent,
+    HeroesComponent,
+    DonationsComponent,
+    TestimoniesComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +40,8 @@ import { ProgramasComponent } from './programs/programas.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
