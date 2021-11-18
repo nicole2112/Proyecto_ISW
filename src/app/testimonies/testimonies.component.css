@@ -1,0 +1,38 @@
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+}
+
+.bgImg{
+    height: 35vh;
+    width: 100%;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.bgImg::before{
+    content: "";
+    background-image: url(../../assets/images/24464241947_01976611c3_b.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.35;
+}
+
+.bgText{
+    position: relative;
+    color: #000000;
+    font-size: 4em;
+    line-height: 0.9;
+    text-align: center;
+    padding-top: 12vh;
+}
