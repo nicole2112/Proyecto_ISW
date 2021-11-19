@@ -1,0 +1,39 @@
+.sectionRectangle{
+    height: 120px;
+    width: 100%;
+    background-color: #8C8ADB;
+}
+
+.bgImgTest{
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.half-opaque-img{
+    background: rgba(255, 255, 255, 0.45);
+    width: 50%;
+    height: 100vh;
+    float: right;
+    top: 0;
+    right: 0;
+    max-height: 100%;
+}
+
+.insideText{
+    text-align: center;
+    font-family: roboto;
+    vertical-align: middle;
+    margin-top: 10vh;
+}
+
+.pStyle{
+    font-style: italic;
+    font-family: roboto;
+    font-size: 24px;
+    margin-left: 25%;
+    margin-right: 25%;
+}
