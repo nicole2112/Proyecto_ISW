@@ -7,8 +7,10 @@ import { DonationsComponent } from "./donations/donations.component";
 import { ProgramasComponent } from "./programs/programas.component";
 import { TestimoniesComponent } from "./testimonies/testimonies.component";
 import { BlogComponent } from "./blog/blog.component";
+import { LoginComponent } from "./login/login.component";
 
 export const AppRoutes: Routes = [
+    { path: 'registro', component: LoginComponent},
     { path: 'quienes-somos', component: QuienesSomosComponent},
     { path: 'que-hacemos', component: QueHacemosComponent},
     { path: 'pagina-principal', component: HomeComponent},

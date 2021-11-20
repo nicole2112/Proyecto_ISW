@@ -20,6 +20,7 @@ import { TestimoniesComponent } from './testimonies/testimonies.component';
 import { BlogComponent } from './blog/blog.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HeroesComponent,
     DonationsComponent,
     TestimoniesComponent,
-    BlogComponent
+    BlogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
