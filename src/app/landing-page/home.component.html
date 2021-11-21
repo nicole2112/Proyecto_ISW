@@ -1,11 +1,10 @@
-<div class="container">
-    <h1>Aquí va landing page</h1>
+<div class="container sectionTitle">
+    <h1>aqui va landing page</h1>
     <video width="320" height="240" autoplay muted>
       <source src="https://drive.google.com/file/d/179KoBMNfHXxpJznp8Vo468AgKG0PjusV/preview?autoplay=1 ">
     Your browser does not support the video tag.
     </video>
 </div>
-
 
 <div class="container">
     <h1 class="title" style="font-size:400%;">Haz la diferencia</h1>
@@ -40,9 +39,23 @@
       </div>
       <br>
 </div>
+
+<div class="sectionRectangle"></div>
+<div class ="parallax" style="background-image:url(https://drive.google.com/uc?export=view&id=1t2YUw7F1DBBeBDFx1lQw6JwiU4QKI4c8);">
+  <div class="half-opaque-img">
+    <div class="insideText">
+      <h1 class="title" style="font-size: 200%;">Testimonios</h1>
+      <br><br>
+      <p class="pStyle">Conoce los testimonios de las personas que son parte de la fundación.</p>
+      <br><br>
+      <a class="button1"  [routerLink]="['/testimonies']" >Más Información</a>
+    </div>
+  </div>
+</div>
+
 <div class="sectionRectangle"></div>
 <div class="container" >
-  <h1 class="title" style="margin-top: 10%; margin-bottom: -10%;">Nuestros Héroes</h1>
+  <h1 class="title" style="font-size: 400%; margin-top: 5%; margin-bottom: -10%;">Nuestros Héroes</h1>
   <section id="slider">
     <input type="radio" name="slider" id="s1" checked>
     <input type="radio" name="slider" id="s2">
@@ -56,22 +69,22 @@
     <label for="s4" id="slide4"><img src="https://drive.google.com/uc?export=view&id=1nMyRAcnD4tEGHfRYOhWkcAQiDGAfb5PO" alt=""></label>
     <label for="s5" id="slide5"><img src="https://drive.google.com/uc?export=view&id=1nTBbfxR8vcaRGdokm3e_aZmAqdaqvowv" alt=""></label>
   </section>
-  <button type="button" 
-  class="btn btn-light" 
-  style= "margin-left: 42%; margin-top:-10%;">
-  Conoce sus Historias</button>
-
-</div>
-<div class="sectionRectangle"></div>
-<div class ="parallax" style="background-image:url(https://drive.google.com/uc?export=view&id=1t2YUw7F1DBBeBDFx1lQw6JwiU4QKI4c8);">
-  <div class="half-opaque-img">
-    <div class="insideText">
-      <h1 class="">Testimonios</h1>
-      <br><br>
-      <p class="pStyle">Conoce los testimonios de las personas que son parte de la fundacion.</p>
-      <br><br>
-      <a href="something" class="button1" >Más Información</a>
-    </div>
+  <div style="text-align: center;  margin-top:-5%;">
+    <a class="button1" [routerLink]="['/heroes']">Conoce sus historias</a>
+    <br><br><br>
   </div>
 </div>
+
 <div class="sectionRectangle"></div>
+<div>
+  <h1 class="title" style="font-size: 400%; margin-top: 5%;">Nuestros Programas</h1>
+</div>
+
+<div>
+  <h1 class="title" style="font-size: 400%; margin-top: 10%;">Contáctenos</h1>
+</div>
+
+<div class="sectionRectangle"></div>
+<div>
+  <h1 class="title" style="font-size: 400%; margin-top: 5%;">Nuestro Blog</h1>
+</div>

@@ -1,12 +1,12 @@
 <div>
-<nav class="navbar navbar-expand-lg navbar-light bg-light navBarStyle">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light navBarStyle">
     <div class="container-fluid">
-        <a class="navbar-brand navBarStyle" href="#"><img src="././assets/images/Logo-FP-1-peque.png"></a>
+        <a class="navbar-brand navBarStyle" [routerLink]="['/pagina-principal']"><img src="././assets/images/Logo-FP-1-2.png"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarTogglerDemo02">
+        <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" [routerLink]="['/pagina-principal']">Página Principal</a>
             </li>
@@ -48,9 +48,6 @@
                 <a class="nav-link" href="#">Link</a>
             </li> -->
         </ul>
-        <form class="d-flex">
-            <a class="button1" [routerLink]="['/registro']" style="font-size: small;">Registrarse</a>
-        </form>
         </div>
     </div>
 </nav>

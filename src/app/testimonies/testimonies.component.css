@@ -29,9 +29,10 @@ html, body{
 }
 
 .bgText{
+    font-family: 'Roboto', sans-serif;
     position: relative;
     color: #000000;
-    font-size: 4em;
+    font-size: 3em;
     line-height: 0.9;
     text-align: center;
     padding-top: 12vh;

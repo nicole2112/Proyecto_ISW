@@ -1,6 +1,7 @@
 
 .site-footer
 {
+  font: 'Roboto', sans-serif;
   background-color: #522662;
   padding:45px 0 20px;
   font-size:15px;
@@ -20,6 +21,7 @@
 {
   color:#fff;
   font-size:16px;
+  font: 'Roboto', sans-serif;
   text-transform:uppercase;
   margin-top:5px;
   letter-spacing:2px
@@ -44,7 +46,7 @@
 }
 .footer-links a
 {
-  color:#737373
+  color:beige
 }
 .footer-links a:active,.footer-links a:focus,.footer-links a:hover
 {
@@ -149,7 +151,7 @@
 {
   background-color:#007bb6
 }
-.social-icons a.dribbble:hover
+.social-icons a.instagram:hover
 {
   background-color:#ea4c89
 }

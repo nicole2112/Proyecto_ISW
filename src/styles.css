@@ -7,6 +7,58 @@
     color: #522662;
 }
 
+.sectionTitleText {
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  color: #000000;
+  font-size: 3em;
+  line-height: 0.9;
+  text-align: center;
+  padding-top: 6vh;
+}
+
+@media screen and (min-width: 1342px) {
+  .sectionTitle {
+    margin-top: 7%;
+  }
+}
+ 
+ @media screen and (max-width: 1342px) and (min-width: 1002px) {
+  .sectionTitle{
+    margin-top: 10%; 
+  }
+ }
+
+ @media screen and (max-width: 1002px) and (min-width: 668px) {
+  .sectionTitle{
+    margin-top: 15%; 
+  }
+ }
+
+ @media screen and (max-width: 668px) and (min-width: 512px) {
+  .sectionTitle{
+    margin-top: 20%; 
+  }
+ }
+
+ @media screen and (max-width: 512px) and (min-width: 337px) {
+  .sectionTitle{
+    margin-top: 30%; 
+  }
+ }
+
+ @media screen and (max-width: 337px) and (min-width: 302px) {
+  .sectionTitle{
+    margin-top: 40%; 
+  }
+ }
+
+ @media screen and (max-width: 302px) {
+  .sectionTitle{
+    margin-top: 50%; 
+  }
+ }
+
 a.button1 {
     display:inline-block;
     padding: 0.3em 1.2em;
