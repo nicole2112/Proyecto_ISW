@@ -21,6 +21,7 @@ import { BlogComponent } from './blog/blog.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { LoginComponent } from './login/login.component';
     DonationsComponent,
     TestimoniesComponent,
     BlogComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
