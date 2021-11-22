@@ -8,3 +8,12 @@
     min-width: 100%;
     min-height: 34vh;
 }
+
+.rmPadding{
+    padding-right: 0%;
+    padding-left: 0%;
+}
+
+.sqrBorder{
+    border-radius: 0rem;
+}
