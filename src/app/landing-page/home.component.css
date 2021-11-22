@@ -11,16 +11,21 @@
     justify-content: center;
 }
 
-
-
 .half-opaque-img{
     background: rgba(255, 255, 255, 0.45);
     width: 50%;
-    height: 66vh;
+    height: 100%;
     float: right;
     top: 0;
     right: 0;
-    max-height: 100%;
+    position: absolute;
+}
+
+.bgTestimonies{
+    height: 100%;
+    position: relative;
+    background-image: url("https://drive.google.com/uc?export=view&id=1t2YUw7F1DBBeBDFx1lQw6JwiU4QKI4c8");
+    overflow: hidden;
 }
 
 .insideText{
