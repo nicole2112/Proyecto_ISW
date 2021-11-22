@@ -7,6 +7,7 @@
 .msgArea{
     min-width: 100%;
     min-height: 34vh;
+    border: 0;
 }
 
 .rmPadding{
@@ -16,4 +17,5 @@
 
 .sqrBorder{
     border-radius: 0rem;
+    border: 0;
 }
