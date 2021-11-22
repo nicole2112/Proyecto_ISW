@@ -37,3 +37,49 @@
     margin-left: 25%;
     margin-right: 25%;
 }
+
+.bgImg{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.bgImg::before{
+    content: "";
+    background-image: url("https://drive.google.com/uc?export=view&id=1HXE8tzkzwmSW003Kj6QjnDnuZ2kz5iZ7");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.35;
+}
+
+.bgWrapper{
+    margin-top: 0%;
+}
+
+.bgText{
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    color: #522662;
+    font-size: 3em;
+    line-height: 0.9;
+    text-align: center;
+    padding-top: 12vh;
+}
+
+.bgParagraph{
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    color: #522662;
+    font-size: 1.2em;
+    line-height: 0.9;
+    text-align: center;
+    padding-top: 5vh;
+}

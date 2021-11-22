@@ -18,6 +18,7 @@ import { ProgramasComponent } from './programs/programas.component';
 import { DonationsComponent } from './donations/donations.component';
 import { TestimoniesComponent } from './testimonies/testimonies.component';
 import { BlogComponent } from './blog/blog.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
@@ -36,7 +37,8 @@ import { FooterComponent } from './footer/footer.component';
     TestimoniesComponent,
     BlogComponent,
     LoginComponent,
-    FooterComponent
+    FooterComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,
