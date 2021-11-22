@@ -23,6 +23,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
+import { AlianzasComponent } from './about-us/alianzas.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FooterComponent } from './footer/footer.component';
     HomeComponent,
     QuienesSomosComponent,
     QueHacemosComponent,
+    AlianzasComponent,
     ProgramasComponent,
     HeroesComponent,
     DonationsComponent,
