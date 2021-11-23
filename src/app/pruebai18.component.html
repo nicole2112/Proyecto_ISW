@@ -1,0 +1,18 @@
+<ul>
+    <li *ngFor="let locale of localesList">
+        <a href="/{{locale.code}}/">
+            {{locale.label}}
+        </a>
+    </li>
+</ul>
+
+<h1 i18n="main header|Friendly welcoming message@@welcome">Hello everyone!!</h1>
+<h2>Aaron estuvo aca jeje.</h2>
+
+<p>
+    <a i18n i18n-href i18n-title href="/en-US/portfolio" title="My portfolio">Portfolio</a>
+</p>
+<h1>Website</h1>
+<!-- <a [routerLink]="['/component1']">component1</a>
+<a [routerLink]="['/component2']">component2</a>
+<router-outlet></router-outlet> -->

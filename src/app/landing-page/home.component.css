@@ -1,0 +1,202 @@
+.sectionRectangle{
+    height: 120px;
+    width: 100%;
+    background-color: #8C8ADB;
+}
+
+.bgImgTest{
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.half-opaque-img{
+    background: rgba(255, 255, 255, 0.45);
+    width: 50%;
+    height: 100%;
+    float: right;
+    top: 0;
+    right: 0;
+    position: absolute;
+}
+
+.bgTestimonies{
+    height: 100%;
+    position: relative;
+    background-image: url("https://drive.google.com/uc?export=view&id=1t2YUw7F1DBBeBDFx1lQw6JwiU4QKI4c8");
+    overflow: hidden;
+}
+
+.insideText{
+    text-align: center;
+    font-family: roboto;
+    vertical-align: middle;
+    margin-top: 10%;
+}
+
+.pStyle{
+    font-style: italic;
+    font-family: roboto;
+    font-size: 24px;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 5%;
+}
+
+.btnTestStyle{
+    margin-top: 5%;
+}
+
+.bgImg{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.bgImg::before{
+    content: "";
+    background-image: url("https://drive.google.com/uc?export=view&id=1HXE8tzkzwmSW003Kj6QjnDnuZ2kz5iZ7");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.35;
+}
+
+.bgWrapper{
+    margin-top: 0%;
+}
+
+.bgText{
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    color: #522662;
+    font-size: 3em;
+    line-height: 0.9;
+    text-align: center;
+    padding-top: 12vh;
+}
+
+.bgParagraph{
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    color: #522662;
+    font-size: 1.2em;
+    line-height: 0.9;
+    text-align: center;
+    padding-top: 5vh;
+}
+
+ 
+  
+#slider label,
+#slider label img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  color: white;
+  font-size: 70px;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 400ms ease;
+}
+
+
+
+/* Slider Functionality */
+
+/* Active Slide */
+#s1:checked ~ #slide1,
+ #s2:checked ~ #slide2,
+  #s3:checked ~ #slide3,
+   #s4:checked ~ #slide4,
+    #s5:checked ~ #slide5 {
+  box-shadow: 0 13px 26px rgba(0,0,0, 0.3), 0 12px 6px rgba(0,0,0, 0.2);
+  transform: translate3d(0%, 0, 0px);
+}
+
+/* Next Slide */
+#s1:checked ~ #slide2,
+ #s2:checked ~ #slide3,
+  #s3:checked ~ #slide4,
+   #s4:checked ~ #slide5,
+    #s5:checked ~ #slide1 {
+  box-shadow: 0 6px 10px rgba(0,0,0, 0.3), 0 2px 2px rgba(0,0,0, 0.2);
+  transform: translate3d(20%, 0, -100px);
+}
+
+
+/* Next to Next Slide */
+#s1:checked ~ #slide3,
+ #s2:checked ~ #slide4,
+  #s3:checked ~ #slide5,
+   #s4:checked ~ #slide1,
+    #s5:checked ~ #slide2 {
+  box-shadow: 0 1px 4px rgba(0,0,0, 0.4);
+  transform: translate3d(40%, 0, -250px);
+}
+
+/* Previous to Previous Slide */
+#s1:checked ~ #slide4,
+ #s2:checked ~ #slide5,
+  #s3:checked ~ #slide1,
+   #s4:checked ~ #slide2,
+    #s5:checked ~ #slide3 {
+  box-shadow: 0 1px 4px rgba(0,0,0, 0.4);
+  transform: translate3d(-40%, 0, -250px);
+}
+
+/* Previous Slide */
+#s1:checked ~ #slide5,
+ #s2:checked ~ #slide1,
+  #s3:checked ~ #slide2,
+   #s4:checked ~ #slide3,
+    #s5:checked ~ #slide4 {
+  box-shadow: 0 6px 10px rgba(0,0,0, 0.3), 0 2px 2px rgba(0,0,0, 0.2);
+  transform: translate3d(-20%, 0, -100px);
+}
+
+.parallax {
+
+  /* Set a specific height */
+  min-height: 500px;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.responsive {
+    max-width: 100%;
+    height: auto;
+  }
+
+
+  .tag {
+    background-color: #fff;
+    border-radius: 50px;
+    font-size: 12px;
+    color: #fff;
+    margin: 0;
+    padding: 2px 10px;
+    text-transform: uppercase;
+  }
+  
+  .tag-teal {
+    background-color: #92d4e4;
+  }

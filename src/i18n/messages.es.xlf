@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" target-language="es" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="welcome" datatype="html">
+        <source>Hello everyone!</source>
+        <target>¡Hola a todosss!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pruebai18.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="description">Friendly welcoming message</note>
+        <note priority="1" from="meaning">main header</note>
+      </trans-unit>
+      <trans-unit id="8336405567663867706" datatype="html">
+        <source>/en-US/portfolio</source>
+        <target>/es/portfolio</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pruebai18.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8369824979841043417" datatype="html">
+        <source>My portfolio</source>
+        <target>Mi portafolio</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pruebai18.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9201103587777813545" datatype="html">
+        <source>Portfolio</source>
+        <target>Portafolio</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pruebai18.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

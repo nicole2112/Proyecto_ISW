@@ -1,0 +1,54 @@
+<div>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light navBarStyle">
+    <div class="container-fluid">
+        <a class="navbar-brand navBarStyle" [routerLink]="['/pagina-principal']"><img src="././assets/images/Logo-FP-1-2.png"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarTogglerDemo02">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" [routerLink]="['/pagina-principal']">Página Principal</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Conócenos
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" [routerLink]="['/quienes-somos']">Quiénes Somos</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['/que-hacemos']">Qué Hacemos</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['/alianzas']">Nuestras alianzas</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" [routerLink]="['/programas']">Programas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" [routerLink]="['/heroes']">Héroes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" [routerLink]="['/donations']">Donaciones</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" [routerLink]="['/testimonies']">Testimonios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" [routerLink]="['/blog']">Blog</a>
+            </li>
+            <li class="nav-item">
+                <ul>
+                    <li class="social-media-icons"><a href="https://www.facebook.com/FPADRINOHN" target="_blank" style="color: black;"><fa-icon [icon]="faFacebook"></fa-icon></a></li>
+                    <li class="social-media-icons"><a href="https://www.instagram.com/fpadrinohn/" target="_blank" style="color: black;"><fa-icon [icon]="faInstragram"></fa-icon></a></li>
+                </ul>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link disabled">Disabled</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li> -->
+        </ul>
+        </div>
+    </div>
+</nav>
+</div>

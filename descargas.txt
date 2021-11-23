@@ -1,0 +1,15 @@
+npm install bootstrap
+ng add @angular/localize    (i18n para lenguajes)
+
+//para Firebase
+npm install firebase
+
+
+
+
+
+
+//para las alertas
+npm install sweetalert2
+
+//test
