@@ -1,27 +1,49 @@
 <!-- {{ form | json }} -->
-<div class="container styleForm">
-    <div class="form-group">
-        <div class="row">
-            <div class="col-sm-6 rmPadding">
-                <input type="text" class="form-control sqrBorder" id="name" placeholder="Nombre Completo">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" name="myForm">
+    <div class="container styleForm">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6 rmPadding">
+                    <label for="name" style="color: red; float: right;" id="labelName"></label>
+                    <input type="text" class="form-control sqrBorder" id="name" placeholder="Nombre Completo" formControlName="name" required>
+                    <!-- <div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" style="border-color: red;" class="alert alert-danger">
+                        <input type="text" class="form-control sqrBorder" id="name" formControlName="name" placeholder="Nombre Completo"  *ngIf="angForm.controls['name'].errors!.required">
+                    </div> -->
+                </div>
+                <div class="col-sm-6 rmPadding">
+                    <label for="email" style="color: red; float: right;" id="labelEmail"></label>
+                    <input type="email" class="form-control sqrBorder" id="correo" formControlName="correo" placeholder="correo" required>  
+                </div>
             </div>
-            <div class="col-sm-6 rmPadding">
-                <input type="email" class="form-control sqrBorder" id="correo" placeholder="correo">  
+            <div class="row">
+                <input type="text" class="form-control sqrBorder" id="asunto" style="margin-top: 3%;" formControlName="asunto" placeholder="asunto">
             </div>
-        </div>
-        <div class="row">
-            <input type="text" class="form-control sqrBorder" id="asunto" style="margin-top: 3%;" placeholder="asunto">
-        </div>
-        
-        <div class="row">
-            <textarea name="msg" id="msg" class="msgArea" style="margin-top: 3%; resize: none;" placeholder="Escriba su mensaje aqui..."></textarea>
-        </div>
+            
+            <div class="row">
+                <textarea name="msg" id="msg" class="form-control msgArea" style="margin-top: 3%; resize: none;" formControlName="mensaje" placeholder="Escriba su mensaje aqui..."></textarea>
+            </div>
+    
+            <div class="col text-center" style="margin-top: 3%;">
+                <button class="button1" type="submit">Enviar</button>
+            </div>
+          </div>
+    </div>
+</form>
 
-        <div class="col text-center" style="margin-top: 3%;">
-            <a class="button1 input-block-level">Enviar</a>
-        </div>
-      </div>
-      <div class="form-group">
-        
-      </div>
-</div>
+
+<!-- <div style="text-align:center">
+    <form [formGroup]="angForm" novalidate>
+          <div class="form-group">
+            <label class="center-block">Name:
+              <input class="form-control" formControlName="name">
+            </label>
+          </div>
+          <div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" class="alert alert-danger">
+              <div *ngIf="angForm.controls['name'].errors!.required">
+              Name is required.
+            </div>
+          </div>
+    </form>
+  <p>Form value: {{ angForm.value | json }}</p>
+  <p>Form status: {{ angForm.status | json }}</p>
+  </div> -->
