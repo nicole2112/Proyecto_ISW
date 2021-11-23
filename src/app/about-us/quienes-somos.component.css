@@ -1,0 +1,34 @@
+.responsive {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .secText {
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    color: #000000;
+    font-size: 3em;
+    line-height: 0.9;
+    text-align: center;
+    padding-top: 6vh;
+  }
+
+  #wrapper ul {
+    padding: 0;
+    margin: auto;
+    width: 80%;
+    list-style-type: none;
+}
+
+#wrapper ul li {
+    padding: 30px;
+    margin-bottom: 20px;
+    display: table;
+    width: 100%;
+}
+
+#wrapper ul li img {
+    float: left;
+}
+
+#wrapper ul li .details {float: right;width: 75%;}
