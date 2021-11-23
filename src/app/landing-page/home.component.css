@@ -185,3 +185,18 @@
     max-width: 100%;
     height: auto;
   }
+
+
+  .tag {
+    background-color: #fff;
+    border-radius: 50px;
+    font-size: 12px;
+    color: #fff;
+    margin: 0;
+    padding: 2px 10px;
+    text-transform: uppercase;
+  }
+  
+  .tag-teal {
+    background-color: #92d4e4;
+  }
