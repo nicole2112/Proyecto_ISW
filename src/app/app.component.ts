@@ -1,20 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-component',
   template: `
-    <navbar></navbar>
+    <!-- <navbar></navbar> -->
     <router-outlet></router-outlet>
-    <footer-comp></footer-comp>
   `
 })
-
 export class AppComponent {
-
-  localesList = [
-    {code: 'en-US', label: 'English'},
-    {code: 'es', label:'Español' }
-  ]
-
   title = 'Proyecto-ISW';
 }

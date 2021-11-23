@@ -1,9 +1,13 @@
-npm install jquery
 npm install bootstrap
 ng add @angular/localize    (i18n para lenguajes)
 
 //para Firebase
 npm install firebase
 
-//para social media Icons
-ng add @fortawesome/angular-fontawesome@0.9.x
+
+
+
+
+
+//para las alertas
+npm install sweetalert2

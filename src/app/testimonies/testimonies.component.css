@@ -16,7 +16,7 @@ html, body{
 
 .bgImg::before{
     content: "";
-    background-image: url(../../assets/images/24464241947_01976611c3_b.jpg);
+    /* background-image: url(../../assets/images/24464241947_01976611c3_b.jpg); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

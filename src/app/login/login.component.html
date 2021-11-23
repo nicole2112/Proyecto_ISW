@@ -1,3 +1,58 @@
-<div class="sectionTitle" >
-    <h1 class="sectionTitleText" >registro para personas de la empresa</h1>
+<navbar></navbar>
+<div *ngIf="auth.user | async; else showLogin" class="center-screen ">
+  <div class="card text-center container-fluid">
+    <div class="card-header">
+      <h3>Atencion</h3>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title" style="margin-top: 1em;">Un usuario activo</h5>
+      <p class="card-text" style="margin-top: 1em;">Selcione ir al portal de empleados o salir de sesesion</p>
+      <div style="margin-top: 1em;">
+        <button type="button" class="btn btn-primary btn-lg" style="margin-right: 2em;" [routerLink]="['/portal-admin']">Portal</button>
+        <button type="button" class="btn btn-danger btn-lg" (click)="logOut()">Cerrar Session</button>
+      </div>
+      
+    </div>
+  </div>
 </div>
+
+<ng-template #showLogin>
+  <div>
+    <h1>Portal Administrativo</h1>
+  </div>
+
+  <div class="imagen">
+    <img src="./assets/images/Logo-FP-1-Medium.png" alt="">
+  </div>
+
+  <!-- login -->
+  <div class="container">
+    <div class="screen">
+      <div class="screen__content">
+        <form class="login">
+          <div class="login__field">
+            <i class="login__icon fas fa-user"></i>
+            <input type="text" class="login__input" placeholder="Correo" [(ngModel)]="email" name="email">
+          </div>
+          <div class="login__field">
+            <i class="login__icon fas fa-lock"></i>
+            <input type="password" class="login__input" placeholder="Password" [(ngModel)]="pass" name="password">
+          </div>
+          <button class="button login__submit" (click)="customLogin()">
+            <span class="button__text">Ingresar</span>
+            <i class="button__icon fas fa-chevron-right"></i>
+          </button>	
+          <div id="formFooter">
+            <a style="text-decoration: none" class="underlineHover" href="#">Olvidaste la contraseña?</a>
+          </div>			
+        </form>
+      </div>
+      <div class="screen__background">
+        <span class="screen__background__shape screen__background__shape4"></span>
+        <span class="screen__background__shape screen__background__shape3"></span>		
+        <span class="screen__background__shape screen__background__shape2"></span>
+        <span class="screen__background__shape screen__background__shape1"></span>
+      </div>		
+    </div>
+  </div>
+</ng-template>

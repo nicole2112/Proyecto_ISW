@@ -1,9 +1,37 @@
-import { Component } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthenticationService } from '../services/auth.services';
 
-@Component ({
-    templateUrl: './login.component.html'
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
+export class LoginComponent implements OnInit {
+  @Input() action: string;
 
-export class LoginComponent {
+  email = '';
+  pass = '';
+  nombre = '';
 
+  constructor(
+    public auth: AngularFireAuth,
+    public service: AuthenticationService
+  ) {}
+
+  ngOnInit(): void {
+    console.log(this.action);
+  }
+
+  logOut() {
+    this.service.logout();
+  }
+
+  customLogin() {
+   
+    this.service.email = this.email;
+    this.service.pass = this.pass;
+    this.service.nombre = this.nombre;
+    this.service.customLogin();
+  }
 }
