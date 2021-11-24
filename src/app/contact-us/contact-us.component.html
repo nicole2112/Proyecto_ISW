@@ -4,11 +4,13 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6 rmPadding">
-                    <label for="name" style="color: red; float: right;" id="labelName"></label>
+                    <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)" class="alert">
+                        <div *ngIf="form.controls['name'].errors.required" >
+                            <label for="name" style="color: red; position: absolute; font-size: 0.5em;" id="labelName">*Nombre requerido</label>
+                      </div>
+                    </div>
+                    
                     <input type="text" class="form-control sqrBorder" id="name" placeholder="Nombre Completo" formControlName="name" required>
-                    <!-- <div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" style="border-color: red;" class="alert alert-danger">
-                        <input type="text" class="form-control sqrBorder" id="name" formControlName="name" placeholder="Nombre Completo"  *ngIf="angForm.controls['name'].errors!.required">
-                    </div> -->
                 </div>
                 <div class="col-sm-6 rmPadding">
                     <label for="email" style="color: red; float: right;" id="labelEmail"></label>
