@@ -22,7 +22,7 @@ body{
 
 
 .container img{
-    width: 400px;
+    width: 25%;
     float: left;
     margin-right: 20px;
     margin-bottom: 20px;
@@ -68,5 +68,12 @@ body{
 @media (max-width: 940px) {
 	.container {
 		grid-template-columns: 1fr;
+	}
+}
+
+
+@media screen and (max-width: 940px) {
+	.container img {
+		width: 100%;
 	}
 }
