@@ -33,6 +33,7 @@ import { PortalAdminComponent } from './portal-admin/portal-admin.component';
 import { HomeComponent } from './landing-page/home.component';
 import { NavbarComponent } from './nav/navbar.component';
 import { NavbarPortalAdminComponent } from './navbar-portal-admin/navbar-portal-admin.component';
+import { PwResetComponent } from './pw-reset/pw-reset.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { NavbarPortalAdminComponent } from './navbar-portal-admin/navbar-portal-
     LoginComponent,
     RegistroComponent,
     PortalAdminComponent,
-    NavbarPortalAdminComponent
+    NavbarPortalAdminComponent,
+    PwResetComponent
   ],
   imports: [
     BrowserModule,

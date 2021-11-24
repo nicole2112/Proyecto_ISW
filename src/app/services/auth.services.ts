@@ -159,6 +159,7 @@ export class AuthenticationService {
                 "email": this.email
             };
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
+            (await user.user.sendEmailVerification());
           })
           .catch((err) => console.log('Error user: ', err));
           
