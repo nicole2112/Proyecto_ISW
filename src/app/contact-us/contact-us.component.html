@@ -4,16 +4,23 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6 rmPadding">
-                    <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)" class="alert">
-                        <div *ngIf="form.controls['name'].errors.required" >
-                            <label for="name" style="color: red; position: absolute; font-size: 0.5em;" id="labelName">*Nombre requerido</label>
+                    <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)">
+                        <div *ngIf="form.controls['name'].errors.required">
+                            <p for="name" style="color: red; font-size: 0.7em; margin-top: -9%; bottom: 0;" id="labelName">*Nombre es requerido</p>
                       </div>
                     </div>
                     <input type="text" class="form-control sqrBorder" id="name" placeholder="Nombre Completo" formControlName="name" required>
                 </div>
                 <div class="col-sm-6 rmPadding">
-                    <label for="email" style="color: red; float: right;" id="labelEmail"></label>
-                    <input type="email" class="form-control sqrBorder" id="correo" formControlName="correo" placeholder="Correo" required>  
+                    <div *ngIf="form.controls['correo'].invalid && (form.controls['correo'].dirty || form.controls['correo'].touched)">
+                        <div *ngIf="correo.errors.required">
+                            <p for="correo" style="color: red; font-size: 0.7em; margin-top: -9%;bottom: 0;" id="labelName">*Correo es un campo requerido</p>
+                      </div>
+                      <div *ngIf="form.get('correo').errors?.pattern">
+                        <p for="correo" style="color: red; font-size: 0.7em; margin-top: -9%;bottom: 0;" id="labelName">*Correo Invalido</p>
+                      </div>
+                    </div>
+                    <input type="email" class="form-control sqrBorder" id="correo" formControlName="correo" [pattern]="emailPattern" placeholder="Correo" required>  
                 </div>
             </div>
             <div class="row">

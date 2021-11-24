@@ -10,17 +10,22 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 })
 
 export class ContactUsComponent {
+    emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
     form = new FormGroup({
         name: new FormControl('', Validators.required),
         correo: new FormControl('', [
             Validators.required,
-            Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
+            Validators.pattern(this.emailPattern)
         ]),
         asunto: new FormControl(),
         mensaje: new FormControl()
     });
     get name(): any{
         return this.form.get('name');
+    }
+
+    get correo() {
+        return this.form.get('correo');
     }
 
     onSubmit(): void{
