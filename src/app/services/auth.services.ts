@@ -161,7 +161,34 @@ export class AuthenticationService {
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
             (await user.user.sendEmailVerification());
           })
-          .catch((err) => console.log('Error user: ', err));
+          .catch((err) => 
+          {
+            let message;
+
+            switch(err['code'])
+            {
+              case 'auth/email-already-in-use':
+                message = 'Error: Usuario ya existe';
+                break;
+              case 'auth/invalid-email':
+                message = 'Error: No es un correo valido';
+                break;
+              case 'auth/weak-password':
+                message = 'Error: La contraseña debe tener almenos 6 caracteres de longitud';
+                break;
+              default: message = 'Error';
+            }
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: message,
+              showConfirmButton: false,
+              timer: 3000
+            })
+          }
+            
+            );
           
         }
       }
