@@ -19,16 +19,47 @@ export class PwResetComponent implements OnInit {
 
   enviarCorreo()
   {
-    this.authService.auth.sendPasswordResetEmail(this.email);
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'Correo enviado!',
-      showConfirmButton: false,
-      timer: 1500
-    }).then(()=>{
-    window.location.href = './login';
-    })
+    if(this.email == null || this.email == '')
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'El campo correo no puede estar vacio',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    else
+      this.authService.auth.sendPasswordResetEmail(this.email).then(() =>
+      {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Correo enviado!',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(()=>{
+        window.location.href = './login';
+        })
+      }).catch((error) =>
+      {
+        let message;
+
+        switch(error['code'])
+        {
+          case 'auth/invalid-email':
+            message = 'Error: No es un correo valido';
+            break;
+          default: message = 'Error';
+        }
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: message,
+          showConfirmButton: false,
+          timer: 3000
+        })
+      });
+    
   }
 
 }
