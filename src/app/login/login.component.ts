@@ -8,11 +8,11 @@ import { AuthenticationService } from '../services/auth.services';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  @Input() action: string;
+  
 
-  email = '';
-  pass = '';
-  nombre = '';
+  email;
+  pass;
+  nombre;
 
   constructor(
     public auth: AngularFireAuth,
@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.action);
   }
 
   logOut() {
