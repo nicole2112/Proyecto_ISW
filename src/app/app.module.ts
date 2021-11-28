@@ -34,6 +34,7 @@ import { HomeComponent } from './landing-page/home.component';
 import { NavbarComponent } from './nav/navbar.component';
 import { NavbarPortalAdminComponent } from './navbar-portal-admin/navbar-portal-admin.component';
 import { PwResetComponent } from './pw-reset/pw-reset.component';
+import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { PwResetComponent } from './pw-reset/pw-reset.component';
     RegistroComponent,
     PortalAdminComponent,
     NavbarPortalAdminComponent,
-    PwResetComponent
+    PwResetComponent,
+    EditUserProfileComponent
   ],
   imports: [
     BrowserModule,

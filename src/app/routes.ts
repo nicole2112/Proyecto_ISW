@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { PortalAdminComponent } from './portal-admin/portal-admin.component';
 import { RegistroComponent } from './registro/registro.component';
 import { PwResetComponent } from './pw-reset/pw-reset.component';
+import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -32,6 +33,7 @@ export const AppRoutes: Routes = [
     component: RegistroComponent,
     canActivate: [RoleGuardGuard],
   },
+  { path: 'portal-admin/perfil', component: EditUserProfileComponent },
   { path: 'portal-admin', component: PortalAdminComponent },
   { path: 'portal-pw-reset', component: PwResetComponent },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },

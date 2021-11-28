@@ -1,0 +1,82 @@
+<app-navbar-portal-admin></app-navbar-portal-admin>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-4 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                <span class="font-weight-bold">Luis</span>
+                <span class="text-black-50">luis@fundacionpadrino.com</span>
+                <span> </span>
+            </div>
+        </div>
+        <div class="col-md-7 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Configuración de Perfil</h4>
+                </div>
+                <form #perfilForm="ngForm">
+                    <div class="row mt-2 form-group"
+                        [ngClass]="{
+                            error:
+                            perfilForm.controls.nombre?.invalid &&
+                            perfilForm.controls.nombre?.touched
+                        }"
+                    >
+                        <div class="col-md-6">
+                            <label class="labels" for="nombre">Nombre</label>
+                            <em *ngIf="perfilForm.controls.nombre?.invalid &&
+                            perfilForm.controls.nombre?.touched">Campo requerido
+                            </em>
+                            <input 
+                                [(ngModel)]="nombre" 
+                                type="text" 
+                                class="form-control" 
+                                id="nombre"
+                                name="nombre"
+                                placeholder="Nombre" 
+                                value=""
+                                required/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Apellido</label>
+                            <input type="text" class="form-control" value="" placeholder="Apellido">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label class="labels">Teléfono</label>
+                            <input type="number" class="form-control" placeholder="Número de teléfono" value="">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Correo personal</label>
+                            <input type="text" class="form-control" placeholder="Correo electrónico" value="">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Dirección</label>
+                            <input type="text" class="form-control" placeholder="Dirección" value="">
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" 
+                                type="submit"
+                                [disabled]="perfilForm.invalid"
+                                >Guardar Cambios</button>
+                    </div>
+                </form>
+                <br>
+
+                <div class="row mt-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Modificar contraseña</h4>
+                    </div>
+                    <div class="col-md-6"><label class="labels">Actual Contraseña</label><input type="password" class="form-control" placeholder="Contraseña" value=""></div>
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6"><label class="labels">Nueva Contraseña</label><input type="password" class="form-control" placeholder="Contraseña" value=""></div>
+                    <div class="col-md-6"><label class="labels">Verificar Contraseña</label><input type="password" class="form-control" value="" placeholder="Validar contraseña"></div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Modificar Contraseña</button></div>
+            </div>
+        </div>
+    </div>
+</div>

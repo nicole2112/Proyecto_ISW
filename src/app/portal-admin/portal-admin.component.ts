@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-portal-admin',
@@ -9,8 +9,13 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class PortalAdminComponent implements OnInit {
 
-  constructor(public auth: AngularFireAuth) { }
+  constructor(public auth: AngularFireAuth, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  //Para redirigir al perfil del usuario correspondiente
+  fnEditUserProfile(){
+    this.router.navigateByUrl(`portal-admin/perfil`);
   }
 }
