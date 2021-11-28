@@ -15,6 +15,8 @@ import { LoginComponent } from './login/login.component';
 import { PortalAdminComponent } from './portal-admin/portal-admin.component';
 import { RegistroComponent } from './registro/registro.component';
 import { PwResetComponent } from './pw-reset/pw-reset.component';
+import { EmailConfGuard } from './email-conf/guard/email-conf.guard';
+import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -32,7 +34,8 @@ export const AppRoutes: Routes = [
     component: RegistroComponent,
     canActivate: [RoleGuardGuard],
   },
-  { path: 'portal-admin', component: PortalAdminComponent },
+  { path: 'portal-admin', component: PortalAdminComponent, canActivate: [EmailConfGuard] },
+  {path: 'no-email-confirmation', component: NoConfirmationComponent},
   { path: 'portal-pw-reset', component: PwResetComponent },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];

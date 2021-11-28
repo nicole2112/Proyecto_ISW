@@ -44,6 +44,17 @@ export class AuthenticationService {
         this.loggedIn = true;
     }
 
+    sendConfirmationEmail()
+    {
+      this.userDetails.sendEmailVerification();
+    }
+
+    emailVerified():boolean
+    {
+      this.userDetails.reload();
+      return this.userDetails.emailVerified;
+    }
+
     isAdmin():Observable<boolean>
     {
       return this.db.object(`usuarios/${this.userDetails.uid}`).valueChanges().pipe(map((user)=>{
@@ -159,7 +170,7 @@ export class AuthenticationService {
                 "email": this.email
             };
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
-            (await user.user.sendEmailVerification());
+            this.sendConfirmationEmail();
           })
           .catch((err) => 
           {
