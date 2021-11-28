@@ -141,8 +141,14 @@ export class AuthenticationService {
             timer: 1500
           })
         } else {
+          var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          var result = '';
+          for ( var i = 0; i < 8; i++ ) {
+              result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+          }
+          console.log(result);
         this.auth
-          .createUserWithEmailAndPassword(this.email, this.pass)
+          .createUserWithEmailAndPassword(this.email, result)
           .then(async (user) => {
             console.log(user);
             this.router.navigate(['/portal-admin']);
