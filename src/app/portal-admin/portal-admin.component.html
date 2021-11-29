@@ -1,25 +1,25 @@
-<app-navbar-portal-admin></app-navbar-portal-admin>
-  <div id="function-list">
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active">
-        Funciones administrativas
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">Crear nuevo usuario</a>
-      <a href="#" class="list-group-item list-group-item-action">Modificar usuario existente</a>
-      <a href="#" class="list-group-item list-group-item-action">Eliminar usuario existente</a>
-      <a href="#" class="list-group-item list-group-item-action">Ver lista de usuarios</a>
-    </div>
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active">
-        Funciones de 
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">C</a>
-      <a href="#" class="list-group-item list-group-item-action">M</a>
-      <a href="#" class="list-group-item list-group-item-action">E</a>
-      <a href="#" class="list-group-item list-group-item-action">V</a>
-    </div>
-  </div>
-
+<app-navbar-portal-admin (toggleUsers)="toggleUsersHandler($event)"></app-navbar-portal-admin>
   <div>
+    <div class="container table-users">
+      <table *ngIf="ShowUsers" class="table table-dark table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Id</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of User">
+            <td>{{user.email}}</td>
+            <td>{{user.id}}</td>
+            <td>{{user.rol}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
     <img class="imagen_opaca" src="assets/images/Logo-FP-1-Medium.png" alt="">
+    
   </div>

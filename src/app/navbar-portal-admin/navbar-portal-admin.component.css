@@ -13,6 +13,34 @@
     position: relative;
     display: inline-block;
   }
+
+.navbar{
+  overflow-y: visible;
+  z-index: 999;
+}
+
+.dropdown-users{
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-users:hover .dropbtn {
+  background-color: #522662;
+}
+
+.dropdown-users:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-users img{
+  width:25px;
+display:inline;
+float:left;
+border:1px solid #111;
+border-radius:3px;
+box-shadow:0 0 3px rgba(0, 0, 0, 0.5) inset;
+}
+
   .dropdownx img{
     width:25px;
 	display:inline;
@@ -52,6 +80,11 @@
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdownx:hover .dropbtn {
     background-color: #522662;
+  }
+
+  .icons{
+    margin-right: 10px;
+    font-size: 1.2em;
   }
 
   
