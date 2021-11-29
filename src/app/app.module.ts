@@ -30,9 +30,11 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistroComponent } from './registro/registro.component';
 import { PortalAdminComponent } from './portal-admin/portal-admin.component';
+import { PortalDigitadorComponent } from './portal-digitador/portal-digitador.component';
 import { HomeComponent } from './landing-page/home.component';
 import { NavbarComponent } from './nav/navbar.component';
 import { NavbarPortalAdminComponent } from './navbar-portal-admin/navbar-portal-admin.component';
+import { NavbarPortalDigitadorComponent } from './navbar-portal-digitador/navbar-portal-digitador.component';
 import { PwResetComponent } from './pw-reset/pw-reset.component';
 
 
@@ -54,7 +56,9 @@ import { PwResetComponent } from './pw-reset/pw-reset.component';
     LoginComponent,
     RegistroComponent,
     PortalAdminComponent,
+    PortalDigitadorComponent,
     NavbarPortalAdminComponent,
+    NavbarPortalDigitadorComponent,
     PwResetComponent
   ],
   imports: [

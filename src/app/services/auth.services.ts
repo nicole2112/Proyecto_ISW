@@ -80,19 +80,24 @@ export class AuthenticationService {
             showConfirmButton: false,
             timer: 1500
           })
-        } else {
+        } else if((this.email != '' && this.pass != '')){
           this.auth
             .signInWithEmailAndPassword(this.email, this.pass)
             .then((res) => {
               console.log(res);
-              this.router.navigate(['/portal-admin']);
-              this.userDetails = res.user;
               this.db.object(`usuarios/${res.user.uid}`).valueChanges().subscribe(item =>{
                 console.log(item['rol']);
-                sessionStorage.setItem('rol', item['rol']);
+                if(item['rol'] == 'Admin' || item['rol'] == 'Presidente')
+                {
+                  this.router.navigate(['/portal-admin']);
+                  this.userDetails = res.user;
+                } else{
+                  this.router.navigate(['/portal-digitador']);
+                  this.userDetails = res.user;
+                }
                 
+                sessionStorage.setItem('rol', item['rol']);
               });
-
             })
             .catch((err) =>{
               console.log(err);

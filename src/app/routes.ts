@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { PortalAdminComponent } from './portal-admin/portal-admin.component';
 import { RegistroComponent } from './registro/registro.component';
 import { PwResetComponent } from './pw-reset/pw-reset.component';
+import { PortalDigitadorComponent } from './portal-digitador/portal-digitador.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -33,6 +34,7 @@ export const AppRoutes: Routes = [
     canActivate: [RoleGuardGuard],
   },
   { path: 'portal-admin', component: PortalAdminComponent },
+  { path: 'portal-digitador', component: PortalDigitadorComponent},
   { path: 'portal-pw-reset', component: PwResetComponent },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];

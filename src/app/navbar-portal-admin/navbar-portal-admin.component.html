@@ -1,29 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand nav-link" onclick="window.location.reload();" [routerLink]="['/portal-admin']">Portal Administrativo</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="dropdown-users">
-        <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Usuarios   ▼</button>
-        <div class="dropdown-content">
-          <a (click)="showUsers()">Ver Usuarios</a>
-          <a href="#">Ver Log Usuarios</a>
-          <a href="#">Ver Log Acciones</a>
-        </div>
-      </div>
-      <div class="dropdown-users">
-        <button class="dropbtn"><fa-icon class="icons" [icon]="faComments"></fa-icon>Testimonios  ▼</button>
-        <div class="dropdown-content">
-          <a>Ver Testimonios</a>
-          <a href="#">Editar Testimonios</a>
-        </div>
-      </div>
-      <div class="dropdownx navbar-nav ms-auto">
-        <button class="dropbtn"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>
-        <div class="dropdown-content">
-          <a href="#">Editar</a>
-          <a href="#">Cambiar Contraseña</a>
-          <a (click)="logOut()">Cerrar Sesion</a>
-        </div>
-      </div>
-  </nav>
+  <a class="navbar-brand nav-link" onclick="window.location.reload();" [routerLink]="['/portal-admin']">Portal Administrativo</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="dropdown-users">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Usuarios   ▼</button>
+    <div class="dropdown-content">
+      <a (click)="showUsers()">Ver Usuarios</a>
+      <a href="#">Ver Log Usuarios</a>
+      <a href="#">Ver Log Acciones</a>
+    </div>
+  </div>
+  <div class="dropdown-users">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faComments"></fa-icon>Testimonios  ▼</button>
+    <div class="dropdown-content">
+      <a>Ver Testimonios</a>
+      <a href="#">Editar Testimonios</a>
+    </div>
+  </div>
+  <div class="dropdownx navbar-nav ms-auto">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>
+    <div class="dropdown-content">
+      <a href="#">Editar</a>
+      <a href="#">Cambiar Contraseña</a>
+      <a (click)="logOut()">Cerrar Sesion</a>
+    </div>
+  </div>
+</nav>

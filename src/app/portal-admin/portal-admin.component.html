@@ -10,10 +10,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of User">
-            <td>{{user.email}}</td>
-            <td>{{user.id}}</td>
-            <td>{{user.rol}}</td>
+          <tr *ngFor="let user of User" onclick="window.location='#';" class="userRowHover">
+            <td class="rowInfo">{{user.email}}</td>
+            <td class="rowInfo">{{user.id}}</td>
+            <td class="rowInfo">{{user.rol}}</td>
           </tr>
         </tbody>
       </table>

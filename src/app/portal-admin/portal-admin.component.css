@@ -25,7 +25,7 @@
 .my-custom-scrollbar {
     position: relative;
     height: 70vh;
-    width: 91vw;
+    width: 100%;
     overflow: auto;
 }
 .table-wrapper-scroll-y {
@@ -35,4 +35,8 @@
 .table-header{
     position: sticky;
     top: 0px;
+}
+
+.userRowHover:hover .rowInfo{
+    color: #9965ac;
 }
