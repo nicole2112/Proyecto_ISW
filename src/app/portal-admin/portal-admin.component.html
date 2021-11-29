@@ -1,8 +1,8 @@
 <app-navbar-portal-admin (toggleUsers)="toggleUsersHandler($event)"></app-navbar-portal-admin>
-  <div>
     <div class="container table-users">
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
       <table *ngIf="ShowUsers" class="table table-dark table-striped table-bordered">
-        <thead>
+        <thead class="table-header">
           <tr>
             <th>Email</th>
             <th>Id</th>

@@ -21,3 +21,18 @@
 .table-users{
     margin-top: 3%;
 }
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 70vh;
+    width: 91vw;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.table-header{
+    position: sticky;
+    top: 0px;
+}
