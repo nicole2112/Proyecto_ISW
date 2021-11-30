@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { AuthenticationService } from "../services/auth.services";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 
 @Component({
   templateUrl: './edit-user-profile.component.html',
@@ -21,7 +22,7 @@ export class EditUserProfileComponent {
     newPass: any;
     newPassVal: any;
 
-    constructor(private service: AuthenticationService){}
+    constructor(private service: AuthenticationService, public auth: AngularFireAuth){}
 
     ngOnInit() {
       this.nombre = this.service.nombre;
@@ -30,4 +31,10 @@ export class EditUserProfileComponent {
       this.direccion = this.service.direccion;
     
     }
+    async editarPerfl(){
+      //editar telefono
+
+    }
+      //editar correo personal
+      //editar direccion
 }
