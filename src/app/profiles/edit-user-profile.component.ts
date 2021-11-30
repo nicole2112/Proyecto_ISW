@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 
 @Component({
   templateUrl: './edit-user-profile.component.html',
@@ -20,6 +21,17 @@ export class EditUserProfileComponent {
     newPass: any;
     newPassVal: any;
 
-    constructor(){}
+    constructor(public auth: AngularFireAuth){}
+
+    ngOnInit(): void{}
+
+
+    async editarPerfl(){
+      //editar telefono
+
+      //editar direccion
+
+      //editar correo personal
+    }
 
 }

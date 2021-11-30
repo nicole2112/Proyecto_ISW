@@ -1,159 +1,162 @@
 <app-navbar-portal-admin></app-navbar-portal-admin>
 
-<div class="container rounded bg-white mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-4 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                <span class="font-weight-bold">Luis</span>
-                <span class="text-black-50">luis@fundacionpadrino.com</span>
-                <span> </span>
-            </div>
-        </div>
-        <div class="col-md-7 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Configuración de Perfil</h4>
+<div *ngIf="auth.user | async as user;">
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-4 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    <span class="font-weight-bold">{{user.displayName}}</span>
+                    <span class="text-black-50">{{user.email}}</span>
+                    <span> </span>
                 </div>
-                <form #perfilForm="ngForm">
-                    <div class="row mt-2 form-group">
-                        <div class="col-md-6">
-                            <label class="labels" for="nombre">Nombre</label>
-                            <em *ngIf="perfilForm.controls.nombre?.invalid &&
-                            perfilForm.controls.nombre?.touched">*Nombre válido es requerido
-                            </em>
-                            <input 
-                                [ngClass]="{
-                                    error:
-                                    (perfilForm.controls.nombre?.invalid &&
-                                    perfilForm.controls.nombre?.touched) || 
-                                    perfilForm.controls.nombre?.errors?.pattern
-                                }"
-                                [(ngModel)]="nombre" 
-                                [pattern]="namePattern"
-                                type="text" 
-                                class="form-control" 
-                                id="nombre"
-                                name="nombre"
-                                placeholder="Nombre" 
-                                value=""
-                                required/>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Apellido</label>
-                            <em *ngIf="perfilForm.controls.apellido?.invalid &&
-                            perfilForm.controls.apellido?.touched">*Apellido válido es requerido
-                            </em>
-                            <input 
-                                [ngClass]="{
-                                    error:
-                                    (perfilForm.controls.apellido?.invalid &&
-                                    perfilForm.controls.apellido?.touched) ||
-                                    perfilForm.controls.apellido?.errors?.pattern
-                                }"
-                                [(ngModel)]="apellido" 
-                                [pattern]="namePattern"
-                                type="text" 
-                                class="form-control" 
-                                id="apellido"
-                                name="apellido"
-                                placeholder="Apellido"
-                                value="" 
-                                required/>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label class="labels">Teléfono</label>
-                            <em *ngIf="perfilForm.controls.telefono?.errors?.pattern">*Número de 8 dígitos sin guiones
-                            </em>
-                            <input 
-                                [ngClass]="{
-                                    error:
-                                    (perfilForm.controls.telefono?.invalid &&
-                                    perfilForm.controls.telefono?.touched) ||
-                                    perfilForm.controls.telefono?.errors?.pattern
-                                }"
-                                [(ngModel)]="telefono" 
-                                [pattern]="phonePattern"
-                                type="number" 
-                                class="form-control" 
-                                id="telefono"
-                                name="telefono"
-                                placeholder="Número de teléfono" 
-                                value="">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Correo personal</label>
-                            <em *ngIf="perfilForm.controls.correo?.errors?.pattern">*Correo no es válido
-                            </em>
-                            <input 
-                                [ngClass]="{error: perfilForm.controls.correo?.errors?.pattern}"
-                                [(ngModel)]=correo
-                                [pattern]="emailPattern"
-                                type="text" 
-                                class="form-control" 
-                                id="correo"
-                                name="correo"
-                                placeholder="Correo electrónico" 
-                                value="">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Dirección</label>
-                            <input type="text" class="form-control" placeholder="Dirección" value="">
-                        </div>
-                    </div>
-                    <div class="mt-5 text-center">
-                        <button class="btn btn-primary profile-button" 
-                                type="submit"
-                                [disabled]="perfilForm.invalid"
-                                >Guardar Cambios</button>
-                    </div>
-                </form>
-                <br>
-                <div class="row mt-3">
+            </div>
+            <div class="col-md-7 border-right">
+                <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Modificar contraseña</h4>
+                        <h4 class="text-right">Configuración de Perfil</h4>
                     </div>
-                    <form #passwordForm="ngForm">
-                        <div class="col-md-6">
-                            <label class="labels">Actual Contraseña</label>
-                            <em *ngIf="passwordForm.controls.actualPass?.invalid &&
-                            passwordForm.controls.actualPass?.touched">*Contraseña actual es requerida
-                            </em>
-                            <input 
-                                [ngClass]="{
-                                    error:
-                                    (passwordForm.controls.actualPass?.invalid &&
-                                    passwordForm.controls.actualPass?.touched) 
-                                }"
-                                [(ngModel)]="actualPass" 
-                                type="password" 
-                                class="form-control"
-                                placeholder="Contraseña" 
-                                id="actualPass"
-                                name="actualPass"
-                                value=""
-                                required>
+                    <form #perfilForm="ngForm">
+                        <div class="row mt-2 form-group">
+                            <div class="col-md-6">
+                                <label class="labels" for="nombre">Nombre Completo</label>
+                                <em *ngIf="perfilForm.controls.nombre?.invalid &&
+                                perfilForm.controls.nombre?.touched">*Nombre válido es requerido
+                                </em>
+                                <input 
+                                    [ngClass]="{
+                                        error:
+                                        (perfilForm.controls.nombre?.invalid &&
+                                        perfilForm.controls.nombre?.touched) || 
+                                        perfilForm.controls.nombre?.errors?.pattern
+                                    }"
+                                    [(ngModel)]="nombre" 
+                                    [pattern]="namePattern"
+                                    type="text" 
+                                    class="form-control" 
+                                    id="nombre"
+                                    name="nombre"
+                                    placeholder="{{user.displayName}}" 
+                                    value=""
+                                    required/>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <label class="labels">Apellido</label>
+                                <em *ngIf="perfilForm.controls.apellido?.invalid &&
+                                perfilForm.controls.apellido?.touched">*Apellido válido es requerido
+                                </em>
+                                <input 
+                                    [ngClass]="{
+                                        error:
+                                        (perfilForm.controls.apellido?.invalid &&
+                                        perfilForm.controls.apellido?.touched) ||
+                                        perfilForm.controls.apellido?.errors?.pattern
+                                    }"
+                                    [(ngModel)]="apellido" 
+                                    [pattern]="namePattern"
+                                    type="text" 
+                                    class="form-control" 
+                                    id="apellido"
+                                    name="apellido"
+                                    placeholder="Apellido"
+                                    value="" 
+                                    required/>
+                            </div> -->
                         </div>
-                        <div class="col-md-6"></div>
-                        <div class="col-md-6">
-                            <label class="labels">Nueva Contraseña</label>
-                            <input type="password" class="form-control" placeholder="Contraseña" value="">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Verificar Contraseña</label>
-                            <input type="password" class="form-control" value="" placeholder="Validar contraseña">
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Teléfono</label>
+                                <em *ngIf="perfilForm.controls.telefono?.errors?.pattern">*Número de 8 dígitos sin guiones
+                                </em>
+                                <input 
+                                    [ngClass]="{
+                                        error:
+                                        (perfilForm.controls.telefono?.invalid &&
+                                        perfilForm.controls.telefono?.touched) ||
+                                        perfilForm.controls.telefono?.errors?.pattern
+                                    }"
+                                    [(ngModel)]="telefono" 
+                                    [pattern]="phonePattern"
+                                    type="number" 
+                                    class="form-control" 
+                                    id="telefono"
+                                    name="telefono"
+                                    placeholder="Número de teléfono" 
+                                    value="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Correo personal</label>
+                                <em *ngIf="perfilForm.controls.correo?.errors?.pattern">*Correo no es válido
+                                </em>
+                                <input 
+                                    [ngClass]="{error: perfilForm.controls.correo?.errors?.pattern}"
+                                    [(ngModel)]=correo
+                                    [pattern]="emailPattern"
+                                    type="text" 
+                                    class="form-control" 
+                                    id="correo"
+                                    name="correo"
+                                    placeholder="Correo electrónico" 
+                                    value="">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Dirección</label>
+                                <input type="text" class="form-control" placeholder="Dirección" value="">
+                            </div>
                         </div>
                         <div class="mt-5 text-center">
-                            <button 
-                                class="btn btn-primary profile-button" 
-                                type="button"
-                                [disabled]="passwordForm.invalid">Modificar Contraseña</button>
+                            <button class="btn btn-primary profile-button" 
+                                    type="submit"
+                                    [disabled]="perfilForm.invalid"
+                                    >Guardar Cambios</button>
                         </div>
                     </form>
+                    <br>
+                    <div class="row mt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Modificar contraseña</h4>
+                        </div>
+                        <form #passwordForm="ngForm">
+                            <div class="col-md-6">
+                                <label class="labels">Actual Contraseña</label>
+                                <em *ngIf="passwordForm.controls.actualPass?.invalid &&
+                                passwordForm.controls.actualPass?.touched">*Contraseña actual es requerida
+                                </em>
+                                <input 
+                                    [ngClass]="{
+                                        error:
+                                        (passwordForm.controls.actualPass?.invalid &&
+                                        passwordForm.controls.actualPass?.touched) 
+                                    }"
+                                    [(ngModel)]="actualPass" 
+                                    type="password" 
+                                    class="form-control"
+                                    placeholder="Contraseña" 
+                                    id="actualPass"
+                                    name="actualPass"
+                                    value=""
+                                    required>
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <label class="labels">Nueva Contraseña</label>
+                                <input type="password" class="form-control" placeholder="Contraseña" value="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Verificar Contraseña</label>
+                                <input type="password" class="form-control" value="" placeholder="Validar contraseña">
+                            </div>
+                            <div class="mt-5 text-center">
+                                <button 
+                                    class="btn btn-primary profile-button" 
+                                    type="button"
+                                    [disabled]="passwordForm.invalid">Modificar Contraseña</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
