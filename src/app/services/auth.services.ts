@@ -142,6 +142,16 @@ export class AuthenticationService {
         this.router.navigate(['/login']);
     }
 
+    logoutVerificacion() {
+      // remove user from local storage to log user out
+      localStorage.removeItem('user');
+      this.auth.signOut();
+      this.loggedIn = false;
+      sessionStorage.removeItem('rol');
+      //this.userSubject.next(null);
+      this.router.navigate(['/login']);
+  }
+
     register(rol:string) {
         if (this.email == '' || this.pass == '' || this.nombre =='') {
           Swal.fire({

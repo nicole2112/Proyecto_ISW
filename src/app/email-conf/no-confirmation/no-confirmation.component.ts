@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/auth.services';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-no-confirmation',
@@ -16,6 +17,15 @@ export class NoConfirmationComponent implements OnInit {
   reenviarCorreo()
   {
     this.authservice.sendConfirmationEmail();
+    this.authservice.logoutVerificacion();
+    
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Correo enviado!',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
 }
