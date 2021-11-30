@@ -27,11 +27,11 @@ export const AppRoutes: Routes = [
   { path: 'programas', component: ProgramasComponent },
   { path: 'testimonies', component: TestimoniesComponent },
   { path: 'blog', component: BlogComponent },
-  {path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'registro',
     component: RegistroComponent,
-    canActivate: [RoleGuardGuard],
+    // canActivate: [RoleGuardGuard],
   },
   { path: 'portal-admin', component: PortalAdminComponent },
   { path: 'portal-digitador', component: PortalDigitadorComponent},

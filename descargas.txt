@@ -10,8 +10,11 @@ npm install @types/jquery --save-dev
 npm install @types/datatables.net --save-dev
 npm install ngx-bootstrap bootstrap --save
 
-
-
+//Download para modales
+npm install --save @angular/material
+npm install --save @angular/animations
+npm install @ng-bootstrap/ng-bootstrap
+npm install angular-material --save
 
 //para las alertas
 npm install sweetalert2

@@ -35,7 +35,10 @@ import { HomeComponent } from './landing-page/home.component';
 import { NavbarComponent } from './nav/navbar.component';
 import { NavbarPortalAdminComponent } from './navbar-portal-admin/navbar-portal-admin.component';
 import { NavbarPortalDigitadorComponent } from './navbar-portal-digitador/navbar-portal-digitador.component';
+import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
 import { PwResetComponent } from './pw-reset/pw-reset.component';
+import { ModalService } from './services/modal.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -59,6 +62,7 @@ import { PwResetComponent } from './pw-reset/pw-reset.component';
     PortalDigitadorComponent,
     NavbarPortalAdminComponent,
     NavbarPortalDigitadorComponent,
+    EditUserModalComponent,
     PwResetComponent
   ],
   imports: [
@@ -74,10 +78,13 @@ import { PwResetComponent } from './pw-reset/pw-reset.component';
     AngularFireAuthModule,
     FontAwesomeModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
 
   ],
-  providers: [],
+  providers: [
+    ModalService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
