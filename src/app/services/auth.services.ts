@@ -23,8 +23,11 @@ export class AuthenticationService {
     public loggedIn = false;
     email = '';
     pass = '';
-    nombre = '';
+    nombre: any;
     rol='';
+    correoPer:any;
+    direccion:any;
+    telefono:any;
 
     constructor(
         private router: Router,
@@ -89,6 +92,12 @@ export class AuthenticationService {
               this.userDetails = res.user;
               this.db.object(`usuarios/${res.user.uid}`).valueChanges().subscribe(item =>{
                 console.log(item['rol']);
+                console.log(item['nombre']);
+                console.log(item['correoPer']);
+                this.nombre = item['nombre'];
+                this.correoPer = item['correoPer'];
+                this.telefono = item['telefono'];
+                this.direccion = item['direccion'];
                 sessionStorage.setItem('rol', item['rol']);
                 
               });

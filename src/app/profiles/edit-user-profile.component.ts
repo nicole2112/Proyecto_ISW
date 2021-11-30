@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { AuthenticationService } from "../services/auth.services";
 
 @Component({
   templateUrl: './edit-user-profile.component.html',
@@ -20,6 +21,13 @@ export class EditUserProfileComponent {
     newPass: any;
     newPassVal: any;
 
-    constructor(){}
+    constructor(private service: AuthenticationService){}
 
+    ngOnInit() {
+      this.nombre = this.service.nombre;
+      this.telefono = this.service.telefono;
+      this.correo = this.service.correoPer;
+      this.direccion = this.service.direccion;
+    
+    }
 }
