@@ -10,7 +10,6 @@ import { AuthenticationService } from '../services/auth.services';
 export class RegistroComponent implements OnInit {
 
   email = '';
-  pass = '';
   nombre = '';
   rol ='';
 
@@ -22,7 +21,6 @@ export class RegistroComponent implements OnInit {
 
   registrar(){
     this.service.email=this.email;
-    this.service.pass=this.pass;
     this.service.nombre=this.nombre;
     this.service.rol=this.rol;
     

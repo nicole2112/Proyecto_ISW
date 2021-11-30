@@ -132,7 +132,7 @@ export class AuthenticationService {
     }
 
     register(rol:string) {
-        if (this.email == '' || this.pass == '' || this.nombre =='') {
+        if (this.email == '' || this.nombre =='') {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
