@@ -1,25 +1,138 @@
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
-<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <app-navbar-portal-admin></app-navbar-portal-admin>
-<div class="testbox">
-  <h1>Registro de usuarios</h1>
 
-  <form action="/">
-      <hr>
-    <div class="accounttype">
-      <input type="radio" value="Admin" id="radioOne" name="account" [(ngModel)]="rol" checked/>
-      <label for="radioOne" class="radio" chec>Administrador</label>
-      <input type="radio" value="Digitador" id="radioTwo" name="account" [(ngModel)]="rol" />
-      <label for="radioTwo" class="radio">Digitador</label>
+<form #claseForm="ngForm" action="/">
+  <div style="margin-top: 50px">
+    <div class="d-flex justify-content-center">
+      <h1>Registro de usuarios</h1>
     </div>
-  <hr>
-  <label id="icon" for="email"><i class="icon-envelope "></i></label>
-  <input type="text" name="email" id="email" placeholder="Email" [(ngModel)]="email" required/>
-  <label id="icon" for="name"><i class="icon-user"></i></label>
-  <input type="text" name="name" id="name" placeholder="Name" [(ngModel)]="nombre" required/>
-  <label id="icon" for="pass"><i class="icon-shield"></i></label>
-  <input type="password" name="pass" id="pass" placeholder="Password" [(ngModel)]="pass" required/>
-   <p>By clicking Register, you agree on our <a href="#">terms and condition</a>.</p>
-   <button class="btn btn-primary" (click)="registrar()">Registrar</button>
-  </form>
-</div>
+
+    <div class="d-flex justify-content-center" style="margin-top: 30px">
+      <div class="col-md-5">
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="inlineRadioOptions"
+            id="inlineRadio1"
+            value="Admin"
+            [(ngModel)]="rol"
+            checked
+          />
+          <label class="form-check-label" for="inlineRadio1"
+            >Administrador</label
+          >
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="inlineRadioOptions"
+            id="inlineRadio2"
+            value="Digitador"
+            [(ngModel)]="rol"
+          />
+          <label class="form-check-label" for="inlineRadio2">Digitador</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center" style="margin-top: 20px">
+      <div
+        class="form-floating mb-3 col-md-5"
+        [ngClass]="{
+          error:
+            claseForm.controls.nombre?.invalid &&
+            claseForm.controls.nombre?.touched
+        }"
+      >
+        <input
+          [(ngModel)]="nombre"
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          name="nombre"
+          placeholder="Nombre completo"
+          required
+        />
+        <label for="floatingInput">Nombre Completo</label>
+        <em
+          class="text-danger"
+          *ngIf="
+            claseForm.controls.nombre?.invalid &&
+            claseForm.controls.nombre?.touched
+          "
+          >Este campo es requerido!</em
+        >
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center" style="margin-top: 15px">
+      <div
+        class="form-floating mb-3 col-md-5"
+        [ngClass]="{
+          error:
+            claseForm.controls.email?.invalid &&
+            claseForm.controls.email?.touched
+        }"
+      >
+        <input
+          [(ngModel)]="email"
+          type="email"
+          class="form-control"
+          id="floatingInput"
+          name="email"
+          placeholder="Correo"
+          required
+        />
+        <label for="floatingInput">Correo</label>
+        <em
+          class="text-danger"
+          *ngIf="
+            claseForm.controls.email?.invalid &&
+            claseForm.controls.email?.touched
+          "
+          >Este campo es requerido!</em
+        >
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center" style="margin-top: 15px">
+      <div
+        class="form-floating mb-3 col-md-5"
+        [ngClass]="{
+          error:
+            claseForm.controls.pass?.invalid && claseForm.controls.pass?.touched
+        }"
+      >
+        <input
+          [(ngModel)]="pass"
+          type="password"
+          class="form-control"
+          id="floatingInput"
+          name="pass"
+          placeholder="Contrasena"
+          required
+        />
+        <label for="floatingInput">Contrasena</label>
+        <em
+          class="text-danger"
+          *ngIf="
+            claseForm.controls.pass?.invalid && claseForm.controls.pass?.touched
+          "
+          >Este campo es requerido!</em
+        >
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <button
+        type="submit"
+        [disabled]="claseForm.invalid"
+        class="btn btn-primary"
+        (click)="registrar()"
+      >
+        Registrar
+      </button>
+    </div>
+  </div>
+</form>
