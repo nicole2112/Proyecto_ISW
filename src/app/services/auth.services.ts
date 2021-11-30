@@ -90,16 +90,18 @@ export class AuthenticationService {
               console.log(res);
               this.router.navigate(['/portal-admin']);
               this.userDetails = res.user;
+              //sessionStorage.setItem('uid', res.user.uid);
               this.db.object(`usuarios/${res.user.uid}`).valueChanges().subscribe(item =>{
-                console.log(item['rol']);
-                console.log(item['nombre']);
-                console.log(item['correoPer']);
                 this.nombre = item['nombre'];
                 this.correoPer = item['correoPer'];
                 this.telefono = item['telefono'];
                 this.direccion = item['direccion'];
+
+                sessionStorage.setItem('nombre', item['nombre']);
+                sessionStorage.setItem('correoPer', item['correoPer']);
+                sessionStorage.setItem('telefono', item['telefono']);
+                sessionStorage.setItem('direccion', item['direccion']);
                 sessionStorage.setItem('rol', item['rol']);
-                
               });
 
             })
@@ -135,8 +137,11 @@ export class AuthenticationService {
           timer: 1500
         })
         this.loggedIn = false;
-        sessionStorage.removeItem('rol');
+        //sessionStorage.removeItem('rol');
+        //sessionStorage.removeItem('nombre');
+        sessionStorage.clear();
         //this.userSubject.next(null);
+        console.log(sessionStorage);
         this.router.navigate(['/login']);
     }
 

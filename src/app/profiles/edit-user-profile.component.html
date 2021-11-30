@@ -36,8 +36,8 @@
                                     class="form-control" 
                                     id="nombre"
                                     name="nombre"
-                                    placeholder="{{user.displayName}}" 
-                                    value=""
+                                    placeholder="Nombre Completo" 
+                                    value="{{user.displayName}}"
                                     required/>
                             </div>
                             <!-- <div class="col-md-6">
@@ -101,7 +101,14 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Dirección</label>
-                                <input type="text" class="form-control" placeholder="Dirección" value="">
+                                <input 
+                                    [(ngModel)]=direccion
+                                    type="text" 
+                                    class="form-control" 
+                                    id="direccion"
+                                    name="direccion"
+                                    placeholder="Dirección" 
+                                    value="">
                             </div>
                         </div>
                         <div class="mt-5 text-center">

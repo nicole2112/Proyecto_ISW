@@ -25,16 +25,23 @@ export class EditUserProfileComponent {
     constructor(private service: AuthenticationService, public auth: AngularFireAuth){}
 
     ngOnInit() {
-      this.nombre = this.service.nombre;
-      this.telefono = this.service.telefono;
-      this.correo = this.service.correoPer;
-      this.direccion = this.service.direccion;
-    
+      this.nombre = sessionStorage.getItem('nombre');
+      this.telefono =  sessionStorage.getItem('telefono');
+      this.correo = sessionStorage.getItem('correoPer');
+      this.direccion = sessionStorage.getItem('direccion');
+      
+      if(this.telefono === 'undefined') this.telefono = null
+      if(this.correo === 'undefined') this.correo = null
+      if(this.direccion === 'undefined') this.direccion = null
+      console.log(sessionStorage);
     }
+
     async editarPerfl(){
       //editar telefono
-
-    }
       //editar correo personal
       //editar direccion
+
+
+    }
+      
 }
