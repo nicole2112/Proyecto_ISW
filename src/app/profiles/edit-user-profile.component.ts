@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { AuthenticationService } from "../services/auth.services";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 
 @Component({
@@ -21,17 +22,26 @@ export class EditUserProfileComponent {
     newPass: any;
     newPassVal: any;
 
-    constructor(public auth: AngularFireAuth){}
+    constructor(private service: AuthenticationService, public auth: AngularFireAuth){}
 
-    ngOnInit(): void{}
-
+    ngOnInit() {
+      this.nombre = sessionStorage.getItem('nombre');
+      this.telefono =  sessionStorage.getItem('telefono');
+      this.correo = sessionStorage.getItem('correoPer');
+      this.direccion = sessionStorage.getItem('direccion');
+      
+      if(this.telefono === 'undefined') this.telefono = null
+      if(this.correo === 'undefined') this.correo = null
+      if(this.direccion === 'undefined') this.direccion = null
+      console.log(sessionStorage);
+    }
 
     async editarPerfl(){
       //editar telefono
-
+      //editar correo personal
       //editar direccion
 
-      //editar correo personal
-    }
 
+    }
+      
 }
