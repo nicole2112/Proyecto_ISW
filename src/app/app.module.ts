@@ -39,6 +39,8 @@ import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.compon
 import { PwResetComponent } from './pw-reset/pw-reset.component';
 import { ModalService } from './services/modal.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.component';
+import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
 
 
 @NgModule({
@@ -63,7 +65,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavbarPortalAdminComponent,
     NavbarPortalDigitadorComponent,
     EditUserModalComponent,
-    PwResetComponent
+    PwResetComponent,
+    AgregarTestimoniosComponent,
+    VerTestimoniosComponent
   ],
   imports: [
     BrowserModule,
