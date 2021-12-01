@@ -65,7 +65,28 @@
             <h4 class="mb-5"><strong>Historias de nuestros héroes</strong></h4>
       
             <div class="row">
-              <div class="col-lg-4 col-md-12 mb-4">
+              <div class="col-lg-4 col-md-6 mb-4" *ngFor="let testimonio of testimonyList">
+                <div class="card">
+                  <div
+                       class="bg-image hover-overlay ripple"
+                       data-mdb-ripple-color="light"
+                       >
+                       <iframe [src]="inputVideo(testimonio.video_url)" width="400" height="300" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" 
+                       allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+                    <a href="#!">
+                      <div
+                           class="mask"
+                           style="background-color: rgba(251, 251, 251, 0.15)"
+                           ></div>
+                    </a>
+                  </div>
+                  <div class="card-body"  style="margin-top: -10%;">
+                    <h5 class="card-title">{{ testimonio?.titulo }}</h5>
+
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-lg-4 col-md-12 mb-4">
                 <div class="card">
                   <div
                        class="bg-image hover-overlay ripple"
@@ -129,11 +150,11 @@
                     <h5 class="card-title">Don Jorge Damaso</h5>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
     
-            <div class="row">
-                <div class="col-lg-4 col-md-12 mb-4">
+          <div class="row">
+                <!-- <div class="col-lg-4 col-md-12 mb-4">
                   <div class="card">
                     <div
                          class="bg-image hover-overlay ripple"
@@ -153,8 +174,8 @@
 
                     </div>
                   </div>
-                </div>
-            <div class="col-lg-4 col-md-6 mb-4">
+                </div> -->
+            <!-- <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card">
                   <div
                        class="bg-image hover-overlay ripple"
@@ -174,10 +195,10 @@
 
                   </div>
                 </div>
-              </div>
+              </div> -->
     
     
-            <div class="col-lg-4 col-md-6 mb-4">
+            <!-- <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card">
                   <div
                        class="bg-image hover-overlay ripple"
@@ -198,10 +219,10 @@
 
                   </div>
                 </div>
-              </div>
+              </div> -->
           <div class="row">
             <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card">
+              <!-- <div class="card">
                 <div
                      class="bg-image hover-overlay ripple"
                      data-mdb-ripple-color="light"
@@ -219,12 +240,12 @@
                   <h5 class="card-title">Doña Saturnina Gonzáles</h5>
 
                 </div>
-              </div>
+              </div> -->
           </div>
   
   
           <div class="col-lg-4 col-md-12 mb-4">
-              <div class="card">
+              <!-- <div class="card">
                 <div
                      class="bg-image hover-overlay ripple"
                      data-mdb-ripple-color="light"
@@ -242,12 +263,12 @@
                   <h5 class="card-title">José Dubón</h5>
 
                 </div>
-              </div>
+              </div> -->
            </div>
   
   
           <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card">
+              <!-- <div class="card">
                 <div
                      class="bg-image hover-overlay ripple"
                      data-mdb-ripple-color="light"
@@ -265,7 +286,7 @@
                   <h5 class="card-title">Neglin Sarmiento</h5>
 
                 </div>
-              </div>
+              </div> -->
           </div>
         </div>
       </div>
