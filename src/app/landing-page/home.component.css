@@ -94,6 +94,23 @@
     padding-top: 5vh;
 }
 
+.card-header img{
+  width:35px;
+  display: inline;
+  float: left;
+}
+
+.card-body{
+  position: relative;
+}
+
+.user{
+}
+
+.user img{
+  width: 100%;
+  height: 100%;
+}
  
   
 #slider label,
@@ -200,7 +217,3 @@
   .tag-teal {
     background-color: #92d4e4;
   }
-
-.user{
-  
-}
