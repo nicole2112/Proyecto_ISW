@@ -1,9 +1,22 @@
-npm install jquery
 npm install bootstrap
 ng add @angular/localize    (i18n para lenguajes)
 
 //para Firebase
 npm install firebase
+npm install datatables.net --save
+npm install datatables.net-dt --save
+npm install angular-datatables --save
+npm install @types/jquery --save-dev
+npm install @types/datatables.net --save-dev
+npm install ngx-bootstrap bootstrap --save
 
-//para social media Icons
-ng add @fortawesome/angular-fontawesome@0.9.x
+//Download para modales
+npm install --save @angular/material
+npm install --save @angular/animations
+npm install @ng-bootstrap/ng-bootstrap
+npm install angular-material --save
+
+//para las alertas
+npm install sweetalert2
+
+//test

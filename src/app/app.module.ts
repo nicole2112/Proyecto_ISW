@@ -8,9 +8,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';//firebase
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';//firebase
 import { provideDatabase,getDatabase } from '@angular/fire/database';//firebase
-import { provideStorage,getStorage } from '@angular/fire/storage';//firebase
-import { HomeComponent } from './landing-page/home.component';
-import { NavbarComponent } from './nav/navbar.component';
+import { provideStorage,getStorage } from '@angular/fire/storage';
 import { RouterModule } from '@angular/router';
 import { AppRoutes } from './routes';
 import { QueHacemosComponent } from './about-us/que-hacemos.component';
@@ -22,10 +20,28 @@ import { TestimoniesComponent } from './testimonies/testimonies.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
-import { FooterComponent } from './footer/footer.component';
+import { AngularFireDatabase, AngularFireDatabaseModule, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireModule } from '@angular/fire/compat';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AlianzasComponent } from './about-us/alianzas.component';
+import { FooterComponent } from './footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RegistroComponent } from './registro/registro.component';
+import { PortalAdminComponent } from './portal-admin/portal-admin.component';
+import { PortalDigitadorComponent } from './portal-digitador/portal-digitador.component';
+import { HomeComponent } from './landing-page/home.component';
+import { NavbarComponent } from './nav/navbar.component';
+import { NavbarPortalAdminComponent } from './navbar-portal-admin/navbar-portal-admin.component';
+import { NavbarPortalDigitadorComponent } from './navbar-portal-digitador/navbar-portal-digitador.component';
+import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
+import { PwResetComponent } from './pw-reset/pw-reset.component';
+import { ModalService } from './services/modal.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.component';
+import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
+
 
 @NgModule({
   declarations: [
@@ -40,9 +56,18 @@ import { AlianzasComponent } from './about-us/alianzas.component';
     DonationsComponent,
     TestimoniesComponent,
     BlogComponent,
-    LoginComponent,
     FooterComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    LoginComponent,
+    RegistroComponent,
+    PortalAdminComponent,
+    PortalDigitadorComponent,
+    NavbarPortalAdminComponent,
+    NavbarPortalDigitadorComponent,
+    EditUserModalComponent,
+    PwResetComponent,
+    AgregarTestimoniosComponent,
+    VerTestimoniosComponent
   ],
   imports: [
     BrowserModule,
@@ -51,11 +76,19 @@ import { AlianzasComponent } from './about-us/alianzas.component';
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideStorage(() => getStorage()),
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     FontAwesomeModule,
+    HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    NgbModule
+
   ],
-  providers: [],
+  providers: [
+    ModalService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
