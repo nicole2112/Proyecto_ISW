@@ -45,7 +45,6 @@ export class EditUserProfileComponent implements OnInit {
     if (this.direccion === 'undefined') this.direccion = null;
     console.log(sessionStorage);
 
-    
       this.userId = getAuth().currentUser.uid;
       console.log(this.userId);
       this.correo = getAuth().currentUser.email;
