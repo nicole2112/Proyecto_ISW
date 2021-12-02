@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
-import { faUserCircle, faAddressBook, faComments } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faAddressBook, faComments, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-navbar-portal-admin',
   templateUrl: './navbar-portal-admin.component.html',
@@ -40,4 +40,5 @@ export class NavbarPortalAdminComponent implements OnInit {
   faUserCircle = faUserCircle;
   faAddressBook = faAddressBook;
   faComments = faComments;
+  faHandSparkles = faHandSparkles;
 }
