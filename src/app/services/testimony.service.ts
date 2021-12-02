@@ -23,4 +23,9 @@ export class TestimonyService {
         
     })
   }
+
+  postTestimonies(testimonio)
+  {
+    this.db.object(`testimonios/${testimonio.titulo.replace(/\s+/g, '_').toLowerCase()}`).set(testimonio);
+  }
 }
