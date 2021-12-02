@@ -44,6 +44,10 @@ export class AuthenticationService {
         this.loggedIn = true;
     }
 
+    getCurrentUser(){
+      return this.userDetails;
+    }
+
     isAdmin():Observable<boolean>
     {
       return this.db.object(`usuarios/${this.userDetails.uid}`).valueChanges().pipe(map((user)=>{
@@ -85,15 +89,16 @@ export class AuthenticationService {
             .signInWithEmailAndPassword(this.email, this.pass)
             .then((res) => {
               console.log(res);
+              console.log(res.user.email)
               this.db.object(`usuarios/${res.user.uid}`).valueChanges().subscribe(item =>{
                 console.log(item['rol']);
                 if(item['rol'] == 'Admin' || item['rol'] == 'Presidente')
                 {
+                  this.userDetails = res.user;
                   this.router.navigate(['/portal-admin']);
-                  this.userDetails = res.user;
                 } else{
-                  this.router.navigate(['/portal-digitador']);
                   this.userDetails = res.user;
+                  this.router.navigate(['/portal-digitador']);
                 }
                 
                 sessionStorage.setItem('rol', item['rol']);

@@ -18,8 +18,15 @@
       <a class="nav-link active" aria-current="page" [routerLink]="['/agregarTestimonio']">Agregar Testimonios</a>
     </div>
   </div>
+  <div class="dropdown-users">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faHandSparkles"></fa-icon>Heroes  ▼</button>
+    <div class="dropdown-content">
+      <a class="nav-link active" aria-current="page" [routerLink]="['/']">Ver Heroes</a>
+      <a class="nav-link active" aria-current="page" [routerLink]="['/']">Agregar Heroes</a>
+    </div>
+  </div>
   <div class="dropdownx navbar-nav ms-auto">
-    <button class="dropbtn"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>
+    <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here  ▼</button>
     <div class="dropdown-content">
       <a href="#">Editar</a>
       <a href="#">Cambiar Contraseña</a>
