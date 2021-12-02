@@ -14,7 +14,7 @@
             <div class="col-md-7 border-right">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Configuración de Perfil</h4>
+                        <h4 class="text-right">Configuración de Perfil ({{this.rol}})</h4>
                     </div>
                     <form #perfilForm="ngForm">
                         <div class="row mt-2 form-group">
@@ -36,32 +36,9 @@
                                     class="form-control" 
                                     id="nombre"
                                     name="nombre"
-                                    placeholder="Nombre Completo" 
-                                    value="{{user.displayName}}"
+                                    placeholder="{{user.displayName}}" 
                                     required/>
                             </div>
-                            <!-- <div class="col-md-6">
-                                <label class="labels">Apellido</label>
-                                <em *ngIf="perfilForm.controls.apellido?.invalid &&
-                                perfilForm.controls.apellido?.touched">*Apellido válido es requerido
-                                </em>
-                                <input 
-                                    [ngClass]="{
-                                        error:
-                                        (perfilForm.controls.apellido?.invalid &&
-                                        perfilForm.controls.apellido?.touched) ||
-                                        perfilForm.controls.apellido?.errors?.pattern
-                                    }"
-                                    [(ngModel)]="apellido" 
-                                    [pattern]="namePattern"
-                                    type="text" 
-                                    class="form-control" 
-                                    id="apellido"
-                                    name="apellido"
-                                    placeholder="Apellido"
-                                    value="" 
-                                    required/>
-                            </div> -->
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6">
@@ -81,8 +58,8 @@
                                     class="form-control" 
                                     id="telefono"
                                     name="telefono"
-                                    placeholder="Número de teléfono" 
-                                    value="">
+                                    placeholder="{{telefono}}"
+                                    >
                             </div>
                             <div class="col-md-6">
                                 <label class="labels">Correo personal</label>
@@ -90,31 +67,31 @@
                                 </em>
                                 <input 
                                     [ngClass]="{error: perfilForm.controls.correo?.errors?.pattern}"
-                                    [(ngModel)]=correo
+                                    [(ngModel)]="correoPersonal"
                                     [pattern]="emailPattern"
                                     type="text" 
                                     class="form-control" 
                                     id="correo"
                                     name="correo"
-                                    placeholder="Correo electrónico" 
+                                    placeholder="{{correoPersonal}}" 
                                     value="">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Dirección</label>
                                 <input 
-                                    [(ngModel)]=direccion
+                                    [(ngModel)]="direccion"
                                     type="text" 
                                     class="form-control" 
                                     id="direccion"
                                     name="direccion"
-                                    placeholder="Dirección" 
+                                    placeholder="{{direccion}}" 
                                     value="">
                             </div>
                         </div>
                         <div class="mt-5 text-center">
                             <button class="btn btn-primary profile-button" 
                                     type="submit"
-                                    [disabled]="perfilForm.invalid"
+                                    (click)="editarPerfl()"
                                     >Guardar Cambios</button>
                         </div>
                     </form>

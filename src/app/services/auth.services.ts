@@ -92,12 +92,10 @@ export class AuthenticationService {
               this.userDetails = res.user;
               //sessionStorage.setItem('uid', res.user.uid);
               this.db.object(`usuarios/${res.user.uid}`).valueChanges().subscribe(item =>{
-                this.nombre = item['nombre'];
                 this.correoPer = item['correoPer'];
                 this.telefono = item['telefono'];
                 this.direccion = item['direccion'];
 
-                sessionStorage.setItem('nombre', item['nombre']);
                 sessionStorage.setItem('correoPer', item['correoPer']);
                 sessionStorage.setItem('telefono', item['telefono']);
                 sessionStorage.setItem('direccion', item['direccion']);
@@ -116,18 +114,15 @@ export class AuthenticationService {
               })
             });
         }
-        if (this.userDetails) {
-          let correo = this.userDetails.email;
-          this.setCurrentUser(correo);
-          } else {
-              console.log("not working");
-          }
     }
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
+        this.loggedIn = false;
         this.auth.signOut();
+        console.log(sessionStorage);
+        this.router.navigate(['/login']);
         //Alerta
         Swal.fire({
           position: 'top-end',
@@ -136,13 +131,6 @@ export class AuthenticationService {
           showConfirmButton: false,
           timer: 1500
         })
-        this.loggedIn = false;
-        //sessionStorage.removeItem('rol');
-        //sessionStorage.removeItem('nombre');
-        sessionStorage.clear();
-        //this.userSubject.next(null);
-        console.log(sessionStorage);
-        this.router.navigate(['/login']);
     }
 
     register(rol:string) {
