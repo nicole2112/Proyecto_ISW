@@ -6,7 +6,7 @@ import { ModalService } from '../services/modal.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
+import { getAuth } from '@firebase/auth';
 @Component({
   selector: 'app-portal-admin',
   templateUrl: './portal-admin.component.html',
@@ -14,9 +14,11 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 
 export class PortalAdminComponent implements OnInit {
-
+  roleOptions = '';
+  selectedValue : any;
   closeResult: string;
   User = [];
+  userSelectedId : string;
 
   constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer) { }
   ShowUsers = false;
@@ -27,6 +29,7 @@ export class PortalAdminComponent implements OnInit {
   }
 
   FundacionRef: AngularFireList<any>;
+  userRef: AngularFireObject<any>;
 
   ngOnInit(): void {
     this.FundacionRef = this.db.list('usuarios');
@@ -59,16 +62,55 @@ export class PortalAdminComponent implements OnInit {
   }
 
   onSelect(selectedItem: any){
+
     document.getElementById("correo").setAttribute('value', selectedItem.email);
-    document.getElementById("rol").setAttribute('value', selectedItem.rol);
+    var selector = document.getElementById("roleOptions");
+    var option = document.createElement("option");
+    if(selectedItem.rol != '')
+    {
+      selectedItem.rol == "Admin" ? option.innerText = 'Digitador' : option.innerText = 'Administrador'
+      selector.appendChild(option);
+    }else{
+      for(let i = 0; i < 2; i++){
+        var opt = document.createElement("option");
+        i === 0 ? opt.innerText = 'Administrador' : opt.innerText = 'Digitador'
+        selector.appendChild(opt);
+      }
+    }
+    
   }
 
-  open(content) {
+  open(content, id: string) {
+    this.userSelectedId = id;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+      console.log(`Closed with: ${result}`);
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+
+  onChange(event : any){
+    var selector = document.getElementById('roleOptions') as HTMLSelectElement;
+    this.selectedValue = selector.options[selector.selectedIndex].text;
+
+    let errorLabel = document.getElementById('error-label') as HTMLLabelElement;
+    let submitButton = document.getElementById('saveBtn') as HTMLButtonElement;
+
+    if(this.selectedValue === 'Seleccion de Rol'){
+      errorLabel.innerText = '*Seleccione una opcion valida*';
+      submitButton.disabled = true;
+    }else{
+      errorLabel.innerText = '';
+      submitButton.disabled = false;
+    }
+  }
+
+  deleteUserScript: HTMLScriptElement;
+
+  deleteUser(){
+    this.userRef = this.db.object('usuarios/' + this.userSelectedId);
+    this.userRef.remove();
   }
 
   private getDismissReason(reason: any): string {
@@ -81,3 +123,4 @@ export class PortalAdminComponent implements OnInit {
     }
   }
 }
+

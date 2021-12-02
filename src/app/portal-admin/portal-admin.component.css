@@ -40,3 +40,8 @@
 .userRowHover:hover .rowInfo{
     color: #9965ac;
 }
+
+.error-label{
+    font-size: 0.7em;
+    color: red;
+}
