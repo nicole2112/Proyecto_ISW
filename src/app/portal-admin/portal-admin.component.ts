@@ -6,7 +6,9 @@ import { ModalService } from '../services/modal.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { getAuth } from '@firebase/auth';
+import { getAuth, Auth } from '@firebase/auth';
+import { authState } from 'rxfire/auth';
+import { AuthenticationService } from '../services/auth.services';
 @Component({
   selector: 'app-portal-admin',
   templateUrl: './portal-admin.component.html',
@@ -38,8 +40,10 @@ export class PortalAdminComponent implements OnInit {
       this.User = [];
       data.forEach(user => {
         let a = user.payload.toJSON();
-        a['$key'] = user.key;
-        this.User.push(a as User);
+        if(a['rol'] != 'Presidente'){
+          a['$key'] = user.key;
+          this.User.push(a as User);
+        }
       })
       console.table(this.User);
     })
@@ -106,7 +110,33 @@ export class PortalAdminComponent implements OnInit {
     }
   }
 
-  deleteUserScript: HTMLScriptElement;
+  checkOption(){
+    var selector = document.getElementById('roleOptions') as HTMLSelectElement;
+    var selectorValue = selector.options[selector.selectedIndex].text;
+    let submitButton = document.getElementById('saveBtn') as HTMLButtonElement;
+    if(selectorValue ==='Seleccion de Rol'){
+      submitButton.disabled = true;
+    }else{
+      submitButton.disabled = false;
+    }
+  }
+
+  updateUser(){
+    var selector = document.getElementById('roleOptions') as HTMLSelectElement;
+    var selectorValue = selector.options[selector.selectedIndex].text;
+
+    const userRef = this.db.object('usuarios/' + this.userSelectedId);
+    var updateValue = '';
+    if(selectorValue === 'Administrador'){
+      updateValue = 'Admin'
+    }else{
+      updateValue = 'Digitador'
+    }
+
+    userRef.update({
+      rol: updateValue
+    })
+  }
 
   deleteUser(){
     this.userRef = this.db.object('usuarios/' + this.userSelectedId);
