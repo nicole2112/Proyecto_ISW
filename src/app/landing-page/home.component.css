@@ -198,9 +198,34 @@
   background-size: cover;
 }
 
+.buttonsGif{
+  padding-top: 60vh;
+}
+
 .responsive {
-    max-width: 100%;
-    height: auto;
+  height: 70vh;
+  width: 100%;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-image: url(../../assets/images/FP6.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  vertical-align: bottom;
+}
+
+.responsive::before{
+    content: "";
+    background-image: url(../../assets/images/FP6.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
 
 
