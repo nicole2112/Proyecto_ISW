@@ -90,21 +90,25 @@ export class AuthenticationService {
               console.log(res);
               this.router.navigate(['/portal-admin']);
               this.userDetails = res.user;
-              //sessionStorage.setItem('uid', res.user.uid);
+
+              sessionStorage.setItem('nombre', res.user.displayName);
+              sessionStorage.setItem('uid', res.user.uid);
+              console.log(res.user.uid);
+
               this.db.object(`usuarios/${res.user.uid}`).valueChanges().subscribe(item =>{
                 this.correoPer = item['correoPer'];
                 this.telefono = item['telefono'];
                 this.direccion = item['direccion'];
 
-                sessionStorage.setItem('correoPer', item['correoPer']);
-                sessionStorage.setItem('telefono', item['telefono']);
-                sessionStorage.setItem('direccion', item['direccion']);
-                sessionStorage.setItem('rol', item['rol']);
+                //sessionStorage.setItem('correoPer', item['correoPer']);
+                //sessionStorage.setItem('telefono', item['telefono']);
+                //sessionStorage.setItem('direccion', item['direccion']);
+                //sessionStorage.setItem('rol', item['rol']);
               });
 
             })
             .catch((err) =>{
-              console.log(err);
+              //console.log(err);
               Swal.fire({
                 position: 'top-end',
                 icon: 'error',
@@ -118,10 +122,13 @@ export class AuthenticationService {
 
     logout() {
         // remove user from local storage to log user out
-        sessionStorage.removeItem('user');
+        //sessionStorage.removeItem('user');
+        console.log(`Session storage (auth): ${sessionStorage.length}`);
+        sessionStorage.clear();
+        console.log(`Session storage (auth): ${sessionStorage.length}`);
+
         this.loggedIn = false;
         this.auth.signOut();
-        console.log(sessionStorage);
         this.router.navigate(['/login']);
         //Alerta
         Swal.fire({

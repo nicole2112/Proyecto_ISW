@@ -8,7 +8,7 @@
                     <h4 class="text-right">Fundación Padrino <br> {{this.rol}}</h4>
                     <!--<img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">-->
                     <span class="font-weight-bold">{{user.displayName}}</span>
-                    <span class="text-black-50">{{user.email}}</span>
+                    <span class="text-black-50">{{correo}}</span>
                     <span> </span>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                                     class="form-control" 
                                     id="nombre"
                                     name="nombre"
-                                    placeholder="{{user.displayName}}" 
+                                    placeholder="Nombre" 
                                     required/>
                             </div>
                         </div>
@@ -72,10 +72,10 @@
                                     [pattern]="emailPattern"
                                     type="text" 
                                     class="form-control" 
-                                    id="correo"
-                                    name="correo"
+                                    id="correoPersonal"
+                                    name="correoPersonal"
                                     placeholder="Correo personal" 
-                                    value="">
+                                    >
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Dirección</label>
@@ -86,13 +86,14 @@
                                     id="direccion"
                                     name="direccion"
                                     placeholder="Dirección" 
-                                    value="">
+                                    >
                             </div>
                         </div>
                         <div class="mt-5 text-center">
                             <button class="btn btn-primary profile-button" 
                                     type="submit"
                                     (click)="editarPerfl()"
+                                    [disabled] = "!perfilForm.valid"
                                     >Guardar Cambios</button>
                         </div>
                     </form>

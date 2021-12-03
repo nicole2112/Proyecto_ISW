@@ -50,6 +50,7 @@
         >
           <input
             [(ngModel)]="email"
+            [pattern]="emailPattern"
             type="email"
             class="form-control"
             id="floatingInput"
@@ -58,14 +59,12 @@
             required
           />
           <label for="floatingInput">Correo</label>
-          <em
-            class="text-danger"
-            *ngIf="
-              claseForm.controls.email?.invalid &&
-              claseForm.controls.email?.touched
-            "
-            >Este campo es requerido!</em
-          >
+          <em class="text-danger"
+              *ngIf="
+                claseForm.controls.email?.invalid &&
+                claseForm.controls.email?.touched
+              ">*Ingrese un correo válido
+          </em>
         </div>
       </div>
 
@@ -85,37 +84,31 @@
             class="form-control"
             id="floatingInput"
             name="pass"
-            placeholder="Contrasena"
+            placeholder="Contraseña"
             required
           />
-          <label for="floatingInput">Contrasena</label>
+          <label for="floatingInput">Contraseña</label>
           <em
             class="text-danger"
             *ngIf="
               claseForm.controls.pass?.invalid &&
               claseForm.controls.pass?.touched
             "
-            >Este campo es requerido!</em
+            >Contraseña es requerida</em
           >
         </div>
       </div>
 
       <div class="col-md-5 ms-md-auto">
-        <a [routerLink]="['/portal-pw-reset']">olvidaste la contraseña?</a>
+        <a [routerLink]="['/portal-pw-reset']">¿Olvidaste la contraseña?</a>
       </div>
 
-      
-
-      <div
-        class="form-group d-flex justify-content-center"
-        style="margin-top: 20px"
-      >
-        <button
-          type="submit"
-          [disabled]="claseForm.invalid"
-          class="button1"
-          (click)="customLogin()"
-        >
+    
+      <div class="form-group d-flex justify-content-center" style="margin-top: 20px">
+        <button class="btn btn-primary ingresar-button" 
+                type="submit"
+                [disabled]="claseForm.invalid"
+                (click)="customLogin()">
           Ingresar
         </button>
       </div>

@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import Swal from 'sweetalert2';
 import { user } from 'rxfire/auth';
 import { getDatabase, ref, set } from 'firebase/database';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 import { getAuth } from '@angular/fire/auth';
 
@@ -24,34 +24,51 @@ export class EditUserProfileComponent implements OnInit {
   emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   phonePattern = '^[0-9]{8}$';
   userId: any;
-  router: any;
+  //router: any;
 
   reload: boolean;
 
-  constructor(
-    private service: AuthenticationService,
-    public auth: AngularFireAuth
-  ) {}
+  constructor(  
+              private router: Router,
+              private service: AuthenticationService,
+              public auth: AngularFireAuth) {}
 
 
-
-  ngOnInit() {
-    this.telefono = sessionStorage.getItem('telefono');
-    this.correoPersonal = sessionStorage.getItem('correoPer');
-    this.direccion = sessionStorage.getItem('direccion');
-
-    if (this.telefono === 'undefined') this.telefono = null;
-    if (this.correoPersonal === 'undefined') this.correoPersonal = null;
-    if (this.direccion === 'undefined') this.direccion = null;
-    console.log(sessionStorage);
-
-      this.userId = getAuth().currentUser.uid;
-      console.log(this.userId);
-      this.correo = getAuth().currentUser.email;
+  ngOnInit() 
+  {
+    this.userId = sessionStorage.getItem('uid');
     
+    this.service.db
+      .list('usuarios')
+      .valueChanges()
+      .subscribe((usuarios) => {
+        let keys = Object.keys(usuarios);
+        //console.log(usuarios);
+        keys.forEach((item) => {
+          if (usuarios[item]['id'] == this.userId) {
+            this.correoPersonal = usuarios[item]['correoPer'];
+            this.direccion = usuarios[item]['direccion'];
+            this.correo = usuarios[item]['email'];
+            this.rol = usuarios[item]['rol'];
+            this.telefono = usuarios[item]['telefono'];
 
+          }
+        });
+      });
 
-    this.obtenerRol();
+    //this.nombre = getAuth().currentUser?.displayName;
+    this.nombre = sessionStorage.getItem('nombre');
+    
+    //if (this.telefono === 'undefined') this.telefono = null;
+    //if (this.correoPersonal === 'undefined') this.correoPersonal = null;
+    //if (this.direccion === 'undefined') this.direccion = null;
+
+    console.log( getAuth().currentUser); //retorna null al recargar página
+
+    // this.userId = getAuth().currentUser.uid;
+    // this.correo = getAuth().currentUser.email;
+    
+    //this.obtenerRol();
 
   }//fin de ngOnInit
 
@@ -79,14 +96,20 @@ export class EditUserProfileComponent implements OnInit {
         displayName: this.nombre,
       });
     }
-    this.writeUserData();
+
+    if (this.telefono === 'undefined') this.telefono = ' ';
+    if (this.correoPersonal === 'undefined') this.correoPersonal = ' ';
+    if (this.direccion === 'undefined') this.direccion = ' ';
+    this.writeUserData(); //editar otros datos
+
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Perfil actualizado!',
+      title: 'Perfil actualizado exitosamente',
       showConfirmButton: false,
       timer: 1500,
     });
+    this.router.navigate(['/portal-admin']);
   }
 
   writeUserData() {
