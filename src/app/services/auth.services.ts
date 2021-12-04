@@ -170,6 +170,7 @@ export class AuthenticationService {
             };
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
             (await user.user.sendEmailVerification());
+            (await this.auth.sendPasswordResetEmail(this.email));
           })
           .catch((err) => 
           {
