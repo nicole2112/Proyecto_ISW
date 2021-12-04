@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { TestimonyService } from "../services/testimony.service";
+import { ModalService } from '../services/modal.service';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component ({
     selector: 'verTestimonios',
@@ -11,10 +13,30 @@ import { TestimonyService } from "../services/testimony.service";
 export class VerTestimoniosComponent implements OnInit{
     testimonyList : any[];
     urlList : string[];
+    url;
+    titulo;
+    visible;
+    userSelectedId : string;
+    estado="Disponible";
+    opciones = ["Disponible", "Ocultar"];
+    Disponible = "Disponible";
+    Ocultar = "Ocultar";
 
-    constructor(private testimService: TestimonyService, private _sanitizer: DomSanitizer)
+    constructor(private testimService: TestimonyService, private _sanitizer: DomSanitizer,private modalService: NgbModal)
     {
 
+    }
+
+    onSelectedChange(event:any)
+    {
+        console.log(event.target.value);
+        this.estado = event.target.value;
+    }
+    
+    ShowTestimonies = false;
+    toggleTestimoniesHandler(isShow: boolean){
+      this.ShowTestimonies = true;
+      console.log(this.ShowTestimonies);
     }
 
     ngOnInit(): void {
@@ -37,4 +59,16 @@ export class VerTestimoniosComponent implements OnInit{
         return this._sanitizer.bypassSecurityTrustResourceUrl(url);
       }
 
+      showPerson(){
+
+      }
+
+      open(content, id: string) {
+        this.userSelectedId = id;
+        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+          console.log(`Closed with: ${result}`);
+        }, (reason) => {
+          
+        });
+      }
 }

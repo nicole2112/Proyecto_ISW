@@ -1,5 +1,5 @@
 
-
+<!--app-navbar-portal-admin (toggleTestimonies)="toggleTestimoniesHandler($event)"--><!--/app-navbar-portal-admin-->
   <div class="container table-testimonies">
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table table-dark table-striped table-bordered">
@@ -7,14 +7,14 @@
         <tr>
           <th style="text-align: center;">Titulo</th>
           <th style="text-align: center;">Testimonio</th>
-          <th style="text-align: center;">Acción</th>
+          <th style="text-align: center;">Editar Disponibilidad</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let testimonio of testimonyList" class="userRowHover" >
           <td class="rowInfo" style="text-align: center;">{{ testimonio?.titulo }}</td>
           <td class="rowInfo" style="text-align: center;"><iframe [src]="inputVideo(testimonio.video_url)"></iframe></td>
-          <td class="rowInfo" style="text-align: center;"><button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#myModal">
+          <td class="rowInfo" style="text-align: center;"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-basic-title" onclick="open( testimonio?.titulo, testimonio.video_url);">
             Editar
           </button></td>
           
@@ -23,56 +23,30 @@
     </table>
   </div>
 
-  
-    
-    <!-- The Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-            <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Firstname</th>
-          <th>Lastname</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John</td>
-          <td>Doe</td>
-          <td>john@example.com</td>
-        </tr>
-        <tr>
-          <td>Mary</td>
-          <td>Moe</td>
-          <td>mary@example.com</td>
-        </tr>
-        <tr>
-          <td>July</td>
-          <td>Dooley</td>
-          <td>july@example.com</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-  
+<!-- Modal -->
+<div class="modal fade" id="modal-basic-title" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="text-align: center;">Modificar Testimonio</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3 style="color:#1c87c9 ;">Cambiar disponibilidad en la página</h3>
+        <form action="/">
+          <div class="info">
+            <select (change)="onSelectedChange($event)" style="text-align: center;" required>
+              <option *ngFor="let opcion of opciones" style="margin-left: 50%;" [ngValue]="opcion">{{opcion}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Guardar Cambios</button>
       </div>
     </div>
   </div>
+</div>
 
-     
+
