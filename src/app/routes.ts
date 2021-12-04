@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { PortalAdminComponent } from './portal-admin/portal-admin.component';
 import { RegistroComponent } from './registro/registro.component';
 import { PwResetComponent } from './pw-reset/pw-reset.component';
+import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -27,6 +28,7 @@ export const AppRoutes: Routes = [
   { path: 'testimonies', component: TestimoniesComponent },
   { path: 'blog', component: BlogComponent },
   {path: 'login', component: LoginComponent },
+  {path: 'heroes-admin', component: HeroesAdminComponent},
   {
     path: 'registro',
     component: RegistroComponent,
