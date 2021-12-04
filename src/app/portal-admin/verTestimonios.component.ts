@@ -32,7 +32,14 @@ export class VerTestimoniosComponent implements OnInit{
         console.log(event.target.value);
         this.estado = event.target.value;
     }
-    
+
+    onSelectedChange2(event:any)
+    {
+        console.log(event.target.value);
+        this.titulo = event.target.value;
+    }
+
+
     ShowTestimonies = false;
     toggleTestimoniesHandler(isShow: boolean){
       this.ShowTestimonies = true;
@@ -59,16 +66,27 @@ export class VerTestimoniosComponent implements OnInit{
         return this._sanitizer.bypassSecurityTrustResourceUrl(url);
       }
 
-      showPerson(){
-
-      }
-
-      open(content, id: string) {
-        this.userSelectedId = id;
-        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-          console.log(`Closed with: ${result}`);
-        }, (reason) => {
-          
-        });
+      modificarTestimonio()
+      {
+          if(this.titulo !== null && this.estado !== null)
+          {
+              let testimonio={
+              "titulo" : "",
+              "visible" : 0,
+              };
+              let visible;
+              if(this.estado === "Disponible")
+                  visible = 1;
+              else
+                  visible = 0;
+              testimonio = {
+              "titulo" : this.titulo,
+              "visible" : visible,
+              }
+              
+              console.log(testimonio.titulo);
+              console.log(testimonio.visible);
+              this.testimService.editarTestomonio(testimonio.titulo,testimonio.visible);
+          }
       }
 }
