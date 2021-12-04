@@ -47,6 +47,7 @@
       >
         <input
           [(ngModel)]="nombre"
+          [pattern]="namePattern"
           type="text"
           class="form-control"
           id="floatingInput"
@@ -61,7 +62,7 @@
             claseForm.controls.nombre?.invalid &&
             claseForm.controls.nombre?.touched
           "
-          >Este campo es requerido!</em
+          >*Nombre válido es requerido</em
         >
       </div>
     </div>
@@ -77,6 +78,7 @@
       >
         <input
           [(ngModel)]="email"
+          [pattern]="emailPattern"
           type="email"
           class="form-control"
           id="floatingInput"
@@ -91,7 +93,7 @@
             claseForm.controls.email?.invalid &&
             claseForm.controls.email?.touched
           "
-          >Este campo es requerido!</em
+          >*Correo válido es requerido</em
         >
       </div>
     </div>
@@ -110,16 +112,16 @@
           class="form-control"
           id="floatingInput"
           name="pass"
-          placeholder="Contrasena"
+          placeholder="Contraseña"
           required
         />
-        <label for="floatingInput">Contrasena</label>
+        <label for="floatingInput">Contraseña</label>
         <em
           class="text-danger"
           *ngIf="
             claseForm.controls.pass?.invalid && claseForm.controls.pass?.touched
           "
-          >Este campo es requerido!</em
+          >Contraseña es requerida</em
         >
       </div>
     </div>

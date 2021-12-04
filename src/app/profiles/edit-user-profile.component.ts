@@ -97,9 +97,9 @@ export class EditUserProfileComponent implements OnInit {
       });
     }
 
-    if (this.telefono === 'undefined') this.telefono = ' ';
-    if (this.correoPersonal === 'undefined') this.correoPersonal = ' ';
-    if (this.direccion === 'undefined') this.direccion = ' ';
+    if (this.telefono == undefined ) this.telefono = '';
+    if (this.correoPersonal == undefined) this.correoPersonal = '';
+    if (this.direccion == undefined) this.direccion = '';
     this.writeUserData(); //editar otros datos
 
     Swal.fire({
