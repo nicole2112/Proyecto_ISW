@@ -55,6 +55,8 @@ export class VerTestimoniosComponent implements OnInit{
             //     element.video_url = this.inputVideo(element.video_url);
             // });
             this.testimonyList = item;
+            this.titulo = item[0].titulo;
+            this.visible = item[0].visible;
             console.log(this.testimonyList);
 
         });
