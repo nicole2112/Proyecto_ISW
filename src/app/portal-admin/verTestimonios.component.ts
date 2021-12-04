@@ -62,31 +62,29 @@ export class VerTestimoniosComponent implements OnInit{
     }
 
     inputVideo(url:string):SafeResourceUrl{
-        console.log(this._sanitizer.bypassSecurityTrustResourceUrl(url));
         return this._sanitizer.bypassSecurityTrustResourceUrl(url);
       }
 
-      modificarTestimonio()
-      {
-          if(this.titulo !== null && this.estado !== null)
-          {
-              let testimonio={
-              "titulo" : "",
-              "visible" : 0,
-              };
-              let visible;
-              if(this.estado === "Disponible")
-                  visible = 1;
-              else
-                  visible = 0;
-              testimonio = {
-              "titulo" : this.titulo,
-              "visible" : visible,
-              }
-              
-              console.log(testimonio.titulo);
-              console.log(testimonio.visible);
-              this.testimService.editarTestomonio(testimonio.titulo,testimonio.visible);
-          }
-      }
+    modificarTestimonio()
+    {
+        if(this.titulo !== null && this.estado !== null)
+        {
+        let visible;
+        if(this.estado === "Disponible")
+            visible = 1;
+        else
+            visible = 0;
+        
+        this.testimonyList.forEach((item) =>
+            {
+                if(item.titulo === this.titulo)
+                {
+                item.visible = visible;
+                this.testimService.postTestimonies(item);
+                }
+            })
+            
+            // this.testimService.editarTestomonio(this.titulo, visible);
+        }
+    }
 }

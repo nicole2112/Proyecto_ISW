@@ -34,7 +34,6 @@ export class TestimoniesComponent implements OnInit
     }
 
     inputVideo(url:string):SafeResourceUrl{
-        console.log(this._sanitizer.bypassSecurityTrustResourceUrl(url));
         return this._sanitizer.bypassSecurityTrustResourceUrl(url);
       }
 

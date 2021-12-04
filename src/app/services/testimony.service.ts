@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { observable, Observable, of, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2'
 
 @Injectable({
@@ -39,28 +40,37 @@ export class TestimonyService {
     this.db.object(`testimonios/${testimonio.titulo.replace(/\s+/g, '_').toLowerCase()}`).set(testimonio);
   }
 
-  editarTestomonio(nombre, visible)
-  {
-    let testimonio: any;
-    this.db.object(`testimonios/${nombre.replace(/\s+/g, '_').toLowerCase()}`).snapshotChanges().subscribe((T) =>{
-        testimonio = T;
-    });
-    if(!this.emptyCheck(testimonio))
-    {
-      testimonio.visible = visible;
-      this.postTestimonies(testimonio);
-    }
-    else
-      {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: "No se encotro el testimonio",
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
+
+  //funcion archivada, muchos problemas
+  // editarTestomonio(nombre, visible):any
+  // {
+  //   let testimonio: any;
+  //   console.log("entra");
+
+  //   this.postTestimonies(this.db.object(`testimonios/${nombre.replace(/\s+/g, '_').toLowerCase()}`).snapshotChanges().pipe().subscribe((T) =>
+  //   {
+  //     console.log(T);
+  //     testimonio = T.payload.toJSON();
+  //     testimonio.visible = visible;
+  //     return testimonio;
+  //     if(!this.emptyCheck(testimonio))
+  //     {
+  //       testimonio.visible = visible;
+  //       this.postTestimonies(testimonio);
+  //     }
+  //     else
+  //       {
+  //         Swal.fire({
+  //           position: 'top-end',
+  //           icon: 'error',
+  //           title: "No se encotro el testimonio",
+  //           showConfirmButton: false,
+  //           timer: 1500
+  //         });
+  //       }
+  //   }))
     
-  }
+    
+  // }
   
 }
