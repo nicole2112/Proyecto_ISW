@@ -18,30 +18,6 @@
         </tbody>
       </table>
 
-  <div id="function-list">
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active">
-        Funciones administrativas
-      </a>
-      <a (click)="fnEditUserProfile()" class="list-group-item list-group-item-action">Editar perfil</a>
-      <a href="#" class="list-group-item list-group-item-action">Crear nuevo usuario</a>
-      <a href="#" class="list-group-item list-group-item-action">Modificar usuario existente</a>
-      <a href="#" class="list-group-item list-group-item-action">Eliminar usuario existente</a>
-      <a href="#" class="list-group-item list-group-item-action">Ver lista de usuarios</a>
-    </div>
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active">
-        Funciones de 
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">C</a>
-      <a href="#" class="list-group-item list-group-item-action">M</a>
-      <a href="#" class="list-group-item list-group-item-action">E</a>
-      <a href="#" class="list-group-item list-group-item-action">V</a>
-    </div>
-    <img class="imagen_opaca" src="assets/images/Logo-FP-1-Medium.png" alt="">
-    
-  </div>
-
   <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Editar Usuario</h4>
@@ -78,3 +54,5 @@
       <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); updateUser();">Save</button>
     </div>
   </ng-template>
+
+  <img class="imagen_opaca" src="assets/images/Logo-FP-1-Medium.png" alt="">

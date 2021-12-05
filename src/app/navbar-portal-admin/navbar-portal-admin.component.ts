@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@ang
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
 import { faUserCircle, faAddressBook, faComments, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar-portal-admin',
   templateUrl: './navbar-portal-admin.component.html',
@@ -9,7 +10,7 @@ import { faUserCircle, faAddressBook, faComments, faHandSparkles } from '@fortaw
 })
 export class NavbarPortalAdminComponent implements OnInit {
   currentUser: any;
-  constructor( public service: AuthenticationService, private eRef: ElementRef) { }
+  constructor( public service: AuthenticationService, private eRef: ElementRef, private router: Router) { }
   @Input() isShow: boolean;
   @Output() toggleUsers: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleTestimonies: EventEmitter<boolean> = new EventEmitter();
@@ -39,6 +40,10 @@ export class NavbarPortalAdminComponent implements OnInit {
     return userexp;
   }
   
+  fnEditUserProfile(){
+    this.router.navigateByUrl(`portal-admin/perfil`);
+  }
+
   logOut(){
     this.service.logout();
   }
