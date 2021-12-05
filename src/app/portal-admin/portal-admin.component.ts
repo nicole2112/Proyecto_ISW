@@ -9,6 +9,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { getAuth, Auth } from '@firebase/auth';
 import { authState } from 'rxfire/auth';
 import { AuthenticationService } from '../services/auth.services';
+import { Router } from "@angular/router";
+
 @Component({
   selector: 'app-portal-admin',
   templateUrl: './portal-admin.component.html',
@@ -22,7 +24,7 @@ export class PortalAdminComponent implements OnInit {
   User = [];
   userSelectedId : string;
 
-  constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer) { }
+  constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer, private router: Router) { }
   ShowUsers = false;
 
   toggleUsersHandler(isShow: boolean){
@@ -151,6 +153,11 @@ export class PortalAdminComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  //Para redirigir al perfil del usuario correspondiente
+  fnEditUserProfile(){
+    this.router.navigateByUrl(`portal-admin/perfil`);
   }
 }
 

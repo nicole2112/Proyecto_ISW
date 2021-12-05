@@ -18,6 +18,7 @@ import { PwResetComponent } from './pw-reset/pw-reset.component';
 import { PortalDigitadorComponent } from './portal-digitador/portal-digitador.component';
 import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.component';
 import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
+import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -35,6 +36,7 @@ export const AppRoutes: Routes = [
     component: RegistroComponent,
     // canActivate: [RoleGuardGuard],
   },
+  { path: 'portal-admin/perfil', component: EditUserProfileComponent },
   { path: 'portal-admin', component: PortalAdminComponent },
   { path: 'portal-digitador', component: PortalDigitadorComponent},
   { path: 'portal-pw-reset', component: PwResetComponent },

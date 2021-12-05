@@ -41,6 +41,7 @@ import { ModalService } from './services/modal.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.component';
 import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
+import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component
     EditUserModalComponent,
     PwResetComponent,
     AgregarTestimoniosComponent,
-    VerTestimoniosComponent
+    VerTestimoniosComponent,
+    EditUserProfileComponent
   ],
   imports: [
     BrowserModule,

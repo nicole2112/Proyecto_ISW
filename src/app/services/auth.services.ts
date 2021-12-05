@@ -22,8 +22,11 @@ export class AuthenticationService {
     public loggedIn = false;
     email = '';
     pass = '';
-    nombre = '';
+    nombre: any;
     rol='';
+    correoPer:any;
+    direccion:any;
+    telefono:any;
 
     constructor(
         private router: Router,
@@ -91,6 +94,9 @@ export class AuthenticationService {
               console.log(res.user.email)
               this.db.object(`usuarios/${res.user.uid}`).valueChanges().subscribe(item =>{
                 console.log(item['rol']);
+                this.correoPer = item['correoPer'];
+                this.telefono = item['telefono'];
+                this.direccion = item['direccion'];
                 if(item['rol'] == 'Admin' || item['rol'] == 'Presidente')
                 {
                   this.userDetails = res.user;
@@ -101,10 +107,15 @@ export class AuthenticationService {
                 }
                 
                 sessionStorage.setItem('rol', item['rol']);
+                this.userDetails = res.user;
+
+                sessionStorage.setItem('nombre', res.user.displayName);
+                sessionStorage.setItem('uid', res.user.uid);
+                //console.log(res.user.uid);
               });
             })
             .catch((err) =>{
-              console.log(err);
+              //console.log(err);
               Swal.fire({
                 position: 'top-end',
                 icon: 'error',
@@ -114,18 +125,18 @@ export class AuthenticationService {
               })
             });
         }
-        if (this.userDetails) {
-          let correo = this.userDetails.email;
-          this.setCurrentUser(correo);
-          } else {
-              console.log("not working");
-          }
     }
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('user');
+        //sessionStorage.removeItem('user');
+        console.log(`Session storage (auth): ${sessionStorage.length}`);
+        sessionStorage.clear();
+        console.log(`Session storage (auth): ${sessionStorage.length}`);
+
+        this.loggedIn = false;
         this.auth.signOut();
+        this.router.navigate(['/login']);
         //Alerta
         Swal.fire({
           position: 'top-end',
@@ -134,10 +145,6 @@ export class AuthenticationService {
           showConfirmButton: false,
           timer: 1500
         })
-        this.loggedIn = false;
-        sessionStorage.removeItem('rol');
-        //this.userSubject.next(null);
-        this.router.navigate(['/login']);
     }
 
     register(rol:string) {
