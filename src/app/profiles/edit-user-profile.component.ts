@@ -43,7 +43,6 @@ export class EditUserProfileComponent implements OnInit {
       .valueChanges()
       .subscribe((usuarios) => {
         let keys = Object.keys(usuarios);
-        //console.log(usuarios);
         keys.forEach((item) => {
           if (usuarios[item]['id'] == this.userId) {
             this.correoPersonal = usuarios[item]['correoPer'];
@@ -55,20 +54,9 @@ export class EditUserProfileComponent implements OnInit {
           }
         });
       });
-
-    //this.nombre = getAuth().currentUser?.displayName;
     this.nombre = sessionStorage.getItem('nombre');
-    
-    //if (this.telefono === 'undefined') this.telefono = null;
-    //if (this.correoPersonal === 'undefined') this.correoPersonal = null;
-    //if (this.direccion === 'undefined') this.direccion = null;
 
     console.log( getAuth().currentUser); //retorna null al recargar página
-
-    // this.userId = getAuth().currentUser.uid;
-    // this.correo = getAuth().currentUser.email;
-    
-    //this.obtenerRol();
 
   }//fin de ngOnInit
 
