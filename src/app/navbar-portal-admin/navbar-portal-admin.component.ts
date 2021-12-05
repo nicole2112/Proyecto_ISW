@@ -12,8 +12,14 @@ export class NavbarPortalAdminComponent implements OnInit {
   constructor( public service: AuthenticationService, private eRef: ElementRef) { }
   @Input() isShow: boolean;
   @Output() toggleUsers: EventEmitter<boolean> = new EventEmitter();
+  @Output() toggleTestimonies: EventEmitter<boolean> = new EventEmitter();
+
   showUsers(){
     this.toggleUsers.emit(!this.isShow);
+  }
+
+  showTestimonies(){
+    this.toggleTestimonies.emit(!this.isShow);
   }
 
   ngOnInit(): void {

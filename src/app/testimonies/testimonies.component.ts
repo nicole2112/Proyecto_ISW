@@ -10,7 +10,8 @@ import { TestimonyService } from "../services/testimony.service";
 
 export class TestimoniesComponent implements OnInit
 {
-    testimonyList : any[];
+    testimonyList : any[] = [];
+    fullList: any[];
     urlList : string[];
 
     constructor(private testimService: TestimonyService, private _sanitizer: DomSanitizer)
@@ -19,22 +20,22 @@ export class TestimoniesComponent implements OnInit
     }
 
     ngOnInit(): void {
-        //console.log(this.testimService.getTestimonies());
         this.testimService.getTestimonies().subscribe((item) => {
-            //console.log(item);
-            // let nuevo = item;
-            // nuevo.forEach(element => {
-            //     element.video_url = this.inputVideo(element.video_url);
-            // });
-            this.testimonyList = item;
-            console.log(this.testimonyList);
+            this.fullList = item;
+            this.fullList.forEach((item) =>
+            {
+                console.log(item);
+                if(item.visible)
+                    this.testimonyList.push(item);
+            });
 
         });
+
+        
 
     }
 
     inputVideo(url:string):SafeResourceUrl{
-        console.log(this._sanitizer.bypassSecurityTrustResourceUrl(url));
         return this._sanitizer.bypassSecurityTrustResourceUrl(url);
       }
 
