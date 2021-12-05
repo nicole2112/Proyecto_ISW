@@ -19,6 +19,7 @@ import { PortalDigitadorComponent } from './portal-digitador/portal-digitador.co
 import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.component';
 import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
 import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
+import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -30,7 +31,8 @@ export const AppRoutes: Routes = [
   { path: 'programas', component: ProgramasComponent },
   { path: 'testimonies', component: TestimoniesComponent },
   { path: 'blog', component: BlogComponent },
-  { path: 'login', component: LoginComponent },
+  {path: 'login', component: LoginComponent },
+  {path: 'heroes-admin', component: HeroesAdminComponent},
   {
     path: 'registro',
     component: RegistroComponent,

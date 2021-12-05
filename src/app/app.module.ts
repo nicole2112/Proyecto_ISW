@@ -42,6 +42,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.component';
 import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
 import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
+import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { EditUserProfileComponent } from './profiles/edit-user-profile.component
     PwResetComponent,
     AgregarTestimoniosComponent,
     VerTestimoniosComponent,
-    EditUserProfileComponent
+    EditUserProfileComponent,
+    HeroesAdminComponent
   ],
   imports: [
     BrowserModule,
