@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-//import * as firebase from 'firebase/app';
 import firebase from '@firebase/app-compat';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Auth, GoogleAuthProvider, getAuth} from 'firebase/auth';
@@ -170,7 +169,9 @@ export class AuthenticationService {
             };
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
             (await user.user.sendEmailVerification());
-            (await this.auth.sendPasswordResetEmail(this.email));
+            (await this.auth.currentUser).updateProfile({
+              displayName: this.nombre,
+            });
           })
           .catch((err) => 
           {
