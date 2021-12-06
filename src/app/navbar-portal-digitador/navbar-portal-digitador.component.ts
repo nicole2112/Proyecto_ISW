@@ -10,6 +10,7 @@ import { faUserCircle, faDollyFlatbed, faHandHoldingUsd } from '@fortawesome/fre
   })
 
 export class NavbarPortalDigitadorComponent {
+
     constructor( public service: AuthenticationService, private eRef: ElementRef) { }
 
     ngOnInit(): void {

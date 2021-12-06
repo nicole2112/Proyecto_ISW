@@ -12,11 +12,16 @@ export class NavbarPortalAdminComponent implements OnInit {
   currentUser: any;
   constructor( public service: AuthenticationService, private eRef: ElementRef, private router: Router) { }
   @Input() isShow: boolean;
-  @Output() toggleUsers: EventEmitter<boolean> = new EventEmitter();
+  @Output() viewUsersClick: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleTestimonies: EventEmitter<boolean> = new EventEmitter();
+  @Output() viewHeroesClick = new EventEmitter<boolean>();
+
+  viewHeroes(){
+    this.viewHeroesClick.emit(true);
+  }
 
   showUsers(){
-    this.toggleUsers.emit(!this.isShow);
+    this.viewUsersClick.emit(true);
   }
 
   showTestimonies(){

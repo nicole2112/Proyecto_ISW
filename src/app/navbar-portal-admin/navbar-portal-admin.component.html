@@ -22,7 +22,7 @@
     <button class="dropbtn"><fa-icon class="icons" [icon]="faHandSparkles"></fa-icon>Heroes  ▼</button>
     <div class="dropdown-content">
       <a class="nav-link active" aria-current="page" [routerLink]="['/']">Ver Heroes</a>
-      <a class="nav-link active" aria-current="page" [routerLink]="['/']">Agregar Heroes</a>
+      <a class="nav-link active" aria-current="page" (click)="viewHeroes()">Agregar Heroes</a>
     </div>
   </div>
   <div class="dropdownx navbar-nav ms-auto">

@@ -12,7 +12,7 @@ import { AuthenticationService } from '../services/auth.services';
 export class HeroesAdminComponent implements OnInit {
  
   contenido: any;
-  fallecido: any;
+  fallecido: any; 
   nombre: any;
   prioridad: any;
   visibilidad:any;

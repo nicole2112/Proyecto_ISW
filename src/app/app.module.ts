@@ -43,6 +43,7 @@ import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.c
 import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
 import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
 import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
+import { UsersAdminComponent } from './users-admin/users-admin.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
     AgregarTestimoniosComponent,
     VerTestimoniosComponent,
     EditUserProfileComponent,
-    HeroesAdminComponent
+    HeroesAdminComponent,
+    UsersAdminComponent
   ],
   imports: [
     BrowserModule,
