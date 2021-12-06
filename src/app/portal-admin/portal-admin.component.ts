@@ -12,6 +12,7 @@ import { AuthenticationService } from '../services/auth.services';
 import { Router } from "@angular/router";
 import { HeroesAdminComponent } from '../heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from '../users-admin/users-admin.component';
+import { ShowHeroesAdminComponent } from '../showHeroes-admin/showHeroes-admin.component';
 
 @Component({
   selector: 'app-portal-admin',
@@ -28,6 +29,7 @@ export class PortalAdminComponent implements OnInit {
 
   toggleHeroes = false;
   toggleUsers = false;
+  toggleShowHeroes = false;
 
   constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer, private router: Router) { }
   ShowUsers = false;

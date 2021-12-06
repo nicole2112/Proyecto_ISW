@@ -45,7 +45,6 @@ export class HeroesAdminComponent implements OnInit {
     console.log(files[0].name);
   }
 
-  
   getHeroeItemID(url){
     this.service.db.object('heroes').valueChanges().pipe(take(1)).subscribe(item =>{
       this.writeUserData(url); //Object.keys

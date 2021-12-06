@@ -1,8 +1,9 @@
-<app-navbar-portal-admin (viewUsersClick)="toggleUsers = true; toggleHeroes = false" (viewHeroesClick)="toggleHeroes = true; toggleUsers = false"></app-navbar-portal-admin>
+<app-navbar-portal-admin (viewUsersClick)="toggleShowHeroes = false; toggleHeroes = false; toggleUsers = true" (viewHeroesClick)="toggleShowHeroes = false; toggleUsers = false; toggleHeroes = true" (showHeroesClick)="toggleHeroes = false; toggleUsers = false; toggleShowHeroes = true"></app-navbar-portal-admin>
     <div class="container table-users">
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
       <app-users-admin *ngIf="toggleUsers"></app-users-admin>
       <app-heroes-admin *ngIf="toggleHeroes"></app-heroes-admin>
+      <app-showHeroes-admin *ngIf="toggleShowHeroes"></app-showHeroes-admin>
     </div>
   </div>
   <img class="imagen_opaca" src="assets/images/Logo-FP-1-Medium.png" alt="">

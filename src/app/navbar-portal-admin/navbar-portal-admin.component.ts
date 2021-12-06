@@ -15,6 +15,7 @@ export class NavbarPortalAdminComponent implements OnInit {
   @Output() viewUsersClick: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleTestimonies: EventEmitter<boolean> = new EventEmitter();
   @Output() viewHeroesClick = new EventEmitter<boolean>();
+  @Output() showHeroesClick = new EventEmitter<boolean>();
 
   viewHeroes(){
     this.viewHeroesClick.emit(true);
@@ -22,6 +23,10 @@ export class NavbarPortalAdminComponent implements OnInit {
 
   showUsers(){
     this.viewUsersClick.emit(true);
+  }
+
+  showHeroes(){
+    this.showHeroesClick.emit(true);
   }
 
   showTestimonies(){
