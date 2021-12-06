@@ -50,6 +50,17 @@ export class AuthenticationService {
       return this.userDetails;
     }
 
+    sendConfirmationEmail()
+    {
+      this.userDetails.sendEmailVerification();
+    }
+
+    emailVerified():boolean
+    {
+      this.userDetails.reload();
+      return this.userDetails.emailVerified;
+    }
+
     isAdmin():Observable<boolean>
     {
       return this.db.object(`usuarios/${this.userDetails.uid}`).valueChanges().pipe(map((user)=>{
@@ -147,6 +158,16 @@ export class AuthenticationService {
         })
     }
 
+    logoutVerificacion() {
+      // remove user from local storage to log user out
+      localStorage.removeItem('user');
+      this.auth.signOut();
+      this.loggedIn = false;
+      sessionStorage.removeItem('rol');
+      //this.userSubject.next(null);
+      this.router.navigate(['/login']);
+  }
+
     register(rol:string) {
         if (this.email == '' || this.nombre =='') {
           Swal.fire({
@@ -185,6 +206,7 @@ export class AuthenticationService {
             (await this.auth.currentUser).updateProfile({
               displayName: this.nombre,
             });
+            this.sendConfirmationEmail();
           })
           .catch((err) => 
           {

@@ -20,6 +20,8 @@ import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.c
 import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
 import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
 import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
+import { EmailConfGuard } from './email-conf/guard/email-conf.guard';
+import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -42,6 +44,8 @@ export const AppRoutes: Routes = [
   { path: 'portal-admin', component: PortalAdminComponent },
   { path: 'portal-digitador/perfil', component: EditUserProfileComponent },
   { path: 'portal-digitador', component: PortalDigitadorComponent},
+  { path: 'portal-admin', component: PortalAdminComponent, canActivate: [EmailConfGuard] },
+  {path: 'no-email-confirmation', component: NoConfirmationComponent},
   { path: 'portal-pw-reset', component: PwResetComponent },
   { path: 'agregarTestimonio', component: AgregarTestimoniosComponent },
   { path: 'verTestimonio', component: VerTestimoniosComponent },

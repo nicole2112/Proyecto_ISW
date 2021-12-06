@@ -43,6 +43,7 @@ import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.c
 import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
 import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
 import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
+import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
 
 
 @NgModule({
@@ -67,11 +68,12 @@ import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
     NavbarPortalAdminComponent,
     NavbarPortalDigitadorComponent,
     EditUserModalComponent,
-    PwResetComponent,
     AgregarTestimoniosComponent,
     VerTestimoniosComponent,
     EditUserProfileComponent,
     HeroesAdminComponent
+    PwResetComponent,
+    NoConfirmationComponent
   ],
   imports: [
     BrowserModule,
