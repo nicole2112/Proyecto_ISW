@@ -11,9 +11,6 @@
           <input class="fname" type="text" name="name" placeholder="URL Facebook"  [(ngModel)]="url" required>
           <input type="text" name="name" placeholder="Titulo del Video" [(ngModel)]="titulo" required>
           <select (change)="onSelectedChange($event)" required>
-            <!-- <option [value]="Disponible" disabled selected >Estado</option>
-            <option [value]="Disponible">Disponible</option>
-            <option [value]="Ocultar">Ocultar</option> -->
             <option *ngFor="let opcion of opciones" [ngValue]="opcion">{{opcion}}</option>
 
           </select>
