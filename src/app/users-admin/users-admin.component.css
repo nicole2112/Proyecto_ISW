@@ -1,0 +1,27 @@
+#function-list{
+    display: flex;
+    justify-content: left;
+    align-content: space-between;
+}
+
+.list-group{
+    margin: 10px;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.table-header{
+    position: sticky;
+    top: 0px;
+}
+
+.userRowHover:hover .rowInfo{
+    color: #9965ac;
+}
+
+.error-label{
+    font-size: 0.7em;
+    color: red;
+}
