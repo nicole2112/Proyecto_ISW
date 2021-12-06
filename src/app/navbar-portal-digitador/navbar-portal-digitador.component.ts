@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@ang
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
 import { faUserCircle, faDollyFlatbed, faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar-portal-digitador',
@@ -10,7 +11,7 @@ import { faUserCircle, faDollyFlatbed, faHandHoldingUsd } from '@fortawesome/fre
   })
 
 export class NavbarPortalDigitadorComponent {
-    constructor( public service: AuthenticationService, private eRef: ElementRef) { }
+    constructor( public service: AuthenticationService, private eRef: ElementRef, private router: Router) { }
 
     ngOnInit(): void {
       this.isLogged();
@@ -27,6 +28,10 @@ export class NavbarPortalDigitadorComponent {
       })
       console.log(userexp);
       return userexp;
+    }
+
+    fnEditUserProfile(){
+      this.router.navigateByUrl(`portal-digitador/perfil`);
     }
 
     logOut(){

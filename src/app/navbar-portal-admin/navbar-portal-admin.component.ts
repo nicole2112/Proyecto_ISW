@@ -40,6 +40,10 @@ export class NavbarPortalAdminComponent implements OnInit {
     return userexp;
   }
   
+  addUser(){
+    this.router.navigateByUrl(`portal-admin/registro`);
+  }
+
   fnEditUserProfile(){
     this.router.navigateByUrl(`portal-admin/perfil`);
   }

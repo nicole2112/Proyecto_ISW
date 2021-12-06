@@ -1,4 +1,5 @@
-<app-navbar-portal-admin></app-navbar-portal-admin>
+<app-navbar-portal-admin *ngIf="rol == 'Admin'"></app-navbar-portal-admin>
+<app-navbar-portal-digitador *ngIf="rol == 'Digitador'"></app-navbar-portal-digitador>
 
 <div *ngIf="auth.user | async as user;">
     <div class="container rounded bg-white mt-5 mb-5">
