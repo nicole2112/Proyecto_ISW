@@ -71,7 +71,7 @@ import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirm
     AgregarTestimoniosComponent,
     VerTestimoniosComponent,
     EditUserProfileComponent,
-    HeroesAdminComponent
+    HeroesAdminComponent,
     PwResetComponent,
     NoConfirmationComponent
   ],
