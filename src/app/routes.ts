@@ -38,7 +38,7 @@ export const AppRoutes: Routes = [
   {path: 'login', component: LoginComponent },
   {path: 'heroes-admin', component: HeroesAdminComponent, canActivate: [AdminConfGuard]},
   {
-    path: 'registro',
+    path: 'portal-admin/registro',
     component: RegistroComponent,
     canActivate: [AdminConfGuard],
   },
