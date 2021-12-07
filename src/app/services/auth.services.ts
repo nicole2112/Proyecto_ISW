@@ -69,6 +69,15 @@ export class AuthenticationService {
         return false;
       }));
     }
+
+    isDigitador():Observable<boolean>
+    {
+      return this.db.object(`usuarios/${this.userDetails.uid}`).valueChanges().pipe(map((user)=>{
+        if(user['rol'] === 'Digitador')
+          return true;
+        return false;
+      }));
+    }
     
     isPresdente():Observable<boolean>
     {
