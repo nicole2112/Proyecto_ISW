@@ -1,0 +1,37 @@
+form{
+    background-color: white;
+    border-radius: 5px;
+    color: #999;
+    font-size: 0.8em;
+    padding: 120px;
+    margin: 0 auto;
+    width: max-content;
+}
+
+input, textarea{
+    outline: none;
+    color: black;
+    width: 280px;
+}
+
+.text{
+
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    font-size: 3em;
+    line-height: 0.9;
+    text-align: center;
+
+}
+body{
+    background-color: #522662;
+}
+
+h1{
+    font-family: 'Roboto', sans-serif;
+    color:white;
+}
+
+.center-content{
+    text-align: center;
+}
