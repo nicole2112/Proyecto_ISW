@@ -2,10 +2,10 @@
 <div class="sectionTitle" >
   <h1 class="sectionTitleText" >Nuestros Héroes</h1>
   <div class="grid-container">
-    <tr *ngFor="let heroe of heroes;">  
+    <tr *ngFor="let heroe of heroesList;">  
       <div class="col">
         <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
-          <img src="{{heroe.foto}}" style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top: 10%;" alt="...">
+          <img src={{heroe.imageUrl}} style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top: 10%;" alt="...">
           <div class="card-body">
             <p class="card-text" style="text-align: center;">{{heroe.nombre}}</p>
           </div>
