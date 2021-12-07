@@ -1,9 +1,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap"
+<!--<link
+  href="https://fonts.googleapis.com/css2?family=Roboto,wght@1,300;1,400&display=swap"
   rel="stylesheet"
-/>
+/>-->
 
 <navbar></navbar>
 
@@ -28,6 +28,7 @@
       >
         <input
           [(ngModel)]="email"
+          [pattern]="emailPattern"
           type="email"
           class="form-control"
           id="floatingInput"
@@ -42,7 +43,7 @@
             claseForm.controls.email?.invalid &&
             claseForm.controls.email?.touched
           "
-          >Este campo es requerido!</em
+          >*Ingrese correo válido para restablecer contraseña</em
         >
       </div>
     </div>
@@ -52,9 +53,9 @@
       style="margin-top: 20px"
     >
       <button
+        class="btn btn-primary ingresar-button" 
         type="submit"
         [disabled]="claseForm.invalid"
-        class="button1"
         (click)="enviarCorreo()"
       >
         Enviar Correo

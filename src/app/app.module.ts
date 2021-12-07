@@ -45,6 +45,7 @@ import { EditUserProfileComponent } from './profiles/edit-user-profile.component
 import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from './users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.component';
+import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
 
 
 @NgModule({
@@ -69,13 +70,14 @@ import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.co
     NavbarPortalAdminComponent,
     NavbarPortalDigitadorComponent,
     EditUserModalComponent,
-    PwResetComponent,
     AgregarTestimoniosComponent,
     VerTestimoniosComponent,
     EditUserProfileComponent,
     HeroesAdminComponent,
     UsersAdminComponent,
-    ShowHeroesAdminComponent
+    ShowHeroesAdminComponent,
+    PwResetComponent,
+    NoConfirmationComponent
   ],
   imports: [
     BrowserModule,
