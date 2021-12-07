@@ -56,7 +56,7 @@ export class EditUserProfileComponent implements OnInit {
       });
     this.nombre = sessionStorage.getItem('nombre');
 
-    console.log( getAuth().currentUser); //retorna null al recargar página
+    //console.log( getAuth().currentUser); //retorna null al recargar página
 
   }//fin de ngOnInit
 

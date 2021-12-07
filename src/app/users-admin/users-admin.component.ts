@@ -42,7 +42,6 @@ export class UsersAdminComponent implements OnInit{
             this.User.push(a as User);
             }
         })
-        console.table(this.User);
         })
     }
 
