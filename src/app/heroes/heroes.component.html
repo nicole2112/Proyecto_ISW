@@ -1,50 +1,88 @@
 <navbar></navbar>
-<div class="sectionTitle" >
-  <h1 class="sectionTitleText" >Nuestros Héroes</h1>
+<div class="sectionTitle">
+  <h1 class="sectionTitleText">Nuestros Héroes</h1>
   <div class="grid-container">
 
     <h3 class="d-flex justify-content-center">Heroes Vivos</h3>
     <tr *ngFor="let heroe of heroesList;">
       <div *ngIf="heroe.fallecido == 'no'">
-        <div class="col">
-          <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
-            <img src={{heroe.imageUrl}} style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top: 10%;" alt="...">
-            <div class="card-body">
-              <p class="card-text" style="text-align: center;">{{heroe.nombre}}</p>
-            </div>
-            <div class="card-body">
-              <p class="card-text" style="text-align: center;">{{heroe.contenido}}</p>
-            </div>
-            <div class="card-body">
-              <p class="card-text" style="text-align: center;">Fallecido: {{heroe.fallecido}}</p>
-            </div>
+        <div class="card mb-3">
+          <img class="card-img-top" src="{{heroe.imageUrl}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{heroe.nombre}}</h5>
+            <p class="card-text">{{heroe.contenido}}</p>
+            <p class="card-text"><small class="text-muted">{{heroe.estado}}</small></p>
             <div class="card-footer">
-              <a class="button1" style="text-align: center;">Conocer más</a>
+  
+            <!-- Button trigger modal -->
+            <button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+              Conocer mas
+            </button>
+  
+            <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">{{heroe.nombre}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      {{heroe.contenido}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </tr> 
       <h3 class="d-flex justify-content-center">Heroes Fallecidos</h3>
-      <tr *ngFor="let heroe of heroesList;"> 
+      <tr *ngFor="let heroe of heroesList;" style="display: inline-flex;"> 
       <div *ngIf="heroe.fallecido == 'si'">
-         <div class="col">
-            <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
-              <img src={{heroe.imageUrl}} style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top: 10%;" alt="...">
-              <div class="card-body">
-                <p class="card-text" style="text-align: center;">{{heroe.nombre}}</p>
-              </div>
-              <div class="card-body">
-                <p class="card-text" style="text-align: center;">{{heroe.contenido}}</p>
-              </div>
-              <div class="card-body">
-                <p class="card-text" style="text-align: center;">Fallecido: {{heroe.fallecido}}</p>
-              </div>
-              <div class="card-footer">
-                <a class="button1" style="text-align: center;">Conocer más</a>
+        <div class="card mb-3">
+          <img class="card-img-top" src="{{heroe.imageUrl}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{heroe.nombre}}</h5>
+            <p class="card-text">{{heroe.contenido}}</p>
+            <p class="card-text"><small class="text-muted">{{heroe.estado}}</small></p>
+            <div class="card-footer">
+  
+            <!-- Button trigger modal -->
+            <button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+              Conocer mas
+            </button>
+  
+            <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">{{heroe.nombre}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      {{heroe.contenido}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </tr>
     
