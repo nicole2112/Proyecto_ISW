@@ -24,6 +24,16 @@ export class RegistroComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  generarContra(){
+    var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    for ( var i = 0; i < 8; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    this.pass = result;
+    console.log(`PW: ${result}`);
+  }
+
   registrar() {
     if(this.rol === ''){
       Swal.fire({

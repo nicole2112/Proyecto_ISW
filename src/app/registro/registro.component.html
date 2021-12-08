@@ -100,7 +100,7 @@
 
     <div class="d-flex justify-content-center" style="margin-top: 15px">
       <div
-        class="form-floating mb-3 col-md-5"
+        class="form-floating mb-3 col-md-4"
         [ngClass]="{
           error:
             claseForm.controls.pass?.invalid && claseForm.controls.pass?.touched
@@ -108,7 +108,7 @@
       >
         <input
           [(ngModel)]="pass"
-          type="password"
+          type="text"
           class="form-control"
           id="floatingInput"
           name="pass"
@@ -124,13 +124,20 @@
           >Contraseña es requerida</em
         >
       </div>
+      <div class="form-floating mb-3 col-md-1">
+        <button 
+          type="button" 
+          class="btn btn-outline-success"
+          (click)="generarContra()"
+        >Generar contraseña</button>
+      </div>
     </div>
 
     <div class="d-flex justify-content-center">
       <button
         type="submit"
         [disabled]="claseForm.invalid"
-        class="btn btn-primary"
+        class="btn btn-success"
         (click)="registrar()"
       >
         Registrar

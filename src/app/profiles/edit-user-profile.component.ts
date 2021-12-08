@@ -83,6 +83,7 @@ export class EditUserProfileComponent implements OnInit {
       (await this.auth.currentUser).updateProfile({
         displayName: this.nombre,
       });
+      sessionStorage.setItem('nombre', this.nombre);
     }
 
     if (this.telefono == undefined ) this.telefono = '';
