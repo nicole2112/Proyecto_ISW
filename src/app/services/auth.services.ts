@@ -110,10 +110,7 @@ export class AuthenticationService {
           this.auth
             .signInWithEmailAndPassword(this.email, this.pass)
             .then((res) => {
-              console.log(res);
-              console.log(res.user.email)
               this.db.object(`usuarios/${res.user.uid}`).valueChanges().subscribe(item =>{
-                console.log(item['rol']);
                 this.correoPer = item['correoPer'];
                 this.telefono = item['telefono'];
                 this.direccion = item['direccion'];
@@ -131,11 +128,9 @@ export class AuthenticationService {
 
                 sessionStorage.setItem('nombre', res.user.displayName);
                 sessionStorage.setItem('uid', res.user.uid);
-                //console.log(res.user.uid);
               });
             })
             .catch((err) =>{
-              //console.log(err);
               Swal.fire({
                 position: 'top-end',
                 icon: 'error',
@@ -148,8 +143,6 @@ export class AuthenticationService {
     }
 
     logout() {
-        // remove user from local storage to log user out
-        //sessionStorage.removeItem('user');
         console.log(`Session storage (auth): ${sessionStorage.length}`);
         sessionStorage.clear();
         console.log(`Session storage (auth): ${sessionStorage.length}`);
@@ -192,11 +185,9 @@ export class AuthenticationService {
           for ( var i = 0; i < 8; i++ ) {
               result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
           }
-          console.log(result);
         this.auth
           .createUserWithEmailAndPassword(this.email, result)
           .then(async (user) => {
-            console.log(user);
             this.router.navigate(['/portal-admin']);
             Swal.fire({
               position: 'top-end',
