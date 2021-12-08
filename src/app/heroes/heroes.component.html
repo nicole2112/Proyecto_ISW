@@ -2,25 +2,52 @@
 <div class="sectionTitle" >
   <h1 class="sectionTitleText" >Nuestros Héroes</h1>
   <div class="grid-container">
-    <tr *ngFor="let heroe of heroesList;">  
-      <div class="col">
-        <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
-          <img src={{heroe.imageUrl}} style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top: 10%;" alt="...">
-          <div class="card-body">
-            <p class="card-text" style="text-align: center;">{{heroe.nombre}}</p>
-          </div>
-          <div class="card-body">
-            <p class="card-text" style="text-align: center;">{{heroe.contenido}}</p>
-          </div>
-          <div class="card-body">
-            <p class="card-text" style="text-align: center;">{{heroe.estado}}</p>
-          </div>
-          <div class="card-footer">
-            <a class="button1" style="text-align: center;">Conocer más</a>
+
+    <h3 class="d-flex justify-content-center">Heroes Vivos</h3>
+    <tr *ngFor="let heroe of heroesList;">
+      <div *ngIf="heroe.fallecido == 'no'">
+        <div class="col">
+          <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
+            <img src={{heroe.imageUrl}} style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top: 10%;" alt="...">
+            <div class="card-body">
+              <p class="card-text" style="text-align: center;">{{heroe.nombre}}</p>
+            </div>
+            <div class="card-body">
+              <p class="card-text" style="text-align: center;">{{heroe.contenido}}</p>
+            </div>
+            <div class="card-body">
+              <p class="card-text" style="text-align: center;">Fallecido: {{heroe.fallecido}}</p>
+            </div>
+            <div class="card-footer">
+              <a class="button1" style="text-align: center;">Conocer más</a>
+            </div>
           </div>
         </div>
       </div>
     </tr> 
+      <h3 class="d-flex justify-content-center">Heroes Fallecidos</h3>
+      <tr *ngFor="let heroe of heroesList;"> 
+      <div *ngIf="heroe.fallecido == 'si'">
+         <div class="col">
+            <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
+              <img src={{heroe.imageUrl}} style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top: 10%;" alt="...">
+              <div class="card-body">
+                <p class="card-text" style="text-align: center;">{{heroe.nombre}}</p>
+              </div>
+              <div class="card-body">
+                <p class="card-text" style="text-align: center;">{{heroe.contenido}}</p>
+              </div>
+              <div class="card-body">
+                <p class="card-text" style="text-align: center;">Fallecido: {{heroe.fallecido}}</p>
+              </div>
+              <div class="card-footer">
+                <a class="button1" style="text-align: center;">Conocer más</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </tr>
+    
   </div>
   
 </div>
