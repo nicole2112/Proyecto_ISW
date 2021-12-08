@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let heroe of Heroe" class="userRowHover" (click)="open(content, heroe.$key); onSelect(heroe, heroe.imageUrl); checkOptionSubmitBtn();">
+      <tr *ngFor="let heroe of Heroe" class="userRowHover" (click)="open(content, heroe.$key); onSelect(heroe, heroe.imageUrl);">
         <td class="rowInfo">{{heroe.nombre}}</td>
         <td class="rowInfo">{{heroe.contenido}}</td>
         <td class="rowInfo">{{heroe.fallecido}}</td>
