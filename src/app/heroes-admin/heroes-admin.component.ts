@@ -73,7 +73,6 @@ export class HeroesAdminComponent implements OnInit {
     
     const storage = getStorage();
     const storageRef = ref(storage, filename);
-    console.log('algo1');
 
     uploadBytes(storageRef, this.fileList[0]).then((snapshot) => {
       
@@ -81,7 +80,6 @@ export class HeroesAdminComponent implements OnInit {
     }).then(
       ()=>{
         getDownloadURL(storageRef).then(data =>{
-          console.log('FUNCA');
           Swal.fire({
             position: 'top-end',
             icon: 'success',

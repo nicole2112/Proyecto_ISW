@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { TestimonyService } from "../services/testimony.service";
 import { ModalService } from '../services/modal.service';
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
 
 @Component ({
@@ -13,6 +13,7 @@ import Swal from 'sweetalert2'
 
 export class VerTestimoniosComponent implements OnInit{
     testimonyList : any[];
+    closeResult: any;
     urlList : string[];
     url;
     titulo;
