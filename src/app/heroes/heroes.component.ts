@@ -15,15 +15,17 @@ export class HeroesComponent implements OnInit{
     prioridad:any;
     visibilidad:any;
 
-    heroesList:any[];
+    heroesList:any[]=[];
 
     constructor(private service: AuthenticationService){}
     
     ngOnInit(){
         this.service.db.list('heroes').valueChanges().subscribe(heroes => {
-            console.log(heroes);
             this.heroesList = heroes;
+            this.heroesList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
+            console.log(this.heroesList);
           });
+
     }
 
 }
