@@ -6,21 +6,22 @@
   <body>
     <div class="main-block">
       <h1 style="color:#1c87c9 ;">Agregar Testimonio</h1>
-      <form action="/">
+      <form #claseForm="ngForm" action="/">
         <div class="info">
-          <input class="fname" type="text" name="name" placeholder="URL Facebook"  [(ngModel)]="url" required>
+          <input class="fname" id= "url" type="text" name="name" placeholder="URL Facebook" [(ngModel)]="url" required>
           <input type="text" name="name" placeholder="Titulo del Video" [(ngModel)]="titulo" required>
           <select (change)="onSelectedChange($event)" required>
             <option *ngFor="let opcion of opciones" [ngValue]="opcion">{{opcion}}</option>
-
           </select>
         </div>
         <button button
         type="button"
+        [disabled]="!url || !titulo"
         (click)="agregarTestimonio()"
         class="btn btn-success">Salvar</button>
       </form>
       </div>
+      
   </body>
 </html>
 

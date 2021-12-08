@@ -13,7 +13,8 @@ export class NavbarPortalAdminComponent implements OnInit {
   constructor( public service: AuthenticationService, private eRef: ElementRef, private router: Router) { }
   @Input() isShow: boolean;
   @Output() viewUsersClick: EventEmitter<boolean> = new EventEmitter();
-  @Output() toggleTestimonies: EventEmitter<boolean> = new EventEmitter();
+  @Output() viewTestimoniesClick = new EventEmitter();
+  @Output() showTestimoniesClick = new EventEmitter();
   @Output() viewHeroesClick = new EventEmitter<boolean>();
   @Output() showHeroesClick = new EventEmitter<boolean>();
 
@@ -29,9 +30,14 @@ export class NavbarPortalAdminComponent implements OnInit {
     this.showHeroesClick.emit(true);
   }
 
+  //Testimonies
   showTestimonies(){
-    this.toggleTestimonies.emit(!this.isShow);
+    this.showTestimoniesClick.emit(true);
   }
+  viewTestimonies(){
+    this.viewTestimoniesClick.emit(true);
+  }
+
 
   ngOnInit(): void {
     this.isLogged();

@@ -15,8 +15,8 @@
   <div class="dropdown-users">
     <button class="dropbtn"><fa-icon class="icons" [icon]="faComments"></fa-icon>Testimonios  ▼</button>
     <div class="dropdown-content">
-      <a class="nav-link active" aria-current="page" [routerLink]="['/verTestimonio']">Ver Testimonios</a>
-      <a class="nav-link active" aria-current="page" [routerLink]="['/agregarTestimonio']">Agregar Testimonios</a>
+      <a [routerLink]="['/portal-admin']" (click)="showTestimonies()">Ver Testimonios</a>
+      <a  [routerLink]="['/portal-admin']" (click)="viewTestimonies()">Agregar Testimonios</a>
     </div>
   </div>
   <div class="dropdown-users">

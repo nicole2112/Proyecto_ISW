@@ -3,9 +3,10 @@ import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { TestimonyService } from "../services/testimony.service";
 import { ModalService } from '../services/modal.service';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import Swal from 'sweetalert2'
 
 @Component ({
-    selector: 'verTestimonios',
+    selector: 'app-view-testimonies-admin',
     templateUrl: './verTestimonios.component.html',
     styleUrls: ['verTestimonios.component.css']
 })
@@ -29,6 +30,7 @@ export class VerTestimoniosComponent implements OnInit{
 
     onSelectedChange(event:any)
     {
+        
         console.log(event.target.value);
         this.estado = event.target.value;
     }
@@ -62,7 +64,7 @@ export class VerTestimoniosComponent implements OnInit{
         });
 
     }
-
+    
     inputVideo(url:string):SafeResourceUrl{
         return this._sanitizer.bypassSecurityTrustResourceUrl(url);
       }
@@ -85,6 +87,14 @@ export class VerTestimoniosComponent implements OnInit{
                 this.testimService.postTestimonies(item);
                 }
             })
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Testimonio modificado!',
+                showConfirmButton: false,
+                timer: 1500
+              })
             
             // this.testimService.editarTestomonio(this.titulo, visible);
         }
