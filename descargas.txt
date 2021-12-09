@@ -22,4 +22,7 @@ npm install material-icons@latest
 //para las alertas
 npm install sweetalert2
 
+//acordion
+npm i ngx-accordion
+
 //test
