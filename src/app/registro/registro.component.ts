@@ -31,7 +31,6 @@ export class RegistroComponent implements OnInit {
         result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
     }
     this.pass = result;
-    console.log(`PW: ${result}`);
   }
 
   registrar() {
