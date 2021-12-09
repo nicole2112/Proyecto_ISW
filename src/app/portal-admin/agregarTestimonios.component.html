@@ -8,7 +8,6 @@
       <h1 style="color:#1c87c9 ;">Agregar Testimonio</h1>
       <form #claseForm="ngForm" action="/">
         <div class="info">
-          <h5 style ="color:red">**Se requiere colocar el link "Embed" de Facebook.**</h5>
           <input class="fname" id= "url" type="text" name="name" placeholder="URL Facebook" [(ngModel)]="url" required>
           <input type="text" name="name" placeholder="Titulo del Video" [(ngModel)]="titulo" required>
           <select (change)="onSelectedChange($event)" required>
