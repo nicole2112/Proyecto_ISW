@@ -142,6 +142,7 @@ export class AuthenticationService {
 
                 sessionStorage.setItem('nombre', res.user.displayName);
                 sessionStorage.setItem('uid', res.user.uid);
+                sessionStorage.setItem('userEmail', res.user.email);
               });
             })
             .catch((err) =>{
@@ -157,9 +158,9 @@ export class AuthenticationService {
     }
 
     logout() {
-        console.log(`Session storage (auth): ${sessionStorage.length}`);
+        console.log(`Session storage (auth): ${sessionStorage}`);
         sessionStorage.clear();
-        console.log(`Session storage (auth): ${sessionStorage.length}`);
+        console.log(`Session storage (auth): ${sessionStorage}`);
 
         this.loggedIn = false;
         this.auth.signOut();
@@ -194,13 +195,13 @@ export class AuthenticationService {
             timer: 1500
           })
         } else {
-          var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          /*var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
           var result = '';
           for ( var i = 0; i < 8; i++ ) {
               result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
-          }
+          }*/
         this.auth
-          .createUserWithEmailAndPassword(this.email, result)
+          .createUserWithEmailAndPassword(this.email, this.pass)
           .then(async (user) => {
             this.router.navigate(['/portal-admin']);
             Swal.fire({
@@ -217,9 +218,9 @@ export class AuthenticationService {
             };
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
             (await user.user.sendEmailVerification());
-            (await this.auth.currentUser).updateProfile({
-              displayName: this.nombre,
-            });
+            //(await this.auth.currentUser).updateProfile({
+            //  displayName: this.nombre,
+            //});
             this.sendConfirmationEmail();
           })
           .catch((err) => 
@@ -232,10 +233,10 @@ export class AuthenticationService {
                 message = 'Error: Usuario ya existe';
                 break;
               case 'auth/invalid-email':
-                message = 'Error: No es un correo valido';
+                message = 'Error: No es un correo válido';
                 break;
               case 'auth/weak-password':
-                message = 'Error: La contraseña debe tener almenos 6 caracteres de longitud';
+                message = 'Error: La contraseña debe tener al menos 6 caracteres de longitud';
                 break;
               default: message = 'Error';
             }
