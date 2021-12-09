@@ -16,6 +16,7 @@ export class HeroesAdminComponent implements OnInit {
   nombre: any;
   prioridad: any;
   visibilidad:any;
+  prioridadInt:any;
 
   fileList: any[];
 
@@ -56,12 +57,20 @@ export class HeroesAdminComponent implements OnInit {
   writeUserData(imageUrl){
     let heroeItem={};
 
+    if(this.prioridad === 'Alta'){
+      this.prioridadInt = 1
+    }else if(this.prioridad === 'Media'){
+      this.prioridadInt = 2
+    }else{
+      this.prioridadInt = 3
+    }
+
     heroeItem={
       "imageUrl": imageUrl,
       "nombre": this.nombre,
       "contenido": this.contenido,
       "fallecido" :this.fallecido,
-      "prioridad" :this.prioridad,
+      "prioridad" :this.prioridadInt,
       "visibilidad": this.visibilidad
     }
     this.service.db.list('heroes').push(heroeItem);

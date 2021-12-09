@@ -41,15 +41,17 @@
               claseForm.controls.contenido?.touched
           }"
         >
-          <input
+          <textarea
             [(ngModel)]="contenido"
             type="text"
             class="form-control"
             id="floatingInput"
             name="contenido"
+            rows="4" 
+            cols="50"
             placeholder="Contenido"
             required
-          />
+          ></textarea>
           <label for="floatingInput">Contenido</label>
           <em
             class="text-danger"
@@ -71,16 +73,20 @@
               claseForm.controls.fallecido?.touched
           }"
         >
-          <input
+          <select 
             [(ngModel)]="fallecido"
-            type="text"
+            id = "floating input" 
             class="form-control"
             id="floatingInput"
             name="fallecido"
-            placeholder="Fallecido"
+            placeholder="Estado"
             required
-          />
-          <label for="floatingInput">Fallecido</label>
+          >
+            <option value="Con Vida">Con Vida</option>
+            <option value="Fallecido">Fallecido</option>
+          </select>
+
+          <label for="floatingInput">Estado</label>
           <em
             class="text-danger"
             *ngIf="
@@ -101,15 +107,20 @@
               claseForm.controls.prioridad?.touched
           }"
         >
-          <input
+          <select 
             [(ngModel)]="prioridad"
-            type="text"
+            id = "floating input" 
             class="form-control"
             id="floatingInput"
             name="prioridad"
             placeholder="Prioridad"
             required
-          />
+          >
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
+          </select>
+
           <label for="floatingInput">Prioridad</label>
           <em
             class="text-danger"
@@ -131,15 +142,20 @@
               claseForm.controls.visibilidad?.touched
           }"
         >
-          <input
+          <select 
             [(ngModel)]="visibilidad"
-            type="text"
+            id = "floating input" 
             class="form-control"
             id="floatingInput"
             name="visibilidad"
             placeholder="Visibilidad"
             required
-          />
+          >
+            <option value="Público">Público</option>
+            <option value="Privado">Privado</option>
+          </select>
+
+          
           <label for="floatingInput">Visibilidad</label>
           <em
             class="text-danger"
