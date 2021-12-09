@@ -1,25 +1,15 @@
-<app-navbar-portal-admin></app-navbar-portal-admin>
-  <div id="function-list">
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active">
-        Funciones administrativas
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">Crear nuevo usuario</a>
-      <a href="#" class="list-group-item list-group-item-action">Modificar usuario existente</a>
-      <a href="#" class="list-group-item list-group-item-action">Eliminar usuario existente</a>
-      <a href="#" class="list-group-item list-group-item-action">Ver lista de usuarios</a>
-    </div>
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active">
-        Funciones de 
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">C</a>
-      <a href="#" class="list-group-item list-group-item-action">M</a>
-      <a href="#" class="list-group-item list-group-item-action">E</a>
-      <a href="#" class="list-group-item list-group-item-action">V</a>
+<app-navbar-portal-admin (viewUsersClick)="toggleShowHeroes = false; toggleHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleUsers = true" 
+(viewHeroesClick)="toggleShowHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleHeroes = true" 
+(showHeroesClick)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleShowHeroes = true"
+(showTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleViewTestimonies=false; toggleShowTestimonies=true;"
+(viewTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=true;"></app-navbar-portal-admin>
+    <div class="container table-users">
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <app-users-admin *ngIf="toggleUsers"></app-users-admin>
+      <app-heroes-admin *ngIf="toggleHeroes"></app-heroes-admin>
+      <app-showHeroes-admin *ngIf="toggleShowHeroes"></app-showHeroes-admin>
+      <app-add-testimonies-admin *ngIf="toggleViewTestimonies"></app-add-testimonies-admin>
+      <app-view-testimonies-admin *ngIf="toggleShowTestimonies"></app-view-testimonies-admin>
     </div>
   </div>
-
-  <div>
-    <img class="imagen_opaca" src="assets/images/Logo-FP-1-Medium.png" alt="">
-  </div>
+  <img class="imagen_opaca" src="assets/images/bg-art.png" alt="">

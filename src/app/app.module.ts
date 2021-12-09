@@ -21,7 +21,7 @@ import { BlogComponent } from './blog/blog.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 
 import { LoginComponent } from './login/login.component';
-import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireDatabase, AngularFireDatabaseModule, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -30,10 +30,22 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistroComponent } from './registro/registro.component';
 import { PortalAdminComponent } from './portal-admin/portal-admin.component';
+import { PortalDigitadorComponent } from './portal-digitador/portal-digitador.component';
 import { HomeComponent } from './landing-page/home.component';
 import { NavbarComponent } from './nav/navbar.component';
 import { NavbarPortalAdminComponent } from './navbar-portal-admin/navbar-portal-admin.component';
+import { NavbarPortalDigitadorComponent } from './navbar-portal-digitador/navbar-portal-digitador.component';
+import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
 import { PwResetComponent } from './pw-reset/pw-reset.component';
+import { ModalService } from './services/modal.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.component';
+import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
+import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
+import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
+import { UsersAdminComponent } from './users-admin/users-admin.component';
+import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.component';
+import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
 
 
 @NgModule({
@@ -54,8 +66,18 @@ import { PwResetComponent } from './pw-reset/pw-reset.component';
     LoginComponent,
     RegistroComponent,
     PortalAdminComponent,
+    PortalDigitadorComponent,
     NavbarPortalAdminComponent,
-    PwResetComponent
+    NavbarPortalDigitadorComponent,
+    EditUserModalComponent,
+    AgregarTestimoniosComponent,
+    VerTestimoniosComponent,
+    EditUserProfileComponent,
+    HeroesAdminComponent,
+    UsersAdminComponent,
+    ShowHeroesAdminComponent,
+    PwResetComponent,
+    NoConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -70,10 +92,13 @@ import { PwResetComponent } from './pw-reset/pw-reset.component';
     AngularFireAuthModule,
     FontAwesomeModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
 
   ],
-  providers: [],
+  providers: [
+    ModalService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

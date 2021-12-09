@@ -1,25 +1,36 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand nav-link" [routerLink]="['/portal-admin']">Portal Administrativo</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Menu
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-              <li><a class="dropdown-item nav-link"[routerLink]="['/registro']">Registrar Nuevo Usuario</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+  <a class="navbar-brand nav-link" onclick="window.location.replace(portal-admin);" [routerLink]="['/portal-admin']">Portal Administrativo</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="dropdown-users">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Usuarios   ▼</button>
+    <div class="dropdown-content">
+      <a (click)="showUsers()" [routerLink]="['/portal-admin']">Ver Usuarios</a>
+      <a (click)="addUser()">Registrar Usuario</a>
+      <a >Ver Log Usuarios</a>
+      <a >Ver Log Acciones</a>
     </div>
-    <div>
-      <button class="btn btn-danger" (click)="logOut()" style="margin-left: 30px" >
-        Log Out
-      </button>
+  </div>
+  <div class="dropdown-users">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faComments"></fa-icon>Testimonios  ▼</button>
+    <div class="dropdown-content">
+      <a [routerLink]="['/portal-admin']" (click)="showTestimonies()">Ver Testimonios</a>
+      <a  [routerLink]="['/portal-admin']" (click)="viewTestimonies()">Agregar Testimonios</a>
     </div>
-  </nav>
+  </div>
+  <div class="dropdown-users">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faHandSparkles"></fa-icon>Heroes  ▼</button>
+    <div class="dropdown-content">
+      <a [routerLink]="['/portal-admin']" (click)="showHeroes()">Ver Heroes</a>
+      <a class="nav-link active" aria-current="page" (click)="viewHeroes()" [routerLink]="['/portal-admin']">Agregar Heroes</a>
+    </div>
+  </div>
+  <div class="dropdownx navbar-nav ms-auto">
+    <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here  ▼</button>
+    <div class="dropdown-content">
+      <a (click)="fnEditUserProfile()">Editar</a>
+      <a (click)="logOut()">Cerrar Sesion</a>
+    </div>
+  </div>
+</nav>

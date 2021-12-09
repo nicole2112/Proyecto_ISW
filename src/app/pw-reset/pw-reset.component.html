@@ -1,27 +1,65 @@
-<div class="barra">
-    <navbar></navbar>
-</div>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!--<link
+  href="https://fonts.googleapis.com/css2?family=Roboto,wght@1,300;1,400&display=swap"
+  rel="stylesheet"
+/>-->
 
-<div class="container">
-    <div class="screen">
-      <div class="screen__content">
-        <form class="login">
-          <h6><strong>Reestablecer Contraseña</strong></h6>
-          <div class="login__field">
-            <i class="login__icon fas fa-user"></i>
-            <input type="text" class="login__input" placeholder="Correo" [(ngModel)]="email" name="email">
-          </div>
-          <button class="button login__submit" (click)="enviarCorreo()">
-            <span class="button__text">Enviar correo</span>
-            <i class="button__icon fas fa-chevron-right"></i>
-          </button>			
-        </form>
+<navbar></navbar>
+
+<h1
+  class="d-flex justify-content-center"
+  style="margin-top: 170px; font-size: 400%; font-family: 'Roboto', sans-serif"
+>
+  Restablecer Contraseña
+</h1>
+
+<form #claseForm="ngForm">
+  <div style="margin-top: 150px">
+    <div class="d-flex justify-content-center">
+      <!-- Olvidaste contrasena -->
+      <div
+        class="form-floating mb-3 col-md-5"
+        [ngClass]="{
+          error:
+            claseForm.controls.email?.invalid &&
+            claseForm.controls.email?.touched
+        }"
+      >
+        <input
+          [(ngModel)]="email"
+          [pattern]="emailPattern"
+          type="email"
+          class="form-control"
+          id="floatingInput"
+          name="email"
+          placeholder="nombre@fundacionpadrino.com"
+          required
+        />
+        <label for="floatingInput">Correo</label>
+        <em
+          class="text-danger"
+          *ngIf="
+            claseForm.controls.email?.invalid &&
+            claseForm.controls.email?.touched
+          "
+          >*Ingrese correo válido para restablecer contraseña</em
+        >
       </div>
-      <div class="screen__background">
-        <span class="screen__background__shape screen__background__shape4"></span>
-        <span class="screen__background__shape screen__background__shape3"></span>		
-        <span class="screen__background__shape screen__background__shape2"></span>
-        <span class="screen__background__shape screen__background__shape1"></span>
-      </div>		
+    </div>
+
+    <div
+      class="form-group d-flex justify-content-center"
+      style="margin-top: 20px"
+    >
+      <button
+        class="btn btn-primary ingresar-button" 
+        type="submit"
+        [disabled]="claseForm.invalid"
+        (click)="enviarCorreo()"
+      >
+        Enviar Correo
+      </button>
     </div>
   </div>
+</form>

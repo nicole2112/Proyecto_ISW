@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-//import * as firebase from 'firebase/app';
 import firebase from '@firebase/app-compat';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Auth, GoogleAuthProvider, getAuth} from 'firebase/auth';
@@ -23,8 +22,11 @@ export class AuthenticationService {
     public loggedIn = false;
     email = '';
     pass = '';
-    nombre = '';
+    nombre: any;
     rol='';
+    correoPer:any;
+    direccion:any;
+    telefono:any;
 
     constructor(
         private router: Router,
@@ -44,10 +46,34 @@ export class AuthenticationService {
         this.loggedIn = true;
     }
 
+    getCurrentUser(){
+      return this.userDetails;
+    }
+
+    sendConfirmationEmail()
+    {
+      this.userDetails.sendEmailVerification();
+    }
+
+    emailVerified():boolean
+    {
+      this.userDetails.reload();
+      return this.userDetails.emailVerified;
+    }
+
     isAdmin():Observable<boolean>
     {
       return this.db.object(`usuarios/${this.userDetails.uid}`).valueChanges().pipe(map((user)=>{
         if(user['rol'] === 'Admin')
+          return true;
+        return false;
+      }));
+    }
+
+    isDigitador():Observable<boolean>
+    {
+      return this.db.object(`usuarios/${this.userDetails.uid}`).valueChanges().pipe(map((user)=>{
+        if(user['rol'] === 'Digitador')
           return true;
         return false;
       }));
@@ -80,22 +106,32 @@ export class AuthenticationService {
             showConfirmButton: false,
             timer: 1500
           })
-        } else {
+        } else if((this.email != '' && this.pass != '')){
           this.auth
             .signInWithEmailAndPassword(this.email, this.pass)
             .then((res) => {
-              console.log(res);
-              this.router.navigate(['/portal-admin']);
-              this.userDetails = res.user;
               this.db.object(`usuarios/${res.user.uid}`).valueChanges().subscribe(item =>{
-                console.log(item['rol']);
-                sessionStorage.setItem('rol', item['rol']);
+                this.correoPer = item['correoPer'];
+                this.telefono = item['telefono'];
+                this.direccion = item['direccion'];
+                if(item['rol'] == 'Admin' || item['rol'] == 'Presidente')
+                {
+                  this.userDetails = res.user;
+                  this.router.navigate(['/portal-admin']);
+                } else{
+                  this.userDetails = res.user;
+                  this.router.navigate(['/portal-digitador']);
+                }
                 
-              });
+                sessionStorage.setItem('rol', item['rol']);
+                this.userDetails = res.user;
 
+                sessionStorage.setItem('nombre', res.user.displayName);
+                sessionStorage.setItem('uid', res.user.uid);
+                sessionStorage.setItem('userEmail', res.user.email);
+              });
             })
             .catch((err) =>{
-              console.log(err);
               Swal.fire({
                 position: 'top-end',
                 icon: 'error',
@@ -105,18 +141,16 @@ export class AuthenticationService {
               })
             });
         }
-        if (this.userDetails) {
-          let correo = this.userDetails.email;
-          this.setCurrentUser(correo);
-          } else {
-              console.log("not working");
-          }
     }
 
     logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('user');
+        console.log(`Session storage (auth): ${sessionStorage}`);
+        sessionStorage.clear();
+        console.log(`Session storage (auth): ${sessionStorage}`);
+
+        this.loggedIn = false;
         this.auth.signOut();
+        this.router.navigate(['/login']);
         //Alerta
         Swal.fire({
           position: 'top-end',
@@ -125,14 +159,20 @@ export class AuthenticationService {
           showConfirmButton: false,
           timer: 1500
         })
-        this.loggedIn = false;
-        sessionStorage.removeItem('rol');
-        //this.userSubject.next(null);
-        this.router.navigate(['/login']);
     }
 
+    logoutVerificacion() {
+      // remove user from local storage to log user out
+      localStorage.removeItem('user');
+      this.auth.signOut();
+      this.loggedIn = false;
+      sessionStorage.removeItem('rol');
+      //this.userSubject.next(null);
+      this.router.navigate(['/login']);
+  }
+
     register(rol:string) {
-        if (this.email == '' || this.pass == '' || this.nombre =='') {
+        if (this.email == '' || this.nombre =='') {
           Swal.fire({
             position: 'top-end',
             icon: 'warning',
@@ -141,10 +181,14 @@ export class AuthenticationService {
             timer: 1500
           })
         } else {
+          /*var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          var result = '';
+          for ( var i = 0; i < 8; i++ ) {
+              result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+          }*/
         this.auth
           .createUserWithEmailAndPassword(this.email, this.pass)
           .then(async (user) => {
-            console.log(user);
             this.router.navigate(['/portal-admin']);
             Swal.fire({
               position: 'top-end',
@@ -160,8 +204,39 @@ export class AuthenticationService {
             };
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
             (await user.user.sendEmailVerification());
+            //(await this.auth.currentUser).updateProfile({
+            //  displayName: this.nombre,
+            //});
+            this.sendConfirmationEmail();
           })
-          .catch((err) => console.log('Error user: ', err));
+          .catch((err) => 
+          {
+            let message;
+
+            switch(err['code'])
+            {
+              case 'auth/email-already-in-use':
+                message = 'Error: Usuario ya existe';
+                break;
+              case 'auth/invalid-email':
+                message = 'Error: No es un correo válido';
+                break;
+              case 'auth/weak-password':
+                message = 'Error: La contraseña debe tener al menos 6 caracteres de longitud';
+                break;
+              default: message = 'Error';
+            }
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: message,
+              showConfirmButton: false,
+              timer: 3000
+            })
+          }
+            
+            );
           
         }
       }

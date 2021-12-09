@@ -1,0 +1,102 @@
+<table class="table table-dark table-striped table-bordered">
+    <thead class="table-header">
+      <tr>
+        <th>Nombre</th>
+        <th>Contenido</th>
+        <th>Fallecido</th>
+        <th>Visibilidad</th>
+        <th>Prioridad</th>
+        <th>Imagen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let heroe of Heroe" class="userRowHover" (click)="open(content, heroe.$key); onSelect(heroe, heroe.imageUrl);">
+        <td class="rowInfo">{{heroe.nombre}}</td>
+        <td class="rowInfo">{{heroe.contenido}}</td>
+        <td class="rowInfo">{{heroe.fallecido}}</td>
+        <td >{{heroe.visibilidad}}</td>
+        <td>{{heroe.prioridad}}</td>
+        <td class="styleImg"><img src="{{heroe.imageUrl}}"></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Editar Heroe</h4>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <div class="input-group">
+            <input id="nombre" type="text" class="form-control" placeholder="nombre apellido" name="dp">
+            <div class="input-group-append">
+              <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="contenido">Contenido</label>
+            <div class="input-group">
+              <textarea name="contenido" class="form-control" id="contenido" cols="60" rows="5" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
+              <div class="input-group-append">
+                <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+              </div>
+            </div>
+          </div>
+        <div style="display: inline-flex;">
+          <div class="form-group">
+            <label for="visibilidadOptions">Visibilidad</label>
+            <div class="input-group">
+              <div class="custom-select" style="width:200px;" id="custom-select">
+                <select name="visibilidadOptions" id="visibilidadOptions">
+                </select>
+              </div>
+            </div>
+            <label class="error-label" id="error-label-visibilidad"></label>
+          </div>
+          <div class="form-group">
+            <label for="prioridadOptions">Prioridad</label>
+            <div class="input-group">
+              <div class="custom-select" style="width:200px;" id="custom-select">
+                <select name="prioridadOptions" id="prioridadOptions">
+                </select>
+              </div>
+            </div>
+            <label class="error-label" id="error-label-prioridad"></label>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top: 1em;">
+            <label for="fallecidoOptions">Fallecido</label>
+            <div class="input-group">
+              <div class="custom-select" style="width:200px;" id="custom-select">
+                <select name="fallecidoOptions" id="fallecidoOptions">
+                </select>
+              </div>
+            </div>
+            <label class="error-label" id="error-label-fallecido"></label>
+        </div>
+        <div class="form-group">
+            <label for="url">Url Imagen</label>
+            <div class="input-group">
+                <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+                    <label class="custom-file-upload">
+                      <input (change)="onChangeFile($event)" type="file" id="url"/>
+                      Agregar imagen...
+                    </label>
+                  </div>
+              
+            </div>
+          </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger pull-left" (click)="deleteHeroe()">Eliminar</button>
+      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); saveHeroe();">Save</button>
+    </div>
+  </ng-template>
+  

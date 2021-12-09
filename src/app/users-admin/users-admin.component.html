@@ -1,0 +1,53 @@
+<table class="table table-dark table-striped table-bordered">
+    <thead class="table-header">
+      <tr>
+        <th>Email</th>
+        <th>Id</th>
+        <th>Rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of User" class="userRowHover" (click)="open(content, user.id); onSelect(user); checkOption();">
+        <td class="rowInfo">{{user.email}}</td>
+        <td class="rowInfo">{{user.id}}</td>
+        <td class="rowInfo">{{user.rol}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Editar Usuario</h4>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="correo">Correo</label>
+          <div class="input-group">
+            <input id="correo" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
+            <div class="input-group-append">
+              <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="rol">Rol</label>
+          <div class="input-group">
+            <div class="custom-select" style="width:200px;" id="custom-select">
+              <select name="roleOptions" id="roleOptions" (change)="onChange($event)">
+                <option selected>Seleccion de Rol</option>
+              </select>
+            </div>
+          </div>
+          <label class="error-label" id="error-label"></label>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger pull-left" (click)="deleteUser()">Eliminar</button>
+      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); updateUser();">Save</button>
+    </div>
+  </ng-template>

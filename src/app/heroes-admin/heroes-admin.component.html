@@ -1,0 +1,178 @@
+<div class="container styleHeroeAdd">
+  <h1 class="d-flex justify-content-center styleTitleForm">Registro de un nuevo Héroe</h1>
+  <form #claseForm="ngForm" action="/">
+      <!-- Ingreso nombre -->
+      <div class="d-flex justify-content-center" style="margin-top: 20px">
+        <div
+          class="form-floating sm-3 col-md-8"
+          [ngClass]="{
+            error:
+              claseForm.controls.nombre?.invalid &&
+              claseForm.controls.nombre?.touched
+          }"
+        >
+          <input
+            [(ngModel)]="nombre"
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="nombre"
+            placeholder="Nombre completo"
+            required
+          />
+          <label for="floatingInput">Nombre Completo</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.nombre?.invalid &&
+              claseForm.controls.nombre?.touched
+            "
+            >*Nombre válido es requerido</em
+          >
+        </div>
+      </div>
+      <!-- Ingreso de contenido -->
+      <div class="d-flex justify-content-center" style="margin-top: 20px">
+        <div
+          class="form-floating sm-3 col-md-8"
+          [ngClass]="{
+            error:
+              claseForm.controls.contenido?.invalid &&
+              claseForm.controls.contenido?.touched
+          }"
+        >
+          <input
+            [(ngModel)]="contenido"
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="contenido"
+            placeholder="Contenido"
+            required
+          />
+          <label for="floatingInput">Contenido</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.contenido?.invalid &&
+              claseForm.controls.contenido?.touched
+            "
+            >*Contenido válido es requerido</em
+          >
+        </div>
+      </div>
+      <!-- Ingreso de estado fallecido -->
+      <div class="d-flex justify-content-center" style="margin-top: 20px">
+        <div
+          class="form-floating sm-3 col-md-8"
+          [ngClass]="{
+            error:
+              claseForm.controls.fallecido?.invalid &&
+              claseForm.controls.fallecido?.touched
+          }"
+        >
+          <input
+            [(ngModel)]="fallecido"
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="fallecido"
+            placeholder="Fallecido"
+            required
+          />
+          <label for="floatingInput">Fallecido</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.fallecido?.invalid &&
+              claseForm.controls.fallecido?.touched
+            "
+            >*Estado válido es requerido</em
+          >
+        </div>
+      </div>
+      <!-- Ingreso de prioridad -->
+      <div class="d-flex justify-content-center" style="margin-top: 20px">
+        <div
+          class="form-floating sm-3 col-md-8"
+          [ngClass]="{
+            error:
+              claseForm.controls.prioridad?.invalid &&
+              claseForm.controls.prioridad?.touched
+          }"
+        >
+          <input
+            [(ngModel)]="prioridad"
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="prioridad"
+            placeholder="Prioridad"
+            required
+          />
+          <label for="floatingInput">Prioridad</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.prioridad?.invalid &&
+              claseForm.controls.prioridad?.touched
+            "
+            >*Prioridad válida es requerida</em
+          >
+        </div>
+      </div>
+      <!-- Ingreso de visibilidad -->
+      <div class="d-flex justify-content-center" style="margin-top: 20px; margin-bottom: 20px;">
+        <div
+          class="form-floating sm-3 col-md-8"
+          [ngClass]="{
+            error:
+              claseForm.controls.visibilidad?.invalid &&
+              claseForm.controls.visibilidad?.touched
+          }"
+        >
+          <input
+            [(ngModel)]="visibilidad"
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="visibilidad"
+            placeholder="Visibilidad"
+            required
+          />
+          <label for="floatingInput">Visibilidad</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.visibilidad?.invalid &&
+              claseForm.controls.visibilidad?.touched
+            "
+            >*Visibilidad válida es requerida</em
+          >
+        </div>
+      </div>
+  
+      <!-- Ingreso de imagen -->
+      <div class="card">
+        <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+          <label class="custom-file-upload">
+            <input (change)="onChange($event)" type="file" />
+            Agregar imagen...
+          </label>
+        </div>
+      </div>
+  
+      <div class="d-flex justify-content-center">
+        <button
+          style="margin-top: 30px;"
+          type="submit"
+          [disabled]="claseForm.invalid"
+          class="btn button1"
+          (click)="saveHeroe()"
+        >
+          Registrar Nuevo Héroe
+        </button>
+      </div>
+  
+  </form>
+</div>
