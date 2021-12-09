@@ -46,8 +46,22 @@ export class AuthenticationService {
         this.loggedIn = true;
     }
 
+    isLoggedin()
+    {
+      return firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.userDetails = user;
+        } else {
+        }
+      });
+    }
+
     getCurrentUser(){
-      return this.userDetails;
+      if(this.isLoggedin())
+      {
+        return this.userDetails;
+      }
+      return false;
     }
 
     sendConfirmationEmail()
