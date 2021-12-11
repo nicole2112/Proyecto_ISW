@@ -23,6 +23,7 @@ export class UsersAdminComponent implements OnInit{
     toggleUsers = false;
     User = [];
     userSelectedId : string;
+    userSelectedEmail : string;
     roleOptions = '';
     selectedValue : any;
     closeResult: string;
@@ -64,6 +65,7 @@ export class UsersAdminComponent implements OnInit{
   onSelect(selectedItem: any){
 
     document.getElementById("correo").setAttribute('value', selectedItem.email);
+
     var selector = document.getElementById("roleOptions");
     var option = document.createElement("option");
     if(selectedItem.rol != '')
@@ -80,13 +82,18 @@ export class UsersAdminComponent implements OnInit{
     
   }
 
-  open(content, id: string) {
+  open(content, id: string, email: string) {
     this.userSelectedId = id;
+    this.userSelectedEmail = email;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       console.log(`Closed with: ${result}`);
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  onDeleteConfirmation(email: string){
+    document.getElementById("correoDelete").setAttribute('value', email);
   }
 
 

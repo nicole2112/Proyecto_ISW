@@ -217,10 +217,10 @@ export class AuthenticationService {
                 "email": this.email
             };
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
-            (await user.user.sendEmailVerification());
-            //(await this.auth.currentUser).updateProfile({
-            //  displayName: this.nombre,
-            //});
+            //(await user.user.sendEmailVerification());
+            (await this.auth.currentUser).updateProfile({
+             displayName: this.nombre,
+            });
             this.sendConfirmationEmail();
           })
           .catch((err) => 
