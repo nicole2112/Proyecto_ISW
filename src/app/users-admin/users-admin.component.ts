@@ -11,6 +11,7 @@ import { authState } from 'rxfire/auth';
 import { AuthenticationService } from '../services/auth.services';
 import { Router } from "@angular/router";
 import { HeroesAdminComponent } from '../heroes-admin/heroes-admin.component';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-users-admin',
@@ -144,6 +145,17 @@ export class UsersAdminComponent implements OnInit{
   deleteUser(){
     this.userRef = this.db.object('usuarios/' + this.userSelectedId);
     this.userRef.remove();
+    this.callDeleteNotification();
+  }
+
+  callDeleteNotification(){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Usuario ha sido eliminado exitosamente!',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
   private getDismissReason(reason: any): string {

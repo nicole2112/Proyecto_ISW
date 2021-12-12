@@ -138,6 +138,7 @@ export class ShowHeroesAdminComponent implements OnInit {
   deleteHeroe(){
     this.heroeRef = this.db.object('heroes/' + this.heroeSelectedId);
     this.heroeRef.remove();
+    this.callDeleteNotification();
   }
 
   onDeleteConfirmation(name: string){
@@ -179,6 +180,16 @@ export class ShowHeroesAdminComponent implements OnInit {
       position: 'top-end',
       icon: 'success',
       title: 'Héroe ha sido actualizado exitosamente!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  callDeleteNotification(){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Héroe ha sido eliminado exitosamente!',
       showConfirmButton: false,
       timer: 1500
     })
