@@ -1,57 +1,15 @@
-<app-navbar-portal-admin (toggleUsers)="toggleUsersHandler($event)"></app-navbar-portal-admin>
+<app-navbar-portal-admin (viewUsersClick)="toggleShowHeroes = false; toggleHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleUsers = true" 
+(viewHeroesClick)="toggleShowHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleHeroes = true" 
+(showHeroesClick)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleShowHeroes = true"
+(showTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleViewTestimonies=false; toggleShowTestimonies=true;"
+(viewTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=true;"></app-navbar-portal-admin>
     <div class="container table-users">
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
-      <table *ngIf="ShowUsers" class="table table-dark table-striped table-bordered">
-        <thead class="table-header">
-          <tr>
-            <th>Email</th>
-            <th>Id</th>
-            <th>Rol</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of User" class="userRowHover" (click)="open(content); onSelect(user);">
-            <td class="rowInfo">{{user.email}}</td>
-            <td class="rowInfo">{{user.id}}</td>
-            <td class="rowInfo">{{user.rol}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <app-users-admin *ngIf="toggleUsers"></app-users-admin>
+      <app-heroes-admin *ngIf="toggleHeroes"></app-heroes-admin>
+      <app-showHeroes-admin *ngIf="toggleShowHeroes"></app-showHeroes-admin>
+      <app-add-testimonies-admin *ngIf="toggleViewTestimonies"></app-add-testimonies-admin>
+      <app-view-testimonies-admin *ngIf="toggleShowTestimonies"></app-view-testimonies-admin>
     </div>
-    <img class="imagen_opaca" src="assets/images/Logo-FP-1-Medium.png" alt="">
-    
   </div>
-
-  <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="correo">Correo</label>
-          <div class="input-group">
-            <input id="correo" class="form-control" placeholder="ejemplo@gmail.com" name="dp" ngbDatepicker #dp="ngbDatepicker" readonly>
-            <div class="input-group-append">
-              <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="rol">Rol</label>
-          <div class="input-group">
-            <input id="rol" class="form-control" placeholder="rol" name="dp" ngbDatepicker #dp="ngbDatepicker">
-            <div class="input-group-append">
-              <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div>
-  </ng-template>
+  <img class="imagen_opaca" src="assets/images/bg-art.png" alt="">

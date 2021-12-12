@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand nav-link" onclick="window.location.reload();" [routerLink]="['/portal-digitador']">Portal Digitador</a>
+    <a class="navbar-brand nav-link" onclick="window.location.replace(portal-digitador);" [routerLink]="['/portal-digitador']">Portal Digitador</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -16,10 +16,9 @@
       </div>
     </div>
     <div class="dropdownx navbar-nav ms-auto">
-      <button class="dropbtn"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>
+      <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>
       <div class="dropdown-content">
-        <a href="#">Editar</a>
-        <a href="#">Cambiar Contraseña</a>
+        <a (click)="fnEditUserProfile()">Editar</a>
         <a (click)="logOut()">Cerrar Sesion</a>
       </div>
     </div>

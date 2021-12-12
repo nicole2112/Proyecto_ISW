@@ -15,9 +15,13 @@ import { LoginComponent } from './login/login.component';
 import { PortalAdminComponent } from './portal-admin/portal-admin.component';
 import { RegistroComponent } from './registro/registro.component';
 import { PwResetComponent } from './pw-reset/pw-reset.component';
+import { EmailConfGuard } from './email-conf/guard/email-conf.guard';
+import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
 import { PortalDigitadorComponent } from './portal-digitador/portal-digitador.component';
-import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.component';
-import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
+import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
+import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
+import { AdminConfGuard } from './email-conf/guard/admin-conf.guard';
+import { DigitadorConfGuard } from './email-conf/guard/digitador-conf.guard';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -29,16 +33,19 @@ export const AppRoutes: Routes = [
   { path: 'programas', component: ProgramasComponent },
   { path: 'testimonies', component: TestimoniesComponent },
   { path: 'blog', component: BlogComponent },
-  { path: 'login', component: LoginComponent },
+  {path: 'login', component: LoginComponent },
+  {path: 'heroes-admin', component: HeroesAdminComponent, canActivate: [AdminConfGuard]},
   {
-    path: 'registro',
+    path: 'portal-admin/registro',
     component: RegistroComponent,
-    // canActivate: [RoleGuardGuard],
+    canActivate: [AdminConfGuard],
   },
-  { path: 'portal-admin', component: PortalAdminComponent },
-  { path: 'portal-digitador', component: PortalDigitadorComponent},
+  { path: 'portal-admin', component: PortalAdminComponent, canActivate: [AdminConfGuard] },
+  {path: 'no-email-confirmation', component: NoConfirmationComponent},
+  { path: 'portal-admin/perfil', component: EditUserProfileComponent, canActivate: [AdminConfGuard] },
+  { path: 'portal-digitador', component: PortalDigitadorComponent, canActivate: [DigitadorConfGuard]},
   { path: 'portal-pw-reset', component: PwResetComponent },
-  { path: 'agregarTestimonio', component: AgregarTestimoniosComponent },
-  { path: 'verTestimonio', component: VerTestimoniosComponent },
+  //{ path: 'agregarTestimonio', component: AgregarTestimoniosComponent, canActivate: [AdminConfGuard] },
+  //{ path: 'verTestimonio', component: VerTestimoniosComponent, canActivate: [AdminConfGuard] },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];

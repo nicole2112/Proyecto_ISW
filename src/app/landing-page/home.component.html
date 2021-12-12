@@ -1,11 +1,14 @@
 <navbar></navbar>
-<div class="container sectionTitle" style="text-align: center;" >
+<div class="sectionTitle" style="text-align: center;" >
 
-<img src= "././assets/images/FP6.gif" class="responsive">
-<div style=" margin-top:-5%;">
-  <a class="button1" [routerLink]="['//quienes-somos']">Conócenos</a>
-  <a class="button1" [routerLink]="['/donations']">Apoya la fundación</a>
-  <br><br><br>
+<!-- <img src= "../../assets/images/FP6.gif" class="responsive"> -->
+<div class="responsive">
+  <div class="buttonsGif">
+    <a class="button1" [routerLink]="['//quienes-somos']">Conócenos</a>
+    <a class="button1" [routerLink]="['/donations']">Apoya la fundación</a>
+    <br><br><br>
+    
+  </div>
 </div>
 </div>
 
@@ -91,7 +94,7 @@
       <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
         <img src="././assets/images/abriendo caminos.png" style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top: 10%;" alt="...">
         <div class="card-body">
-<span class="tag tag-teal">Abriendo Caminos</span>
+          <span class="tag tag-teal">Abriendo Caminos</span>
           <p class="card-text" style="text-align: center;">Patrocina la educación de nuestros pacientes</p>
         </div>
         <div class="card-footer">
@@ -160,7 +163,7 @@
     <div class="col-md-4 align-items-stretch">
       <div class="card card-block h-100" style="background-color: #F2F2F2; text-align: center;">
         <div class="card-header">
-          <img src="./images/ballons.jpeg" alt="img" />
+          <h5>Andrea Nuñez</h5>
         </div>
         <div class="card-body">
           <span class="tag tag-teal">Vacunas</span>
@@ -169,9 +172,8 @@
             Utiliza gel, manten la distancia y usa tu mascarilla!
           </p>
           <div class="user">
-            <img src="././assets/images/user-1.jpg" alt="user 1" />
+            <img src="../../assets/images/vacunas.jpg" alt="user 1" />
             <div class="user-info">
-              <h5>Andrea Nuñez</h5>
               <small>Hace 2 horas</small>
             </div> 
          </div>
@@ -185,7 +187,7 @@
     <div class="col-md-4 d-flex align-items-stretch">
       <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
         <div class="card-header">
-          <img src="./images/ballons.jpeg" alt="img" />
+          <h5>Gabriel Jimenez</h5>
         </div>
         <div class="card-body flex-fill">
           <span class="tag tag-teal">Dialisis</span>
@@ -194,9 +196,8 @@
             La Dialisis es una enfermedad muy complicada, te llevamos a un paso a paso del tratamiento en la fundación
           </p>
           <div class="user">
-            <img src="././assets/images/user-2.jpg" alt="user 2" />
+            <img src="../../assets/images/dialisis.jpg" alt="user 2" />
             <div class="user-info">
-              <h5>Gabriel Jimenez</h5>
               <small>Ayer</small>
             </div> 
          </div>
@@ -210,7 +211,7 @@
     <div class="col-md-4 d-flex align-items-stretch">
       <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
         <div class="card-header">
-          <img src="./images/ballons.jpeg" alt="img" />
+          <h5>Maria Velazquez</h5>
         </div>
         <div class="card-body flex-fill">
           <span class="tag tag-teal">Medicamentos</span>
@@ -219,9 +220,8 @@
             Fundación Padrino agradece a los estudiantes de la Carrera de Administración de la UNAH-VS por la generosa donación de medicamentos otorgada
           </p>
           <div class="user">
-            <img src="././assets/images/user-3.jpg" alt="user 3" />
+            <img src="../../assets/images/meds.jpg" alt="user 3"/>
             <div class="user-info">
-              <h5>Maria Velazquez</h5>
               <small>20 Nov 2021</small>
             </div> 
          </div>
@@ -231,6 +231,12 @@
         </div>
       </div>
     </div>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <a href="https://api.whatsapp.com/send?phone=50433364562&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20tema%20." class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+    </a>
+
     </div>
     <br>
 </div>

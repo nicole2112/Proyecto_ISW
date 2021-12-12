@@ -1,21 +1,11 @@
 .imagen_opaca{
-    z-index: -1;  opacity: 0.20; display: block;
+    z-index: -1; display: block;
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0px;
     left: 0px;
 
-}
-
-#function-list{
-    display: flex;
-    justify-content: left;
-    align-content: space-between;
-}
-
-.list-group{
-    margin: 10px;
 }
 
 .table-users{
@@ -27,16 +17,4 @@
     height: 70vh;
     width: 100%;
     overflow: auto;
-}
-.table-wrapper-scroll-y {
-    display: block;
-}
-
-.table-header{
-    position: sticky;
-    top: 0px;
-}
-
-.userRowHover:hover .rowInfo{
-    color: #9965ac;
 }

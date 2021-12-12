@@ -11,7 +11,8 @@ import Swal from 'sweetalert2'
 export class PwResetComponent implements OnInit {
 
   email;
-
+  emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  
   constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {

@@ -1,58 +1,119 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--<link href="https://fonts.googleapis.com/css2?family=Roboto,wght@1,300;1,400&display=swap" rel="stylesheet">-->
+
 <navbar></navbar>
+<h1 class="d-flex justify-content-center" style="margin-top: 170px; font-size: 400%; font-family: 'Roboto', sans-serif;">Portal Corporativo</h1>
+
+
 <div *ngIf="auth.user | async; else showLogin" class="center-screen">
   <div class="card text-center container-fluid">
     <div class="card-header">
-      <h3>Atencion</h3>
+      <h3>Atención</h3>
     </div>
     <div class="card-body">
-      <h5 class="card-title" style="margin-top: 1em;">Un usuario activo</h5>
-      <p class="card-text" style="margin-top: 1em;">Seleccione ir al portal de empleados o salir de sesion</p>
-      <div style="margin-top: 1em;">
-        <button type="button" class="btn btn-primary btn-lg" style="margin-right: 2em;" [routerLink]="['/portal-admin']">Portal</button>
-        <button type="button" class="btn btn-danger btn-lg" (click)="logOut()">Cerrar Session</button>
+      <h5 class="card-title" style="margin-top: 1em">Un usuario activo</h5>
+      <p class="card-text" style="margin-top: 1em">
+        Seleccione ir al portal de empleados o salir de la sesión.
+      </p>
+      <div style="margin-top: 1em">
+        <button
+          type="button"
+          class="btn btn-primary btn-lg"
+          style="margin-right: 2em"
+          [routerLink]="['/portal-admin']"
+        >
+          Portal
+        </button>
+        <button type="button" class="btn btn-danger btn-lg" (click)="logOut()">
+          Cerrar Sessión
+        </button>
       </div>
-      
     </div>
   </div>
 </div>
 
+
+
 <ng-template #showLogin>
-  <div>
-    <h1>Portal Administrativo</h1>
-  </div>
-
-  <div class="imagen">
-    <img src="./assets/images/Logo-FP-1-Medium.png" alt="">
-  </div>
-
-  <!-- login -->
-  <div class="container">
-    <div class="screen">
-      <div class="screen__content">
-        <form class="login">
-          <div class="login__field">
-            <i class="login__icon fas fa-user"></i>
-            <input type="text" class="login__input" placeholder="Correo" [(ngModel)]="email" name="email">
-          </div>
-          <div class="login__field">
-            <i class="login__icon fas fa-lock"></i>
-            <input type="password" class="login__input" placeholder="Password" [(ngModel)]="pass" name="password">
-          </div>
-          <button class="button login__submit" (click)="customLogin()">
-            <span class="button__text">Ingresar</span>
-            <i class="button__icon fas fa-chevron-right"></i>
-          </button>	
-          <div id="formFooter">
-            <a style="text-decoration: none" class="underlineHover" href="/portal-pw-reset">Olvidaste la contraseña?</a>
-          </div>			
-        </form>
+  <form #claseForm="ngForm">
+    <div style="margin-top: 120px">
+      <div class="d-flex justify-content-center">
+        <!-- login -->
+        <div
+          class="form-floating mb-3 col-md-5"
+          [ngClass]="{
+            error:
+              claseForm.controls.email?.invalid &&
+              claseForm.controls.email?.touched
+          }"
+        >
+          <input
+            [(ngModel)]="email"
+            [pattern]="emailPattern"
+            type="email"
+            class="form-control"
+            id="floatingInput"
+            name="email"
+            placeholder="nombre@fundacionpadrino.com"
+            required
+          />
+          <label for="floatingInput">Correo</label>
+          <em class="text-danger"
+              *ngIf="
+                claseForm.controls.email?.invalid &&
+                claseForm.controls.email?.touched
+              ">*Ingrese un correo válido
+          </em>
+        </div>
       </div>
-      <div class="screen__background">
-        <span class="screen__background__shape screen__background__shape4"></span>
-        <span class="screen__background__shape screen__background__shape3"></span>		
-        <span class="screen__background__shape screen__background__shape2"></span>
-        <span class="screen__background__shape screen__background__shape1"></span>
-      </div>		
+
+      <div class="d-flex justify-content-center" style="margin-top: 10px">
+        <!-- Contrasena -->
+        <div
+          class="form-floating mb-3 col-md-5"
+          [ngClass]="{
+            error:
+              claseForm.controls.pass?.invalid &&
+              claseForm.controls.pass?.touched
+          }"
+        >
+          <input
+            [(ngModel)]="pass"
+            type="password"
+            class="form-control"
+            id="floatingInput"
+            name="pass"
+            placeholder="Contraseña"
+            required
+          />
+          <label for="floatingInput">Contraseña</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.pass?.invalid &&
+              claseForm.controls.pass?.touched
+            "
+            >Contraseña es requerida</em
+          >
+        </div>
+      </div>
+
+      <div class="col-md-5 ms-md-auto">
+        <a [routerLink]="['/portal-pw-reset']">¿Olvidaste la contraseña?</a>
+      </div>
+
+    
+      <div class="form-group d-flex justify-content-center" style="margin-top: 20px">
+        <button class="btn btn-primary ingresar-button" 
+                type="submit"
+                [disabled]="claseForm.invalid"
+                (click)="customLogin()">
+          Ingresar
+        </button>
+      </div>
     </div>
-  </div>
+  </form>
 </ng-template>
+
+<!-- text-danger -->

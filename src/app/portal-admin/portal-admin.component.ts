@@ -6,6 +6,13 @@ import { ModalService } from '../services/modal.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { getAuth, Auth } from '@firebase/auth';
+import { authState } from 'rxfire/auth';
+import { AuthenticationService } from '../services/auth.services';
+import { Router } from "@angular/router";
+import { HeroesAdminComponent } from '../heroes-admin/heroes-admin.component';
+import { UsersAdminComponent } from '../users-admin/users-admin.component';
+import { ShowHeroesAdminComponent } from '../showHeroes-admin/showHeroes-admin.component';
 
 @Component({
   selector: 'app-portal-admin',
@@ -14,11 +21,19 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 
 export class PortalAdminComponent implements OnInit {
-
+  roleOptions = '';
+  selectedValue : any;
   closeResult: string;
   User = [];
+  userSelectedId : string;
 
-  constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer) { }
+  toggleHeroes = false;
+  toggleUsers = false;
+  toggleShowHeroes = false;
+  toggleShowTestimonies=false;
+  toggleViewTestimonies=false;
+
+  constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer, private router: Router) { }
   ShowUsers = false;
 
   toggleUsersHandler(isShow: boolean){
@@ -27,57 +42,14 @@ export class PortalAdminComponent implements OnInit {
   }
 
   FundacionRef: AngularFireList<any>;
+  userRef: AngularFireObject<any>;
 
   ngOnInit(): void {
-    this.FundacionRef = this.db.list('usuarios');
-
-    this.FundacionRef.snapshotChanges().subscribe(data =>{
-      this.User = [];
-      data.forEach(user => {
-        let a = user.payload.toJSON();
-        a['$key'] = user.key;
-        this.User.push(a as User);
-      })
-      console.table(this.User);
-    })
   }
 
-  private _inputEmail: string;
-  private _inputRole: string;
-  private _inputId: string;
-
-  public get inputEmail(): SafeHtml{
-    return this._sanitizer.bypassSecurityTrustHtml(this._inputEmail);
-  }
-
-  public get inputRole(): SafeHtml{
-    return this._sanitizer.bypassSecurityTrustHtml(this._inputRole);
-  }
-
-  public get inputId(): SafeHtml{
-    return this._sanitizer.bypassSecurityTrustHtml(this._inputId);
-  }
-
-  onSelect(selectedItem: any){
-    document.getElementById("correo").setAttribute('value', selectedItem.email);
-    document.getElementById("rol").setAttribute('value', selectedItem.rol);
-  }
-
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  //Para redirigir al perfil del usuario correspondiente
+  fnEditUserProfile(){
+    this.router.navigateByUrl(`portal-admin/perfil`);
   }
 }
+
