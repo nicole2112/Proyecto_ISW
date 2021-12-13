@@ -85,7 +85,7 @@
             <div class="input-group">
                 <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
                     <label class="custom-file-upload">
-                      <input (change)="onChangeFile($event)" type="file" id="url"/>
+                      <input (change)="onChangeFile($event)" type="file" id="url" accept="image/png, image/jpeg"/>
                       Agregar imagen...
                     </label>
                   </div>
