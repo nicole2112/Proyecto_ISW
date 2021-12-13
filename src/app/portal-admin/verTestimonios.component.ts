@@ -50,17 +50,27 @@ export class VerTestimoniosComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        //console.log(this.testimService.getTestimonies());
         this.testimService.getTestimonies().subscribe((item) => {
-            //console.log(item);
-            // let nuevo = item;
-            // nuevo.forEach(element => {
-            //     element.video_url = this.inputVideo(element.video_url);
-            // });
+       
             this.testimonyList = item;
             this.titulo = item[0].titulo;
-            this.visible = item[0].visible;
             console.log(this.testimonyList);
+
+            
+
+            this.testimonyList.forEach(element => {
+        
+                if(element.visible == 1){
+                    element.visible ="Disponible";
+                }else{
+                    element.visible ="Oculto";
+                }
+
+                this.testimonyList.push(element);
+
+            });
+
+            
 
         });
 

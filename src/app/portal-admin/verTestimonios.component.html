@@ -11,6 +11,7 @@
           </button></th>
           <th style="text-align: center;">Titulo</th>
           <th style="text-align: center;">Testimonio</th>
+          <th style="text-align: center;">Estado</th>
           
         </tr>
       </thead>
@@ -19,8 +20,7 @@
           <td class="rowInfo" style="text-align: center; width: 0%;"></td>
           <td class="rowInfo" style="text-align: center;">{{ testimonio?.titulo }}</td>
           <td class="rowInfo" style="text-align: center;"><iframe [src]="inputVideo(testimonio.video_url)"></iframe></td>
-          
-          
+          <td class="rowInfo" style="text-align: center;">{{testimonio?.visible}}</td>   
         </tr>
       </tbody>
     </table>
