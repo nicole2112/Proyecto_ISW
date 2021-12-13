@@ -72,6 +72,12 @@ export class HeroesAdminComponent implements OnInit {
       this.prioridadInt = 3
     }
 
+    if(this.fallecido === 'Fallecido'){
+      this.fallecido = 'si'
+    }else{
+      this.fallecido = 'no'
+    }
+
     heroeItem={
       "imageUrl": imageUrl,
       "nombre": this.nombre,
