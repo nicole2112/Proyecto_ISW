@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { take } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { AuthenticationService } from '../services/auth.services';
-
+import { NavbarPortalAdminComponent } from '../navbar-portal-admin/navbar-portal-admin.component';
+import { PortalAdminComponent } from '../portal-admin/portal-admin.component';
 @Component({
   selector: 'app-heroes-admin',
   templateUrl: './heroes-admin.component.html',
@@ -21,7 +22,13 @@ export class HeroesAdminComponent implements OnInit {
   fileList: any[];
 
 
-  constructor(public service: AuthenticationService) {}
+  constructor(public service: AuthenticationService, public adminComp: PortalAdminComponent) {}
+
+  @Output() viewHeroesRedirect = new EventEmitter<boolean>();
+
+  viewHeroesRedirectFunc(){
+    this.viewHeroesRedirect.emit(true);
+  }
 
   ngOnInit(): void {}
 
@@ -98,12 +105,12 @@ export class HeroesAdminComponent implements OnInit {
           })
     
           this.getHeroeItemID(data);
+          this.viewHeroesRedirectFunc();
         }).catch((error)=>{
     
         });
       }
     );
-
   }  
 
 
