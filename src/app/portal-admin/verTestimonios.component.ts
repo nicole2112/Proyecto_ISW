@@ -23,6 +23,8 @@ export class VerTestimoniosComponent implements OnInit{
     opciones = ["Disponible", "Ocultar"];
     Disponible = "Disponible";
     Ocultar = "Ocultar";
+    prioridad = "Baja";
+    opcionesPrioridad = ["Alta","Media", "Baja"];
 
     constructor(private testimService: TestimonyService, private _sanitizer: DomSanitizer,private modalService: NgbModal)
     {
@@ -50,17 +52,11 @@ export class VerTestimoniosComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        //console.log(this.testimService.getTestimonies());
         this.testimService.getTestimonies().subscribe((item) => {
-            //console.log(item);
-            // let nuevo = item;
-            // nuevo.forEach(element => {
-            //     element.video_url = this.inputVideo(element.video_url);
-            // });
+            console.log(item);
             this.testimonyList = item;
             this.titulo = item[0].titulo;
             this.visible = item[0].visible;
-            console.log(this.testimonyList);
 
         });
 
@@ -99,5 +95,10 @@ export class VerTestimoniosComponent implements OnInit{
             
             // this.testimService.editarTestomonio(this.titulo, visible);
         }
+    }
+
+    editarTestimonio(key)
+    {
+
     }
 }

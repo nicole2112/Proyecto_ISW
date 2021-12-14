@@ -25,52 +25,30 @@ export class TestimonyService {
       return false;
   }
 
-  getTestimonies(): Observable<any>{
+  getTestimonies(): Observable<any[]>{
 
     this.FundacionRef = this.db.list('testimonios');
 
-    return this.FundacionRef.valueChanges().pipe(data =>{
-        return data;
-        
-    })
-  }
+    return this.FundacionRef.snapshotChanges().pipe(map(data =>{
+      this.testimonyList = [];
+      data.forEach(testimonio =>{
+          let a = testimonio.payload.toJSON();
+          a['key'] = testimonio.key;
+          this.testimonyList.push(a);
+      })
+      return this.testimonyList;
+    }))
+}
 
   postTestimonies(testimonio)
   {
-    this.db.object(`testimonios/${testimonio.titulo.replace(/\s+/g, '_').toLowerCase()}`).set(testimonio);
+    this.db.list(`testimonios`).push(testimonio);
   }
 
+  updateTestimonies(testimonio, key)
+  {
+    this.db.object(`testimonios/${key}`).set(testimonio);
+  }
 
-  //funcion archivada, muchos problemas
-  // editarTestomonio(nombre, visible):any
-  // {
-  //   let testimonio: any;
-  //   console.log("entra");
-
-  //   this.postTestimonies(this.db.object(`testimonios/${nombre.replace(/\s+/g, '_').toLowerCase()}`).snapshotChanges().pipe().subscribe((T) =>
-  //   {
-  //     console.log(T);
-  //     testimonio = T.payload.toJSON();
-  //     testimonio.visible = visible;
-  //     return testimonio;
-  //     if(!this.emptyCheck(testimonio))
-  //     {
-  //       testimonio.visible = visible;
-  //       this.postTestimonies(testimonio);
-  //     }
-  //     else
-  //       {
-  //         Swal.fire({
-  //           position: 'top-end',
-  //           icon: 'error',
-  //           title: "No se encotro el testimonio",
-  //           showConfirmButton: false,
-  //           timer: 1500
-  //         });
-  //       }
-  //   }))
-    
-    
-  // }
   
 }

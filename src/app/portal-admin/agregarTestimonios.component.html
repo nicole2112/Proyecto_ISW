@@ -8,16 +8,54 @@
       <h1 style="color:#1c87c9 ;">Agregar Testimonio</h1>
       <form #claseForm="ngForm" action="/">
         <div class="info">
-          <h5 style ="color:red">**Se requiere colocar el link "Embed" de Facebook.**</h5>
-          <input class="fname" id= "url" type="text" name="name" placeholder="URL Facebook" [(ngModel)]="url" required>
-          <input type="text" name="name" placeholder="Titulo del Video" [(ngModel)]="titulo" required>
-          <select (change)="onSelectedChange($event)" required>
+          <h5 style ="color:red; width: 100%;">**Se requiere colocar el link "Embed" de Facebook.**</h5>
+
+          <div
+          class="form-floating mb-3 col-md-5"
+          [ngClass]="{
+            error:
+              claseForm.controls.url?.invalid &&
+              claseForm.controls.url?.touched
+          }"
+          style="width: 100%;"
+          >
+          <em class="text-danger" *ngIf="(claseForm.controls.url?.invalid  || !validarURL(url)) && claseForm.controls.url?.touched">*Contenido válido es requerido</em>
+          <input class="fname" id= "url" type="text" name="url" placeholder="URL Facebook" [(ngModel)]="url" required>
+          </div>
+
+          <div
+          class="form-floating mb-3 col-md-5"
+          [ngClass]="{
+            error:
+              claseForm.controls.titulo?.invalid &&
+              claseForm.controls.titulo?.touched
+          }"
+          style="width: 100%;"
+          >
+          
+          <em class="text-danger" *ngIf="claseForm.controls.titulo?.invalid && claseForm.controls.titulo?.touched">*Contenido válido es requerido</em>
+          <input type="text" name="titulo" placeholder="Titulo del Video" [(ngModel)]="titulo" required>
+          </div>
+
+          <div>
+          <label for="visibilidad">Visibilidad</label>
+          <em class="text-danger" *ngIf="claseForm.controls.visibilidad?.invalid && claseForm.controls.visibilidad?.touched">*Contenido válido es requerido</em>
+          <select (change)="onSelectedChange($event)" name="visibilidad" required>
             <option *ngFor="let opcion of opciones" [ngValue]="opcion">{{opcion}}</option>
           </select>
+          </div>
+
+          <div>
+          <label for="prioridad">Prioridad</label>
+          <em class="text-danger" *ngIf="claseForm.controls.prioridad?.invalid && claseForm.controls.prioridad?.touched">*Contenido válido es requerido</em>
+          <select (change)="onSelectedPriorityChange($event)" name="prioridad" required>
+            <option *ngFor="let opcion of opcionesPrioridad" [ngValue]="opcion">{{opcion}}</option>
+          </select>
+          </div>
         </div>
         <button button
         type="button"
-        [disabled]="!url || !titulo"
+        [disabled]="!(url && titulo && validarURL(url))"
         (click)="agregarTestimonio()"
         class="btn btn-success">Salvar</button>
       </form>
