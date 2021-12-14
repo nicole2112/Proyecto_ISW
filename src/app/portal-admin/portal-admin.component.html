@@ -10,7 +10,7 @@
       <app-heroes-admin *ngIf="toggleHeroes" (viewHeroesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = true"></app-heroes-admin>
       <app-showHeroes-admin *ngIf="toggleShowHeroes"></app-showHeroes-admin>
       <!-- <app-showHeroes-admin *ngIf="toggleShowHeroesRedirect"></app-showHeroes-admin> -->
-      <app-add-testimonies-admin *ngIf="toggleViewTestimonies"></app-add-testimonies-admin>
+      <app-add-testimonies-admin *ngIf="toggleViewTestimonies" (viewTestimoniesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=true; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = false"></app-add-testimonies-admin>
       <app-view-testimonies-admin *ngIf="toggleShowTestimonies"></app-view-testimonies-admin>
     </div>
   </div>

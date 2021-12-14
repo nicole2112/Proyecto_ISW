@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Output, EventEmitter } from "@angular/core";
 import { TestimonyService } from "../services/testimony.service";
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2'
@@ -24,6 +24,11 @@ export class AgregarTestimoniosComponent {
     {
 
     }
+    @Output() viewTestimoniesRedirect = new EventEmitter<boolean>();
+
+    viewTestimoniesRedirectFunc(){
+    this.viewTestimoniesRedirect.emit(true);
+  }
 
     onSelectedChange(event:any)
     {
@@ -58,7 +63,8 @@ export class AgregarTestimoniosComponent {
                 timer: 1500
               })
 
-            this.tService.postTestimonies(testimonio);
+            this.tService.postTestimonies(testimonio); 
+            this.viewTestimoniesRedirectFunc();
         }
     }
 
