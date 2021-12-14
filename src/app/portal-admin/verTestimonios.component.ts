@@ -18,11 +18,15 @@ export class VerTestimoniosComponent implements OnInit{
     url;
     titulo;
     visible;
+    prioridad;
     userSelectedId : string;
     estado="Disponible";
     opciones = ["Disponible", "Ocultar"];
     Disponible = "Disponible";
     Ocultar = "Ocultar";
+
+    NuevaLista: any[] = [];
+
 
     constructor(private testimService: TestimonyService, private _sanitizer: DomSanitizer,private modalService: NgbModal)
     {
@@ -54,23 +58,28 @@ export class VerTestimoniosComponent implements OnInit{
        
             this.testimonyList = item;
             this.titulo = item[0].titulo;
-            console.log(this.testimonyList);
-
-            
+            //console.log(this.testimonyList);
+            this.testimonyList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
 
             this.testimonyList.forEach(element => {
-        
+
                 if(element.visible == 1){
                     element.visible ="Disponible";
                 }else{
                     element.visible ="Oculto";
+                } 
+                
+                if(element.prioridad == 1){
+                    element.prioridad ="Alta";
+                }else if (element.prioridad == 2){
+                    element.prioridad = "Media";
+                }else if(element.prioridad == 3){
+                    element.prioridad = "Baja"
                 }
-
-                this.testimonyList.push(element);
-
+                this.NuevaLista.push(element);
             });
 
-            
+            console.log(this.NuevaLista);
 
         });
 
@@ -105,8 +114,7 @@ export class VerTestimoniosComponent implements OnInit{
                 title: 'Testimonio modificado!',
                 showConfirmButton: false,
                 timer: 1500
-              })
-            
+              })            
             // this.testimService.editarTestomonio(this.titulo, visible);
         }
     }

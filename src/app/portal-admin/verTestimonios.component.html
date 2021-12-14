@@ -12,15 +12,17 @@
           <th style="text-align: center;">Titulo</th>
           <th style="text-align: center;">Testimonio</th>
           <th style="text-align: center;">Estado</th>
+          <th style="text-align: center;">Prioridad</th>
           
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let testimonio of testimonyList" class="userRowHover" >
+        <tr *ngFor="let testimonio of NuevaLista" class="userRowHover" >
           <td class="rowInfo" style="text-align: center; width: 0%;"></td>
           <td class="rowInfo" style="text-align: center;">{{ testimonio?.titulo }}</td>
           <td class="rowInfo" style="text-align: center;"><iframe [src]="inputVideo(testimonio.video_url)"></iframe></td>
-          <td class="rowInfo" style="text-align: center;">{{testimonio?.visible}}</td>   
+          <td class="rowInfo" style="text-align: center;" >{{testimonio?.visible}}</td> 
+          <td class="rowInfo" style="text-align: center;">{{testimonio?.prioridad}}</td> 
         </tr>
       </tbody>
     </table>
