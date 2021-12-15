@@ -43,9 +43,9 @@ export class AgregarTestimoniosComponent {
         console.log(this.prioridad);
     }
 
-    validarURL(link)
+    validarURL(link:string)
     {
-        return /<(“[^”]*”|'[^’]*’|[^'”>])*>/.test(link);
+        return (/<(“[^”]*”|'[^’]*’|[^'”>])*>/.test(link) && link.length > 13);
     }
 
     agregarTestimonio()
