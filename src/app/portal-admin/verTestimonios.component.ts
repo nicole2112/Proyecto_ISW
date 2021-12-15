@@ -32,6 +32,7 @@ export class VerTestimoniosComponent implements OnInit{
     Ocultar = "Ocultar";
     prioridad = "Baja";
     opcionesPrioridad = ["Alta","Media", "Baja"];
+    currentKey:string;
 
     constructor(private testimService: TestimonyService, private _sanitizer: DomSanitizer,private modalService: NgbModal, private db:AngularFireDatabase)
     {
@@ -53,6 +54,11 @@ export class VerTestimoniosComponent implements OnInit{
         this.titulo = event.target.value;
     }
 
+    onSelectedPriorityChange(event:any)
+    {
+        this.prioridad = event.target.value;
+        console.log(this.prioridad);
+    }
 
     ShowTestimonies = false;
     toggleTestimoniesHandler(isShow: boolean){
@@ -64,52 +70,57 @@ export class VerTestimoniosComponent implements OnInit{
         this.testimService.getTestimonies().subscribe((item) => {
             console.log(item);
             this.testimonyList = item;
-            this.titulo = item[0].titulo;
-            this.visible = item[0].visible;
-
         });
 
     }
-    
     
     inputVideo(url:string):SafeResourceUrl{
         return this._sanitizer.bypassSecurityTrustResourceUrl(url);
       }
 
-    modificarTestimonio()
+    editarTestimonio()
     {
-        if(this.titulo !== null && this.visible !== null)
-        {
+        console.log("entra");
+        let testimonio = {};
         let visible;
         if(this.estado === "Disponible")
             visible = 1;
         else
             visible = 0;
-        
-        this.testimonyList.forEach((item) =>
-            {
-                if(item.titulo === this.titulo)
-                {
-                item.visible = visible;
-                this.testimService.postTestimonies(item);
-                }
-            })
 
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Testimonio modificado!',
-                showConfirmButton: false,
-                timer: 1500
-              })
-            
-            // this.testimService.editarTestomonio(this.titulo, visible);
+        let numPrioridad = 3;
+        switch(this.prioridad)
+        {
+            case "Alta":
+                numPrioridad = 1;
+                break;
+            case "Media":
+                numPrioridad = 2;
+                break;
+            case "Baja":
+            default: 
+                numPrioridad = 3;
         }
+
+        testimonio = {
+            "titulo" : this.titulo,
+            "video_url" : this.url,
+            "visible" : visible,
+            "prioridad": numPrioridad,
+        }
+        this.testimService.updateTestimony(testimonio, this.currentKey);
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Testimonio modificado!',
+            showConfirmButton: false,
+            timer: 1500
+          });
     }
 
-    editarTestimonio(key)
+    eliminarTestimonio()
     {
-
+        this.testimService.deleteTestimony(this.currentKey);
     }
     /**********************************************************
      * ********************************************************
@@ -146,7 +157,8 @@ export class VerTestimoniosComponent implements OnInit{
         });
       }
     
-      onSelect(selectedItem: any, img: string){
+    onSelect(selectedItem: any, img: string, key:string)
+    {
         this.testimonioSelectedImg = selectedItem.imageUrl;
         document.getElementById("titulo").setAttribute('value', selectedItem.titulo);
         document.getElementById("url").innerHTML = selectedItem.video_url;
@@ -199,6 +211,9 @@ export class VerTestimoniosComponent implements OnInit{
         selectorPrioridad.appendChild(optionPrioridad1);
         selectorPrioridad.appendChild(optionPrioridad2);
         selectorPrioridad.appendChild(optionPrioridad3);
+        this.currentKey = key;
+        this.url = selectedItem.video_url;
+        this.titulo = selectedItem.titulo;
     }
 
     //NUEVO HEROES

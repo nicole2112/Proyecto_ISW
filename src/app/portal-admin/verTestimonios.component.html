@@ -73,7 +73,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let testimonio of testimonyList" class="userRowHover" (click)="open(content, testimonio.key, testimonio.titulo); onSelect(testimonio, testimonio.video_url);" >
+        <tr *ngFor="let testimonio of testimonyList" class="userRowHover" (click)="open(content, testimonio.key, testimonio.titulo); onSelect(testimonio, testimonio.video_url, testimonio.key);" >
           <td class="rowInfo" style="text-align: center;">{{ testimonio?.titulo }}</td>
           <td class="rowInfo" style="text-align: center;"><iframe [src]="inputVideo(testimonio.video_url)"></iframe></td> 
         </tr>
@@ -95,7 +95,7 @@
         <div class="form-group">
           <label for="nombre">Titulo</label>
           <div class="input-group">
-            <input id="titulo" type="text" class="form-control" placeholder="nombre apellido" name="dp">
+            <input id="titulo" type="text" class="form-control" placeholder="nombre apellido" [(ngModel)]="titulo" name="dp">
             <div class="input-group-append">
               <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
             </div>
@@ -125,7 +125,7 @@
             <label for="prioridadOptions">Prioridad</label>
             <div class="input-group">
               <div class="custom-select" style="width:200px;" id="custom-select">
-                <select name="prioridadOptions" id="prioridadOptions">
+                <select name="prioridadOptions" id="prioridadOptions" (change)="onSelectedPriorityChange($event)">
                 </select>
               </div>
             </div>
@@ -136,7 +136,7 @@
     </div>
     <div class="modal-footer">
       <!--button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, testimonioSelectedId, testimonioSelectedName); onDeleteConfirmation(testimonioSelectedName); modal.close('Delete Click');">Eliminar</button-->
-      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); modificarTestimonio();">Guardar</button>
+      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarTestimonio();">Guardar</button>
     </div>
 
   </ng-template>

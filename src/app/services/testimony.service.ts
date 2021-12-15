@@ -45,9 +45,22 @@ export class TestimonyService {
     this.db.list(`testimonios`).push(testimonio);
   }
 
-  updateTestimonies(testimonio, key)
+  updateTestimony(testimonio, key)
   {
-    this.db.object(`testimonios/${key}`).set(testimonio);
+    console.log(key);
+    console.log(testimonio);
+    this.db.object(`testimonios/${key}`).set(testimonio).then(()=>{
+      console.log("success");
+    })
+    .catch((err) =>
+    {
+      console.log(err);
+    });
+  }
+
+  deleteTestimony(key)
+  {
+    this.db.object(`testimonios/${key}`).set(null);
   }
 
   
