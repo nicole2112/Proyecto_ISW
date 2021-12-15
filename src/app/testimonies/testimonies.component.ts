@@ -24,7 +24,7 @@ export class TestimoniesComponent implements OnInit
             this.fullList = item;
             this.fullList.forEach((item) =>
             {
-                console.log(item);
+                //console.log(item);
                 if(item.visible)
                     this.testimonyList.push(item);
             });
