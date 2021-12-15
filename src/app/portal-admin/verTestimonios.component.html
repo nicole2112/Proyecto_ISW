@@ -115,7 +115,7 @@
             <label for="visibilidadOptions">Visibilidad</label>
             <div class="input-group">
               <div class="custom-select" style="width:200px;" id="custom-select">
-                <select name="visibilidadOptions" id="visibilidadOptions">
+                <select name="visibilidadOptions" id="visibilidadOptions" (change)="onSelectedChange($event)">
                 </select>
               </div>
             </div>

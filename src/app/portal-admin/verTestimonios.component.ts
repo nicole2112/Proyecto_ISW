@@ -43,6 +43,8 @@ export class VerTestimoniosComponent implements OnInit{
         
         console.log(event.target.value);
         this.estado = event.target.value;
+        console.log("ESTADO ACA xx")
+        console.log("ESTADO ACA " + this.estado)
     }
 
     onSelectedChange2(event:any)
@@ -76,7 +78,7 @@ export class VerTestimoniosComponent implements OnInit{
 
     modificarTestimonio()
     {
-        if(this.titulo !== null && this.estado !== null)
+        if(this.titulo !== null && this.visible !== null)
         {
         let visible;
         if(this.estado === "Disponible")
@@ -153,16 +155,17 @@ export class VerTestimoniosComponent implements OnInit{
         var optionVisibilidad = document.createElement("option");
         var optionVisibilidad2 = document.createElement("option");
     
-        optionVisibilidad.innerHTML = selectedItem.estado;
-        optionVisibilidad.selected = true;
-        selectorVisibilidad.appendChild(optionVisibilidad);
-        if(selectedItem.estado === 'Disponible')
+        //optionVisibilidad.innerHTML = selectedItem.visible;
+        if(selectedItem.visible == 1)
         {
+          optionVisibilidad.innerHTML = "Disponible"
           optionVisibilidad2.innerHTML = "Ocultar"
         }else{
+          optionVisibilidad.innerHTML = "Ocultar"
           optionVisibilidad2.innerHTML = "Disponible"
         }
-    
+        optionVisibilidad.selected = true;
+        selectorVisibilidad.appendChild(optionVisibilidad);
         selectorVisibilidad.appendChild(optionVisibilidad2);
     
         var selectorPrioridad = document.getElementById("prioridadOptions");

@@ -3,14 +3,12 @@
     <thead class="table-header">
       <tr>
         <th>Email</th>
-        <th>Id</th>
         <th>Rol</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of User" class="userRowHover" (click)="open(content, user.id, user.email); onSelect(user); checkOption();">
         <td class="rowInfo">{{user.email}}</td>
-        <td class="rowInfo">{{user.id}}</td>
         <td class="rowInfo">{{user.rol}}</td>
       </tr>
     </tbody>
