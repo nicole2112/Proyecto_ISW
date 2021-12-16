@@ -167,7 +167,7 @@ export class VerTestimoniosComponent implements OnInit{
         var selectorVisibilidad = document.getElementById("visibilidadOptions");
         var optionVisibilidad = document.createElement("option");
         var optionVisibilidad2 = document.createElement("option");
-    
+
         //optionVisibilidad.innerHTML = selectedItem.visible;
         if(selectedItem.visible == 1)
         {
