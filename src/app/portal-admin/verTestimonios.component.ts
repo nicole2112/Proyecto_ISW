@@ -76,7 +76,7 @@ export class VerTestimoniosComponent implements OnInit{
        
           this.testimonyList = item;
           this.titulo = item[0].titulo;
-          //this.testimonyList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
+          this.testimonyList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
 
           this.testimonyList.forEach(element => {
 
