@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Output, EventEmitter } from "@angular/core";
 import { TestimonyService } from "../services/testimony.service";
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2'
@@ -19,16 +19,33 @@ export class AgregarTestimoniosComponent {
     opciones = ["Disponible", "Ocultar"];
     Disponible = "Disponible";
     Ocultar = "Ocultar";
+    prioridad = "Alta";
+    opcionesPrioridad = ["Alta","Media", "Baja"];
 
     constructor(private tService: TestimonyService,private router: Router)
     {
 
     }
+    @Output() viewTestimoniesRedirect = new EventEmitter<boolean>();
+
+    viewTestimoniesRedirectFunc(){
+    this.viewTestimoniesRedirect.emit(true);
+  }
 
     onSelectedChange(event:any)
     {
-        console.log(event.target.value);
         this.estado = event.target.value;
+    }
+
+    onSelectedPriorityChange(event:any)
+    {
+        this.prioridad = event.target.value;
+        console.log(this.prioridad);
+    }
+
+    validarURL(link:string)
+    {
+        return (/<(“[^”]*”|'[^’]*’|[^'”>])*>/.test(link) && link.length > 13);
     }
 
     agregarTestimonio()
@@ -44,10 +61,26 @@ export class AgregarTestimoniosComponent {
                 visible = 1;
             else
                 visible = 0;
+
+            let numPrioridad = 3;
+            switch(this.prioridad)
+            {
+                case "Alta":
+                    numPrioridad = 1;
+                    break;
+                case "Media":
+                    numPrioridad = 2;
+                    break;
+                case "Baja":
+                default: 
+                    numPrioridad = 3;
+            }
+
             testimonio = {
                 "titulo" : this.titulo,
                 "video_url" : nuevo,
                 "visible" : visible,
+                "prioridad": numPrioridad,
             }
 
             Swal.fire({
@@ -58,7 +91,8 @@ export class AgregarTestimoniosComponent {
                 timer: 1500
               })
 
-            this.tService.postTestimonies(testimonio);
+            this.tService.postTestimonies(testimonio); 
+            this.viewTestimoniesRedirectFunc();
         }
     }
 

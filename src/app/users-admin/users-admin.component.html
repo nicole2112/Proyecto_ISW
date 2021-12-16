@@ -1,15 +1,16 @@
-<table class="table table-dark table-striped table-bordered">
+<div style="background-color: white;">
+  <table class="table table-striped">
     <thead class="table-header">
       <tr>
         <th>Email</th>
-        <th>Id</th>
+        <th>Nombre</th>
         <th>Rol</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of User" class="userRowHover" (click)="open(content, user.id); onSelect(user); checkOption();">
+      <tr *ngFor="let user of User" class="userRowHover" (click)="open(content, user.id, user.email); onSelect(user); checkOption();">
         <td class="rowInfo">{{user.email}}</td>
-        <td class="rowInfo">{{user.id}}</td>
+        <td class="rowInfo">{{user.nombre}}</td>
         <td class="rowInfo">{{user.rol}}</td>
       </tr>
     </tbody>
@@ -27,7 +28,7 @@
         <div class="form-group">
           <label for="correo">Correo</label>
           <div class="input-group">
-            <input id="correo" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
+            <input id="correo" class="form-control" placeholder="ejemplo@gmail.com" Sw="dp" readonly>
             <div class="input-group-append">
               <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
             </div>
@@ -47,7 +48,34 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-danger pull-left" (click)="deleteUser()">Eliminar</button>
-      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); updateUser();">Save</button>
+      <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, userSelectedId, userSelectedEmail); onDeleteConfirmation(userSelectedEmail);modal.close('Delete Click');">Eliminar</button>
+      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); updateUser();">Gaurdar</button>
     </div>
   </ng-template>
+
+  <ng-template #confirmation let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el usuario?</h4>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <input id="correoDelete" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
+            <div class="input-group-append">
+              <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger pull-left" (click)="deleteUser(); modal.close('Delete Click');">Eliminar</button>
+      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancelar</button>
+    </div>
+  </ng-template>
+
+</div>
