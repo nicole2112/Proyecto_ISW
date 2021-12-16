@@ -111,15 +111,16 @@ export class VerTestimoniosComponent implements OnInit{
 
     editarTestimonio()
     {
-        console.log("entra");
+      const userRef = this.db.object('testimonios/' + this.testimonioSelectedId);
+        console.log("x");
         let testimonio = {};
         let visible;
         let prioridad;
         if(this.estado === "Disponible")
             visible = 1;
-        else{
+        else
             visible = 0;
-
+            console.log("x1");
         let numPrioridad = 3;
         switch(this.prioridad)
         {
@@ -133,13 +134,15 @@ export class VerTestimoniosComponent implements OnInit{
             default: 
                 numPrioridad = 3;
         }
-
+        
         testimonio = {
             "titulo" : this.titulo,
             "video_url" : this.url,
             "visible" : visible,
             "prioridad": numPrioridad,
         }
+        console.log("HR" + testimonio);
+        //userRef.update(testimonio)
         this.testimService.updateTestimony(testimonio, this.currentKey);
         Swal.fire({
             position: 'top-end',
@@ -149,7 +152,6 @@ export class VerTestimoniosComponent implements OnInit{
             timer: 1500
           });
     }
-  }
 
     eliminarTestimonio()
     {
