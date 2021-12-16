@@ -1,7 +1,7 @@
 /* Style The Dropdown Button */
 .dropbtn {
     background-color: inherit;
-    color: white;
+    color: black  ;
     padding: 16px;
     font-size: 16px;
     border: none;
@@ -26,6 +26,7 @@
 
 .dropdown-users:hover .dropbtn {
   background-color: #522662;
+  color:white;
 }
 
 .dropdown-users:hover .dropdown-content {
@@ -80,6 +81,7 @@ box-shadow:0 0 3px rgba(0, 0, 0, 0.5) inset;
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdownx:hover .dropbtn {
     background-color: #522662;
+    color:white;
   }
 
   .icons{

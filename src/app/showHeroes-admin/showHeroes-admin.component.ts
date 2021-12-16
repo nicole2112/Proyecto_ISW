@@ -27,6 +27,7 @@ export class ShowHeroesAdminComponent implements OnInit {
 
   heroeSelectedId: string;
   heroeSelectedImg: string;
+  heroeSelectedName: string
   Heroe = [];
   closeResult: string;
   selectedValue : any;
@@ -53,8 +54,9 @@ export class ShowHeroesAdminComponent implements OnInit {
         })
   }
 
-  open(content, id: string) {
+  open(content, id: string, name: string) {
     this.heroeSelectedId = id;
+    this.heroeSelectedName = name;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       console.log(`Closed with: ${result}`);
     }, (reason) => {
@@ -136,6 +138,11 @@ export class ShowHeroesAdminComponent implements OnInit {
   deleteHeroe(){
     this.heroeRef = this.db.object('heroes/' + this.heroeSelectedId);
     this.heroeRef.remove();
+    this.callDeleteNotification();
+  }
+
+  onDeleteConfirmation(name: string){
+    document.getElementById("nameDelete").setAttribute('value', name);
   }
 
   private getDismissReason(reason: any): string {
@@ -173,6 +180,16 @@ export class ShowHeroesAdminComponent implements OnInit {
       position: 'top-end',
       icon: 'success',
       title: 'Héroe ha sido actualizado exitosamente!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  callDeleteNotification(){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Héroe ha sido eliminado exitosamente!',
       showConfirmButton: false,
       timer: 1500
     })
