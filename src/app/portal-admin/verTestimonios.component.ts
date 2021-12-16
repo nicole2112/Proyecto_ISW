@@ -273,17 +273,15 @@ export class VerTestimoniosComponent implements OnInit{
 
 
 
-  /*
-  deleteHeroe(){
-    this.heroeRef = this.db.object('heroes/' + this.heroeSelectedId);
-    this.heroeRef.remove();
-    this.callDeleteNotification();
-  }
+  // deleteHeroe(){
+  //   this.heroeRef = this.db.object('heroes/' + this.heroeSelectedId);
+  //   this.heroeRef.remove();
+  //   this.callDeleteNotification();
+  // }
 
   onDeleteConfirmation(name: string){
     document.getElementById("nameDelete").setAttribute('value', name);
   }
-  */
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

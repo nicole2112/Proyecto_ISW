@@ -135,8 +135,33 @@
       </form>
     </div>
     <div class="modal-footer">
-      <!--button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, testimonioSelectedId, testimonioSelectedName); onDeleteConfirmation(testimonioSelectedName); modal.close('Delete Click');">Eliminar</button-->
+      <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, testimonioSelectedId, testimonioSelectedName); onDeleteConfirmation(testimonioSelectedName); modal.close('Delete Click');">Eliminar</button>
       <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarTestimonio();">Guardar</button>
     </div>
 
+  </ng-template>
+
+  <ng-template #confirmation let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Seguro que desea eliminar el Heroe?</h4>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <input id="nameDelete" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
+            <div class="input-group-append">
+              <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger pull-left" (click)="eliminarTestimonio(); modal.close('Delete Click'); ">Eliminar</button>
+      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancelar</button>
+    </div>
   </ng-template>
