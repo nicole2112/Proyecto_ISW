@@ -117,7 +117,7 @@ export class VerTestimoniosComponent implements OnInit{
         let prioridad;
         if(this.estado === "Disponible")
             visible = 1;
-        else{
+        else
             visible = 0;
 
         let numPrioridad = 3;
@@ -148,7 +148,6 @@ export class VerTestimoniosComponent implements OnInit{
             showConfirmButton: false,
             timer: 1500
           });
-    }
   }
 
     eliminarTestimonio()
