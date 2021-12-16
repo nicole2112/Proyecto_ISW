@@ -47,7 +47,9 @@
             <select (change)="onSelectedChange($event)" style="text-align: center; margin-left: 5%;" required>
               <option *ngFor="let opcion of opciones" style="margin-left: 50%;" [ngValue]="opcion">{{opcion}}</option>
             </select>
-
+            <select (change)="onSelectedChange3($event)" style="text-align: center; margin-left: 5%;" required>
+                <option *ngFor="let op of opcionesPrioridad" style="margin-left: 50%;" [ngValue]="op">{{op}}</option>
+            </select>
           </div>
         </form>
       </div>

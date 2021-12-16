@@ -4,6 +4,7 @@ import { TestimonyService } from "../services/testimony.service";
 import { ModalService } from '../services/modal.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
+import { AngularFireDatabase } from "@angular/fire/compat/database";
 
 @Component ({
     selector: 'app-view-testimonies-admin',
@@ -22,6 +23,7 @@ export class VerTestimoniosComponent implements OnInit{
     userSelectedId : string;
     estado="Disponible";
     opciones = ["Disponible", "Ocultar"];
+    opcionesPrioridad =["Alta", "Media", "Baja"];
     Disponible = "Disponible";
     Ocultar = "Ocultar";
 
@@ -44,6 +46,12 @@ export class VerTestimoniosComponent implements OnInit{
     {
         console.log(event.target.value);
         this.titulo = event.target.value;
+    }
+
+    onSelectedChange3(event:any)
+    {
+        console.log(event.target.value);
+        this.prioridad = event.target.value;
     }
 
 
@@ -94,16 +102,28 @@ export class VerTestimoniosComponent implements OnInit{
         if(this.titulo !== null && this.estado !== null)
         {
         let visible;
+        let prioridad;
         if(this.estado === "Disponible")
             visible = 1;
-        else
+        else{
             visible = 0;
+        }
+
+        if(this.prioridad == "Alta"){
+            prioridad = 1;
+        }else if(this.prioridad == "Media"){
+            prioridad = 2;
+        }else if (this.prioridad == "Baja"){
+            prioridad = 3;
+        }
         
         this.testimonyList.forEach((item) =>
             {
                 if(item.titulo === this.titulo)
                 {
                 item.visible = visible;
+                item.prioridad = prioridad;
+                console.log(prioridad);
                 this.testimService.postTestimonies(item);
                 }
             })
@@ -114,7 +134,7 @@ export class VerTestimoniosComponent implements OnInit{
                 title: 'Testimonio modificado!',
                 showConfirmButton: false,
                 timer: 1500
-              })            
+              });
             // this.testimService.editarTestomonio(this.titulo, visible);
         }
     }
