@@ -50,7 +50,7 @@ export class EditUserProfileComponent implements OnInit {
             this.correo = usuarios[item]['email'];
             this.rol = usuarios[item]['rol'];
             this.telefono = usuarios[item]['telefono'];
-
+            this.nombre = usuarios[item]['nombre'];
           }
         });
       });
@@ -79,16 +79,17 @@ export class EditUserProfileComponent implements OnInit {
 
   async editarPerfl() {
     //editar nombre
-    if (this.nombre != '') {
-      (await this.auth.currentUser).updateProfile({
-        displayName: this.nombre,
-      });
-      sessionStorage.setItem('nombre', this.nombre);
-    }
+    // if (this.nombre != '') {
+    //   (await this.auth.currentUser).updateProfile({
+    //     displayName: this.nombre,
+    //   });
+    //   sessionStorage.setItem('nombre', this.nombre);
+    // }
 
     if (this.telefono == undefined ) this.telefono = '';
     if (this.correoPersonal == undefined) this.correoPersonal = '';
     if (this.direccion == undefined) this.direccion = '';
+    if (this.nombre == undefined) this.nombre = '';
     this.writeUserData(); //editar otros datos
 
     Swal.fire({
@@ -105,6 +106,7 @@ export class EditUserProfileComponent implements OnInit {
     const db = getDatabase();
     set(ref(db, 'usuarios/' + this.userId), {
       "id": this.userId,
+      "nombre": this.nombre,
       "rol": this.rol,
       "email": this.correo,
       "correoPer": this.correoPersonal,

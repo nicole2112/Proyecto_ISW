@@ -26,15 +26,14 @@ export class VerTestimoniosComponent implements OnInit{
     url;
     titulo;
     visible;
+    prioridad;
     userSelectedId : string;
     estado="Disponible";
     opciones = ["Disponible", "Ocultar"];
+    opcionesPrioridad =["Alta", "Media", "Baja"];
     Disponible = "Disponible";
     Ocultar = "Ocultar";
-    prioridad = "Baja";
-    opcionesPrioridad = ["Alta","Media", "Baja"];
     currentKey:string;
-
     constructor(private testimService: TestimonyService, private _sanitizer: DomSanitizer,private modalService: NgbModal, private db:AngularFireDatabase)
     {
 
@@ -60,6 +59,12 @@ export class VerTestimoniosComponent implements OnInit{
         this.prioridad = event.target.value;
         console.log(this.prioridad);
     }
+    onSelectedChange3(event:any)
+    {
+        console.log(event.target.value);
+        this.prioridad = event.target.value;
+    }
+
 
     ShowTestimonies = false;
     toggleTestimoniesHandler(isShow: boolean){
@@ -109,9 +114,10 @@ export class VerTestimoniosComponent implements OnInit{
         console.log("entra");
         let testimonio = {};
         let visible;
+        let prioridad;
         if(this.estado === "Disponible")
             visible = 1;
-        else
+        else{
             visible = 0;
 
         let numPrioridad = 3;
@@ -143,6 +149,7 @@ export class VerTestimoniosComponent implements OnInit{
             timer: 1500
           });
     }
+  }
 
     eliminarTestimonio()
     {

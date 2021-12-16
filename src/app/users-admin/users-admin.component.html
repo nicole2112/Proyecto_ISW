@@ -3,12 +3,14 @@
     <thead class="table-header">
       <tr>
         <th>Email</th>
+        <th>Nombre</th>
         <th>Rol</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of User" class="userRowHover" (click)="open(content, user.id, user.email); onSelect(user); checkOption();">
         <td class="rowInfo">{{user.email}}</td>
+        <td class="rowInfo">{{user.nombre}}</td>
         <td class="rowInfo">{{user.rol}}</td>
       </tr>
     </tbody>
@@ -47,7 +49,7 @@
     </div>
     <div class="modal-footer">
       <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, userSelectedId, userSelectedEmail); onDeleteConfirmation(userSelectedEmail);modal.close('Delete Click');">Eliminar</button>
-      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); updateUser();">Save</button>
+      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); updateUser();">Gaurdar</button>
     </div>
   </ng-template>
 

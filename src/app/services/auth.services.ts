@@ -132,6 +132,7 @@ export class AuthenticationService {
                 this.correoPer = item['correoPer'];
                 this.telefono = item['telefono'];
                 this.direccion = item['direccion'];
+                this.nombre = item['nombre'];
                 if(item['rol'] == 'Admin' || item['rol'] == 'Presidente')
                 {
                   this.userDetails = res.user;
@@ -218,7 +219,8 @@ export class AuthenticationService {
             let userData = {
                 "id" : user.user.uid,
                 "rol": rol,
-                "email": this.email
+                "email": this.email,
+                "nombre": this.nombre
             };
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
             (await user.user.sendEmailVerification());
