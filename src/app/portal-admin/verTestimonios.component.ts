@@ -20,6 +20,7 @@ import { empty } from 'rxjs';
 
 export class VerTestimoniosComponent implements OnInit{
     testimonyList : any[];
+    NuevaLista: any[] = [];
     closeResult: any;
     urlList : string[];
     url;
@@ -67,11 +68,36 @@ export class VerTestimoniosComponent implements OnInit{
     }
 
     ngOnInit(): void {
+        // this.testimService.getTestimonies().subscribe((item) => {
+        //     console.log(item);
+        //     this.testimonyList = item;
+        // });
         this.testimService.getTestimonies().subscribe((item) => {
-            console.log(item);
-            this.testimonyList = item;
-        });
+       
+          this.testimonyList = item;
+          this.titulo = item[0].titulo;
+          //this.testimonyList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
 
+          this.testimonyList.forEach(element => {
+
+              if(element.visible == 1){
+                  element.visible ="Disponible";
+              }else{
+                  element.visible ="Oculto";
+              } 
+              
+              if(element.prioridad == 1){
+                  element.prioridad ="Alta";
+              }else if (element.prioridad == 2){
+                  element.prioridad = "Media";
+              }else if(element.prioridad == 3){
+                  element.prioridad = "Baja"
+              }
+              this.NuevaLista.push(element);
+          });
+
+          //this.testimonyList = item;
+      });
     }
     
     inputVideo(url:string):SafeResourceUrl{
@@ -121,6 +147,7 @@ export class VerTestimoniosComponent implements OnInit{
     eliminarTestimonio()
     {
         this.testimService.deleteTestimony(this.currentKey);
+        this.callDeleteNotification();
     }
     /**********************************************************
      * ********************************************************
@@ -166,9 +193,9 @@ export class VerTestimoniosComponent implements OnInit{
         var selectorVisibilidad = document.getElementById("visibilidadOptions");
         var optionVisibilidad = document.createElement("option");
         var optionVisibilidad2 = document.createElement("option");
-    
+
         //optionVisibilidad.innerHTML = selectedItem.visible;
-        if(selectedItem.visible == 1)
+        if(selectedItem.visible === "Disponible")
         {
           optionVisibilidad.innerHTML = "Disponible"
           optionVisibilidad2.innerHTML = "Ocultar"
@@ -187,7 +214,7 @@ export class VerTestimoniosComponent implements OnInit{
     
         
     
-        if(selectedItem.prioridad == 1)
+        if(selectedItem.prioridad === "Alta")
         {
           optionPrioridad1.innerHTML = "Alta";
           optionPrioridad1.selected = true;
@@ -195,7 +222,7 @@ export class VerTestimoniosComponent implements OnInit{
           optionPrioridad2.innerHTML = "Media"
           optionPrioridad3.innerHTML = "Baja"
           
-        }else if(selectedItem.prioridad == 2){
+        }else if(selectedItem.prioridad === "Media"){
           optionPrioridad1.innerHTML = "Media";
           optionPrioridad1.selected = true;
     
@@ -273,17 +300,15 @@ export class VerTestimoniosComponent implements OnInit{
 
 
 
-  /*
-  deleteHeroe(){
-    this.heroeRef = this.db.object('heroes/' + this.heroeSelectedId);
-    this.heroeRef.remove();
-    this.callDeleteNotification();
-  }
+  // deleteHeroe(){
+  //   this.heroeRef = this.db.object('heroes/' + this.heroeSelectedId);
+  //   this.heroeRef.remove();
+  //   this.callDeleteNotification();
+  // }
 
   onDeleteConfirmation(name: string){
     document.getElementById("nameDelete").setAttribute('value', name);
   }
-  */
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -329,7 +354,7 @@ export class VerTestimoniosComponent implements OnInit{
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Héroe ha sido eliminado exitosamente!',
+      title: 'Testimonio ha sido eliminado exitosamente!',
       showConfirmButton: false,
       timer: 1500
     })

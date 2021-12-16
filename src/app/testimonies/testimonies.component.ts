@@ -27,6 +27,7 @@ export class TestimoniesComponent implements OnInit
                 //console.log(item);
                 if(item.visible)
                     this.testimonyList.push(item);
+                    this.testimonyList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
             });
 
         });
@@ -34,6 +35,7 @@ export class TestimoniesComponent implements OnInit
         
 
     }
+
 
     inputVideo(url:string):SafeResourceUrl{
         return this._sanitizer.bypassSecurityTrustResourceUrl(url);
