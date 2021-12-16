@@ -121,6 +121,7 @@ export class VerTestimoniosComponent implements OnInit{
     eliminarTestimonio()
     {
         this.testimService.deleteTestimony(this.currentKey);
+        this.callDeleteNotification();
     }
     /**********************************************************
      * ********************************************************
@@ -327,7 +328,7 @@ export class VerTestimoniosComponent implements OnInit{
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Héroe ha sido eliminado exitosamente!',
+      title: 'Testimonio ha sido eliminado exitosamente!',
       showConfirmButton: false,
       timer: 1500
     })
