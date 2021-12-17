@@ -64,111 +64,111 @@
 
 
 
-  <div style="background-color: white;">
-<div class="container table-testimonies">
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-    <table class="table table-striped table-bordered">
-      <thead class="table-header" class="userRowHover">
-        
-        <tr>
-          <th style="text-align: center;">Titulo</th>
-          <th style="text-align: center;">Estado</th>
-          <th style="text-align: center;">Prioridad</th>
-          <th style="text-align: center;">Testimonio</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let testimonio of testimonyList" class="userRowHover" (click)="open(content, testimonio.key, testimonio.titulo); onSelect(testimonio, testimonio.video_url, testimonio.key);" >
-          <td class="rowInfo" style="text-align: center;">{{ testimonio?.titulo }}</td>
-          <td class="rowInfo" style="text-align: center;" >{{testimonio?.visible}}</td> 
-          <td class="rowInfo" style="text-align: center;">{{testimonio?.prioridad}}</td> 
-          <td class="rowInfo" style="text-align: center;"><iframe [src]="inputVideo(testimonio.video_url)"></iframe></td> 
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-
-  <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Editar Testimonio</h4>
-      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+<div style="background-color: white;">
+  <div class="container table-testimonies">
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <table class="table table-striped table-bordered">
+        <thead class="table-header" class="userRowHover">
+          
+          <tr>
+            <th style="text-align: center;">Titulo</th>
+            <th style="text-align: center;">Visibilidad</th>
+            <th style="text-align: center;">Prioridad</th>
+            <th style="text-align: center;">Testimonio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let testimonio of testimonyList" class="userRowHover" (click)="open(content, testimonio.$key, testimonio.titulo); onSelect(testimonio, testimonio.video_url, testimonio.key);" >
+            <td class="rowInfo" style="text-align: center;">{{ testimonio?.titulo }}</td>
+            <td class="rowInfo" style="text-align: center;" >{{testimonio?.visible}}</td> 
+            <td class="rowInfo" style="text-align: center;">{{testimonio?.prioridad}}</td> 
+            <td class="rowInfo" style="text-align: center;"><iframe [src]="inputVideo(testimonio.video_url)"></iframe></td> 
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="nombre">Titulo</label>
-          <div class="input-group">
-            <input id="titulo" type="text" class="form-control" placeholder="nombre apellido" [(ngModel)]="titulo" name="dp">
-            <div class="input-group-append">
-              <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-            <label for="contenido">URL Facebook</label>
+  
+  
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Editar Testimonio</h4>
+        <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nombre">Titulo</label>
             <div class="input-group">
-              <textarea name="contenido" class="form-control" id="url" placeholder="URL Facebook" style="resize: none; margin-bottom: 1em;" readonly></textarea>
+              <input id="titulo" type="text" class="form-control" placeholder="nombre apellido" [(ngModel)]="titulo" name="dp">
               <div class="input-group-append">
                 <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
               </div>
             </div>
           </div>
-        <div style="display: inline-flex;">
           <div class="form-group">
-            <label for="visibilidadOptions">Visibilidad</label>
-            <div class="input-group">
-              <div class="custom-select" style="width:200px;" id="custom-select">
-                <select name="visibilidadOptions" id="visibilidadOptions" (change)="onSelectedChange($event)">
-                </select>
+              <label for="contenido">URL Facebook</label>
+              <div class="input-group">
+                <textarea name="contenido" class="form-control" id="url" placeholder="URL Facebook" style="resize: none; margin-bottom: 1em;" readonly></textarea>
+                <div class="input-group-append">
+                  <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+                </div>
               </div>
             </div>
-            <label class="error-label" id="error-label-visibilidad"></label>
+          <div style="display: inline-flex;">
+            <div class="form-group">
+              <label for="visibilidadOptions">Visibilidad</label>
+              <div class="input-group">
+                <div class="custom-select" style="width:200px;" id="custom-select">
+                  <select name="visibilidadOptions" id="visibilidadOptions" (change)="onSelectedChange($event)">
+                  </select>
+                </div>
+              </div>
+              <label class="error-label" id="error-label-visibilidad"></label>
+            </div>
+            <div class="form-group">
+              <label for="prioridadOptions">Prioridad</label>
+              <div class="input-group">
+                <div class="custom-select" style="width:200px;" id="custom-select">
+                  <select name="prioridadOptions" id="prioridadOptions" (change)="onSelectedPriorityChange($event)">
+                  </select>
+                </div>
+              </div>
+              <label class="error-label" id="error-label-prioridad"></label>
+            </div>
           </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, testimonioSelectedId, testimonioSelectedName); onDeleteConfirmation(testimonioSelectedName); modal.close('Delete Click');">Eliminar</button>
+        <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarTestimonio();">Guardar</button>
+      </div>
+  
+    </ng-template>
+  
+    <ng-template #confirmation let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el Testimonio?</h4>
+        <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
           <div class="form-group">
-            <label for="prioridadOptions">Prioridad</label>
             <div class="input-group">
-              <div class="custom-select" style="width:200px;" id="custom-select">
-                <select name="prioridadOptions" id="prioridadOptions" (change)="onSelectedPriorityChange($event)">
-                </select>
+              <input id="nameDelete" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
+              <div class="input-group-append">
+                <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
               </div>
             </div>
-            <label class="error-label" id="error-label-prioridad"></label>
           </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, testimonioSelectedId, testimonioSelectedName); onDeleteConfirmation(testimonioSelectedName); modal.close('Delete Click');">Eliminar</button>
-      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarTestimonio();">Guardar</button>
-    </div>
-
-  </ng-template>
-
-  <ng-template #confirmation let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el Testimonio?</h4>
-      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <div class="input-group">
-            <input id="nameDelete" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
-            <div class="input-group-append">
-              <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-danger pull-left" (click)="eliminarTestimonio(); modal.close('Delete Click'); ">Eliminar</button>
-      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancelar</button>
-    </div>
-  </ng-template>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger pull-left" (click)="eliminarTestimonio(); modal.close('Delete Click'); ">Eliminar</button>
+        <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancelar</button>
+      </div>
+    </ng-template>
