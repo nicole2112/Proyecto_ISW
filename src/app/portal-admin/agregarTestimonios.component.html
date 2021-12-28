@@ -56,7 +56,7 @@
             />
             <label for="titulo">Título</label>
             <em class="text-danger" 
-                *ngIf="claseForm.controls.titulo?.invalid && claseForm.controls.titulo?.touched">*Título es requerido</em>
+                *ngIf="(claseForm.controls.titulo?.invalid || validarTitulo(titulo)) && claseForm.controls.titulo?.touched">*Título es requerido</em>
           </div>
         </div>
 
@@ -81,7 +81,7 @@
         <div class="d-flex justify-content-center" style="margin-top:3%; margin-left: 20%;">
           <button
           type="button"
-          [disabled]="!(url && titulo && validarURL(url))"
+          [disabled]="!(url && titulo && validarURL(url)) || validarTitulo(titulo)"
           (click)="agregarTestimonio()"
           class="btn button1">Guardar Testimonio
           </button>
