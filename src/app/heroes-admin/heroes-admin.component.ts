@@ -18,6 +18,7 @@ export class HeroesAdminComponent implements OnInit {
   prioridad: any;
   visibilidad:any;
   prioridadInt:any;
+  prioridadString: any;
 
   fileList: any[];
 
@@ -65,17 +66,20 @@ export class HeroesAdminComponent implements OnInit {
     let heroeItem={};
 
     if(this.prioridad === 'Alta'){
-      this.prioridadInt = 1
+      this.prioridadInt = 1,
+      this.prioridadString = "Alta"
     }else if(this.prioridad === 'Media'){
-      this.prioridadInt = 2
+      this.prioridadInt = 2,
+      this.prioridadString = "Media"
     }else{
-      this.prioridadInt = 3
+      this.prioridadInt = 3,
+      this.prioridadString = "Baja"
     }
 
     if(this.fallecido === 'Fallecido'){
-      this.fallecido = 'si'
+      this.fallecido = 'Fallecido'
     }else{
-      this.fallecido = 'no'
+      this.fallecido = 'Con Vida'
     }
 
     heroeItem={
@@ -84,6 +88,7 @@ export class HeroesAdminComponent implements OnInit {
       "contenido": this.contenido,
       "fallecido" :this.fallecido,
       "prioridad" :this.prioridadInt,
+      "prioridadString": this.prioridadString,
       "visibilidad": this.visibilidad
     }
     this.service.db.list('heroes').push(heroeItem);
