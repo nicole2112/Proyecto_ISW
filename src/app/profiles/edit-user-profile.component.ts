@@ -99,7 +99,12 @@ export class EditUserProfileComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500,
     });
-    this.router.navigate(['/portal-admin']);
+    console.log(this.rol);
+    if(this.rol == "Admin")
+      this.router.navigate(['/portal-admin']);
+    else if (this.rol == "Digitador")
+      this.router.navigate(['/portal-digitador']);
+
   }
 
   writeUserData() {
