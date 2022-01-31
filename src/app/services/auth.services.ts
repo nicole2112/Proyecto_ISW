@@ -27,6 +27,7 @@ export class AuthenticationService {
     correoPer:any;
     direccion:any;
     telefono:any;
+    authWorkerAuth:any;
 
     constructor(
         private router: Router,
@@ -35,6 +36,9 @@ export class AuthenticationService {
         public db: AngularFireDatabase
     ) {
         this.loggedIn = !!sessionStorage.getItem('user');
+        let authWorkerApp = firebase.initializeApp(firebase.app().options, 'auth-worker');
+        this.authWorkerAuth = firebase.auth(authWorkerApp);
+        this.authWorkerAuth.setPersistence(firebase.auth.Auth.Persistence.NONE); // disables caching of account credentials
     }
 
     public get userValue(): User {
@@ -128,6 +132,7 @@ export class AuthenticationService {
                 this.correoPer = item['correoPer'];
                 this.telefono = item['telefono'];
                 this.direccion = item['direccion'];
+                this.nombre = item['nombre'];
                 if(item['rol'] == 'Admin' || item['rol'] == 'Presidente')
                 {
                   this.userDetails = res.user;
@@ -200,7 +205,7 @@ export class AuthenticationService {
           for ( var i = 0; i < 8; i++ ) {
               result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
           }*/
-        this.auth
+        this.authWorkerAuth
           .createUserWithEmailAndPassword(this.email, this.pass)
           .then(async (user) => {
             this.router.navigate(['/portal-admin']);
@@ -214,14 +219,14 @@ export class AuthenticationService {
             let userData = {
                 "id" : user.user.uid,
                 "rol": rol,
-                "email": this.email
+                "email": this.email,
+                "nombre": this.nombre
             };
             (await this.db.object(`usuarios/${user.user.uid}`).set(userData));
             (await user.user.sendEmailVerification());
             //(await this.auth.currentUser).updateProfile({
             //  displayName: this.nombre,
             //});
-            this.sendConfirmationEmail();
           })
           .catch((err) => 
           {
@@ -248,9 +253,7 @@ export class AuthenticationService {
               showConfirmButton: false,
               timer: 3000
             })
-          }
-            
-            );
+          });
           
         }
       }

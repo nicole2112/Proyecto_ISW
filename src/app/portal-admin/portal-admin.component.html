@@ -1,14 +1,16 @@
-<app-navbar-portal-admin (viewUsersClick)="toggleShowHeroes = false; toggleHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleUsers = true" 
-(viewHeroesClick)="toggleShowHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleHeroes = true" 
-(showHeroesClick)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleShowHeroes = true"
-(showTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleViewTestimonies=false; toggleShowTestimonies=true;"
-(viewTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=true;"></app-navbar-portal-admin>
+<app-navbar-portal-admin (viewUsersClick)="toggleShowHeroes = false; toggleHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleUsers = true" 
+(viewHeroesClick)="toggleShowHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleHeroes = true" 
+(showHeroesClick)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = true"
+(showTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowTestimonies=true;"
+(viewTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=true;">
+</app-navbar-portal-admin>
     <div class="container table-users">
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
       <app-users-admin *ngIf="toggleUsers"></app-users-admin>
-      <app-heroes-admin *ngIf="toggleHeroes"></app-heroes-admin>
+      <app-heroes-admin *ngIf="toggleHeroes" (viewHeroesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = true"></app-heroes-admin>
       <app-showHeroes-admin *ngIf="toggleShowHeroes"></app-showHeroes-admin>
-      <app-add-testimonies-admin *ngIf="toggleViewTestimonies"></app-add-testimonies-admin>
+      <!-- <app-showHeroes-admin *ngIf="toggleShowHeroesRedirect"></app-showHeroes-admin> -->
+      <app-add-testimonies-admin *ngIf="toggleViewTestimonies" (viewTestimoniesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=true; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = false"></app-add-testimonies-admin>
       <app-view-testimonies-admin *ngIf="toggleShowTestimonies"></app-view-testimonies-admin>
     </div>
   </div>

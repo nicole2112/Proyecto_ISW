@@ -12,11 +12,6 @@
     display: block;
 }
 
-.table-header{
-    position: sticky;
-    top: 0px;
-}
-
 .userRowHover:hover .rowInfo{
     color: #9965ac;
 }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand nav-link" onclick="window.location.replace(portal-admin);" [routerLink]="['/portal-admin']">Portal Administrativo</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -20,9 +20,9 @@
     </div>
   </div>
   <div class="dropdown-users">
-    <button class="dropbtn"><fa-icon class="icons" [icon]="faHandSparkles"></fa-icon>Heroes  ▼</button>
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faHandSparkles"></fa-icon>Héroes  ▼</button>
     <div class="dropdown-content">
-      <a [routerLink]="['/portal-admin']" (click)="showHeroes()">Ver Heroes</a>
+      <a [routerLink]="['/portal-admin']" (click)="showHeroes()">Ver Héroes</a>
       <a class="nav-link active" aria-current="page" (click)="viewHeroes()" [routerLink]="['/portal-admin']">Agregar Heroes</a>
     </div>
   </div>
@@ -30,7 +30,7 @@
     <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here  ▼</button>
     <div class="dropdown-content">
       <a (click)="fnEditUserProfile()">Editar</a>
-      <a (click)="logOut()">Cerrar Sesion</a>
+      <a (click)="logOut()">Cerrar Sesión</a>
     </div>
   </div>
 </nav>

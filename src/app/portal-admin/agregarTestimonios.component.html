@@ -5,24 +5,92 @@
   </head>
   <body>
     <div class="main-block">
-      <h1 style="color:#1c87c9 ;">Agregar Testimonio</h1>
-      <form #claseForm="ngForm" action="/">
-        <div class="info">
-          <h5 style ="color:red">**Se requiere colocar el link "Embed" de Facebook.**</h5>
-          <input class="fname" id= "url" type="text" name="name" placeholder="URL Facebook" [(ngModel)]="url" required>
-          <input type="text" name="name" placeholder="Titulo del Video" [(ngModel)]="titulo" required>
-          <select (change)="onSelectedChange($event)" required>
-            <option *ngFor="let opcion of opciones" [ngValue]="opcion">{{opcion}}</option>
-          </select>
-        </div>
-        <button button
-        type="button"
-        [disabled]="!url || !titulo"
-        (click)="agregarTestimonio()"
-        class="btn btn-success">Salvar</button>
-      </form>
+      <div class="d-flex justify-content-center">
+        <h1 style="margin-bottom: 2%; margin-top: 2%;">Registro de Testimonio</h1>
       </div>
       
+      <form #claseForm="ngForm" action="/">
+
+        <div class="d-flex justify-content-center" style="margin-top: 15px; margin-left: 20%;">
+          <div
+            class="form-floating mb-3 col-md-10"
+            [ngClass]="{
+              error:
+              claseForm.controls.url?.invalid &&
+              claseForm.controls.url?.touched
+            }"
+          >
+            <h6 style ="width: 100%;">Nota: Se requiere colocar el link "Embed" de Facebook.</h6>
+            <input 
+              class="form-control" 
+              id= "url" 
+              type="text" 
+              name="url" 
+              placeholder="URL Facebook" 
+              [(ngModel)]="url" 
+              required
+            />
+            <label for="url" style="margin-top: 3%;">URL de Facebook</label>
+            <em class="text-danger"
+                *ngIf="(claseForm.controls.url?.invalid  || !validarURL(url)) && claseForm.controls.url?.touched"
+            >*URL válido es requerido</em>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center" style="margin-top: 15px; margin-left: 20%;">
+          <div
+            class="form-floating mb-3 col-md-10"
+            [ngClass]="{
+            error:
+              claseForm.controls.titulo?.invalid &&
+              claseForm.controls.titulo?.touched
+            }"
+          >
+            <input 
+              class="form-control" 
+              type="text" 
+              name="titulo" 
+              placeholder="Título del Video" 
+              [(ngModel)]="titulo" 
+              required
+            />
+            <label for="titulo">Título</label>
+            <em class="text-danger" 
+                *ngIf="(claseForm.controls.titulo?.invalid || validarTitulo(titulo)) && claseForm.controls.titulo?.touched">*Título es requerido</em>
+          </div>
+        </div>
+
+        <div class="row mt-3 d-flex justify-content-center" style="margin-top: 10px; margin-left: 20%;">
+          <div class="col-md-5">
+            <label for="visibilidad" style="margin-right: 2%;">Visibilidad</label>
+            <em class="text-danger" *ngIf="claseForm.controls.visibilidad?.invalid && claseForm.controls.visibilidad?.touched">*Visibilidad es requerida</em>
+            <select class="form-select" (change)="onSelectedChange($event)" name="visibilidad" required>
+              <option *ngFor="let opcion of opciones" [ngValue]="opcion">{{opcion}}</option>
+            </select>
+          </div>
+          
+          <div class="col-md-5">
+            <label for="prioridad" style="margin-right: 2%;">Prioridad</label>
+            <em class="text-danger" *ngIf="claseForm.controls.prioridad?.invalid && claseForm.controls.prioridad?.touched">*Prioridad es requerida</em>
+            <select class="form-select" (change)="onSelectedPriorityChange($event)" name="prioridad" required>
+              <option *ngFor="let opcion of opcionesPrioridad" [ngValue]="opcion">{{opcion}}</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="d-flex justify-content-center" style="margin-top:3%; margin-left: 20%;">
+          <button
+          type="button"
+          [disabled]="!(url && titulo && validarURL(url)) || validarTitulo(titulo)"
+          (click)="agregarTestimonio()"
+          class="btn button1">Guardar Testimonio
+          </button>
+        </div>
+
+        <br>
+
+      </form>
+    </div>  
   </body>
 </html>
 

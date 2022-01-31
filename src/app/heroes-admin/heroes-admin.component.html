@@ -1,10 +1,13 @@
+
 <div class="container styleHeroeAdd">
-  <h1 class="d-flex justify-content-center styleTitleForm">Registro de un nuevo Héroe</h1>
+  <div class="d-flex justify-content-center">
+    <h1 style="margin-bottom: 2%; margin-top: 2%;">Registro de Héroe</h1>
+  </div>
   <form #claseForm="ngForm" action="/">
       <!-- Ingreso nombre -->
       <div class="d-flex justify-content-center" style="margin-top: 20px">
         <div
-          class="form-floating sm-3 col-md-8"
+          class="form-floating sm-3 col-md-9"
           [ngClass]="{
             error:
               claseForm.controls.nombre?.invalid &&
@@ -34,7 +37,7 @@
       <!-- Ingreso de contenido -->
       <div class="d-flex justify-content-center" style="margin-top: 20px">
         <div
-          class="form-floating sm-3 col-md-8"
+          class="form-floating sm-3 col-md-9"
           [ngClass]="{
             error:
               claseForm.controls.contenido?.invalid &&
@@ -45,14 +48,13 @@
             [(ngModel)]="contenido"
             type="text"
             class="form-control"
-            id="floatingInput"
+            id="contenido"
             name="contenido"
             rows="4" 
-            cols="50"
             placeholder="Contenido"
             required
           ></textarea>
-          <label for="floatingInput">Contenido</label>
+          <label for="contenido">Contenido</label>
           <em
             class="text-danger"
             *ngIf="
@@ -63,30 +65,31 @@
           >
         </div>
       </div>
-      <!-- Ingreso de estado fallecido -->
-      <div class="d-flex justify-content-center" style="margin-top: 20px">
+      
+      <div class="row mt-3 d-flex justify-content-center">
+        <!--estado (fallecido o no)-->
         <div
-          class="form-floating sm-3 col-md-8"
-          [ngClass]="{
-            error:
-              claseForm.controls.fallecido?.invalid &&
-              claseForm.controls.fallecido?.touched
-          }"
+        class="form-floating sm-3 col-md-3"
+        [ngClass]="{
+          error:
+            claseForm.controls.fallecido?.invalid &&
+            claseForm.controls.fallecido?.touched
+        }"
         >
           <select 
             [(ngModel)]="fallecido"
             id = "floating input" 
-            class="form-control"
+            class="form-select"
             id="floatingInput"
             name="fallecido"
             placeholder="Estado"
             required
           >
-            <option value="Con Vida">Con Vida</option>
-            <option value="Fallecido">Fallecido</option>
+            <option value="no">Con Vida</option>
+            <option value="si">Fallecido</option>
           </select>
 
-          <label for="floatingInput">Estado</label>
+          <label for="floatingInput" style="margin-left: 3%;">Estado</label>
           <em
             class="text-danger"
             *ngIf="
@@ -96,11 +99,10 @@
             >*Estado válido es requerido</em
           >
         </div>
-      </div>
-      <!-- Ingreso de prioridad -->
-      <div class="d-flex justify-content-center" style="margin-top: 20px">
+
+        <!--prioridad-->
         <div
-          class="form-floating sm-3 col-md-8"
+          class="form-floating sm-3 col-md-3"
           [ngClass]="{
             error:
               claseForm.controls.prioridad?.invalid &&
@@ -110,7 +112,7 @@
           <select 
             [(ngModel)]="prioridad"
             id = "floating input" 
-            class="form-control"
+            class="form-select"
             id="floatingInput"
             name="prioridad"
             placeholder="Prioridad"
@@ -121,7 +123,7 @@
             <option value="Baja">Baja</option>
           </select>
 
-          <label for="floatingInput">Prioridad</label>
+          <label for="floatingInput" style="margin-left: 3%;">Prioridad</label>
           <em
             class="text-danger"
             *ngIf="
@@ -131,11 +133,10 @@
             >*Prioridad válida es requerida</em
           >
         </div>
-      </div>
-      <!-- Ingreso de visibilidad -->
-      <div class="d-flex justify-content-center" style="margin-top: 20px; margin-bottom: 20px;">
+
+        <!--visibilidad-->
         <div
-          class="form-floating sm-3 col-md-8"
+          class="form-floating sm-3 col-md-3"
           [ngClass]="{
             error:
               claseForm.controls.visibilidad?.invalid &&
@@ -145,18 +146,18 @@
           <select 
             [(ngModel)]="visibilidad"
             id = "floating input" 
-            class="form-control"
+            class="form-select"
             id="floatingInput"
             name="visibilidad"
             placeholder="Visibilidad"
             required
           >
-            <option value="Público">Público</option>
-            <option value="Privado">Privado</option>
+            <option value="publico">Público</option>
+            <option value="privado">Privado</option>
           </select>
 
           
-          <label for="floatingInput">Visibilidad</label>
+          <label for="floatingInput" style="margin-left: 3%;">Visibilidad</label>
           <em
             class="text-danger"
             *ngIf="
@@ -166,13 +167,14 @@
             >*Visibilidad válida es requerida</em
           >
         </div>
+        
       </div>
   
       <!-- Ingreso de imagen -->
-      <div class="card">
+      <div class="card" style="margin-top: 3%;">
         <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
           <label class="custom-file-upload">
-            <input (change)="onChange($event)" type="file" />
+            <input (change)="onChange($event)" type="file" accept="image/png, image/jpeg"/>
             Agregar imagen...
           </label>
         </div>
@@ -184,11 +186,12 @@
           type="submit"
           [disabled]="claseForm.invalid"
           class="btn button1"
-          (click)="saveHeroe()"
+          (click)="saveHeroe();"
         >
           Registrar Nuevo Héroe
         </button>
       </div>
-  
+      <br>
+      <br>
   </form>
 </div>
