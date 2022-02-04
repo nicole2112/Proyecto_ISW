@@ -58,8 +58,8 @@
 </div>
 
 
-    <div class="container">
-        <p>Abrir PDF con informacion <a href="{{pdfList}}">PDF</a>.</p>
+    <div class="container" *ngFor="let pdf of pdfList">
+        <p>Abrir PDF con informacion <a href="{{pdf.archivo}}">PDF</a>.</p>
     </div>
 
 

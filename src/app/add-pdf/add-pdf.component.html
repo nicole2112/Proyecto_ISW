@@ -1,1 +1,31 @@
-<p>add-pdf works!</p>
+<div class="container PDF">
+  <div class="d-flex justify-content-center">
+    <h1 style="margin-bottom: 2%; margin-top: 2%;">Actualizar PDF</h1>
+  </div>
+  <form #claseForm="ngForm" action="/">
+
+      <!-- Ingreso de pdf -->
+      <div class="card" style="margin-top: 3%;">
+        <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+          <label class="custom-file-upload">
+            <input (change)="onChange($event)" type="file"/>
+            Agregar pdf...
+          </label>
+        </div>
+      </div>
+  
+      <div class="d-flex justify-content-center">
+        <button
+          style="margin-top: 30px;"
+          type="submit"
+          [disabled]="claseForm.invalid"
+          class="btn button1"
+          (click)="savePDF();"
+        >
+          Actualizar PDF
+        </button>
+      </div>
+      <br>
+      <br>
+  </form>
+</div>

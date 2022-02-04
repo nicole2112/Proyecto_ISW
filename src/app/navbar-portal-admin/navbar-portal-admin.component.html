@@ -26,6 +26,12 @@
       <a class="nav-link active" aria-current="page" (click)="viewHeroes()" [routerLink]="['/portal-admin']">Agregar Heroes</a>
     </div>
   </div>
+  <div class="dropdown-users">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Agregar PDF  ▼</button>
+    <div class="dropdown-content">
+      <a class="nav-link active" aria-current="page" (click)="addPDF()" [routerLink]="['/agregarPDF']">Modificar PDF</a>
+    </div>
+  </div>
   <div class="dropdownx navbar-nav ms-auto">
     <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here  ▼</button>
     <div class="dropdown-content">

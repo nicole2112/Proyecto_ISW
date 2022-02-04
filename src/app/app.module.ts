@@ -47,6 +47,7 @@ import { UsersAdminComponent } from './users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.component';
 import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
 import { AddPdfComponent } from './add-pdf/add-pdf.component';
+import { PdfServices } from './services/pdf.services';
 
 
 @NgModule({
@@ -100,6 +101,7 @@ import { AddPdfComponent } from './add-pdf/add-pdf.component';
   ],
   providers: [
     ModalService,
+    PdfServices
   ],
   bootstrap: [AppComponent]
 })

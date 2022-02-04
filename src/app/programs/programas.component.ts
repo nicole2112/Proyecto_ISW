@@ -22,7 +22,6 @@ export class ProgramasComponent implements OnInit{
             pdf =>{
                 this.pdfList = pdf;
                 console.log(this.pdfList);
-                console.log(pdf);
             }
         )
     }
