@@ -34,7 +34,7 @@ export class AddPdfComponent implements OnInit {
       });
       console.log(this.pdfId);
     });
-    
+
   }
 
   onDragOver(event) {

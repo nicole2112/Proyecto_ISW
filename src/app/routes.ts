@@ -46,7 +46,7 @@ export const AppRoutes: Routes = [
   { path: 'portal-admin/perfil', component: EditUserProfileComponent, canActivate: [AdminConfGuard] },
   { path: 'portal-digitador', component: PortalDigitadorComponent, canActivate: [DigitadorConfGuard]},
   { path: 'portal-pw-reset', component: PwResetComponent },
-  {path: 'agregarPDF', component: AddPdfComponent},
+  {path: 'portal-admin/agregarPDF', component: AddPdfComponent},
   //{ path: 'agregarTestimonio', component: AgregarTestimoniosComponent, canActivate: [AdminConfGuard] },
   //{ path: 'verTestimonio', component: VerTestimoniosComponent, canActivate: [AdminConfGuard] },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
