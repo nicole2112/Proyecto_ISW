@@ -9,7 +9,7 @@
       <div class="card" style="margin-top: 3%;">
         <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
           <label class="custom-file-upload">
-            <input (change)="onChange($event)" type="file"/>
+            <input (change)="onChange($event)" type="file" accept=".pdf"/>
             Agregar pdf...
           </label>
         </div>
