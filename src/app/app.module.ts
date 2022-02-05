@@ -46,6 +46,8 @@ import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from './users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.component';
 import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
+import { verArticulosComponent } from './portal-admin/verArticulos.component';
+import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
 
 
 @NgModule({
@@ -77,7 +79,9 @@ import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirm
     UsersAdminComponent,
     ShowHeroesAdminComponent,
     PwResetComponent,
-    NoConfirmationComponent
+    NoConfirmationComponent,
+    verArticulosComponent,
+    AgregarArticuloComponent
   ],
   imports: [
     BrowserModule,

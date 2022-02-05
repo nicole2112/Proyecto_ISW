@@ -5,22 +5,28 @@
           <thead class="table-header" class="userRowHover">
             
             <tr>
-              <th style="text-align: center;">Titulo</th>
-              <th style="text-align: center;">Descripcion</th>
+              <th style="text-align: center;">Título</th>
+              <th style="text-align: center;">Descripción</th>
               <th style="text-align: center;">Fecha</th>
               <th style="text-align: center;">Categorias</th>
             </tr>
           </thead>
           
           <tbody>
+            <tr>
+              <td class="rowInfo" style="text-align: center;">lala</td>
+              <td class="rowInfo" style="text-align: center;">lala</td> 
+              <td class="rowInfo" style="text-align: center;">lala</td> 
+              <td class="rowInfo" style="text-align: center;">lala</td>
+            </tr>
             <tr *ngFor="let articulo of articuloList" class="userRowHover">
               <td class="rowInfo" style="text-align: center;">{{articulo.Titulo }}</td>
               <td class="rowInfo" style="text-align: center;">{{articulo.Descripion}}</td> 
               <td class="rowInfo" style="text-align: center;">{{articulo.Fecha}}</td> 
-              <td class="rowInfo" style="text-align: center;">{{articulo.Categorias}}
+              <td class="rowInfo" style="text-align: center;">{{articulo.Categorias}}</td>
             </tr>
           </tbody>
           
         </table>
       </div>
-    </div>>
+    </div>

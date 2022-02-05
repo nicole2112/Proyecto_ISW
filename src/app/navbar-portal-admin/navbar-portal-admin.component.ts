@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
-import { faUserCircle, faAddressBook, faComments, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faAddressBook, faComments, faHandSparkles, faBlog } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar-portal-admin',
@@ -19,28 +19,35 @@ export class NavbarPortalAdminComponent implements OnInit {
   @Output() showHeroesClick = new EventEmitter<boolean>();
   
   @Output() showArticulosClick = new EventEmitter<boolean>();
+  @Output() viewArticulosClick = new EventEmitter<boolean>();
 
-  viewHeroes(){
-    this.viewHeroesClick.emit(true);
-  }
-
+  //Usuarios
   showUsers(){
     this.viewUsersClick.emit(true);
   }
 
-  showHeroes(){
+  //Héroes
+  viewHeroes(){ //view->agregar
+    this.viewHeroesClick.emit(true);
+  }
+
+  showHeroes(){  //show->ver
     this.showHeroesClick.emit(true);
   }
 
-  showArticulos(){
+  //Blog
+  viewArticulos(){ //view->agregar
+    this.viewArticulosClick.emit(true);
+  }
+  showArticulos(){  //show->ver
     this.showArticulosClick.emit(true);
   }
 
   //Testimonies
-  showTestimonies(){
+  showTestimonies(){  //show->ver
     this.showTestimoniesClick.emit(true);
   }
-  viewTestimonies(){
+  viewTestimonies(){ //view->agregar
     this.viewTestimoniesClick.emit(true);
   }
 
@@ -80,4 +87,5 @@ export class NavbarPortalAdminComponent implements OnInit {
   faAddressBook = faAddressBook;
   faComments = faComments;
   faHandSparkles = faHandSparkles;
+  faBlog = faBlog;
 }

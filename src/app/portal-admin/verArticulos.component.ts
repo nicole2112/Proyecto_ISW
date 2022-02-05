@@ -18,9 +18,12 @@ import { empty } from 'rxjs';
     styleUrls: ['verArticulos.component.css']
 })
 
+
+export class verArticulosComponent {
+    articuloList;
+}
 /*
 export class verArticulosComponent implements OnInit{
-
 }
 
 ngOnInit(): void {
