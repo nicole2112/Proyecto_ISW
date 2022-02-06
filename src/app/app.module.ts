@@ -47,6 +47,7 @@ import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from './users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.component';
 import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //tiny mce
 import { verArticulosComponent } from './portal-admin/verArticulos.component';
 import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
 
@@ -99,10 +100,12 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
     HttpClientModule,
     ReactiveFormsModule,
     NgbModule,
-    NgSelectizeModule
+    NgSelectizeModule,
+    EditorModule
   ],
   providers: [
     ModalService,
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
   bootstrap: [AppComponent]
 })

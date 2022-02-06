@@ -9,6 +9,7 @@
               <th style="text-align: center;">Descripción</th>
               <th style="text-align: center;">Fecha</th>
               <th style="text-align: center;">Categorias</th>
+              <th style="text-align: center;">Portada</th>
             </tr>
           </thead>
           
@@ -18,12 +19,14 @@
               <td class="rowInfo" style="text-align: center;">lala</td> 
               <td class="rowInfo" style="text-align: center;">lala</td> 
               <td class="rowInfo" style="text-align: center;">lala</td>
+              <td class="rowInfo" style="text-align: center;"><img src="https://i0.wp.com/ensedeciencia.com/wp-content/uploads/2021/08/Area_Medicina.jpg?resize=800%2C420&ssl=1" style="max-width: 80px; max-height: 80px;"></td>
             </tr>
             <tr *ngFor="let articulo of articuloList" class="userRowHover">
               <td class="rowInfo" style="text-align: center;">{{articulo.Titulo }}</td>
               <td class="rowInfo" style="text-align: center;">{{articulo.Descripion}}</td> 
               <td class="rowInfo" style="text-align: center;">{{articulo.Fecha}}</td> 
               <td class="rowInfo" style="text-align: center;">{{articulo.Categorias}}</td>
+              <td class="rowInfo" style="text-align: center;">{{articulo.ImagenPortada}}</td>
             </tr>
           </tbody>
           

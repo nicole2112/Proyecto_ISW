@@ -27,9 +27,11 @@ npm i ngx-accordion
 
 //test
 
-//para dropdown con múltiples opciones de Categorías
+//Selectize: para múltiples opciones de Categorías
 npm i --save ng-selectize  selectize
 (ng-selectize->v2.0.0, selectize->v0.12.6, también se ocupa jquery)
 npm i lodash.clonedeep@4.5.0
 
-//tiny
+//tiny mce
+npm install --save @tinymce/tinymce-angular@5.0.1
+npm install --save tinymce@5.10.2

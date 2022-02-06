@@ -12,9 +12,10 @@ export class AgregarArticuloComponent{
     descripcion: any;
     fecha: any;
     contenido: any;
+    newCat: any;
     public categorias = null;
 
-    public val = null;
+    imageList: any[];
 
     config = {
         labelField: 'label',
@@ -24,6 +25,7 @@ export class AgregarArticuloComponent{
         create: false,
     };
     
+    //datos de prueba
     data = [
         {
             label: 'Medicina',
@@ -39,21 +41,44 @@ export class AgregarArticuloComponent{
         }
     ]
 
-    ngOnInit(){
+    ngOnInit(){}
 
-    }
-
-    public changed() {
+    public changed() { //cada vez que se modifica input de categorías seleccionadas
         console.log(this.categorias);
     }
 
     agregarCategoria()
     {
         const item = {
-            label: "Pediatria",
-            value: "Pediatria"
+            label: this.newCat,
+            value: this.newCat
         };
 
         this.data.push(item);
+        this.newCat = null;
     }
+
+    //Para adjuntar imagen principal
+    onDragOver(event) {
+        event.preventDefault();
+    }
+    // From drag and drop
+    onDropSuccess(event) {
+          event.preventDefault();
+    
+          this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
+    }
+    // From attachment link
+    onChange(event) {
+        this.onFileChange(event.target.files);    // "target" is correct here
+    }
+    private onFileChange(files: File[]) {
+        this.imageList = files;
+        console.log(files[0]?.name);
+    }
+
+    saveArticle(){
+
+    }
+
 }

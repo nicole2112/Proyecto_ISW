@@ -3,7 +3,7 @@
     <h1 style="margin-bottom: 2%; margin-top: 2%;">Creación de Artículo</h1>
   </div>
 
-  <form #articuloForm="ngForm" action="/">
+  <form #articuloForm="ngForm" action="/" class="half-width">
     
     <div class="row mt-3 d-flex justify-content-center styleFormElem">
       <!--Título de Artículo-->
@@ -67,59 +67,98 @@
     </div>
 
     <!--Imagen Primaria-->
-
+    <div class="d-flex justify-content-center styleFormElem">
+      <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+        <label class="form-label">Imagen de Portada</label>
+        <input 
+          class="form-control" 
+          (change)="onChange($event)" 
+          type="file" 
+          accept="image/png, image/jpeg"
+          required
+        />
+      </div>
+    </div>
 
     <!--Categorías-->
-    <!--
-    <div class="d-flex justify-content-center styleFormElem">
-      <div class="col-md-9">
-        <label for="categorias">Categorías</label>
-        <select 
-          class="form-select" 
-          [(ngModel)]="categorias"
+    <div class="row mt-3 d-flex justify-content-center styleFormElem">
+      <div class="sm-3 col-md-4">
+        <ng-selectize 
+          [(ngModel)]="categorias" 
           id="categorias"
           name="categorias"
-          multiple
-          required>
-          <option selected>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-        <em class="text-danger"
-          *ngIf=" articuloForm.controls.categorias?.invalid && articuloForm.controls.categorias?.touched"
-          >*Mínimo 1 categoría debe ser seleccionada</em>
+          [config]="config" 
+          [options] = "data" 
+          (ngModelChange)="changed()"
+          placeholder="Categorías"
+          required
+        ></ng-selectize>
+      </div>
+
+      <div class="form-floating sm-3 col-md-3">
+        <input
+          [(ngModel)]="newCat"
+          type="text"
+          class="form-control"
+          id="newCat"
+          name="newCat"
+          placeholder="Categoría nueva"
+        />
+        <label for="newCat" style="margin-left: 10px;">Categoría Nueva</label>
+      </div>
+
+      <div class="form-floating sm-3 col-md-2">
+        <button 
+          type="button"
+          class="btn button1" 
+          (click)="agregarCategoria()"
+          [disabled]="newCat?.length == 0 || newCat == undefined"
+        >Agregar Categoría</button>
       </div>
     </div>
     
-    <ng-selectize 
-      [config]="config" 
-      [options] = "data" 
-      [(ngModel)]="categorias" 
-      (ngModelChange)="changed()"
-      name="categorias" 
-    ></ng-selectize>
-  -->
-    <div class="d-flex justify-content-center styleFormElem">
-      <ng-selectize 
-        [(ngModel)]="categorias" 
-        id="categorias"
-        name="categorias"
-        [config]="config" 
-        [options] = "data" 
-        (ngModelChange)="changed()"
-        placeholder="Categorías"
-        required
-      ></ng-selectize>
-    </div>
-    
-    <button (click)="agregarCategoria()">Agregar Categoría</button>
-    
-  
     <!--Contenido-->
-    <div>aqui va tiny</div>
+    <div id="tiny" class="styleFormElem justify-content-center">
+      <label for="contenido" class="form-label">Contenido</label>
+      <editor
+        class="centered"
+        id="contenido"
+        [init]="{
+           base_url: '/tinymce',
+           suffix: '.min',
+           height: 500,
+           menubar: false,
+           plugins: [
+             'advlist autolink lists link image charmap print preview anchor codesample',
+             'searchreplace visualblocks code fullscreen image imagetools',
+             'insertdatetime media table paste code help wordcount'
+           ],
+          codesample_languages: [
+            { text: 'TypeScript', value: 'typescript' },
+            { text: 'JavaScript', value: 'javascript' },
+            { text: 'HTML/XML', value: 'markup' },
+            { text: 'CSS', value: 'css' }
+          ],
+           toolbar:
+             'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image codesample'
+         }"
+      ></editor>
+    </div>
 
+    <div class="d-flex justify-content-center">
+      <button
+        style="margin-top: 30px;"
+        type="submit"
+        [disabled]="articuloForm.invalid"
+        class="btn button1"
+        (click)="saveArticle();"
+      >
+        Guardar Artículo
+      </button>
+    </div>
 
   </form>
+
+
   <br>
 </div>
