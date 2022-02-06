@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import {NgSelectizeModule} from 'ng-selectize'; //categorías de blog
 
 import { AppComponent } from './app.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';//firebase
@@ -97,8 +98,8 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
     FontAwesomeModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbModule
-
+    NgbModule,
+    NgSelectizeModule
   ],
   providers: [
     ModalService,

@@ -1,3 +1,125 @@
-<div class="d-flex justify-content-center">
+<div class="container styleArticuloAdd">
+  <div class="d-flex justify-content-center">
     <h1 style="margin-bottom: 2%; margin-top: 2%;">Creación de Artículo</h1>
   </div>
+
+  <form #articuloForm="ngForm" action="/">
+    
+    <div class="row mt-3 d-flex justify-content-center styleFormElem">
+      <!--Título de Artículo-->
+      <div class="form-floating sm-3 col-md-6">
+        <input
+          [(ngModel)]="titulo"
+          [ngClass]="{ error: articuloForm.controls.titulo?.invalid && articuloForm.controls.titulo?.touched }"
+          type="text"
+          class="form-control"
+          id="titulo"
+          name="titulo"
+          placeholder="Título"
+          required
+        />
+        <label for="titulo" style="margin-left: 10px;">Título</label>
+        <em class="text-danger"
+          *ngIf=" articuloForm.controls.titulo?.invalid && articuloForm.controls.titulo?.touched"
+          >*Título es requerido</em
+        >
+      </div>
+      <!--Fecha de Artículo-->
+      <div class="col-md-3">
+        <label for="fecha">Fecha </label>
+        <br>
+        <input 
+          [(ngModel)]="fecha"
+          [ngClass]="{ error: articuloForm.controls.fecha?.invalid && articuloForm.controls.fecha?.touched }"
+          type="date" 
+          class="form-control"
+          id="fecha" 
+          name="fecha"
+          required
+        >
+        <em class="text-danger"
+          *ngIf=" articuloForm.controls.fecha?.invalid && articuloForm.controls.fecha?.touched"
+          >*Fecha es requerida</em>
+      </div>
+      
+    </div>
+
+    <!--Descripción de Artículo-->
+    <div class="d-flex justify-content-center styleFormElem">
+      <div class="form-floating sm-3 col-md-9">
+        <input
+        [(ngModel)]="descripcion"
+        [ngClass]="{ error: articuloForm.controls.descripcion?.invalid && articuloForm.controls.descripcion?.touched }"
+        type="text"
+        class="form-control"
+        id="descripcion"
+        name="descripcion"
+        placeholder="Descripción"
+        maxlength="120"
+        required
+        />
+        <label for="descripcion">Descripción</label>
+        <em class="text-danger"
+          *ngIf=" articuloForm.controls.descripcion?.invalid && articuloForm.controls.descripcion?.touched"
+          >*Descripción es requerida</em
+        >
+      </div>
+    </div>
+
+    <!--Imagen Primaria-->
+
+
+    <!--Categorías-->
+    <!--
+    <div class="d-flex justify-content-center styleFormElem">
+      <div class="col-md-9">
+        <label for="categorias">Categorías</label>
+        <select 
+          class="form-select" 
+          [(ngModel)]="categorias"
+          id="categorias"
+          name="categorias"
+          multiple
+          required>
+          <option selected>Open this select menu</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <em class="text-danger"
+          *ngIf=" articuloForm.controls.categorias?.invalid && articuloForm.controls.categorias?.touched"
+          >*Mínimo 1 categoría debe ser seleccionada</em>
+      </div>
+    </div>
+    
+    <ng-selectize 
+      [config]="config" 
+      [options] = "data" 
+      [(ngModel)]="categorias" 
+      (ngModelChange)="changed()"
+      name="categorias" 
+    ></ng-selectize>
+  -->
+    <div class="d-flex justify-content-center styleFormElem">
+      <ng-selectize 
+        [(ngModel)]="categorias" 
+        id="categorias"
+        name="categorias"
+        [config]="config" 
+        [options] = "data" 
+        (ngModelChange)="changed()"
+        placeholder="Categorías"
+        required
+      ></ng-selectize>
+    </div>
+    
+    <button (click)="agregarCategoria()">Agregar Categoría</button>
+    
+  
+    <!--Contenido-->
+    <div>aqui va tiny</div>
+
+
+  </form>
+  <br>
+</div>
