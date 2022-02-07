@@ -83,12 +83,12 @@
     <!--Categorías-->
     <div class="row mt-3 d-flex justify-content-center styleFormElem">
       <div class="sm-3 col-md-4">
-        <ng-selectize 
+        <ng-selectize
           [(ngModel)]="categorias" 
           id="categorias"
           name="categorias"
           [config]="config" 
-          [options] = "data" 
+          [options] = "categoriasList"
           (ngModelChange)="changed()"
           placeholder="Categorías"
           required
@@ -97,22 +97,22 @@
 
       <div class="form-floating sm-3 col-md-3">
         <input
-          [(ngModel)]="newCat"
+          [(ngModel)]="nombreCategoria"
           type="text"
           class="form-control"
-          id="newCat"
-          name="newCat"
+          id="nombreCategoria"
+          name="nombreCategoria"
           placeholder="Categoría nueva"
         />
-        <label for="newCat" style="margin-left: 10px;">Categoría Nueva</label>
+        <label for="nombreCategoria" style="margin-left: 10px;">Categoría Nueva</label>
       </div>
 
       <div class="form-floating sm-3 col-md-2">
         <button 
           type="button"
-          class="btn button1" 
+          class="btn button1"
           (click)="agregarCategoria()"
-          [disabled]="newCat?.length == 0 || newCat == undefined"
+          [disabled]="nombreCategoria?.length == 0 || nombreCategoria == undefined"
         >Agregar Categoría</button>
       </div>
     </div>

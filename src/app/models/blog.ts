@@ -7,3 +7,7 @@ export class Blog {
     titulo: string;
     categorias: string[];
 }
+
+export class Categoria{
+    nombreCategoria: string;
+}
