@@ -31,8 +31,6 @@ export class NavbarPortalAdminComponent implements OnInit {
     this.showHeroesClick.emit(true);
   }
 
-  //showPDF(){}
-
   //Testimonies
   showTestimonies(){
     this.showTestimoniesClick.emit(true);
@@ -50,14 +48,11 @@ export class NavbarPortalAdminComponent implements OnInit {
     let userexp = '';
     firebase.auth().onAuthStateChanged(function(user){
       if(user){
-        //document.getElementById('user-display').innerHTML = '<fa-icon class="fa icons" [icon]="faUserCircle"></fa-icon>' + user.email + ' ▼';
         document.getElementById('user-display').innerHTML = '<fa-icon class="fa icons" [icon]="faUserCircle"></fa-icon>' + sessionStorage.getItem("userEmail") + ' ▼';
-        //console.log(sessionStorage.getItem("userEmail"));
       }else{
         //console.log('Error');
       }
     })
-    //console.log(userexp);
     return userexp;
   }
   
