@@ -1,4 +1,7 @@
 import { Component } from "@angular/core";
+import tinymce from "tinymce";
+import { BlogService } from "../services/blog.service";
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Component({
     selector: 'app-add-articulo-admin',
@@ -14,8 +17,28 @@ export class AgregarArticuloComponent{
     contenido: any;
     newCat: any;
     public categorias = null;
+    articulos: any[] = [];
 
     imageList: any[];
+
+    constructor(private blogservice: BlogService, private sanitized: DomSanitizer) 
+    { }
+
+    getContenidoTiny()
+    {
+        return tinymce.get("contenido").getContent();
+    }
+
+    //Permite desplegar el codigo html tomado de la base de datos
+    sanitizar(html)
+    {
+        return this.sanitized.bypassSecurityTrustHtml(html);
+    }
+
+    onSubmit()
+    {
+
+    }
 
     config = {
         labelField: 'label',
@@ -41,7 +64,14 @@ export class AgregarArticuloComponent{
         }
     ]
 
-    ngOnInit(){}
+    ngOnInit()
+    {
+
+        this.blogservice.getArticulos().subscribe((item) => {
+       
+            this.articulos = item;
+        });
+    }
 
     public changed() { //cada vez que se modifica input de categorías seleccionadas
         console.log(this.categorias);
@@ -78,7 +108,7 @@ export class AgregarArticuloComponent{
     }
 
     saveArticle(){
-
+        this.blogservice.postArticulo(this.titulo, this.getContenidoTiny(), "url",this.descripcion, this.fecha);
     }
 
 }
