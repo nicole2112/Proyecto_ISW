@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import {NgSelectizeModule} from 'ng-selectize'; //categorías de blog
 
 import { AppComponent } from './app.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';//firebase
@@ -46,6 +47,9 @@ import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from './users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.component';
 import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //tiny mce
+import { verArticulosComponent } from './portal-admin/verArticulos.component';
+import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
 
 
 @NgModule({
@@ -77,7 +81,9 @@ import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirm
     UsersAdminComponent,
     ShowHeroesAdminComponent,
     PwResetComponent,
-    NoConfirmationComponent
+    NoConfirmationComponent,
+    verArticulosComponent,
+    AgregarArticuloComponent
   ],
   imports: [
     BrowserModule,
@@ -93,11 +99,13 @@ import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirm
     FontAwesomeModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbModule
-
+    NgbModule,
+    NgSelectizeModule,
+    EditorModule
   ],
   providers: [
     ModalService,
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
   bootstrap: [AppComponent]
 })

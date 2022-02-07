@@ -176,3 +176,7 @@ button.button1{
   transition: all 0.2s;
 }
  
+/*Para errores en los forms*/
+input.error{
+  border: 0.5px solid red;
+}

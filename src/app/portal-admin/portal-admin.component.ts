@@ -26,15 +26,21 @@ export class PortalAdminComponent implements OnInit {
   closeResult: string;
   User = [];
   userSelectedId : string;
+  
+  toggleUsers = false;
 
   toggleHeroes = false;
-  toggleUsers = false;
   toggleShowHeroes = false;
+  toggleShowHeroesRedirect=false;
+
   toggleShowTestimonies=false;
   toggleViewTestimonies=false;
-  toggleShowHeroesRedirect=false;
   toggleShowTestimoniesRedirect=false;
   toggleAddPDF=false;
+
+  toggleShowArticulos=false; //para ver artículos
+  toggleViewArticulos=false; //para agregar artículo
+
 
   constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer, private router: Router) { }
   ShowUsers = false;
