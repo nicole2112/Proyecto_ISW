@@ -17,41 +17,36 @@ export class NavbarPortalAdminComponent implements OnInit {
   @Output() showTestimoniesClick = new EventEmitter();
   @Output() viewHeroesClick = new EventEmitter<boolean>();
   @Output() showHeroesClick = new EventEmitter<boolean>();
-<<<<<<< HEAD
   @Output() showPDFOptions = new EventEmitter<boolean>();
-=======
-  
+
   @Output() showArticulosClick = new EventEmitter<boolean>();
   @Output() viewArticulosClick = new EventEmitter<boolean>();
->>>>>>> 70612fccad42b15013f6a3ca05899ef7387823bb
 
-  //Usuarios
+  viewHeroes(){
+    this.viewHeroesClick.emit(true);
+  }
+
   showUsers(){
     this.viewUsersClick.emit(true);
   }
 
-  //Héroes
-  viewHeroes(){ //view->agregar
-    this.viewHeroesClick.emit(true);
-  }
-
-  showHeroes(){  //show->ver
+  showHeroes(){
     this.showHeroesClick.emit(true);
   }
 
   //Blog
-  viewArticulos(){ //view->agregar
+  viewArticulos() {
     this.viewArticulosClick.emit(true);
   }
-  showArticulos(){  //show->ver
+  showArticulos() {
     this.showArticulosClick.emit(true);
   }
 
   //Testimonies
-  showTestimonies(){  //show->ver
+  showTestimonies(){
     this.showTestimoniesClick.emit(true);
   }
-  viewTestimonies(){ //view->agregar
+  viewTestimonies(){
     this.viewTestimoniesClick.emit(true);
   }
 

@@ -35,25 +35,51 @@
                 <input id="titulo" type="text" class="form-control" placeholder="titulo" name="dp">
             </div>
         </div>
-    </form>
-   </div>
-   <div class="form-group">
-    <label for="contenido">Contenido</label>
-    <div class="input-group">
-      <textarea name="contenido" class="form-control" id="contenido" cols="60" rows="5" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
-    </div>
-  </div>
-    <div class="form-group">
-      <label for="fecha">Fecha</label>
-      <div class="input-group">
-        <div class="custom-select" style="width:200px;" id="custom-select">
-          <input type="date" id="fechaCreacion" class="form-control" name="fechaCreacion" id="fechaCreacion" placeholder="fechaCreacion">
+        <div class="form-group">
+          <label for="contenido">Contenido</label>
+          <div class="input-group">
+            <textarea name="contenido" class="form-control" id="contenido" cols="60" rows="5" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
+          </div>
         </div>
-      </div>
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <div class="input-group">
+              <div class="custom-select" style="width:200px;" id="custom-select">
+                <input type="date" id="fechaCreacion" class="form-control" name="fechaCreacion" id="fechaCreacion" placeholder="fechaCreacion">
+              </div>
+            </div>
+          </div>
+    </form>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, articuloSelectedId, articuloSelectedName); onDeleteConfirmation(articuloSelectedName); modal.close('Delete Click');">Eliminar</button>
+      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); saveArticulo();">Guardar</button>
     </div>
- 
-
+   </div>
 </ng-template>
 
+<ng-template #confirmation let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el Articulo?</h4>
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <input id="nameDelete" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
+          <div class="input-group-append">
+            <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-danger pull-left" (click)="deleteArticulo(); modal.close('Delete Click'); ">Eliminar</button>
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancelar</button>
+  </div>
+</ng-template>
 
 </div>

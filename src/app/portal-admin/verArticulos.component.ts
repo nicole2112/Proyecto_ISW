@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { BlogService } from '../services/blog.service';
 import { Blog } from '../models/blog';
 
@@ -26,7 +27,7 @@ export class verArticulosComponent {
 
   articuloSelectedId: string;
   articuloSelectedImg: string;
-  artiuloSelectedName: string;
+  articuloSelectedName: string;
   Blog =[];
   closeResult: string;
   selectedValue: any;
@@ -55,7 +56,7 @@ export class verArticulosComponent {
 
   open(content, id: string, name: string){
     this.articuloSelectedId = id;
-    this.artiuloSelectedName = name;
+    this.articuloSelectedName = name;
 
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
       console.log(`Closed with: ${result}`);
@@ -111,5 +112,58 @@ export class verArticulosComponent {
       timer: 1500
     })
   }
+
+  writeArticleData(imageUrl, articuloSelectedId){
+    let articuloItem={};
+    const userRef = this.db.object('blogs/' + articuloSelectedId);
+
+    articuloItem={
+        "contenido": this.contenido,
+        "fechaCreacion": this.fechaCreacion,
+        "titulo": this.titulo
+      }
+    userRef.update(articuloItem)
+    this.callUpdateNotification();
+  }
+
+  getValues(){
+    var tituloVal = document.getElementById('titulo') as HTMLInputElement;
+    var contenidoVal = document.getElementById('contenido') as HTMLTextAreaElement;
+    var fechaCreacionVal = document.getElementById('fechaCreacion') as HTMLInputElement;
+
+    let tituloValue = tituloVal.value;
+    let contenidoValue = contenidoVal.value;
+    let fechaCreacionValue = fechaCreacionVal.value;
+
+    this.titulo = tituloValue;
+    this.contenido =  contenidoValue;
+    this.fechaCreacion = fechaCreacionValue;
+
+  }
+
+  saveArticulo() {
+    this.getValues();
+    if(this.fileList != undefined  && this.fileList.length > 0)
+    {
+    let filename = this.fileList[0].name;
+    const storage = getStorage();
+    const storageRef = ref(storage, filename);
+    
+    
+      uploadBytes(storageRef, this.fileList[0]).then((snapshot) => {
+
+      }).then(
+         ()=>{
+          getDownloadURL(storageRef).then(data =>{
+            this.writeArticleData(data, this.articuloSelectedId) 
+          }).catch((error)=>{
+            console.log(error)
+          });
+        }
+      );
+    }else{
+      this.writeArticleData(this.articuloSelectedImg, this.articuloSelectedId)
+    }
+  }  
     
 }
