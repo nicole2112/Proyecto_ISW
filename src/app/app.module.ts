@@ -50,7 +50,6 @@ import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirm
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //tiny mce
 import { verArticulosComponent } from './portal-admin/verArticulos.component';
 import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
-import { ModificarBlogComponent } from './modificar-blog/modificar-blog.component';
 
 
 @NgModule({
@@ -84,8 +83,7 @@ import { ModificarBlogComponent } from './modificar-blog/modificar-blog.componen
     PwResetComponent,
     NoConfirmationComponent,
     verArticulosComponent,
-    AgregarArticuloComponent,
-    ModificarBlogComponent
+    AgregarArticuloComponent
   ],
   imports: [
     BrowserModule,
