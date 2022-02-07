@@ -2,6 +2,10 @@ import { Component } from "@angular/core";
 import tinymce from "tinymce";
 import { BlogService } from "../services/blog.service";
 import { DomSanitizer } from '@angular/platform-browser'
+import { AuthenticationService } from "../services/auth.services";
+import Swal from "sweetalert2";
+import { AngularFireList } from "@angular/fire/compat/database";
+import { Categoria } from "../models/blog";
 
 @Component({
     selector: 'app-add-articulo-admin',
@@ -15,13 +19,18 @@ export class AgregarArticuloComponent{
     descripcion: any;
     fecha: any;
     contenido: any;
-    newCat: any;
-    public categorias = null;
     articulos: any[] = [];
 
     imageList: any[];
 
-    constructor(private blogservice: BlogService, private sanitized: DomSanitizer) 
+
+    //nuevo
+    categorias: any;
+    nombreCategoria: string;
+    categoriasList = [];
+    
+
+    constructor(private blogservice: BlogService, private sanitized: DomSanitizer, public service: AuthenticationService) 
     { }
 
     getContenidoTiny()
@@ -41,28 +50,18 @@ export class AgregarArticuloComponent{
     }
 
     config = {
-        labelField: 'label',
-        valueField: 'value',
+        labelField: 'Categoria',
+        valueField: 'Categoria',
         maxItems: 10,
         highlight: true,
         create: false,
     };
     
-    //datos de prueba
-    data = [
-        {
-            label: 'Medicina',
-            value: 'Medicina'
-        },
-            {
-            label: 'Eventos',
-            value: 'Eventos'
-        },
-            {
-            label: 'Donaciones',
-            value: 'Donaciones'
-        }
-    ]
+
+
+    categoriaRef: AngularFireList<any>;
+
+
 
     ngOnInit()
     {
@@ -71,21 +70,48 @@ export class AgregarArticuloComponent{
        
             this.articulos = item;
         });
+
+        
+        this.getCategorias();
     }
 
     public changed() { //cada vez que se modifica input de categorías seleccionadas
-        console.log(this.categorias);
+        console.log(this.categoriasList);
+    }
+
+    getCategorias(){
+        this.categoriaRef = this.service.db.list('categorias');
+
+        this.categoriaRef.snapshotChanges().subscribe(data =>{
+            this.categoriasList = [];
+            data.forEach(articulo =>{
+                let a = articulo.payload.toJSON();
+                a['$key'] = articulo.key;
+                this.categoriasList.push(a as Categoria);
+            })
+            console.log(this.categoriasList);
+        })
     }
 
     agregarCategoria()
     {
-        const item = {
-            label: this.newCat,
-            value: this.newCat
-        };
+        let categoriaItem={};
 
-        this.data.push(item);
-        this.newCat = null;
+        categoriaItem={
+            "Categoria": this.nombreCategoria
+        }
+        this.service.db.list('categorias').push(categoriaItem);
+        this.callNuevaCategoriaAgregada();
+    }
+
+    callNuevaCategoriaAgregada(){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Nueva Categoria agregada',
+            showConfirmButton: false,
+            timer: 1500
+          })
     }
 
     //Para adjuntar imagen principal

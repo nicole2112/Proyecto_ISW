@@ -9,17 +9,19 @@ import Swal from 'sweetalert2'
 })
 export class BlogService {
 
-  FundacionRef: AngularFireList<any>;
+  blogRef: AngularFireList<any>;
+
   blogList : any[];
+  categoriaList: any[];
 
   constructor(private db:AngularFireDatabase) { }
 
   getArticulos(): Observable<any[]>
   {
 
-    this.FundacionRef = this.db.list('blogs');
+    this.blogRef = this.db.list('blogs');
 
-    return this.FundacionRef.snapshotChanges().pipe(map(data =>{
+    return this.blogRef.snapshotChanges().pipe(map(data =>{
     this.blogList = [];
     data.forEach(articulo =>{
         let a = articulo.payload.toJSON();
@@ -29,6 +31,8 @@ export class BlogService {
     return this.blogList;
     }))
   }
+
+  
 
 
   postArticulo(titulo, contenido, urlimagen, descripcion, fecha)
@@ -62,5 +66,5 @@ export class BlogService {
   deleteArticulo(key){
     this.db.object(`blogs/${key}`).set(null);
   }
-  
+
 }
