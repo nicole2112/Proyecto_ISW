@@ -1,35 +1,59 @@
 <div style="background-color: white;">
-    <div class="container table-testimonies">
-        <div class="table-wrapper-scroll-y my-custom-scrollbar">
-        <table class="table table-striped table-bordered">
-          <thead class="table-header" class="userRowHover">
-            
-            <tr>
-              <th style="text-align: center;">Título</th>
-              <th style="text-align: center;">Descripción</th>
-              <th style="text-align: center;">Fecha</th>
-              <th style="text-align: center;">Categorias</th>
-              <th style="text-align: center;">Portada</th>
-            </tr>
-          </thead>
-          
-          <tbody>
-            <tr>
-              <td class="rowInfo" style="text-align: center;">lala</td>
-              <td class="rowInfo" style="text-align: center;">lala</td> 
-              <td class="rowInfo" style="text-align: center;">lala</td> 
-              <td class="rowInfo" style="text-align: center;">lala</td>
-              <td class="rowInfo" style="text-align: center;"><img src="https://i0.wp.com/ensedeciencia.com/wp-content/uploads/2021/08/Area_Medicina.jpg?resize=800%2C420&ssl=1" style="max-width: 80px; max-height: 80px;"></td>
-            </tr>
-            <tr *ngFor="let articulo of articuloList" class="userRowHover">
-              <td class="rowInfo" style="text-align: center;">{{articulo.Titulo }}</td>
-              <td class="rowInfo" style="text-align: center;">{{articulo.Descripion}}</td> 
-              <td class="rowInfo" style="text-align: center;">{{articulo.Fecha}}</td> 
-              <td class="rowInfo" style="text-align: center;">{{articulo.Categorias}}</td>
-              <td class="rowInfo" style="text-align: center;">{{articulo.ImagenPortada}}</td>
-            </tr>
-          </tbody>
-          
-        </table>
+<table class="table table-striped table-bordered">
+    <thead class="table-header">
+        <tr>
+           <th>Título</th>
+           <th>Descripción</th>
+           <th>Fecha</th>
+           <th>Categorías</th>
+           <th>Imagen</th> 
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let articulo of Blog" class="userRowHover" (click)="open(content, articulo.$key, articulo.titulo); onSelect(articulo, articulo.imagenPreview )">
+            <td class="rowInfo">{{articulo.titulo}}</td>
+            <td class="rowInfo">{{articulo.descripcion}}</td>
+            <td class="rowInfo">{{articulo.fechaCreacion}}</td>
+            <td class="rowInfo">{{articulo.categorias}}</td>
+            <td class="styleImg"><img src="{{articulo.imagenPreview}}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #content let-modal>
+   <div class="modal-header">
+       <h4 class="modal-title" id="modal-basic-title">Editar Artículo</h4>
+       <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+           <span aria-hidden="true">&times;</span>
+       </button>
+   </div>
+   <div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <div class="input-group">
+                <input id="titulo" type="text" class="form-control" placeholder="titulo" name="dp">
+            </div>
+        </div>
+    </form>
+   </div>
+   <div class="form-group">
+    <label for="contenido">Contenido</label>
+    <div class="input-group">
+      <textarea name="contenido" class="form-control" id="contenido" cols="60" rows="5" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
+    </div>
+  </div>
+    <div class="form-group">
+      <label for="fecha">Fecha</label>
+      <div class="input-group">
+        <div class="custom-select" style="width:200px;" id="custom-select">
+          <input type="date" id="fechaCreacion" class="form-control" name="fechaCreacion" id="fechaCreacion" placeholder="fechaCreacion">
+        </div>
       </div>
     </div>
+ 
+
+</ng-template>
+
+
+</div>

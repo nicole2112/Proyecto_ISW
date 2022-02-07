@@ -1,16 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
-import { TestimonyService } from "../services/testimony.service";
-import { ModalService } from '../services/modal.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { ignoreElements, take } from 'rxjs/operators';
-import { AuthenticationService } from '../services/auth.services';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
-//import { Heroe } from '../models/heroe';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { empty } from 'rxjs';
+import { BlogService } from '../services/blog.service';
+import { Blog } from '../models/blog';
 
 @Component ({
     selector: 'app-view-articulos-admin',
@@ -20,38 +13,103 @@ import { empty } from 'rxjs';
 
 
 export class verArticulosComponent {
-    articuloList;
+
+  contenido:any;
+  fechaCreacion: any;
+  idArticulo: any;
+  imageUrl: any;
+  resumen: any;
+  titulo: any;
+
+  fileList: any[];
+
+
+  articuloSelectedId: string;
+  articuloSelectedImg: string;
+  artiuloSelectedName: string;
+  Blog =[];
+  closeResult: string;
+  selectedValue: any;
+  imgUrlSave: any;
+
+
+  constructor(public blogService: BlogService, private db: AngularFireDatabase, private modalService: NgbModal) {}
+
+  FundacionRef: AngularFireList<any>;
+  articuloRef: AngularFireObject<any>;
+
+
+  ngOnInit(): void {
+
+    this.FundacionRef = this.db.list('blogs');
+
+    this.FundacionRef.snapshotChanges().subscribe(data =>{
+      this.Blog = [];
+      data.forEach(articulo =>{
+        let a = articulo.payload.toJSON();
+        a['$key'] = articulo.key;
+        this.Blog.push(a as Blog);
+      })
+    })
+  }
+
+  open(content, id: string, name: string){
+    this.articuloSelectedId = id;
+    this.artiuloSelectedName = name;
+
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
+      console.log(`Closed with: ${result}`);
+    }, (reason)=>{
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
+    })
+  }
+
+  onSelect(selectedItem: any, img: string){
+    this.articuloSelectedImg = selectedItem.imageUrl;
+    document.getElementById("titulo").setAttribute('value', selectedItem.titulo);
+    document.getElementById("contenido").innerHTML = selectedItem.contenido;
+  }
+
+  deleteArticulo(){
+    this.articuloRef = this.db.object('blogs/' + this.articuloSelectedId);
+    this.articuloRef.remove();
+    this.callDeleteNotification();
+  }
+
+  onDeleteConfirmation(name: string){
+    document.getElementById("nameDelete").setAttribute('value', name);
+  }
+
+
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  callUpdateNotification(){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Héroe ha sido actualizado exitosamente!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  callDeleteNotification(){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Héroe ha sido eliminado exitosamente!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+    
 }
-/*
-export class verArticulosComponent implements OnInit{
-}
-
-ngOnInit(): void {
-    this.testimService.getTestimonies().subscribe((item) => {
-   
-      this.testimonyList = item;
-      this.titulo = item[0].titulo;
-      this.testimonyList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
-
-      this.testimonyList.forEach(element => {
-
-          if(element.visible == 1){
-              element.visible ="Disponible";
-          }else{
-              element.visible ="Oculto";
-          } 
-          
-          if(element.prioridad == 1){
-              element.prioridad ="Alta";
-          }else if (element.prioridad == 2){
-              element.prioridad = "Media";
-          }else if(element.prioridad == 3){
-              element.prioridad = "Baja"
-          }
-          this.NuevaLista.push(element);
-      });
-
-      //this.testimonyList = item;
-  });
-}
-*/
