@@ -17,6 +17,7 @@ export class NavbarPortalAdminComponent implements OnInit {
   @Output() showTestimoniesClick = new EventEmitter();
   @Output() viewHeroesClick = new EventEmitter<boolean>();
   @Output() showHeroesClick = new EventEmitter<boolean>();
+  @Output() showPDFOptions = new EventEmitter<boolean>();
 
   viewHeroes(){
     this.viewHeroesClick.emit(true);
@@ -29,6 +30,8 @@ export class NavbarPortalAdminComponent implements OnInit {
   showHeroes(){
     this.showHeroesClick.emit(true);
   }
+
+  //showPDF(){}
 
   //Testimonies
   showTestimonies(){

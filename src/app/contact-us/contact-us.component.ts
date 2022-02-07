@@ -3,6 +3,9 @@ import { ContactUsForm } from "../contact-us-form/contactUsForm";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
+import '../../assets/js/smtp.js';
+declare const Email: any;
+
 @Component({
     selector: 'contact-us-form',
     templateUrl: './contact-us.component.html', 
@@ -32,11 +35,28 @@ export class ContactUsComponent {
         return this.form.get('correo');
     }
 
+    get asunto() {
+        return this.form.get('asunto');
+    }
+
+    get mensaje() {
+        return this.form.get('mensaje');
+    }
+
     onSubmit(): void{
         console.table(this.form.value);
         console.log("Form is touched: ", this.form.touched);
         console.log("Is form valid: ", this.form.valid);
         console.log("Form dirty: ", this.form.dirty);
+        Email.send({
+            SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
+            To: 'aaron20092009@hotmail.com',
+            From: 'lopez.aaron1022@gmail.com',
+            Subject: `Consulta - ${this.asunto.value}`,
+            Body: `${this.name.value}` + ` -${this.correo.value}- `+ '\n' + `${this.mensaje.value}`
+          }).then(
+            message => console.log(message)
+          );
     }
 }
 
