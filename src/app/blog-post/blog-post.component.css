@@ -1,0 +1,32 @@
+.blog, .article {
+    position: relative;
+    height: fit-content;
+    padding-bottom: 0;
+}
+
+.article, .title{
+    min-height: auto;
+    height: fit-content;
+    padding: 0 10px;
+    white-space: normal;
+}
+
+.published{
+    margin: 20px 0 60px;
+    padding: 0 10px;
+    text-transform: capitalize;
+    font-style: italic;
+    color: Orgba (0, 0,
+    0,
+    0.5);
+}
+
+.published span{
+    font-weight: 700;
+    font-style: normal;
+}
+
+.article *{
+    margin: 30px 0;
+    color: O#2d2d2d;
+}
