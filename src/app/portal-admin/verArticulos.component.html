@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let articulo of Blog" class="userRowHover" (click)="open(content, articulo.$key, articulo.titulo); onSelect(articulo, articulo.imagenPreview )">
+        <tr *ngFor="let articulo of Blog" class="userRowHover" (click)="open(content, articulo.$key, articulo.titulo, articulo.descripcion, articulo.fecha, articulo.categorias); onSelect(articulo, articulo.imagenPreview )">
             <td class="rowInfo">{{articulo.titulo}}</td>
             <td class="rowInfo">{{articulo.descripcion}}</td>
             <td class="rowInfo">{{articulo.fechaCreacion}}</td>
@@ -36,6 +36,12 @@
             </div>
         </div>
         <div class="form-group">
+          <label for="contenido">Descripción</label>
+          <div class="input-group">
+            <textarea name="descripcion" class="form-control" id="descripcion" cols="60" rows="4" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
           <label for="contenido">Contenido</label>
           <div class="input-group">
             <textarea name="contenido" class="form-control" id="contenido" cols="60" rows="5" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
@@ -49,9 +55,21 @@
               </div>
             </div>
           </div>
+          <div class="form-group">
+            <label for="url">Url Imagen</label>
+            <div class="input-group">
+                <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+                    <label class="custom-file-upload">
+                      <input (change)="onChangeFile($event)" type="file" id="url" accept="image/png, image/jpeg"/>
+                      Agregar imagen...
+                    </label>
+                  </div>
+              
+            </div>
+        </div>
     </form>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, articuloSelectedId, articuloSelectedName); onDeleteConfirmation(articuloSelectedName); modal.close('Delete Click');">Eliminar</button>
+      <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, articuloSelectedId, articuloSelectedName, articuloSelectedDescription, articuloSelectedfecha, articuloSelectedCategorias); onDeleteConfirmation(articuloSelectedName); modal.close('Delete Click');">Eliminar</button>
       <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); saveArticulo();">Guardar</button>
     </div>
    </div>

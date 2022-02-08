@@ -5,6 +5,8 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angula
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { BlogService } from '../services/blog.service';
 import { Blog } from '../models/blog';
+import { StringLike } from '@firebase/util';
+import { runInThisContext } from 'vm';
 
 @Component ({
     selector: 'app-view-articulos-admin',
@@ -28,6 +30,10 @@ export class verArticulosComponent {
   articuloSelectedId: string;
   articuloSelectedImg: string;
   articuloSelectedName: string;
+  articuloSelectedDescription: string;
+  articuloSelectedfecha: any;
+  articuloSelectedCategorias: any;
+
   Blog =[];
   closeResult: string;
   selectedValue: any;
@@ -39,6 +45,8 @@ export class verArticulosComponent {
   FundacionRef: AngularFireList<any>;
   articuloRef: AngularFireObject<any>;
 
+  arrCategorias: any
+
 
   ngOnInit(): void {
 
@@ -49,14 +57,26 @@ export class verArticulosComponent {
       data.forEach(articulo =>{
         let a = articulo.payload.toJSON();
         a['$key'] = articulo.key;
+        //console.log(a['categorias']);
+        this.arrCategorias = a['categorias'];
+        a['categorias'] = "";
+        for(var categoria in this.arrCategorias){
+          if(this.arrCategorias.hasOwnProperty(categoria)) {
+            console.log(this.arrCategorias[categoria]);
+            a['categorias'] += this.arrCategorias[categoria] + " ";
+          }
+        }
         this.Blog.push(a as Blog);
       })
     })
   }
 
-  open(content, id: string, name: string){
+  open(content, id: string, name: string, descripcion: string, fecha: Date, categorias: any){
     this.articuloSelectedId = id;
     this.articuloSelectedName = name;
+    this.articuloSelectedDescription = descripcion;
+    this.articuloSelectedfecha = fecha;
+    this.articuloSelectedCategorias = categorias;
 
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
       console.log(`Closed with: ${result}`);
@@ -69,6 +89,8 @@ export class verArticulosComponent {
     this.articuloSelectedImg = selectedItem.imageUrl;
     document.getElementById("titulo").setAttribute('value', selectedItem.titulo);
     document.getElementById("contenido").innerHTML = selectedItem.contenido;
+    document.getElementById("descripcion").innerHTML = selectedItem.descripcion;
+    document.getElementById("fechaCreacion").setAttribute('value', selectedItem.fechaCreacion);
   }
 
   deleteArticulo(){
@@ -81,6 +103,25 @@ export class verArticulosComponent {
     document.getElementById("nameDelete").setAttribute('value', name);
   }
 
+  onDragOver(event) {
+    event.preventDefault();
+  }
+
+  // From drag and drop
+  onDropSuccess(event) {
+      event.preventDefault();
+
+      this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
+  }
+
+  // From attachment link
+  onChangeFile(event) {
+      this.onFileChange(event.target.files);    // "target" is correct here
+  }
+
+  private onFileChange(files: File[]) {
+    this.fileList = files;
+  }
 
 
   private getDismissReason(reason: any): string {
@@ -118,10 +159,11 @@ export class verArticulosComponent {
     const userRef = this.db.object('blogs/' + articuloSelectedId);
 
     articuloItem={
-        "contenido": this.contenido,
-        "fechaCreacion": this.fechaCreacion,
-        "titulo": this.titulo
-      }
+      "contenido": this.contenido,
+      "fechaCreacion": this.fechaCreacion,
+      "titulo": this.titulo
+    }
+
     userRef.update(articuloItem)
     this.callUpdateNotification();
   }
