@@ -35,7 +35,7 @@ export class BlogService {
   
 
 
-  postArticulo(titulo, contenido, urlimagen, descripcion, fecha)
+  postArticulo(titulo, contenido, urlimagen, descripcion, fecha, categorias:any)
   {
     let nuevoArticulo = {
       "titulo": titulo,
@@ -43,6 +43,7 @@ export class BlogService {
       "fechaCreacion": fecha,
       "imagenPreview": urlimagen,
       "descripcion": descripcion,
+      "categorias": categorias,
     }
     this.db.list(`blogs`).push(nuevoArticulo).then((data) =>
     {

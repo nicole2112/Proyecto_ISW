@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import tinymce from "tinymce";
 import { BlogService } from "../services/blog.service";
 import { DomSanitizer } from '@angular/platform-browser'
@@ -6,6 +6,9 @@ import { AuthenticationService } from "../services/auth.services";
 import Swal from "sweetalert2";
 import { AngularFireList } from "@angular/fire/compat/database";
 import { Categoria } from "../models/blog";
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { Router } from "@angular/router";
+
 
 @Component({
     selector: 'app-add-articulo-admin',
@@ -14,12 +17,15 @@ import { Categoria } from "../models/blog";
 })
 
 export class AgregarArticuloComponent{
+
+    
     
     titulo: any;
     descripcion: any;
     fecha: any;
     contenido: any;
     articulos: any[] = [];
+    imageUrl:any;
 
     imageList: any[];
 
@@ -30,8 +36,14 @@ export class AgregarArticuloComponent{
     categoriasList = [];
     
 
-    constructor(private blogservice: BlogService, private sanitized: DomSanitizer, public service: AuthenticationService) 
+    constructor(private blogservice: BlogService, private sanitized: DomSanitizer, public service: AuthenticationService, private router: Router) 
     { }
+
+    @Output() viewTestimoniesRedirect = new EventEmitter<boolean>();
+
+    viewTestimoniesRedirectFunc(){
+    this.viewTestimoniesRedirect.emit(true);
+    }
 
     getContenidoTiny()
     {
@@ -46,7 +58,7 @@ export class AgregarArticuloComponent{
 
     onSubmit()
     {
-
+        
     }
 
     config = {
@@ -134,7 +146,23 @@ export class AgregarArticuloComponent{
     }
 
     saveArticle(){
-        this.blogservice.postArticulo(this.titulo, this.getContenidoTiny(), "url",this.descripcion, this.fecha);
+        let filename = this.imageList[0].name;
+        
+        const storage = getStorage();
+        const storageRef = ref(storage, filename);
+
+        uploadBytes(storageRef, this.imageList[0]).then((snapshot) => {
+        
+        
+        }).then(
+        ()=>{
+            getDownloadURL(storageRef).then(data =>{
+                this.blogservice.postArticulo(this.titulo, this.getContenidoTiny(), data,this.descripcion, this.fecha, this.categorias);
+            }).catch((error)=>{
+        
+            });
+        }
+        );
     }
 
 }
