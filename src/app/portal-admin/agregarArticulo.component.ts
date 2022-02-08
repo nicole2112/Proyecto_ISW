@@ -33,7 +33,9 @@ export class AgregarArticuloComponent{
     //nuevo
     categorias: any;
     nombreCategoria: string;
-    categoriasList = [];
+    categoriasList: any[];
+
+    catListLocal: any[];
     
 
     constructor(private blogservice: BlogService, private sanitized: DomSanitizer, public service: AuthenticationService, private router: Router) 
@@ -83,7 +85,6 @@ export class AgregarArticuloComponent{
             this.articulos = item;
         });
 
-        
         this.getCategorias();
     }
 
@@ -91,19 +92,42 @@ export class AgregarArticuloComponent{
         console.log(this.categoriasList);
     }
 
-    getCategorias(){
-        this.categoriaRef = this.service.db.list('categorias');
 
+     removeDuplicates(arr) {
+        return [...new Set(arr)];
+    }
+
+    getCategorias(){
+        this.categoriasList =[];
+
+        
+        this.categoriaRef = this.service.db.list('categorias');
         this.categoriaRef.snapshotChanges().subscribe(data =>{
-            this.categoriasList = [];
             data.forEach(articulo =>{
                 let a = articulo.payload.toJSON();
                 a['$key'] = articulo.key;
                 this.categoriasList.push(a as Categoria);
             })
+            console.log("Categoria List de BD");
             console.log(this.categoriasList);
+
+            // this.catListLocal = this.removeDuplicates(this.categoriasList);
+            // console.log("Categoria List de Local");
+            // console.log(this.catListLocal);
+
+
+
+            //this.updateCategoriaLocal();
         })
     }
+
+    // updateCategoriaLocal(){ 
+    //     this.catListLocal = [];
+    //     //this.catListLocal = this.categoriasList;
+    //     this.catListLocal = this.removeDuplicates(this.categoriasList);
+    //     console.log("Categoria List de LOCAL");
+    //     console.log(this.catListLocal);
+    // }
 
     agregarCategoria()
     {
@@ -114,6 +138,7 @@ export class AgregarArticuloComponent{
         }
         this.service.db.list('categorias').push(categoriaItem);
         this.callNuevaCategoriaAgregada();
+        //this.getCategorias();
     }
 
     callNuevaCategoriaAgregada(){
