@@ -68,6 +68,7 @@
 
     <!--Imagen Primaria-->
     <div class="d-flex justify-content-center styleFormElem">
+      <img *ngIf="urlI" src="{{urlI}}" style="max-height: 500px; max-width: 500px; margin-right: 10px;">
       <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
         <label class="form-label">Imagen de Portada</label>
         <input 

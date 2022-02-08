@@ -18,8 +18,6 @@ import { Router } from "@angular/router";
 
 export class AgregarArticuloComponent{
 
-    
-    
     titulo: any;
     descripcion: any;
     fecha: any;
@@ -29,6 +27,7 @@ export class AgregarArticuloComponent{
 
     imageList: any[];
 
+    urlI:any; //para mostrar imagen al seleccionarla
 
     //nuevo
     categorias: any;
@@ -41,10 +40,10 @@ export class AgregarArticuloComponent{
     constructor(private blogservice: BlogService, private sanitized: DomSanitizer, public service: AuthenticationService, private router: Router) 
     { }
 
-    @Output() viewTestimoniesRedirect = new EventEmitter<boolean>();
+    @Output() viewArticulosRedirect = new EventEmitter<boolean>();
 
-    viewTestimoniesRedirectFunc(){
-    this.viewTestimoniesRedirect.emit(true);
+    viewArticulosRedirectFunc() {
+        this.viewArticulosRedirect.emit(true);
     }
 
     getContenidoTiny()
@@ -166,8 +165,28 @@ export class AgregarArticuloComponent{
         this.onFileChange(event.target.files);    // "target" is correct here
     }
     private onFileChange(files: File[]) {
+        if(!files[0]) {
+			Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Debe seleccionar una imagen de portada.',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            this.urlI = null;
+			return;
+		}
+
         this.imageList = files;
         console.log(files[0]?.name);
+
+        //for displaying image in form
+        var reader = new FileReader();
+		reader.readAsDataURL(files[0]);
+		
+		reader.onload = (_event) => {
+			this.urlI = reader.result; 
+		}
     }
 
     saveArticle(){
@@ -183,6 +202,16 @@ export class AgregarArticuloComponent{
         ()=>{
             getDownloadURL(storageRef).then(data =>{
                 this.blogservice.postArticulo(this.titulo, this.getContenidoTiny(), data,this.descripcion, this.fecha, this.categorias);
+
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'El artículo ha sido agregado al blog.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            
+                this.viewArticulosRedirectFunc();
             }).catch((error)=>{
         
             });
