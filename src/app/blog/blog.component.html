@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-6 mb-4" *ngFor="let blog of fullList">
             <div class="cardcontainer">
-                <div class="photo"> <img src="inputPic(blog.imagenPreview)" >
+                <div class="photo"><img src="{{blog?.imagenPreview}}">
                     <div class="photos"></div>
                 </div>
                 <div class="content"> 

@@ -27,7 +27,4 @@ export class BlogComponent{
 
     }
 
-    inputPic(url:string):SafeResourceUrl{
-        return this._sanitizer.bypassSecurityTrustResourceUrl(url);
-      }
 }
