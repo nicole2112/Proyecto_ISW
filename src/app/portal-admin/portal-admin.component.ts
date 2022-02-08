@@ -32,6 +32,8 @@ export class PortalAdminComponent implements OnInit {
   toggleShowHeroes = false;
   toggleShowTestimonies=false;
   toggleViewTestimonies=false;
+  toggleShowHeroesRedirect=false;
+  toggleShowTestimoniesRedirect=false;
 
   constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer, private router: Router) { }
   ShowUsers = false;
