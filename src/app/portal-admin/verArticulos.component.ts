@@ -57,7 +57,6 @@ export class verArticulosComponent {
       data.forEach(articulo =>{
         let a = articulo.payload.toJSON();
         a['$key'] = articulo.key;
-        //console.log(a['categorias']);
         this.arrCategorias = a['categorias'];
         a['categorias'] = "";
         for(var categoria in this.arrCategorias){
