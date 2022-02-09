@@ -34,7 +34,7 @@ export const AppRoutes: Routes = [
   { path: 'programas', component: ProgramasComponent },
   { path: 'testimonies', component: TestimoniesComponent },
   { path: 'blog', component: BlogComponent },
-  { path: 'blog-post', component: BlogPostComponent },
+  { path: 'blog-post/:blogId', component: BlogPostComponent },
   {path: 'login', component: LoginComponent },
   {path: 'heroes-admin', component: HeroesAdminComponent, canActivate: [AdminConfGuard]},
   {

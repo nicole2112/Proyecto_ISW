@@ -36,7 +36,8 @@
                     <p class="txt5">{{blog?.resumen}}</p>
                  </div>
                 <div class="footer">
-                    <p><a class="waves-effect waves-light btn" href="#" [routerLink]="['/blog-post']" >Leer mas</a></p>
+                    <p><a class="waves-effect waves-light btn" [routerLink]="['/blog-post', blog?.id]">Leer mas</a></p>
+
                     <p class="txt3"><i class="far fa-clock"></i>{{blog?.fechaCreacion}}</p>
                 </div>
             </div>

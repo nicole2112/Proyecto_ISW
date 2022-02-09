@@ -8,6 +8,9 @@ import Swal from 'sweetalert2'
   providedIn: 'root'
 })
 export class BlogService {
+  static getBlogById(idBlog: any): any {
+      throw new Error("Method not implemented.");
+  }
 
   FundacionRef: AngularFireList<any>;
   blogList : any[];
@@ -61,6 +64,11 @@ export class BlogService {
 
   deleteArticulo(key){
     this.db.object(`blogs/${key}`).set(null);
+  }
+
+  getBlogById(idBlog)
+  {
+    return this.db.object(`blogs/${idBlog}`).valueChanges();
   }
   
 }

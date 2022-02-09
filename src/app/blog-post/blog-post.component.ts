@@ -1,5 +1,7 @@
-import { Component } from "@angular/core";
-
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { CollapseModule } from "angular-bootstrap-md";
+import { BlogService } from "../services/blog.service";
 
 @Component({
     selector: 'blog-post',
@@ -7,7 +9,19 @@ import { Component } from "@angular/core";
     styleUrls: ['blog-post.component.css']
 })
 
-export class BlogPostComponent {
+export class BlogPostComponent implements OnInit{
+    idBlog: any;
+    blog: any;
 
+    constructor(private route: ActivatedRoute, private blogService: BlogService){}
 
+    ngOnInit(): void {
+        this.idBlog = this.route.snapshot.params.blogId;
+
+        this.blogService.getBlogById(this.idBlog).subscribe(blog =>{
+            this.blog = blog;
+        });
+
+        console.log(this.blog);
+    }
 }
