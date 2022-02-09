@@ -21,10 +21,17 @@ export class BlogComponent{
     ngOnInit(): void {
         this.blogService.getArticulos().subscribe((item) => {
             this.fullList = item;
-
         });
-        
+    }
 
+    getCategorias(blog){
+        let tmpArray = [];
+
+        for (let cat in blog.categorias){
+            tmpArray.push(blog.categorias[cat]);
+        }
+
+        return tmpArray;
     }
 
 }
