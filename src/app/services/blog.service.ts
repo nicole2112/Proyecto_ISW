@@ -3,6 +3,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/datab
 import { observable, Observable, of, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2'
+import { Categoria } from '../models/blog';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,14 @@ export class BlogService {
     }))
   }
 
-  
+  getArticulobyKey(key): Observable<any>
+  {
+    this.blogRef = this.db.list(`blogs/${key}`);
+
+    return this.blogRef.snapshotChanges().pipe(map(data =>{
+      return data;
+    }))
+  }
 
 
   postArticulo(titulo, contenido, urlimagen, descripcion, fecha, categorias:any)
@@ -64,7 +72,61 @@ export class BlogService {
     })
   }
 
+  getCategorias(){
+    this.categoriaList =[];
+
+    
+    let categoriaRef = this.db.list('categorias');
+    categoriaRef.snapshotChanges().subscribe(data =>{
+        data.forEach(articulo =>{
+            let a = articulo.payload.toJSON();
+            a['$key'] = articulo.key;
+            this.categoriaList.push(a as Categoria);
+        });
+    })
+}
+
+  getCategoriasArticulo(key): Observable<any[]>
+  {
+    this.blogRef = this.db.list(`blogs/${key}`);
+
+    return this.blogRef.snapshotChanges().pipe(map(data =>{
+    return data["categorias"];
+    }));
+  }
+
+  deleteCategoriasbyArticulo(key)
+  {
+    let cats = this.getCategoriasArticulo(key);
+    this.getArticulos();
+    let borrar = [];
+
+    cats.forEach((elem) => 
+    {
+      let incluido = false;
+      this.blogList.forEach((articulo)=>
+      {
+        if(articulo["categorias"].includes(elem))
+          incluido = true;
+      })
+
+      if(!incluido)
+        borrar.push(elem);
+    });
+
+    borrar.forEach((n) =>
+    {
+      this.categoriaList.forEach((cat) =>
+      {
+        if(n = cat["Categoria"])
+         this.db.object(`categorias/${cat["$key"]}`).set(null);
+      });
+    });
+  }
+
   deleteArticulo(key){
+    
+    this.deleteCategoriasbyArticulo(key);
     this.db.object(`blogs/${key}`).set(null);
   }
 
