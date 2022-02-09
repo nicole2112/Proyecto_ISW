@@ -34,7 +34,10 @@
                 <div class="content"> 
                     <p class="txt4">{{blog?.titulo}}</p>
                     <p class="txt5">{{blog?.resumen}}</p>
-                 </div>
+                    <div *ngFor="let cat of getCategorias(blog)">
+                      {{ cat }}
+                    </div>
+                  </div>
                 <div class="footer">
                     <p><a class="waves-effect waves-light btn" href="#">Leer mas</a></p>
                     <p class="txt3"><i class="far fa-clock"></i>{{blog?.fechaCreacion}}</p>
