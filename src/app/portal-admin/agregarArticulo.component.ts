@@ -88,7 +88,6 @@ export class AgregarArticuloComponent{
     }
 
     public changed() { //cada vez que se modifica input de categorías seleccionadas
-        console.log(this.categoriasList);
     }
 
 
@@ -107,26 +106,9 @@ export class AgregarArticuloComponent{
                 a['$key'] = articulo.key;
                 this.categoriasList.push(a as Categoria);
             })
-            console.log("Categoria List de BD");
-            console.log(this.categoriasList);
 
-            // this.catListLocal = this.removeDuplicates(this.categoriasList);
-            // console.log("Categoria List de Local");
-            // console.log(this.catListLocal);
-
-
-
-            //this.updateCategoriaLocal();
         })
     }
-
-    // updateCategoriaLocal(){ 
-    //     this.catListLocal = [];
-    //     //this.catListLocal = this.categoriasList;
-    //     this.catListLocal = this.removeDuplicates(this.categoriasList);
-    //     console.log("Categoria List de LOCAL");
-    //     console.log(this.catListLocal);
-    // }
 
     agregarCategoria()
     {
@@ -137,7 +119,6 @@ export class AgregarArticuloComponent{
         }
         this.service.db.list('categorias').push(categoriaItem);
         this.callNuevaCategoriaAgregada();
-        //this.getCategorias();
     }
 
     callNuevaCategoriaAgregada(){
@@ -213,7 +194,7 @@ export class AgregarArticuloComponent{
             
                 this.viewArticulosRedirectFunc();
             }).catch((error)=>{
-        
+                console.log(error);
             });
         }
         );

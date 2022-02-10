@@ -211,6 +211,7 @@ export class ShowHeroesAdminComponent implements OnInit {
       }
     userRef.update(heroeItem)
     this.callUpdateNotification();
+    this.fileList = [];
   }
 
   getValues(){
