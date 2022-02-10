@@ -43,6 +43,11 @@ export class AgregarTestimoniosComponent {
         console.log(this.prioridad);
     }
 
+    validarTitulo(nombre:string)
+    {
+        return /^\s+$/i.test(nombre);
+    }
+
     validarURL(link:string)
     {
         return (/<(“[^”]*”|'[^’]*’|[^'”>])*>/.test(link) && link.length > 13);

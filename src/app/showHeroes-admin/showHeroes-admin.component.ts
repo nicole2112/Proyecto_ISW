@@ -20,6 +20,7 @@ export class ShowHeroesAdminComponent implements OnInit {
   fallecido: any; 
   nombre: any;
   prioridad: any;
+  prioridadString: any;
   visibilidad:any;
   imageUrl: any;
 
@@ -76,11 +77,11 @@ export class ShowHeroesAdminComponent implements OnInit {
     optionVisibilidad.innerHTML = selectedItem.visibilidad;
     optionVisibilidad.selected = true;
     selectorVisibilidad.appendChild(optionVisibilidad);
-    if(selectedItem.visibilidad === 'publico')
+    if(selectedItem.visibilidad === 'Público')
     {
-      optionVisibilidad2.innerHTML = "privado"
+      optionVisibilidad2.innerHTML = "Privado"
     }else{
-      optionVisibilidad2.innerHTML = "publico"
+      optionVisibilidad2.innerHTML = "Público"
     }
 
     selectorVisibilidad.appendChild(optionVisibilidad2);
@@ -124,12 +125,12 @@ export class ShowHeroesAdminComponent implements OnInit {
     optionFallecido.innerHTML = selectedItem.fallecido;
     optionFallecido.selected = true;
     selectorFallecido.appendChild(optionFallecido);
-    if(selectedItem.fallecido === "si")
+    if(selectedItem.fallecido === "Fallecido")
     {
-      optionFallecido2.innerHTML = "no"
+      optionFallecido2.innerHTML = "Con Vida"
       selectorFallecido.appendChild(optionFallecido2);
     }else{
-      optionFallecido2.innerHTML = "si"
+      optionFallecido2.innerHTML = "Fallecido"
       selectorFallecido.appendChild(optionFallecido2);
     }
     
@@ -205,10 +206,12 @@ export class ShowHeroesAdminComponent implements OnInit {
         "contenido": this.contenido,
         "fallecido" :this.fallecido,
         "prioridad" :this.prioridad,
+        "prioridadString" :this.prioridadString,
         "visibilidad": this.visibilidad
       }
     userRef.update(heroeItem)
     this.callUpdateNotification();
+    this.fileList = [];
   }
 
   getValues(){
@@ -228,11 +231,14 @@ export class ShowHeroesAdminComponent implements OnInit {
     let updateValue = {};
 
     if(prioridadValue === 'Alta'){
-      prioridadSend = 1
+      prioridadSend = 1,
+      this.prioridadString = "Alta"
     }else if(prioridadValue === 'Media'){
-      prioridadSend = 2
+      prioridadSend = 2,
+      this.prioridadString = "Media"
     }else{
-      prioridadSend = 3
+      prioridadSend = 3,
+      this.prioridadString ="Baja"
     }
 
     this.nombre = nombreValue;

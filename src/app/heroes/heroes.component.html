@@ -9,8 +9,8 @@
     border: 5px solid #522662;
     padding: 10px;">Héroes en la Tierra</h3>
     <tr *ngFor="let heroe of heroesList;">
-      <div *ngIf="heroe.visibilidad== 'publico'">
-        <div *ngIf="heroe.fallecido == 'no'">
+      <div *ngIf="heroe.visibilidad== 'Público'">
+        <div *ngIf="heroe.fallecido == 'Con Vida'">
                 <div class="col" style="margin: auto;
                 width: 60%;
                 padding: 10px;">
@@ -35,8 +35,8 @@
       border: 5px solid #522662;
       padding: 10px;">Héroes en el Cielo</h3>
       <tr *ngFor="let heroe of heroesList;"> 
-        <div *ngIf="heroe.visibilidad == 'publico'">
-          <div *ngIf="heroe.fallecido == 'si'">
+        <div *ngIf="heroe.visibilidad == 'Público'">
+          <div *ngIf="heroe.fallecido == 'Fallecido'">
                   <div class="col" style="margin: auto;
                   width: 60%;
                   padding: 10px;">
