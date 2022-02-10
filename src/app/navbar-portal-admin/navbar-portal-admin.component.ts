@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
-import { faUserCircle, faAddressBook, faComments, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faAddressBook, faComments, faHandSparkles, faBlog, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar-portal-admin',
@@ -17,6 +17,10 @@ export class NavbarPortalAdminComponent implements OnInit {
   @Output() showTestimoniesClick = new EventEmitter();
   @Output() viewHeroesClick = new EventEmitter<boolean>();
   @Output() showHeroesClick = new EventEmitter<boolean>();
+  @Output() viewPDFClick = new EventEmitter<boolean>();
+
+  @Output() showArticulosClick = new EventEmitter<boolean>();
+  @Output() viewArticulosClick = new EventEmitter<boolean>();
 
   viewHeroes(){
     this.viewHeroesClick.emit(true);
@@ -30,12 +34,25 @@ export class NavbarPortalAdminComponent implements OnInit {
     this.showHeroesClick.emit(true);
   }
 
+  //Blog
+  viewArticulos() {
+    this.viewArticulosClick.emit(true);
+  }
+  showArticulos() {
+    this.showArticulosClick.emit(true);
+  }
+
   //Testimonies
   showTestimonies(){
     this.showTestimoniesClick.emit(true);
   }
   viewTestimonies(){
     this.viewTestimoniesClick.emit(true);
+  }
+
+  //PDF
+  addPDF(){
+    this.viewPDFClick.emit(true);
   }
 
 
@@ -47,14 +64,11 @@ export class NavbarPortalAdminComponent implements OnInit {
     let userexp = '';
     firebase.auth().onAuthStateChanged(function(user){
       if(user){
-        //document.getElementById('user-display').innerHTML = '<fa-icon class="fa icons" [icon]="faUserCircle"></fa-icon>' + user.email + ' ▼';
         document.getElementById('user-display').innerHTML = '<fa-icon class="fa icons" [icon]="faUserCircle"></fa-icon>' + sessionStorage.getItem("userEmail") + ' ▼';
-        console.log(sessionStorage.getItem("userEmail"));
       }else{
-        console.log('Error');
+        //console.log('Error');
       }
     })
-    console.log(userexp);
     return userexp;
   }
   
@@ -66,6 +80,7 @@ export class NavbarPortalAdminComponent implements OnInit {
     this.router.navigateByUrl(`portal-admin/perfil`);
   }
 
+
   logOut(){
     this.service.logout();
   }
@@ -74,4 +89,6 @@ export class NavbarPortalAdminComponent implements OnInit {
   faAddressBook = faAddressBook;
   faComments = faComments;
   faHandSparkles = faHandSparkles;
+  faFilePdf= faFilePdf;
+  faBlog = faBlog;
 }

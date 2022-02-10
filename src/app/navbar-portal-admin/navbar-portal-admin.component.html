@@ -23,7 +23,20 @@
     <button class="dropbtn"><fa-icon class="icons" [icon]="faHandSparkles"></fa-icon>Héroes  ▼</button>
     <div class="dropdown-content">
       <a [routerLink]="['/portal-admin']" (click)="showHeroes()">Ver Héroes</a>
-      <a class="nav-link active" aria-current="page" (click)="viewHeroes()" [routerLink]="['/portal-admin']">Agregar Heroes</a>
+      <a class="nav-link active" aria-current="page" (click)="viewHeroes()" [routerLink]="['/portal-admin']">Agregar Héroe</a>
+    </div>
+  </div>
+  <div class="dropdown-users">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faBlog"></fa-icon>Blog   ▼</button>
+    <div class="dropdown-content">
+      <a [routerLink]="['/portal-admin']" (click)="showArticulos()">Ver Artículos</a>
+      <a [routerLink]="['/portal-admin']" (click)="viewArticulos()">Agregar Artículo</a>
+    </div>
+  </div>
+  <div class="dropdown-users">
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Agregar PDF  ▼</button>
+    <div class="dropdown-content">
+      <a class="nav-link active" aria-current="page" (click)="addPDF()" [routerLink]="['/portal-admin/agregarPDF']">Modificar PDF</a>
     </div>
   </div>
   <div class="dropdownx navbar-nav ms-auto">

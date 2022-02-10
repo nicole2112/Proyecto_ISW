@@ -56,6 +56,13 @@
     </p>
 
 </div>
+
+
+    <div class="container" *ngFor="let pdf of pdfList">
+        <p>Abrir PDF con informacion <a href="{{pdf.archivo}}" target="_blank" rel="noopener noreferrer">PDF</a>.</p>
+    </div>
+
+
 <br><br>
 
 <footer-comp></footer-comp>

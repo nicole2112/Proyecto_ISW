@@ -4,6 +4,8 @@ import { AuthenticationService } from '../services/auth.services';
 
 import Swal from 'sweetalert2'
 
+import '../../assets/js/smtp.js';
+declare const Email: any;
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -49,7 +51,23 @@ export class RegistroComponent implements OnInit {
     this.service.pass = this.pass;
     this.service.nombre = this.nombre;
     this.service.rol = this.rol;
-
     this.service.register(this.rol);
+    var rolSend: any;
+
+    if(this.rol === 'Admin'){
+      rolSend = 'Administrador'
+    }else {
+      rolSend = 'Digitador'
+    }
+
+    Email.send({
+      SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
+      To: this.email,
+      From: 'lopez.aaron1022@gmail.com',
+      Subject: '¡Bienvenido a Fundacion Padrino!',
+      Body: `¡Hola ${this.nombre}! Esta es tu contraseña para ingreso al portal de ${rolSend}: ${this.pass}\nInicio de Sesion: https://fundacion-padrino.web.app/login`
+    }).then(
+      message => console.log(message)
+    );
   }
 }
