@@ -41,27 +41,21 @@ export class VerTestimoniosComponent implements OnInit{
 
     onSelectedChange(event:any)
     {
-        
-        console.log(event.target.value);
         this.estado = event.target.value;
-        console.log("ESTADO ACA xx")
-        console.log("ESTADO ACA " + this.estado)
+    
     }
 
     onSelectedChange2(event:any)
     {
-        console.log(event.target.value);
         this.titulo = event.target.value;
     }
 
     onSelectedPriorityChange(event:any)
     {
         this.prioridad = event.target.value;
-        console.log(this.prioridad);
     }
     onSelectedChange3(event:any)
     {
-        console.log(event.target.value);
         this.prioridad = event.target.value;
     }
 
@@ -69,7 +63,6 @@ export class VerTestimoniosComponent implements OnInit{
     ShowTestimonies = false;
     toggleTestimoniesHandler(isShow: boolean){
       this.ShowTestimonies = true;
-      console.log(this.ShowTestimonies);
     }
 
     ngOnInit(): void {
@@ -112,7 +105,6 @@ export class VerTestimoniosComponent implements OnInit{
     editarTestimonio()
     {
       const userRef = this.db.object('testimonios/' + this.testimonioSelectedId);
-        console.log("x");
         let testimonio = {};
         let visible;
         let prioridad;
@@ -120,7 +112,7 @@ export class VerTestimoniosComponent implements OnInit{
             visible = 1;
         else
             visible = 0;
-            console.log("x1");
+            
         let numPrioridad = 3;
         switch(this.prioridad)
         {

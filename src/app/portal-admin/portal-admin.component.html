@@ -3,14 +3,21 @@
 (showHeroesClick)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = true"
 (showTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowTestimonies=true;"
 (viewTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=true;">
+(viewPDFClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleAddPDF = true;">
+
 </app-navbar-portal-admin>
     <div class="container table-users">
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
       <app-users-admin *ngIf="toggleUsers"></app-users-admin>
-      <app-heroes-admin *ngIf="toggleHeroes" (viewHeroesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = true"></app-heroes-admin>
+      
+      <app-heroes-admin *ngIf="toggleHeroes" (viewHeroesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = true; toggleAddPDF = false;"></app-heroes-admin>
       <app-showHeroes-admin *ngIf="toggleShowHeroes"></app-showHeroes-admin>
+
       <!-- <app-showHeroes-admin *ngIf="toggleShowHeroesRedirect"></app-showHeroes-admin> -->
-      <app-add-testimonies-admin *ngIf="toggleViewTestimonies" (viewTestimoniesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=true; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = false"></app-add-testimonies-admin>
+      <app-add-testimonies-admin *ngIf="toggleViewTestimonies" (viewTestimoniesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=true; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = false ; toggleAddPDF = false;"></app-add-testimonies-admin>
+
+      <app-add-pdf *ngIf="toggleAddPDF" (AddPDFRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = false; toggleAddPDF = true;" ></app-add-pdf>
+
       <app-view-testimonies-admin *ngIf="toggleShowTestimonies"></app-view-testimonies-admin>
     </div>
   </div>

@@ -13,6 +13,7 @@ import { Router } from "@angular/router";
 import { HeroesAdminComponent } from '../heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from '../users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from '../showHeroes-admin/showHeroes-admin.component';
+import {AddPdfComponent} from '../add-pdf/add-pdf.component'
 
 @Component({
   selector: 'app-portal-admin',
@@ -34,6 +35,7 @@ export class PortalAdminComponent implements OnInit {
   toggleViewTestimonies=false;
   toggleShowHeroesRedirect=false;
   toggleShowTestimoniesRedirect=false;
+  toggleAddPDF=false;
 
   constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer, private router: Router) { }
   ShowUsers = false;
