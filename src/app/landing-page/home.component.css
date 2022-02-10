@@ -309,17 +309,27 @@
   .floating-btn{
     width: 60px;
     height: 60px;
-    background-color:#25d366;
+    background-color: #3b5998;
     color:#FFF;
     border-radius:50px;
     text-align:center;
-    font-size:30px;
+    font-size:35px;
     box-shadow: 2px 2px 3px #999;
     z-index:100;
     position: fixed;
     right: 40px;
     bottom: 120px;
   }
+
+  .floating-btn:hover {
+    text-decoration: none;
+    color: #3b5998;
+    background-color:#fff;
+  }
+
+  
+
+
 
   
   @media (max-width: 940px) {
