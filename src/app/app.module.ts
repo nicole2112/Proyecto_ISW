@@ -84,7 +84,7 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
     ShowHeroesAdminComponent,
     PwResetComponent,
     NoConfirmationComponent,
-    AddPdfComponent
+    AddPdfComponent,
     NoConfirmationComponent,
     verArticulosComponent,
     AgregarArticuloComponent
@@ -109,7 +109,7 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
   ],
   providers: [
     ModalService,
-    PdfServices
+    PdfServices,
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
   bootstrap: [AppComponent]
