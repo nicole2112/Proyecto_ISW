@@ -65,7 +65,6 @@ export class BlogService {
     console.log(key);
     console.log(articulo);
     this.db.object(`blogs/${key}`).set(articulo).then(()=>{
-      console.log("hecho");
     })
     .catch((err)=>{
       console.log(err);

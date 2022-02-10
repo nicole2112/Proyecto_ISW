@@ -116,8 +116,6 @@ export class verArticulosComponent {
   }
 
   deleteArticulo(){
-    //this.articuloRef = this.db.object('blogs/' + this.articuloSelectedId);
-    //this.articuloRef.remove();
     this.blogService.deleteArticulo(this.articuloSelectedId);
     this.callDeleteNotification();
   }
@@ -135,7 +133,6 @@ export class verArticulosComponent {
   };
 
   public changed() { //cada vez que se modifica input de categorías seleccionadas
-    console.log(this.categoriasList);
 }
 
 
@@ -263,13 +260,6 @@ agregarCategoria()
     this.contenido =  this.getContenidoTiny();
     this.fechaCreacion = fechaCreacionValue;
     this.descripcion = descripcionValue;
-  //   contenido:any;
-  // fechaCreacion: any;
-  // idArticulo: any;
-  // imageUrl: any;
-  // resumen: any;
-  // descripcion: any;
-  // titulo: any;
   }
 
   saveArticulo() {
