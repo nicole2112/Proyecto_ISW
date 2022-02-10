@@ -338,8 +338,8 @@ h1 {
 }
 
 .cardcontainer {
-    width: 350px;
-    height: 500px;
+    width: 400px;
+    height: 650px;
     background-color: white;
     margin-left: auto;
     margin-right: auto;
@@ -368,7 +368,7 @@ h1 {
 
 .content {
     width: 80%;
-    height: 100px;
+    height: 150px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -378,7 +378,7 @@ h1 {
 .photos {
     width: 90px;
     height: 30px;
-    background-color: #8C8ADB;
+    background-color:#5F2E74;
     color: white;
     position: relative;
     top: -30px;
@@ -387,16 +387,16 @@ h1 {
 }
 
 .txt4 {
-    font-size: 27px;
+    font-size: 23px;
     position: relative;
-    top: 33px
+    top: 10px
 }
 
 .txt5 {
     position: relative;
     top: 18px;
-    color: #E74C3C;
-    font-size: 23px
+    color: #2C73B5;;
+    font-size: 16px
 }
 
 .txt2 {
@@ -420,7 +420,7 @@ h1 {
 }
 
 .cardcontainer:hover>.content {
-    height: 200px
+    height: 300px
 }
 
 .footer {
@@ -435,7 +435,7 @@ h1 {
 
 .btn {
     position: relative;
-    top: 20px
+    top: 20px;
 }
 
 #heart {

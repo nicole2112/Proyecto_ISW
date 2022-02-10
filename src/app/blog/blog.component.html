@@ -24,7 +24,7 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-   
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <div class="row">
         <div class="col-lg-4 col-md-6 mb-4" *ngFor="let blog of fullList">
             <div class="cardcontainer">
@@ -32,15 +32,16 @@
                     <div class="photos"></div>
                 </div>
                 <div class="content"> 
+                  <br><br>  
+                  <span class="w3-tag w3-padding w3-round-large w3-center" style="background-color:#77B6E2; margin: 0.23em; font-size: 70%;" *ngFor="let cat of getCategorias(blog)">
+                    {{ cat }}
+                    </span>
                     <p class="txt4">{{blog?.titulo}}</p>
-                    <p class="txt5">{{blog?.resumen}}</p>
-                    <div *ngFor="let cat of getCategorias(blog)">
-                      {{ cat }}
-                    </div>
+                    <p class="txt5">{{blog?.descripcion}}</p>
+                    
                   </div>
                 <div class="footer">
-                    <p><a class="waves-effect waves-light btn" [routerLink]="['/blog-post', blog?.id]">Leer mas</a></p>
-
+                    <p><button type="button" class="btn btn-light" style="background-color: #5F2E74;" [routerLink]="['/blog-post', blog?.id]">Leer mas</button></p>
                     <p class="txt3"><i class="far fa-clock"></i>{{blog?.fechaCreacion}}</p>
                 </div>
             </div>
