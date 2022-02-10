@@ -236,7 +236,7 @@ agregarCategoria()
       "fechaCreacion": this.fechaCreacion,
       "titulo": this.titulo,
       "descripcion": this.descripcion,
-      // "categorias": this.categorias
+      "categorias": this.categorias
     }
 
     userRef.update(articuloItem)
