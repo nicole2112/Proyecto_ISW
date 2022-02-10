@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import {NgSelectizeModule} from 'ng-selectize'; //categorías de blog
 
 import { AppComponent } from './app.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';//firebase
@@ -48,6 +49,9 @@ import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.co
 import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
 import { AddPdfComponent } from './add-pdf/add-pdf.component';
 import { PdfServices } from './services/pdf.services';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //tiny mce
+import { verArticulosComponent } from './portal-admin/verArticulos.component';
+import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
 
 
 @NgModule({
@@ -81,6 +85,9 @@ import { PdfServices } from './services/pdf.services';
     PwResetComponent,
     NoConfirmationComponent,
     AddPdfComponent
+    NoConfirmationComponent,
+    verArticulosComponent,
+    AgregarArticuloComponent
   ],
   imports: [
     BrowserModule,
@@ -96,12 +103,14 @@ import { PdfServices } from './services/pdf.services';
     FontAwesomeModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbModule
-
+    NgbModule,
+    NgSelectizeModule,
+    EditorModule
   ],
   providers: [
     ModalService,
     PdfServices
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
   bootstrap: [AppComponent]
 })

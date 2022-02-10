@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@ang
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
 import { faUserCircle, faAddressBook, faComments, faHandSparkles, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faAddressBook, faComments, faHandSparkles, faBlog } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar-portal-admin',
@@ -19,6 +20,9 @@ export class NavbarPortalAdminComponent implements OnInit {
   @Output() showHeroesClick = new EventEmitter<boolean>();
   @Output() viewPDFClick = new EventEmitter<boolean>();
 
+  @Output() showArticulosClick = new EventEmitter<boolean>();
+  @Output() viewArticulosClick = new EventEmitter<boolean>();
+
   viewHeroes(){
     this.viewHeroesClick.emit(true);
   }
@@ -29,6 +33,14 @@ export class NavbarPortalAdminComponent implements OnInit {
 
   showHeroes(){
     this.showHeroesClick.emit(true);
+  }
+
+  //Blog
+  viewArticulos() {
+    this.viewArticulosClick.emit(true);
+  }
+  showArticulos() {
+    this.showArticulosClick.emit(true);
   }
 
   //Testimonies
@@ -53,14 +65,11 @@ export class NavbarPortalAdminComponent implements OnInit {
     let userexp = '';
     firebase.auth().onAuthStateChanged(function(user){
       if(user){
-        //document.getElementById('user-display').innerHTML = '<fa-icon class="fa icons" [icon]="faUserCircle"></fa-icon>' + user.email + ' ▼';
         document.getElementById('user-display').innerHTML = '<fa-icon class="fa icons" [icon]="faUserCircle"></fa-icon>' + sessionStorage.getItem("userEmail") + ' ▼';
-        //console.log(sessionStorage.getItem("userEmail"));
       }else{
         //console.log('Error');
       }
     })
-    //console.log(userexp);
     return userexp;
   }
   
@@ -82,4 +91,5 @@ export class NavbarPortalAdminComponent implements OnInit {
   faComments = faComments;
   faHandSparkles = faHandSparkles;
   faFilePdf= faFilePdf;
+  faBlog = faBlog;
 }

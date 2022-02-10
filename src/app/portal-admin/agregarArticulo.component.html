@@ -1,0 +1,164 @@
+<div class="container styleArticuloAdd">
+  <div class="d-flex justify-content-center">
+    <h1 style="margin-bottom: 2%; margin-top: 2%;">Creación de Artículo</h1>
+  </div>
+
+  <form #articuloForm="ngForm" action="/" class="half-width">
+    
+    <div class="row mt-3 d-flex justify-content-center styleFormElem">
+      <!--Título de Artículo-->
+      <div class="form-floating sm-3 col-md-6">
+        <input
+          [(ngModel)]="titulo"
+          [ngClass]="{ error: articuloForm.controls.titulo?.invalid && articuloForm.controls.titulo?.touched }"
+          type="text"
+          class="form-control"
+          id="titulo"
+          name="titulo"
+          placeholder="Título"
+          required
+        />
+        <label for="titulo" style="margin-left: 10px;">Título</label>
+        <em class="text-danger"
+          *ngIf=" articuloForm.controls.titulo?.invalid && articuloForm.controls.titulo?.touched"
+          >*Título es requerido</em
+        >
+      </div>
+      <!--Fecha de Artículo-->
+      <div class="col-md-3">
+        <label for="fecha">Fecha </label>
+        <br>
+        <input 
+          [(ngModel)]="fecha"
+          [ngClass]="{ error: articuloForm.controls.fecha?.invalid && articuloForm.controls.fecha?.touched }"
+          type="date" 
+          class="form-control"
+          id="fecha" 
+          name="fecha"
+          required
+        >
+        <em class="text-danger"
+          *ngIf=" articuloForm.controls.fecha?.invalid && articuloForm.controls.fecha?.touched"
+          >*Fecha es requerida</em>
+      </div>
+      
+    </div>
+
+    <!--Descripción de Artículo-->
+    <div class="d-flex justify-content-center styleFormElem">
+      <div class="form-floating sm-3 col-md-9">
+        <input
+        [(ngModel)]="descripcion"
+        [ngClass]="{ error: articuloForm.controls.descripcion?.invalid && articuloForm.controls.descripcion?.touched }"
+        type="text"
+        class="form-control"
+        id="descripcion"
+        name="descripcion"
+        placeholder="Descripción"
+        maxlength="120"
+        required
+        />
+        <label for="descripcion">Descripción</label>
+        <em class="text-danger"
+          *ngIf=" articuloForm.controls.descripcion?.invalid && articuloForm.controls.descripcion?.touched"
+          >*Descripción es requerida</em
+        >
+      </div>
+    </div>
+
+    <!--Imagen Primaria-->
+    <div class="d-flex justify-content-center styleFormElem">
+      <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+        <label class="form-label">Imagen de Portada</label>
+        <input 
+          class="form-control" 
+          (change)="onChange($event)" 
+          type="file" 
+          accept="image/png, image/jpeg"
+          required
+        />
+      </div>
+    </div>
+
+    <!--Categorías-->
+    <div class="row mt-3 d-flex justify-content-center styleFormElem">
+      <div class="sm-3 col-md-4">
+        <ng-selectize
+          [(ngModel)]="categorias" 
+          id="categorias"
+          name="categorias"
+          [config]="config" 
+          [options] = "categoriasList"
+          (ngModelChange)="changed()"
+          placeholder="Categorías"
+          required
+        ></ng-selectize>
+      </div>
+
+      <div class="form-floating sm-3 col-md-3">
+        <input
+          [(ngModel)]="nombreCategoria"
+          type="text"
+          class="form-control"
+          id="nombreCategoria"
+          name="nombreCategoria"
+          placeholder="Categoría nueva"
+        />
+        <label for="nombreCategoria" style="margin-left: 10px;">Categoría Nueva</label>
+      </div>
+
+      <div class="form-floating sm-3 col-md-2">
+        <button 
+          type="button"
+          class="btn button1"
+          (click)="agregarCategoria()"
+          [disabled]="nombreCategoria?.length == 0 || nombreCategoria == undefined"
+        >Agregar Categoría</button>
+      </div>
+    </div>
+    
+    <!--Contenido-->
+    <div id="tiny" class="styleFormElem justify-content-center">
+      <label for="contenido" class="form-label">Contenido</label>
+      <editor
+        class="centered"
+        id="contenido"
+        [init]="{
+           base_url: '/tinymce',
+           suffix: '.min',
+           height: 500,
+           menubar: false,
+           plugins: [
+             'advlist autolink lists link image charmap print preview anchor codesample',
+             'searchreplace visualblocks code fullscreen image imagetools',
+             'insertdatetime media table paste code help wordcount'
+           ],
+          codesample_languages: [
+            { text: 'TypeScript', value: 'typescript' },
+            { text: 'JavaScript', value: 'javascript' },
+            { text: 'HTML/XML', value: 'markup' },
+            { text: 'CSS', value: 'css' }
+          ],
+           toolbar:
+             'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image codesample'
+         }"
+      ></editor>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <button
+        style="margin-top: 30px;"
+        type="submit"
+        [disabled]="articuloForm.invalid"
+        class="btn button1"
+        (click)="saveArticle();"
+      >
+        Guardar Artículo
+      </button>
+    </div>
+
+  </form>
+
+
+  <br>
+</div>

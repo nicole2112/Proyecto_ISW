@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
 import { User } from '../models/user';
@@ -25,7 +25,7 @@ export class UsersAdminComponent implements OnInit{
     User = [];
     userSelectedId : string;
     userSelectedEmail : string;
-    roleOptions = '';
+    roleOptions: string;
     selectedValue : any;
     closeResult: string;
 
@@ -83,7 +83,18 @@ export class UsersAdminComponent implements OnInit{
     
   }
 
-  open(content, id: string, email: string) {
+  open(content, id: string, email: string, rol: string) {
+    this.userSelectedId = id;
+    this.userSelectedEmail = email;
+    this.roleOptions = rol;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      console.log(`Closed with: ${result}`);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  actualizarRol(content, id: string, email: string) {
     this.userSelectedId = id;
     this.userSelectedEmail = email;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -95,6 +106,10 @@ export class UsersAdminComponent implements OnInit{
 
   onDeleteConfirmation(email: string){
     document.getElementById("correoDelete").setAttribute('value', email);
+  }
+
+  onEditConfirmation(email: string){
+    document.getElementById("correoUpdate").setAttribute('value', email);
   }
 
 
@@ -126,12 +141,14 @@ export class UsersAdminComponent implements OnInit{
   }
 
   updateUser(){
-    var selector = document.getElementById('roleOptions') as HTMLSelectElement;
-    var selectorValue = selector.options[selector.selectedIndex].text;
+    //var selector = document.getElementById('roleOptions') as HTMLSelectElement;
+    //var selectorValue = selector.options[selector.selectedIndex].text;
+
+    console.log("Im here")
 
     const userRef = this.db.object('usuarios/' + this.userSelectedId);
     var updateValue = '';
-    if(selectorValue === 'Administrador'){
+    if(this.roleOptions === 'Digitador'){
       updateValue = 'Admin'
     }else{
       updateValue = 'Digitador'
