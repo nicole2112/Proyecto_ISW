@@ -1,11 +1,18 @@
 <navbar></navbar>
 
+
+
 <div class ="sectionTitle">
+
+    <div id="bannerimage"></div>
+
     <div class="blog">
         <h1 class="title">{{blog?.titulo}}</h1>
-        <p class="published"><span>publicado el </span></p>
+        <p class="published"><span>publicado el {{blog?.fechaCreacion}}</span></p>
 
-        <div class="article"></div>
+        <div class="article"> 
+            {{sinhtml}}
+        </div>
     </div>
 </div>
 

@@ -12,6 +12,8 @@ import { BlogService } from "../services/blog.service";
 export class BlogPostComponent implements OnInit{
     idBlog: any;
     blog: any;
+    text: any;
+    sinhtml: any;
 
     constructor(private route: ActivatedRoute, private blogService: BlogService){}
 
@@ -22,6 +24,14 @@ export class BlogPostComponent implements OnInit{
             this.blog = blog;
         });
 
-        console.log(this.blog);
+        this.sinhtml = this.blog?.contenido.replace(/<[^>]+>/g, '');
+
+        const { convert } = require('html-to-text');
+
+        this.text = convert(this.blog?.contenido, {
+        wordwrap: 130
+        });
+
+        
     }
 }

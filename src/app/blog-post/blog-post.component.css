@@ -30,3 +30,11 @@
     margin: 30px 0;
     color: O#2d2d2d;
 }
+
+#bannerimage {
+    width: 100%;
+    background-image: url();
+    height: 405px;
+    background-color: purple;
+    background-position: center;
+  }
