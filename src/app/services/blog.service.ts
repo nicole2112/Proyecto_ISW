@@ -74,7 +74,7 @@ export class BlogService {
     })
   }
 
-  getCategorias(){
+  getCategoriasSnapshot(){
     this.categoryList =[];
 
     
@@ -107,7 +107,7 @@ export class BlogService {
 
   deleteCategoriasbyArticulo(key)
   {
-    this.getCategorias();
+    this.getCategoriasSnapshot();
     this.getCategoriasArticulo(key).subscribe((catos) => {
 
       let cats = Object.values(catos[0]);
