@@ -92,7 +92,9 @@ export class verArticulosComponent {
 
   open(content, id: string, name: string, descripcion: string, fecha: Date, categorias: any){
 
-    this.categorias = [];
+    const selectCats = categorias.split("-");
+
+    this.categorias = selectCats;
 
     this.articuloSelectedId = id;
     this.articuloSelectedName = name;
