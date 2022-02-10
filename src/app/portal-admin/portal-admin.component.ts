@@ -41,6 +41,7 @@ export class PortalAdminComponent implements OnInit {
 
   toggleShowArticulos=false; //para ver artículos
   toggleViewArticulos=false; //para agregar artículo
+  toggleShowArticulosRedirect=false; //para redireccionar a ver artículos al agregar artículo
 
 
   constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer, private router: Router) { }
