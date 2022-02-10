@@ -1,34 +1,32 @@
 <navbar></navbar>
 <div class="sectionTitle" >
-    <h1 class="sectionTitleText" >Blog</h1>
+  <h1 class="sectionTitleText" >Blog</h1>
 </div>
 
 <br><br>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <a class="navbar-brand" href="#">Hidden brand</a>
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <br><br>
-
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" (click)="applyCategoryFilter('all')">Todas</a>
+      </li>
+      <li class="nav-item" *ngFor="let categoria of categoryList">
+        <a class="nav-link" (click)="applyCategoryFilter(categoria.Categoria)">{{ categoria.Categoria }}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br><br>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let blog of fullList">
+        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let blog of filteredBlogList">
             <div class="cardcontainer">
-                <div class="photo"><img src="{{blog?.imagenPreview}}">
+                <div class="photo">
+                    <img src="{{blog?.imagenPreview}}">
                     <div class="photos"></div>
                 </div>
                 <div class="content"> 
@@ -41,7 +39,7 @@
                     
                   </div>
                 <div class="footer">
-                    <p><button type="button" class="btn btn-light" style="background-color: #5F2E74;" [routerLink]="['/blog-post', blog?.id]">Leer mas</button></p>
+                    <p><button type="button" class="btn btn-light" style="background-color: #5F2E74; color:white;box-shadow: 0 0 10px gray;" [routerLink]="['/blog-post', blog?.id]">Leer más</button></p>
                     <p class="txt3"><i class="far fa-clock"></i>{{blog?.fechaCreacion}}</p>
                 </div>
             </div>

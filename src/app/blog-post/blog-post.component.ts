@@ -26,11 +26,11 @@ export class BlogPostComponent implements OnInit{
 
         this.sinhtml = this.blog?.contenido.replace(/<[^>]+>/g, '');
 
-        const { convert } = require('html-to-text');
+        // const { convert } = require('html-to-text');
 
-        this.text = convert(this.blog?.contenido, {
-        wordwrap: 130
-        });
+        // this.text = convert(this.blog?.contenido, {
+        // wordwrap: 130
+        // });
 
         
     }

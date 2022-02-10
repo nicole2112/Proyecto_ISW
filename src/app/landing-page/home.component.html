@@ -161,7 +161,6 @@
   <h1 class="title" style="font-size:400%;">Nuestro Blog</h1>
   <div class="row" style="min-height: 550%; margin-left: 10%; margin-right: 10%;">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <div class="row">
         <div class="col-lg-4 col-md-6 mb-4" *ngFor="let blog of fullList.slice(0, 3);">
@@ -179,7 +178,7 @@
                     
                   </div>
                 <div class="footer">
-                    <p><button type="button" class="btn btn-light" style="background-color: #5F2E74;" [routerLink]="['/blog-post', blog?.id]">Leer mas</button></p>
+                    <p><button type="button" class="btn btn-light" style="background-color: #5F2E74;color:white;box-shadow: 0 0 10px gray;" [routerLink]="['/blog-post', blog?.id]">Leer mas</button></p>
                     <p class="txt3"><i class="far fa-clock"></i>{{blog?.fechaCreacion}}</p>
                 </div>
             </div>
