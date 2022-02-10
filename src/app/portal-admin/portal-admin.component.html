@@ -1,10 +1,10 @@
-<app-navbar-portal-admin (viewUsersClick)="toggleShowHeroes = false; toggleHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulos=false; toggleUsers = true" 
-(viewHeroesClick)="toggleShowHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleHeroes = true" 
-(showHeroesClick)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleShowHeroes = true"
-(showTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleShowTestimonies=true;"
-(viewTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleViewTestimonies=true;"
-(showArticulosClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulos=true;"
-(viewArticulosClick)="toggleUsers = false; toggleHeroes = false; toggleShowHeroes = false; toggleShowHeroesRedirect = false; toggleShowTestimonies = false; toggleViewTestimonies = false; toggleShowTestimoniesRedirect = false; toggleShowArticulos = false; toggleViewArticulos = true;">
+<app-navbar-portal-admin (viewUsersClick)="toggleShowHeroes = false; toggleHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulos=false; toggleShowArticulosRedirect=false; toggleUsers = true" 
+(viewHeroesClick)="toggleShowHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleHeroes = true" 
+(showHeroesClick)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleShowHeroes = true"
+(showTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleShowTestimonies=true;"
+(viewTestimoniesClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleViewTestimonies=true;"
+(showArticulosClick)="toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleShowArticulos=true;"
+(viewArticulosClick)="toggleUsers = false; toggleHeroes = false; toggleShowHeroes = false; toggleShowHeroesRedirect = false; toggleShowTestimonies = false; toggleViewTestimonies = false; toggleShowTestimoniesRedirect = false; toggleShowArticulos = false; toggleShowArticulosRedirect=false; toggleViewArticulos = true;">
 
 </app-navbar-portal-admin>
     <div class="container table-users">
@@ -16,7 +16,7 @@
       <app-add-testimonies-admin *ngIf="toggleViewTestimonies" (viewTestimoniesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=true; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = false"></app-add-testimonies-admin>
       <app-view-testimonies-admin *ngIf="toggleShowTestimonies"></app-view-testimonies-admin>
       <app-view-articulos-admin *ngIf="toggleShowArticulos"></app-view-articulos-admin>
-      <app-add-articulo-admin *ngIf="toggleViewArticulos"></app-add-articulo-admin>
+      <app-add-articulo-admin *ngIf="toggleViewArticulos" (viewArticulosRedirect)="toggleUsers = false; toggleHeroes = false; toggleShowHeroes = false; toggleShowHeroesRedirect = false; toggleShowTestimonies = false; toggleViewTestimonies = false; toggleShowTestimoniesRedirect = false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleShowArticulos = true;"></app-add-articulo-admin>
     </div>
   </div>
   <img class="imagen_opaca" src="assets/images/bg-art.png" alt="">
