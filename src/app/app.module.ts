@@ -20,6 +20,7 @@ import { DonationsComponent } from './donations/donations.component';
 import { TestimoniesComponent } from './testimonies/testimonies.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { BlogPostComponent } from './blog-post/blog-post.component';
 
 import { LoginComponent } from './login/login.component';
 import { AngularFireDatabase, AngularFireDatabaseModule, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
@@ -67,6 +68,7 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
     DonationsComponent,
     TestimoniesComponent,
     BlogComponent,
+    BlogPostComponent,
     FooterComponent,
     ContactUsComponent,
     LoginComponent,

@@ -1,0 +1,20 @@
+<navbar></navbar>
+
+
+
+<div class ="sectionTitle">
+
+
+<div class="banner" >
+    <img src="{{blog?.imagenPreview}}">
+</div>
+    <div class="blog">
+        <h1 class="title">{{blog?.titulo}}</h1>
+        <p class="published"><span>publicado el {{blog?.fechaCreacion}}</span></p>
+
+        <div class="article" [innerHTML]="blog?.contenido"> 
+        </div>
+    </div>
+</div>
+
+<footer-comp></footer-comp>

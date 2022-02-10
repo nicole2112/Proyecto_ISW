@@ -23,6 +23,7 @@ import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { AdminConfGuard } from './email-conf/guard/admin-conf.guard';
 import { DigitadorConfGuard } from './email-conf/guard/digitador-conf.guard';
 import { AddPdfComponent } from './add-pdf/add-pdf.component';
+import { BlogPostComponent } from './blog-post/blog-post.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -34,6 +35,7 @@ export const AppRoutes: Routes = [
   { path: 'programas', component: ProgramasComponent },
   { path: 'testimonies', component: TestimoniesComponent },
   { path: 'blog', component: BlogComponent },
+  { path: 'blog-post/:blogId', component: BlogPostComponent },
   {path: 'login', component: LoginComponent },
   {path: 'heroes-admin', component: HeroesAdminComponent, canActivate: [AdminConfGuard]},
   {

@@ -159,77 +159,35 @@
 <div class="container-fluid content-row">
   <h1 class="title" style="font-size:400%;">Nuestro Blog</h1>
   <div class="row" style="min-height: 550%; margin-left: 10%; margin-right: 10%;">
-    <div class="col-md-4 align-items-stretch">
-      <div class="card card-block h-100" style="background-color: #F2F2F2; text-align: center;">
-        <div class="card-header">
-          <h5>Andrea Nuñez</h5>
-        </div>
-        <div class="card-body">
-          <span class="tag tag-teal">Vacunas</span>
-          <h4>La Fundacion apoya y promueve las vacunas</h4>
-          <p >
-            Utiliza gel, manten la distancia y usa tu mascarilla!
-          </p>
-          <div class="user">
-            <img src="../../assets/images/vacunas.jpg" alt="user 1" />
-            <div class="user-info">
-              <small>Hace 2 horas</small>
-            </div> 
-         </div>
-        </div>
-        <div class="card-footer">
-          <a class="button1" style="text-align: center;" [routerLink]="['/blog']">Leer</a>
-        </div>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let blog of fullList.slice(0, 3);">
+            <div class="cardcontainer">
+                <div class="photo"><img src="{{blog?.imagenPreview}}">
+                    <div class="photos"></div>
+                </div>
+                <div class="content"> 
+                  <br><br>  
+                  <span class="w3-tag w3-padding w3-round-large w3-center" style="background-color:#77B6E2; margin: 0.23em; font-size: 70%;" *ngFor="let cat of getCategorias(blog)">
+                    {{ cat }}
+                    </span>
+                    <p class="txt4">{{blog?.titulo}}</p>
+                    <p class="txt5">{{blog?.descripcion}}</p>
+                    
+                  </div>
+                <div class="footer">
+                    <p><button type="button" class="btn btn-light" style="background-color: #5F2E74;color:white;box-shadow: 0 0 10px gray;" [routerLink]="['/blog-post', blog?.id]">Leer mas</button></p>
+                    <p class="txt3"><i class="far fa-clock"></i>{{blog?.fechaCreacion}}</p>
+                </div>
+            </div>
+            </div>
       </div>
-    </div>
 
-    <div class="col-md-4 d-flex align-items-stretch">
-      <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
-        <div class="card-header">
-          <h5>Gabriel Jimenez</h5>
-        </div>
-        <div class="card-body flex-fill">
-          <span class="tag tag-teal">Dialisis</span>
-          <h4>Aprende sobre el tratamiento que brindamos</h4>
-          <p>
-            La Dialisis es una enfermedad muy complicada, te llevamos a un paso a paso del tratamiento en la fundación
-          </p>
-          <div class="user">
-            <img src="../../assets/images/dialisis.jpg" alt="user 2" />
-            <div class="user-info">
-              <small>Ayer</small>
-            </div> 
-         </div>
-        </div>
-        <div class="card-footer">
-          <a class="button1" style="text-align: center;" [routerLink]="['/blog']">Leer</a>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-4 d-flex align-items-stretch">
-      <div class="card h-100" style="background-color: #F2F2F2; text-align: center;">
-        <div class="card-header">
-          <h5>Maria Velazquez</h5>
-        </div>
-        <div class="card-body flex-fill">
-          <span class="tag tag-teal">Medicamentos</span>
-          <h4>Medicamentos donados por estudiantes de la UNAH</h4>
-          <p>
-            Fundación Padrino agradece a los estudiantes de la Carrera de Administración de la UNAH-VS por la generosa donación de medicamentos otorgada
-          </p>
-          <div class="user">
-            <img src="../../assets/images/meds.jpg" alt="user 3"/>
-            <div class="user-info">
-              <small>20 Nov 2021</small>
-            </div> 
-         </div>
-        </div>
-        <div class="card-footer">
-          <a class="button1" style="text-align: center;" [routerLink]="['/blog']">Leer</a>
-        </div>
-      </div>
-    </div>
+    
+
+    
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <a href="https://api.whatsapp.com/send?phone=50494303497&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20tema%20." class="float" target="_blank">
