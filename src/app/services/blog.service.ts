@@ -91,43 +91,55 @@ export class BlogService {
     this.blogRef = this.db.list(`blogs/${key}`);
 
     return this.blogRef.snapshotChanges().pipe(map(data =>{
-    return data["categorias"];
+      let catlist = [];
+      data.forEach(cat =>{
+          if(cat.key === "categorias")
+          {
+            let a = cat.payload.toJSON();
+            catlist.push(a);
+          }
+      })
+    return catlist;
     }));
   }
 
   deleteCategoriasbyArticulo(key)
   {
-    let cats = this.getCategoriasArticulo(key);
-    this.getArticulos();
-    let borrar = [];
+    this.getCategorias();
+    this.getCategoriasArticulo(key).subscribe((catos) => {
 
-    cats.forEach((elem) => 
-    {
-      let incluido = false;
-      this.blogList.forEach((articulo)=>
+      let cats = Object.values(catos[0]);
+      this.db.object(`blogs/${key}`).set(null);
+      let borrar = [];
+
+      for(let elem of cats)
       {
-        if(articulo["categorias"].includes(elem))
-          incluido = true;
-      })
+        let incluido = false;
+        this.blogList.forEach((articulo)=>
+        {
+          let art = Object.values(articulo["categorias"]);
+          if(art.includes(elem) && articulo["id"]!= key)
+            incluido = true;
+        })
 
-      if(!incluido)
-        borrar.push(elem);
-    });
+        if(!incluido)
+          borrar.push(elem);
+      }
 
-    borrar.forEach((n) =>
-    {
-      this.categoriaList.forEach((cat) =>
+      borrar.forEach((n) =>
       {
-        if(n = cat["Categoria"])
-         this.db.object(`categorias/${cat["$key"]}`).set(null);
+        this.categoriaList.forEach((cat) =>
+        {
+          if(n == cat["Categoria"])
+          this.db.object(`categorias/${cat["$key"]}`).set(null);
+        });
       });
     });
+    
   }
 
   deleteArticulo(key){
-    
     this.deleteCategoriasbyArticulo(key);
-    this.db.object(`blogs/${key}`).set(null);
   }
 
 }

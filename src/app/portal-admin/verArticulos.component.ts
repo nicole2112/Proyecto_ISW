@@ -116,8 +116,9 @@ export class verArticulosComponent {
   }
 
   deleteArticulo(){
-    this.articuloRef = this.db.object('blogs/' + this.articuloSelectedId);
-    this.articuloRef.remove();
+    //this.articuloRef = this.db.object('blogs/' + this.articuloSelectedId);
+    //this.articuloRef.remove();
+    this.blogService.deleteArticulo(this.articuloSelectedId);
     this.callDeleteNotification();
   }
 
