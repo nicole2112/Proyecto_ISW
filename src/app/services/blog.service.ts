@@ -147,5 +147,19 @@ export class BlogService {
   getBlogById(idBlog){
     return this.db.object(`blogs/${idBlog}`).valueChanges();
   }
+
+  getCategorias(){
+    this.blogRef = this.db.list('categorias');
+
+    return this.blogRef.snapshotChanges().pipe(map(data =>{
+      this.categoryList = [];
+      data.forEach(articulo =>{
+          let a = articulo.payload.toJSON();
+          a['key'] = articulo.key;
+          this.categoryList.push(a);
+      })
+      return this.categoryList;
+    }))
+  }
   
 }

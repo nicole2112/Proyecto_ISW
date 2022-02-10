@@ -198,7 +198,7 @@ agregarCategoria()
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Héroe ha sido actualizado exitosamente!',
+      title: 'Artículo ha sido actualizado exitosamente!',
       showConfirmButton: false,
       timer: 1500
     })
@@ -208,7 +208,7 @@ agregarCategoria()
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Héroe ha sido eliminado exitosamente!',
+      title: 'Artículo ha sido eliminado exitosamente!',
       showConfirmButton: false,
       timer: 1500
     })
@@ -218,7 +218,7 @@ agregarCategoria()
     Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: 'Nueva Categoria agregada',
+        title: 'Nueva Categoría agregada',
         showConfirmButton: false,
         timer: 1500
       })
@@ -230,11 +230,11 @@ agregarCategoria()
 
     articuloItem={
       "imagenPreview": imageUrl,
-      "contenido": this.contenido,
+      // "contenido": this.contenido,
       "fechaCreacion": this.fechaCreacion,
       "titulo": this.titulo,
       "descripcion": this.descripcion,
-      "categorias": this.categorias
+      // "categorias": this.categorias
     }
 
     userRef.update(articuloItem)
