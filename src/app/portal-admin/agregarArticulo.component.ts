@@ -119,6 +119,7 @@ export class AgregarArticuloComponent{
         }
         this.service.db.list('categorias').push(categoriaItem);
         this.callNuevaCategoriaAgregada();
+        this.nombreCategoria = "";
     }
 
     callNuevaCategoriaAgregada(){
