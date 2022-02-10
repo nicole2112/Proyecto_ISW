@@ -26,5 +26,15 @@ export class HomeComponent {
 
     }
 
+    getCategorias(blog){
+        let tmpArray = [];
+
+        for (let cat in blog.categorias){
+            tmpArray.push(blog.categorias[cat]);
+        }
+
+        return tmpArray;
+    }
+
 
 }
