@@ -108,7 +108,7 @@ export class verArticulosComponent {
   }
 
   onSelect(selectedItem: any, img: string){
-    this.articuloSelectedImg = selectedItem.imageUrl;
+    this.articuloSelectedImg = selectedItem.imagenPreview;
     document.getElementById("titulo").setAttribute('value', selectedItem.titulo);
     //document.getElementById("contenido").innerHTML = selectedItem.contenido;
     document.getElementById("descripcion").innerHTML = selectedItem.descripcion;
@@ -231,6 +231,7 @@ agregarCategoria()
     const userRef = this.db.object('blogs/' + articuloSelectedId);
 
     articuloItem={
+      "imagenPreview": imageUrl,
       "contenido": this.contenido,
       "fechaCreacion": this.fechaCreacion,
       "titulo": this.titulo,
@@ -240,6 +241,7 @@ agregarCategoria()
 
     userRef.update(articuloItem)
     this.callUpdateNotification();
+    this.fileList = [];
   }
 
   getContenidoTiny()
