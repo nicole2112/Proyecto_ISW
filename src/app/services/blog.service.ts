@@ -14,6 +14,7 @@ export class BlogService {
 
   FundacionRef: AngularFireList<any>;
   blogList : any[];
+  categoryList: any[];
 
   constructor(private db:AngularFireDatabase) { }
 
@@ -23,13 +24,13 @@ export class BlogService {
     this.FundacionRef = this.db.list('blogs');
 
     return this.FundacionRef.snapshotChanges().pipe(map(data =>{
-    this.blogList = [];
-    data.forEach(articulo =>{
-        let a = articulo.payload.toJSON();
-        a['key'] = articulo.key;
-        this.blogList.push(a);
-    })
-    return this.blogList;
+      this.blogList = [];
+      data.forEach(articulo =>{
+          let a = articulo.payload.toJSON();
+          a['key'] = articulo.key;
+          this.blogList.push(a);
+      })
+      return this.blogList;
     }))
   }
 
@@ -66,9 +67,22 @@ export class BlogService {
     this.db.object(`blogs/${key}`).set(null);
   }
 
-  getBlogById(idBlog)
-  {
+  getBlogById(idBlog){
     return this.db.object(`blogs/${idBlog}`).valueChanges();
+  }
+
+  getCategorias(){
+    this.FundacionRef = this.db.list('categorias');
+
+    return this.FundacionRef.snapshotChanges().pipe(map(data =>{
+      this.categoryList = [];
+      data.forEach(articulo =>{
+          let a = articulo.payload.toJSON();
+          a['key'] = articulo.key;
+          this.categoryList.push(a);
+      })
+      return this.categoryList;
+    }))
   }
   
 }
