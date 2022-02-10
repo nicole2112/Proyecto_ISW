@@ -5,8 +5,12 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angula
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { BlogService } from '../services/blog.service';
 import { Blog } from '../models/blog';
+import tinymce from "tinymce";
 import { StringLike } from '@firebase/util';
 import { runInThisContext } from 'vm';
+import { AuthenticationService } from "../services/auth.services";
+import { Categoria } from "../models/blog";
+import { ThrowStmt } from '@angular/compiler';
 
 @Component ({
     selector: 'app-view-articulos-admin',
@@ -22,6 +26,7 @@ export class verArticulosComponent {
   idArticulo: any;
   imageUrl: any;
   resumen: any;
+  descripcion: any;
   titulo: any;
 
   fileList: any[];
@@ -34,13 +39,19 @@ export class verArticulosComponent {
   articuloSelectedfecha: any;
   articuloSelectedCategorias: any;
 
+
+  articulos: any[] = [];
   Blog =[];
   closeResult: string;
   selectedValue: any;
   imgUrlSave: any;
 
+  categorias: any;
+  nombreCategoria: string;
+  categoriasList = [];
 
-  constructor(public blogService: BlogService, private db: AngularFireDatabase, private modalService: NgbModal) {}
+
+  constructor(public blogService: BlogService, private db: AngularFireDatabase, private modalService: NgbModal, public service: AuthenticationService) {}
 
   FundacionRef: AngularFireList<any>;
   articuloRef: AngularFireObject<any>;
@@ -58,19 +69,31 @@ export class verArticulosComponent {
         let a = articulo.payload.toJSON();
         a['$key'] = articulo.key;
         this.arrCategorias = a['categorias'];
-        a['categorias'] = "";
+        a['categorias'] = "-";
+
         for(var categoria in this.arrCategorias){
           if(this.arrCategorias.hasOwnProperty(categoria)) {
-            console.log(this.arrCategorias[categoria]);
-            a['categorias'] += this.arrCategorias[categoria] + " ";
+            console.log(this.arrCategorias.length);
+            a['categorias'] += this.arrCategorias[categoria] + "-";
           }
         }
         this.Blog.push(a as Blog);
       })
     })
+
+    this.blogService.getArticulos().subscribe((item) => {
+       
+      this.articulos = item;
+  });
+
+  
+  this.getCategorias();
   }
 
   open(content, id: string, name: string, descripcion: string, fecha: Date, categorias: any){
+
+    this.categorias = [];
+
     this.articuloSelectedId = id;
     this.articuloSelectedName = name;
     this.articuloSelectedDescription = descripcion;
@@ -87,7 +110,7 @@ export class verArticulosComponent {
   onSelect(selectedItem: any, img: string){
     this.articuloSelectedImg = selectedItem.imageUrl;
     document.getElementById("titulo").setAttribute('value', selectedItem.titulo);
-    document.getElementById("contenido").innerHTML = selectedItem.contenido;
+    //document.getElementById("contenido").innerHTML = selectedItem.contenido;
     document.getElementById("descripcion").innerHTML = selectedItem.descripcion;
     document.getElementById("fechaCreacion").setAttribute('value', selectedItem.fechaCreacion);
   }
@@ -101,6 +124,46 @@ export class verArticulosComponent {
   onDeleteConfirmation(name: string){
     document.getElementById("nameDelete").setAttribute('value', name);
   }
+
+  config = {
+    labelField: 'Categoria',
+    valueField: 'Categoria',
+    maxItems: 10,
+    highlight: true,
+    create: false,
+  };
+
+  public changed() { //cada vez que se modifica input de categorías seleccionadas
+    console.log(this.categoriasList);
+}
+
+
+categoriaRef: AngularFireList<any>;
+
+  getCategorias(){
+    this.categoriaRef = this.service.db.list('categorias');
+
+    this.categoriaRef.snapshotChanges().subscribe(data =>{
+        this.categoriasList = [];
+        data.forEach(articulo =>{
+            let a = articulo.payload.toJSON();
+            a['$key'] = articulo.key;
+            this.categoriasList.push(a as Categoria);
+        })
+        console.log(this.categoriasList);
+    })
+}
+
+agregarCategoria()
+{
+    let categoriaItem={};
+
+    categoriaItem={
+        "Categoria": this.nombreCategoria
+    }
+    this.service.db.list('categorias').push(categoriaItem);
+    this.callNuevaCategoriaAgregada();
+}
 
   onDragOver(event) {
     event.preventDefault();
@@ -153,6 +216,16 @@ export class verArticulosComponent {
     })
   }
 
+  callNuevaCategoriaAgregada(){
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Nueva Categoria agregada',
+        showConfirmButton: false,
+        timer: 1500
+      })
+}
+
   writeArticleData(imageUrl, articuloSelectedId){
     let articuloItem={};
     const userRef = this.db.object('blogs/' + articuloSelectedId);
@@ -160,26 +233,40 @@ export class verArticulosComponent {
     articuloItem={
       "contenido": this.contenido,
       "fechaCreacion": this.fechaCreacion,
-      "titulo": this.titulo
+      "titulo": this.titulo,
+      "descripcion": this.descripcion,
+      "categorias": this.categorias
     }
 
     userRef.update(articuloItem)
     this.callUpdateNotification();
   }
 
+  getContenidoTiny()
+    {
+        return tinymce.get("contenido").getContent();
+    }
+
   getValues(){
     var tituloVal = document.getElementById('titulo') as HTMLInputElement;
-    var contenidoVal = document.getElementById('contenido') as HTMLTextAreaElement;
     var fechaCreacionVal = document.getElementById('fechaCreacion') as HTMLInputElement;
+    var descripcionVal = document.getElementById('descripcion') as HTMLTextAreaElement;
 
     let tituloValue = tituloVal.value;
-    let contenidoValue = contenidoVal.value;
     let fechaCreacionValue = fechaCreacionVal.value;
+    let descripcionValue = descripcionVal.value;
 
     this.titulo = tituloValue;
-    this.contenido =  contenidoValue;
+    this.contenido =  this.getContenidoTiny();
     this.fechaCreacion = fechaCreacionValue;
-
+    this.descripcion = descripcionValue;
+  //   contenido:any;
+  // fechaCreacion: any;
+  // idArticulo: any;
+  // imageUrl: any;
+  // resumen: any;
+  // descripcion: any;
+  // titulo: any;
   }
 
   saveArticulo() {
