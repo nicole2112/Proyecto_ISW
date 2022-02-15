@@ -201,7 +201,7 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  background-image: url(../../assets/images/FP6.gif);
+  background-image: url("https://drive.google.com/uc?export=view&id=1bQqwKhHwvboGuV5XgmvEfc-O1HN26Swk");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -211,7 +211,7 @@
 
 .responsive::before{
     content: "";
-    background-image: url(../../assets/images/FP6.gif);
+    background-image: url("https://drive.google.com/uc?export=view&id=1bQqwKhHwvboGuV5XgmvEfc-O1HN26Swk");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
