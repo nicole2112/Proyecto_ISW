@@ -53,6 +53,7 @@ import { PdfServices } from './services/pdf.services';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //tiny mce
 import { verArticulosComponent } from './portal-admin/verArticulos.component';
 import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
+import { DocumentsComponent } from './about-us/documents.component';
 
 
 @NgModule({
@@ -89,7 +90,8 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
     AddPdfComponent,
     NoConfirmationComponent,
     verArticulosComponent,
-    AgregarArticuloComponent
+    AgregarArticuloComponent,
+    DocumentsComponent
   ],
   imports: [
     BrowserModule,

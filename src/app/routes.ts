@@ -24,11 +24,13 @@ import { AdminConfGuard } from './email-conf/guard/admin-conf.guard';
 import { DigitadorConfGuard } from './email-conf/guard/digitador-conf.guard';
 import { AddPdfComponent } from './add-pdf/add-pdf.component';
 import { BlogPostComponent } from './blog-post/blog-post.component';
+import { DocumentsComponent } from './about-us/documents.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
   { path: 'que-hacemos', component: QueHacemosComponent },
   { path: 'alianzas', component: AlianzasComponent },
+  { path: 'documentos', component: DocumentsComponent },
   { path: 'pagina-principal', component: HomeComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'donations', component: DonationsComponent },
