@@ -1,42 +1,68 @@
 <!-- {{ form | json }} -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()" name="myForm">
-    <div class="container styleForm">
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-6 rmPadding">
-                    <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)">
-                        <div *ngIf="form.controls['name'].errors.required">
-                            <p for="name" style="color: red; font-size: 0.7em; margin-top: -9%; bottom: 0;" id="labelName">*Nombre es requerido</p>
-                      </div>
-                      <div *ngIf="form.get('name').errors?.pattern">
-                        <p for="name" style="color: red; font-size: 0.7em; margin-top: -9%;bottom: 0;" id="labelName">*Solo se permite letras y espacios</p>
-                      </div>
+    <div class="container-fluid styleForm">
+        <div class="row">
+            <div class="col-12 col-md-6 mt-md-2">
+                <div class="form-group">
+                    <div class="row">
+                        <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Formulario enviado exitosamente!</strong>
+                            <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                        <!-- <div *ngIf="alert">
+                            <p for="name" style="color: greenyellow; font-size: 0.7em; margin-top: 0%; bottom: 0;" id="labelName">*Formulario de Contacto enviado existosamente!</p>
+                        </div> -->
+                        <div class="col-sm-6 rmPadding">
+                            <input type="text" class="form-control sqrBorder" id="name" placeholder="Nombre Completo" formControlName="name" required>
+                            <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)">
+                                <div *ngIf="form.controls['name'].errors.required">
+                                    <p for="name" style="color: red; font-size: 0.7em; margin-top: 0%; bottom: 0;" id="labelName">*Nombre es requerido</p>
+                                </div>
+                                <div *ngIf="form.get('name').errors?.pattern">
+                                    <p for="name" style="color: red; font-size: 0.7em; margin-top: 0%;bottom: 0;" id="labelName">*Solo se permite letras y espacios</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 rmPadding">
+                            <input type="email" class="form-control sqrBorder" id="correo" formControlName="correo" [pattern]="emailPattern" placeholder="Correo" required>
+                            <div *ngIf="form.controls['correo'].invalid && (form.controls['correo'].dirty || form.controls['correo'].touched)">
+                                <div *ngIf="correo.errors.required">
+                                    <p for="correo" style="color: red; font-size: 0.7em; margin-top: 0%;bottom: 0;" id="labelName">*Correo es un campo requerido</p>
+                                </div>
+                                <div *ngIf="form.get('correo').errors?.pattern">
+                                    <p for="correo" style="color: red; font-size: 0.7em; margin-top: 0%;bottom: 0;" id="labelName">*Correo Invalido</p>
+                                </div>
+                            </div> 
+                        </div>
                     </div>
-                    <input type="text" class="form-control sqrBorder" id="name" placeholder="Nombre Completo" formControlName="name" required>
-                </div>
-                <div class="col-sm-6 rmPadding">
-                    <div *ngIf="form.controls['correo'].invalid && (form.controls['correo'].dirty || form.controls['correo'].touched)">
-                        <div *ngIf="correo.errors.required">
-                            <p for="correo" style="color: red; font-size: 0.7em; margin-top: -9%;bottom: 0;" id="labelName">*Correo es un campo requerido</p>
-                      </div>
-                      <div *ngIf="form.get('correo').errors?.pattern">
-                        <p for="correo" style="color: red; font-size: 0.7em; margin-top: -9%;bottom: 0;" id="labelName">*Correo Invalido</p>
-                      </div>
+                    <div class="row">
+                        <input type="text" class="form-control sqrBorder" id="asunto" style="margin-top: 3%;" formControlName="asunto" placeholder="Asunto">
                     </div>
-                    <input type="email" class="form-control sqrBorder" id="correo" formControlName="correo" [pattern]="emailPattern" placeholder="Correo" required>  
-                </div>
-            </div>
-            <div class="row">
-                <input type="text" class="form-control sqrBorder" id="asunto" style="margin-top: 3%;" formControlName="asunto" placeholder="Asunto">
-            </div>
+                    
+                    <div class="row">
+                        <textarea name="msg" id="msg" class="form-control msgArea" style="margin-top: 3%; resize: none;" formControlName="mensaje" placeholder="Escriba su mensaje aquí..."></textarea>
+                    </div>
             
-            <div class="row">
-                <textarea name="msg" id="msg" class="form-control msgArea" style="margin-top: 3%; resize: none;" formControlName="mensaje" placeholder="Escriba su mensaje aquí..."></textarea>
+                    <div class="col text-center" style="margin-top: 3%;">
+                        <button class="button1" type="submit">Enviar</button>
+                    </div>
+                </div>
             </div>
-    
-            <div class="col text-center" style="margin-top: 3%;">
-                <button class="button1" type="submit">Enviar</button>
+            <div class="col-12 col-md-6 mt-2 mt-md-0">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3844.6393857462863!2d-88.03192648473406!3d15.50381755845854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f665b3ddd9dcef1%3A0x9c0f9a13c6181f8a!2sFundacion%20Padrino!5e0!3m2!1ses-419!2shn!4v1644262008023!5m2!1ses-419!2shn" 
+                    style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+                <p class="bgParagraph">Bo. El Benque 3 Valle 8-9 Ave. S.O. San Pedro Sula, Hondoras C.A.</p>
             </div>
-          </div>
+        </div>
     </div>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

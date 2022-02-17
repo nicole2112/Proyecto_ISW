@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
-import { faUserCircle, faAddressBook, faComments, faHandSparkles, faBlog } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faAddressBook, faComments, faHandSparkles, faBlog, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar-portal-admin',
@@ -17,7 +17,7 @@ export class NavbarPortalAdminComponent implements OnInit {
   @Output() showTestimoniesClick = new EventEmitter();
   @Output() viewHeroesClick = new EventEmitter<boolean>();
   @Output() showHeroesClick = new EventEmitter<boolean>();
-  @Output() showPDFOptions = new EventEmitter<boolean>();
+  @Output() viewPDFClick = new EventEmitter<boolean>();
 
   @Output() showArticulosClick = new EventEmitter<boolean>();
   @Output() viewArticulosClick = new EventEmitter<boolean>();
@@ -50,6 +50,11 @@ export class NavbarPortalAdminComponent implements OnInit {
     this.viewTestimoniesClick.emit(true);
   }
 
+  //PDF
+  addPDF(){
+    this.viewPDFClick.emit(true);
+  }
+
 
   ngOnInit(): void {
     this.isLogged();
@@ -75,6 +80,7 @@ export class NavbarPortalAdminComponent implements OnInit {
     this.router.navigateByUrl(`portal-admin/perfil`);
   }
 
+
   logOut(){
     this.service.logout();
   }
@@ -83,5 +89,6 @@ export class NavbarPortalAdminComponent implements OnInit {
   faAddressBook = faAddressBook;
   faComments = faComments;
   faHandSparkles = faHandSparkles;
+  faFilePdf= faFilePdf;
   faBlog = faBlog;
 }

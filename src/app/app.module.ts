@@ -20,6 +20,7 @@ import { DonationsComponent } from './donations/donations.component';
 import { TestimoniesComponent } from './testimonies/testimonies.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { BlogPostComponent } from './blog-post/blog-post.component';
 
 import { LoginComponent } from './login/login.component';
 import { AngularFireDatabase, AngularFireDatabaseModule, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
@@ -47,6 +48,8 @@ import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from './users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.component';
 import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
+import { AddPdfComponent } from './add-pdf/add-pdf.component';
+import { PdfServices } from './services/pdf.services';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //tiny mce
 import { verArticulosComponent } from './portal-admin/verArticulos.component';
 import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
@@ -65,6 +68,7 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
     DonationsComponent,
     TestimoniesComponent,
     BlogComponent,
+    BlogPostComponent,
     FooterComponent,
     ContactUsComponent,
     LoginComponent,
@@ -81,6 +85,8 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
     UsersAdminComponent,
     ShowHeroesAdminComponent,
     PwResetComponent,
+    NoConfirmationComponent,
+    AddPdfComponent,
     NoConfirmationComponent,
     verArticulosComponent,
     AgregarArticuloComponent
@@ -105,6 +111,7 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
   ],
   providers: [
     ModalService,
+    PdfServices,
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
   bootstrap: [AppComponent]

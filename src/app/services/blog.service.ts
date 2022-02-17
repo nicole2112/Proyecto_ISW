@@ -9,11 +9,14 @@ import { Categoria } from '../models/blog';
   providedIn: 'root'
 })
 export class BlogService {
+  static getBlogById(idBlog: any): any {
+      throw new Error("Method not implemented.");
+  }
 
   blogRef: AngularFireList<any>;
 
   blogList : any[];
-  categoriaList: any[];
+  categoryList: any[];
 
   constructor(private db:AngularFireDatabase) { }
 
@@ -71,8 +74,8 @@ export class BlogService {
     })
   }
 
-  getCategorias(){
-    this.categoriaList =[];
+  getCategoriasSnapshot(){
+    this.categoryList =[];
 
     
     let categoriaRef = this.db.list('categorias');
@@ -80,7 +83,7 @@ export class BlogService {
         data.forEach(articulo =>{
             let a = articulo.payload.toJSON();
             a['$key'] = articulo.key;
-            this.categoriaList.push(a as Categoria);
+            this.categoryList.push(a as Categoria);
         });
     })
 }
@@ -104,7 +107,7 @@ export class BlogService {
 
   deleteCategoriasbyArticulo(key)
   {
-    this.getCategorias();
+    this.getCategoriasSnapshot();
     this.getCategoriasArticulo(key).subscribe((catos) => {
 
       let cats = Object.values(catos[0]);
@@ -127,7 +130,7 @@ export class BlogService {
 
       borrar.forEach((n) =>
       {
-        this.categoriaList.forEach((cat) =>
+        this.categoryList.forEach((cat) =>
         {
           if(n == cat["Categoria"])
           this.db.object(`categorias/${cat["$key"]}`).set(null);
@@ -141,4 +144,22 @@ export class BlogService {
     this.deleteCategoriasbyArticulo(key);
   }
 
+  getBlogById(idBlog){
+    return this.db.object(`blogs/${idBlog}`).valueChanges();
+  }
+
+  getCategorias(){
+    this.blogRef = this.db.list('categorias');
+
+    return this.blogRef.snapshotChanges().pipe(map(data =>{
+      this.categoryList = [];
+      data.forEach(articulo =>{
+          let a = articulo.payload.toJSON();
+          a['key'] = articulo.key;
+          this.categoryList.push(a);
+      })
+      return this.categoryList;
+    }))
+  }
+  
 }

@@ -13,6 +13,7 @@ import { Router } from "@angular/router";
 import { HeroesAdminComponent } from '../heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from '../users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from '../showHeroes-admin/showHeroes-admin.component';
+import {AddPdfComponent} from '../add-pdf/add-pdf.component'
 
 @Component({
   selector: 'app-portal-admin',

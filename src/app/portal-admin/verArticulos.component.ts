@@ -288,7 +288,7 @@ agregarCategoria()
 
     articuloItem={
       "imagenPreview": imageUrl,
-      "contenido": this.contenido,
+      // "contenido": this.contenido,
       "fechaCreacion": this.fechaCreacion,
       "titulo": this.titulo,
       "descripcion": this.descripcion,

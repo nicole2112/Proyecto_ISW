@@ -15,6 +15,9 @@ declare const Email: any;
 export class ContactUsComponent {
     namePattern = "^[a-zA-Z ]*$";
     emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+
+    alert:boolean = false;
+
     form = new FormGroup({
         name: new FormControl('', [
             Validators.required,
@@ -57,6 +60,12 @@ export class ContactUsComponent {
           }).then(
             message => console.log(message)
           );
+          this.alert = true;
+          this.form.reset();
+    }
+
+    closeAlert() {
+        this.alert = false;
     }
 }
 
