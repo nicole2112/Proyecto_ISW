@@ -1,0 +1,50 @@
+<app-navbar-portal-admin></app-navbar-portal-admin>
+
+<!-- Mostrar Datos de PDF-Descargables -->
+<div style="background-color: white;">
+    <div class="container table-heroes">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table table-striped table-bordered">
+            <thead class="table-header" class="userRowHover">
+              <tr>
+                <th style="text-align: center">Nombre</th>
+                <th style="text-align: center">Fecha</th>
+                <th style="text-align: center">Archivo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let descargables of PdfDescargables" class="userRowHover">
+                <td class="rowInfo">{{ descargables?.Nombre }}</td>
+                <td class="rowInfo">{{ descargables?.Fecha }}</td>
+                <td class="rowInfo"><a href="{{descargables.archivo}}" target="_blank" rel="noopener noreferrer">{{descargables.Nombre}}</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <br><br><br>
+      
+      
+      <!-- Mostrar datos de PDF-Programas -->
+      <div class="container table-heroes">
+          <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-striped table-bordered">
+              <thead class="table-header" class="userRowHover">
+                <tr>
+                  <th style="text-align: center">Nombre</th>
+                  <th style="text-align: center">Fecha</th>
+                  <th style="text-align: center">Archivo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let programas of PdfProgramas" class="userRowHover">
+                  <td class="rowInfo">{{ programas?.Nombre }}</td>
+                  <td class="rowInfo">{{ programas?.Fecha }}</td>
+                  <td class="rowInfo"><a href="{{programas.archivo}}" target="_blank" rel="noopener noreferrer">{{programas.Nombre}}</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+</div>

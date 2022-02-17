@@ -13,8 +13,14 @@ import { PdfServices } from '../services/pdf.services';
 })
 export class AddPdfComponent implements OnInit {
 
-  fileList: any[];
-  pdfId: any;
+  fileList: File[];
+  pdfId: string;
+
+  fechaPdf: any;
+  NombrePdf: string;
+
+  AreaSeleccionada: string;
+
 
   constructor(public service: AuthenticationService, public pdfService: PdfServices) { }
   
@@ -27,12 +33,11 @@ export class AddPdfComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.service.db.list('PDFS').valueChanges().subscribe((pdfs) =>{
+    this.service.db.list('PDF-Programas').valueChanges().subscribe((pdfs) =>{
       let keys = Object.keys(pdfs);
       keys.forEach((item) => {
         this.pdfId = pdfs[item]['id'];
       });
-      console.log(this.pdfId);
     });
 
   }
@@ -59,13 +64,22 @@ export class AddPdfComponent implements OnInit {
   }
 
 
-
-
-  AddNuevoPdf(pdfURL){
-   this.pdfService.actualizarPDF(pdfURL, this.pdfId);
+  AgregarPDF_Programas(pdfURL){
+   this.fechaPdf = new Date().toLocaleDateString();
+   this.pdfService.actualizarPDF(pdfURL, this.pdfId, this.NombrePdf, this.fechaPdf);
   }
 
+  AgregarPDF_Descargables(pdfURL){
+    let PdfDescargable={};
+    this.fechaPdf = new Date().toLocaleDateString();
+    PdfDescargable={
+      "Nombre": this.NombrePdf,
+      "Fecha": this.fechaPdf,
+      "archivo": pdfURL
+    }
 
+    this.service.db.list('PDF-Descargables').push(PdfDescargable);
+  }
 
 
   savePDF() {
@@ -75,8 +89,6 @@ export class AddPdfComponent implements OnInit {
     const storageRef = ref(storage, filename);
 
     uploadBytes(storageRef, this.fileList[0]).then((snapshot) => {
-      
-      
     }).then(
       ()=>{
         getDownloadURL(storageRef).then(data =>{
@@ -87,8 +99,13 @@ export class AddPdfComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
-    
-          this.AddNuevoPdf(data);
+
+          if(this.AreaSeleccionada === "Programas"){
+            this.AgregarPDF_Programas(data);
+          }else{
+            this.AgregarPDF_Descargables(data);
+          }    
+         
           this.addPDFFunc();
         }).catch((error)=>{
     

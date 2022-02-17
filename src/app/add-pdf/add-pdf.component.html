@@ -4,6 +4,74 @@
     <h1 style="margin-bottom: 2%; margin-top: 2%;">Actualizar PDF</h1>
   </div>
   <form #claseForm="ngForm" action="/">
+<!-- Ingreso de Nombre de Pdf -->
+    <div class="d-flex justify-content-center" style="margin-top: 20px">
+      <div
+        class="form-floating sm-3 col-md-9"
+        [ngClass]="{
+          error:
+            claseForm.controls.NombrePdf?.invalid &&
+            claseForm.controls.NombrePdf?.touched
+        }"
+      >
+        <input
+          [(ngModel)]="NombrePdf"
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          name="NombrePdf"
+          placeholder="Nombre del PDF"
+          required
+        />
+        <label for="floatingInput">Nombre del PDF</label>
+        <em
+          class="text-danger"
+          *ngIf="
+            claseForm.controls.NombrePdf?.invalid &&
+            claseForm.controls.NombrePdf?.touched
+          "
+          >*Nombre válido es requerido</em
+        >
+      </div>
+    </div>
+    <br>
+    <br>
+<!-- Seleccion de area -->
+    <div class="d-flex justify-content-center">
+      <div
+        class="form-floating sm-3 col-md-4"
+        [ngClass]="{
+          error:
+            claseForm.controls.AreaSeleccionada?.invalid &&
+            claseForm.controls.AreaSeleccionada?.touched
+        }"
+        >
+          <select 
+            [(ngModel)]="AreaSeleccionada"
+            id = "floating input" 
+            class="form-select"
+            id="floatingInput"
+            name="AreaSeleccionada"
+            placeholder="Area"
+            required
+          >
+            <option value="Programas">Programas</option>
+            <option value="Descargables">Descargables</option>
+          </select>
+
+          <label for="floatingInput" style="margin-left: 3%;">Area</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.AreaSeleccionada?.invalid &&
+              claseForm.controls.AreaSeleccionada?.touched
+            "
+            >*Area válida es requerido</em
+          >
+        </div>
+    </div>
+    
+
 
       <!-- Ingreso de pdf -->
       <div class="card" style="margin-top: 3%;">
