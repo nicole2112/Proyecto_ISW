@@ -25,6 +25,7 @@ export class ViewPdfsComponent implements OnInit {
       this.PdfDescargables = [];
       data.forEach(pdf =>{
         let a = pdf.payload.toJSON();
+        console.log(a);
         a['$key'] = pdf.key;
         this.PdfDescargables.push(a as Descargables)
       })
@@ -36,6 +37,7 @@ export class ViewPdfsComponent implements OnInit {
       this.PdfProgramas = [];
       data.forEach(pdf =>{
         let b = pdf.payload.toJSON();
+        console.log(b);
         b['$key'] = pdf.key;
         this.PdfProgramas.push(b as Programas)
       })

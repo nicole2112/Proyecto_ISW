@@ -104,8 +104,8 @@ export class AddPdfComponent implements OnInit {
             this.AgregarPDF_Programas(data);
           }else{
             this.AgregarPDF_Descargables(data);
-          }    
-         
+          }
+                   
           this.addPDFFunc();
         }).catch((error)=>{
     
