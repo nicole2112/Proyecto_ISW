@@ -7,7 +7,7 @@ import { PdfServices } from '../services/pdf.services';
 
 
 @Component({
-  selector: 'app-add-pdf',
+  selector: 'app-add-pdf-admin',
   templateUrl: './add-pdf.component.html',
   styleUrls: ['./add-pdf.component.css']
 })
@@ -59,8 +59,17 @@ export class AddPdfComponent implements OnInit {
   }
 
   private onFileChange(files: File[]) {
+    if(!files[0]) {
+			Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Debe seleccionar un archivo pdf.',
+          showConfirmButton: false,
+          timer: 1500
+      })
+			return;
+		}
     this.fileList = files;
-    console.log(files[0].name);
   }
 
 

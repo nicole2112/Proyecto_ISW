@@ -32,10 +32,10 @@
     </div>
   </div>
   <div class="dropdown-users">
-    <button class="dropbtn"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Agregar PDF  ▼</button>
+    <button class="dropbtn"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Documentos  ▼</button>
     <div class="dropdown-content">
-      <a class="nav-link active" aria-current="page" (click)="addPDF()" [routerLink]="['/portal-admin/agregarPDF']">Agregar PDF</a>
-      <a class="nav-link active" aria-current="page" [routerLink]="['/portal-admin/VerPDFS']">Ver PDFS</a>
+      <a class="nav-link active" aria-current="page" (click)="showPDF()">Ver PDFS</a>
+      <a class="nav-link active" aria-current="page" (click)="viewPDF()">Agregar PDF</a>
     </div>
   </div>
   <div class="dropdownx navbar-nav ms-auto">

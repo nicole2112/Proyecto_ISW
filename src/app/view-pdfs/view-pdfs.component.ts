@@ -4,7 +4,7 @@ import { Descargables, Programas } from '../models/pdf';
 import { AuthenticationService } from '../services/auth.services';
 
 @Component({
-  selector: 'app-view-pdfs',
+  selector: 'app-view-pdfs-admin',
   templateUrl: './view-pdfs.component.html',
   styleUrls: ['./view-pdfs.component.css']
 })
