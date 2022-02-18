@@ -10,16 +10,20 @@
       </div>
     </div>
     <div class="dropdown-users">
-      <button class="dropbtn"><fa-icon class="icons" [icon]="faHandHoldingUsd"></fa-icon>Donaciones  ▼</button>
+      <button class="dropbtn"><fa-icon class="icons" [icon]="faHandHoldingUsd"></fa-icon>Solicitudes  ▼</button>
       <div class="dropdown-content">
-        <a>Ingresar Solicitud</a>
+        <a (click)="addSolicitud()">Ingresar Solicitud</a>
+        <a (click)="showHistorial()" [routerLink]="['/portal-digitador']">Historial</a>
       </div>
+    </div>
+    <div class="dropdown-users">
+      <button class="dropbtn" (click)="showHistorial()" [routerLink]="['/portal-digitador']"><fa-icon class="icons" [icon]="faDollyFlatbed"></fa-icon>Formularios</button>
     </div>
     <div class="dropdownx navbar-nav ms-auto">
       <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>
       <div class="dropdown-content">
         <a (click)="fnEditUserProfile()">Editar</a>
         <a (click)="logOut()">Cerrar Sesion</a>
-      </div>
+      </div>  
     </div>
   </nav>

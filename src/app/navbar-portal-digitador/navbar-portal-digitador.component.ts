@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
 export class NavbarPortalDigitadorComponent {
 
     constructor( public service: AuthenticationService, private eRef: ElementRef, private router: Router) { }
+    @Input() isShow: boolean;
+    @Output() viewHistorialClick: EventEmitter<boolean> = new EventEmitter();
+    @Output() viewFormulariosClick: EventEmitter<boolean> = new EventEmitter();
 
     ngOnInit(): void {
       this.isLogged();
@@ -39,6 +42,17 @@ export class NavbarPortalDigitadorComponent {
       this.service.logout();
     }
 
+    showHistorial(){
+      this.viewHistorialClick.emit(true);
+    }
+
+    showFormularios(){
+      this.viewFormulariosClick.emit(true);
+    }
+
+    addSolicitud(){
+      this.router.navigateByUrl(`portal-digitador/registro`);
+    }
     faUserCircle = faUserCircle;
     faDollyFlatbed = faDollyFlatbed;
     faHandHoldingUsd = faHandHoldingUsd;
