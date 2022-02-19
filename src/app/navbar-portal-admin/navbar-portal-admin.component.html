@@ -6,7 +6,7 @@
   <div class="dropdown-users">
     <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Usuarios   ▼</button>
     <div class="dropdown-content">
-      <a (click)="showUsers()" [routerLink]="['/portal-admin']">Ver Usuarios</a>
+      <a [routerLink]="['/portal-admin']" (click)="showUsers()">Ver Usuarios</a>
       <a (click)="addUser()">Registrar Usuario</a>
     </div>
   </div>
@@ -14,14 +14,14 @@
     <button class="dropbtn"><fa-icon class="icons" [icon]="faComments"></fa-icon>Testimonios  ▼</button>
     <div class="dropdown-content">
       <a [routerLink]="['/portal-admin']" (click)="showTestimonies()">Ver Testimonios</a>
-      <a  [routerLink]="['/portal-admin']" (click)="viewTestimonies()">Agregar Testimonios</a>
+      <a [routerLink]="['/portal-admin']" (click)="viewTestimonies()">Agregar Testimonios</a>
     </div>
   </div>
   <div class="dropdown-users">
     <button class="dropbtn"><fa-icon class="icons" [icon]="faHandSparkles"></fa-icon>Héroes  ▼</button>
     <div class="dropdown-content">
       <a [routerLink]="['/portal-admin']" (click)="showHeroes()">Ver Héroes</a>
-      <a class="nav-link active" aria-current="page" (click)="viewHeroes()" [routerLink]="['/portal-admin']">Agregar Héroe</a>
+      <a [routerLink]="['/portal-admin']" (click)="viewHeroes()">Agregar Héroe</a>
     </div>
   </div>
   <div class="dropdown-users">
@@ -34,8 +34,8 @@
   <div class="dropdown-users">
     <button class="dropbtn"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Documentos  ▼</button>
     <div class="dropdown-content">
-      <a class="nav-link active" aria-current="page" (click)="showPDF()">Ver PDFS</a>
-      <a class="nav-link active" aria-current="page" (click)="viewPDF()">Agregar PDF</a>
+      <a [routerLink]="['/portal-admin']"  (click)="showPDF()">Ver PDFS</a>
+      <a [routerLink]="['/portal-admin']"  (click)="viewPDF()">Agregar PDF</a>
     </div>
   </div>
   <div class="dropdownx navbar-nav ms-auto">
