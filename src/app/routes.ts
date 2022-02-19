@@ -22,7 +22,6 @@ import { EditUserProfileComponent } from './profiles/edit-user-profile.component
 import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { AdminConfGuard } from './email-conf/guard/admin-conf.guard';
 import { DigitadorConfGuard } from './email-conf/guard/digitador-conf.guard';
-import { AddPdfComponent } from './add-pdf/add-pdf.component';
 import { BlogPostComponent } from './blog-post/blog-post.component';
 
 export const AppRoutes: Routes = [
@@ -49,8 +48,5 @@ export const AppRoutes: Routes = [
   { path: 'portal-digitador/perfil', component: EditUserProfileComponent, canActivate: [DigitadorConfGuard] },
   { path: 'portal-digitador', component: PortalDigitadorComponent, canActivate: [DigitadorConfGuard]},
   { path: 'portal-pw-reset', component: PwResetComponent },
-  {path: 'portal-admin/agregarPDF', component: AddPdfComponent},
-  //{ path: 'agregarTestimonio', component: AgregarTestimoniosComponent, canActivate: [AdminConfGuard] },
-  //{ path: 'verTestimonio', component: VerTestimoniosComponent, canActivate: [AdminConfGuard] },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];
