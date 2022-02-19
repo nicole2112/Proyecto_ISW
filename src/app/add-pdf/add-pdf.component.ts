@@ -19,6 +19,11 @@ export class AddPdfComponent implements OnInit {
   fechaPdf: any;
   NombrePdf: string;
 
+  hoy: any;
+  dia:any;
+  mes:any;
+  anio:any;
+
   AreaSeleccionada: string;
 
 
@@ -72,15 +77,33 @@ export class AddPdfComponent implements OnInit {
     this.fileList = files;
   }
 
+  ObtenerFecha(){
+    this.hoy = new Date();
+     this.dia = this.hoy.getDate();
+     this.mes = this.hoy.getMonth() + 1;
+     this.anio = this.hoy.getFullYear();
+
+    if(this.dia < 10){
+      this.dia ='0'+ this.dia;
+    }
+
+    if(this.mes < 10){
+      this.mes = '0' + this.mes;
+    }
+
+   return this.hoy = this.anio + '/' + this.mes + '/' + this.dia;
+  }
+
 
   AgregarPDF_Programas(pdfURL){
-   this.fechaPdf = new Date().toLocaleDateString();
+   this.fechaPdf = this.ObtenerFecha();
+   console.log(this.fechaPdf);
    this.pdfService.actualizarPDF(pdfURL, this.pdfId, this.NombrePdf, this.fechaPdf);
   }
 
   AgregarPDF_Descargables(pdfURL){
     let PdfDescargable={};
-    this.fechaPdf = new Date().toLocaleDateString();
+    this.fechaPdf = this.ObtenerFecha();
     PdfDescargable={
       "Nombre": this.NombrePdf,
       "Fecha": this.fechaPdf,
