@@ -16,6 +16,7 @@ export class NavbarPortalDigitadorComponent {
     @Input() isShow: boolean;
     @Output() viewHistorialClick: EventEmitter<boolean> = new EventEmitter();
     @Output() viewFormulariosClick: EventEmitter<boolean> = new EventEmitter();
+    @Output() viewSolicitudesClick: EventEmitter<boolean> = new EventEmitter();
 
     ngOnInit(): void {
       this.isLogged();
