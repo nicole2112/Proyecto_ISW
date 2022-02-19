@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
-import { faUserCircle, faDollyFlatbed, faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faDollyFlatbed, faHandHoldingUsd, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
 @Component({
@@ -52,10 +52,10 @@ export class NavbarPortalDigitadorComponent {
     }
 
     addSolicitud(){
-      this.router.navigateByUrl(`portal-digitador/registro`);
+      this.viewSolicitudesClick.emit(true);
     }
     faUserCircle = faUserCircle;
     faDollyFlatbed = faDollyFlatbed;
     faHandHoldingUsd = faHandHoldingUsd;
-
+    faFilePdf = faFilePdf;
 }

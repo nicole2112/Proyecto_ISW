@@ -12,12 +12,12 @@
     <div class="dropdown-users">
       <button class="dropbtn"><fa-icon class="icons" [icon]="faHandHoldingUsd"></fa-icon>Solicitudes  ▼</button>
       <div class="dropdown-content">
-        <a (click)="addSolicitud()">Ingresar Solicitud</a>
         <a (click)="showHistorial()" [routerLink]="['/portal-digitador']">Historial</a>
+        <a (click)="addSolicitud()">Ingresar Solicitud</a>
       </div>
     </div>
     <div class="dropdown-users">
-      <button class="dropbtn" (click)="showHistorial()" [routerLink]="['/portal-digitador']"><fa-icon class="icons" [icon]="faDollyFlatbed"></fa-icon>Formularios</button>
+      <button class="dropbtn" (click)="showFormularios()" [routerLink]="['/portal-digitador']"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Formularios</button>
     </div>
     <div class="dropdownx navbar-nav ms-auto">
       <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>

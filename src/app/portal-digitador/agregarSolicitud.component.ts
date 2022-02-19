@@ -18,6 +18,5 @@ import { Router } from "@angular/router";
 
 export class agregarSolicitudComponent{
 
-    constructor() 
-{ }
+    constructor(){ }
 }
