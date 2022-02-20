@@ -11,3 +11,10 @@
 .table-users{
     margin-top: 3%;
 }
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 70vh;
+    width: 100%;
+    overflow: auto;
+}

@@ -4,10 +4,10 @@
 </app-navbar-portal-digitador>
 
 <div class="container table-users">
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">    
-        <app-add-Solicitud-digitador *ngIf="toggleSolicitudes"></app-add-Solicitud-digitador>
-        <app-view-Historial-admin *ngIf="toggleHistorial"></app-view-Historial-admin>
-        <app-view-formularios-digitador *ngIf="toggleFormularios"></app-view-formularios-digitador>
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">    
+    <app-add-Solicitud-digitador *ngIf="toggleSolicitudes" (historialRedirect)="toggleHistorial=true; toggleSolicitudes=false; toggleFormularios=false"></app-add-Solicitud-digitador>
+    <app-view-Historial-admin *ngIf="toggleHistorial"></app-view-Historial-admin>
+    <app-view-formularios-digitador *ngIf="toggleFormularios"></app-view-formularios-digitador>
   </div>
 </div>
 

@@ -1,3 +1,11 @@
-.addSolicitud {
+.styleSolicitud {
     background-color: white;
+}
+
+.styleTitleForm{
+    color: black;
+}
+
+.styleFormElem{
+    margin-top: 20px;
 }
