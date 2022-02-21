@@ -4,4 +4,28 @@
 </div>
 <br><br>
 
+<div class="accordion">
+    <div class="accordion-item" *ngFor="let pdf of pdfList; let i = index" style="margin-left: 5%; margin-right: 5%;">
+      <h2 class="accordion-header" [attr.id]="'heading' + i">
+        <button class="accordion-button" type="button"
+              (click)='openAccordion[i] = !openAccordion[i]' data-bs-toggle="collapse"
+                  [attr.data-target]="'#collapse' + i" aria-expanded="true" [attr.aria-controls]="'collapse' + i"  style="background-color:white; color:black">
+                  {{pdf.Nombre}}
+              </button>
+      </h2>
+      <div [attr.id]="'collapse' + i" class="accordion-collapse collapse" [class.show]='openAccordion[i]'
+        [attr.aria-labelledby]="'heading' + i" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <ul>
+                <p>Fecha: <a>{{pdf.Fecha}}</a>.</p>
+              </ul>
+          <ul>
+            <p>Abrir PDF con información <a href="{{pdf.archivo}}" target="_blank" rel="noopener noreferrer"style="color:#00ABE7" >{{pdf.Nombre}}</a>.</p>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br><br>
 <footer-comp></footer-comp>
