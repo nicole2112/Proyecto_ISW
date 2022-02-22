@@ -4,6 +4,7 @@ import { take } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { AuthenticationService } from '../services/auth.services';
 import { FormsModule } from '@angular/forms';
+import { SolicitudesService } from "../services/solicitudes.service";
 
 
 @Component({
@@ -27,7 +28,7 @@ export class agregarSolicitudComponent implements OnInit{
     fileList: any[] = [];
     namePattern = '^[a-zA-Z ]*$';
 
-    constructor(public service: AuthenticationService) {}
+    constructor(public service: AuthenticationService, private solicitudservice: SolicitudesService) {}
 
     @Output() historialRedirect = new EventEmitter<boolean>();
 
@@ -73,6 +74,10 @@ export class agregarSolicitudComponent implements OnInit{
     }
 
     guardarSolicitud(){
+        this.fileList.forEach((file) =>
+        {
+            
+        });
         this.historialRedirectFunc();
     }
 }
