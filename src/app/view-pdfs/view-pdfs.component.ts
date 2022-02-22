@@ -39,6 +39,8 @@ export class ViewPdfsComponent implements OnInit {
   pdfSelectedFecha: any;
   pdfSelectedArchivo: any;
 
+  pdfSelectedType: string;
+
   ngOnInit(): void {
     //leer base de datos PDF-Descargables
     this.PDF_DescargablesRef = this.service.db.list('PDF-Descargables');
@@ -66,12 +68,14 @@ export class ViewPdfsComponent implements OnInit {
 
   }
 
-  open(content, id:string , nombre: string, fecha: Date, archivo: any){
+  open(content, id:string , nombre: string, fecha: Date, archivo: any, tipo: string){
     this.pdfSelectedId = id
     this.pdfSelectedNombre = nombre;
     this.pdfSelectedFecha = fecha;
     this.pdfSelectedArchivo = archivo;
+    this.pdfSelectedType = tipo;
 
+    console.log('Type: ' + this.pdfSelectedType);
     // console.log(this.fechaActual);
 
     this.modalService.open(content, {backdrop: 'static', ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
@@ -119,7 +123,11 @@ export class ViewPdfsComponent implements OnInit {
       }).then(
          ()=>{
           getDownloadURL(storageRef).then(data =>{
-            this.writePDFData(data, this.pdfSelectedId)
+            if(this.pdfSelectedType === 'descargable'){
+              this.writePDFData(data, this.pdfSelectedId)
+            }else{
+              this.AgregarPDF_Programas(data);
+            }
           }).catch((error)=>{
             console.log(error)
           });
@@ -129,6 +137,11 @@ export class ViewPdfsComponent implements OnInit {
       this.writePDFData(this.pdfSelectedArchivo ,this.pdfSelectedId)
     }
   }
+
+  AgregarPDF_Programas(pdfURL){
+    this.pdfSelectedFecha = new Date().toLocaleDateString();
+    this.pdfService.actualizarPDF(pdfURL, this.pdfSelectedId, this.pdfSelectedNombre, this.pdfSelectedFecha);
+   }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -184,7 +197,7 @@ export class ViewPdfsComponent implements OnInit {
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Artículo ha sido actualizado exitosamente!',
+      title: 'PDF ha sido actualizado exitosamente!',
       showConfirmButton: false,
       timer: 1500
     })
@@ -194,7 +207,7 @@ export class ViewPdfsComponent implements OnInit {
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Artículo ha sido eliminado exitosamente!',
+      title: 'PDF ha sido eliminado exitosamente!',
       showConfirmButton: false,
       timer: 1500
     })
