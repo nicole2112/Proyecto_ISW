@@ -11,15 +11,25 @@ import { runInThisContext } from 'vm';
 import { AuthenticationService } from "../services/auth.services";
 import { Categoria } from "../models/blog";
 import { ThrowStmt } from '@angular/compiler';
+import { SolicitudesService } from '../services/solicitudes.service';
 
-@Component ({
+@Component({
     selector: 'app-view-Historial-admin',
     templateUrl: './verHistorial.component.html',
     styleUrls: ['verHistorial.component.css']
 })
 
-export class verHistorialComponent{
+export class verHistorialComponent implements OnInit {
+    recordsList: any;
+    recordList = [];
 
-        constructor() 
-    { }
+    constructor(private service: AuthenticationService, private recordService: SolicitudesService) { }
+
+    ngOnInit() {
+        this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
+            this.recordList = records;
+        });
+
+        console.log(this.service.userDetails.uid)
+    }
 }

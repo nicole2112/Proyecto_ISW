@@ -16,31 +16,29 @@ export class SolicitudesService {
 
   blogRef: AngularFireList<any>;
 
-  listaSolicitudes : any[];
+  listaSolicitudes: any[];
 
-  constructor(private db:AngularFireDatabase, private auth: AuthenticationService) { 
-      
+  constructor(private db: AngularFireDatabase, private auth: AuthenticationService) {
+
   }
 
-  getSolicitudes(id): Observable<any[]>
-  {
+  getSolicitudes(id): Observable<any[]> {
 
     this.blogRef = this.db.list('solicitudes');
 
-    return this.blogRef.snapshotChanges().pipe(map(data =>{
-    this.listaSolicitudes = [];
-    data.forEach(solicitud =>{
+    return this.blogRef.snapshotChanges().pipe(map(data => {
+      this.listaSolicitudes = [];
+      data.forEach(solicitud => {
         let a = solicitud.payload.toJSON();
         a['key'] = solicitud.key;
-        if(a['digitador'] == id)
-        this.listaSolicitudes.push(a);
-    })
-    return this.listaSolicitudes;
+        if (a['digitador'] == id)
+          this.listaSolicitudes.push(a);
+      })
+      return this.listaSolicitudes;
     }))
   }
 
-  postSolicitud(descripcionCaso, nombrePaciente, comentario, comentariosPresidencia, ciudad, queSolicita, estudioSE, archivoSolicitud, hojaCompromiso, archivoAdicional, imagen1, imagen2, fecha)
-  {
+  postSolicitud(descripcionCaso, nombrePaciente, comentario, comentariosPresidencia, ciudad, queSolicita, estudioSE, archivoSolicitud, hojaCompromiso, archivoAdicional, imagen1, imagen2, fecha) {
     let solicitud = {
       "descripcion": descripcionCaso,
       "digitador": this.auth.userDetails.uid,
@@ -58,21 +56,20 @@ export class SolicitudesService {
       "imagen2": imagen2,
       "fecha": fecha
     };
-      
-    this.db.list(`solicitudes`).push(solicitud).then((data) =>
-    {
+
+    this.db.list(`solicitudes`).push(solicitud).then((data) => {
       solicitud["id"] = data.key;
       this.db.object(`solicitudes/${data.key}`).set(solicitud);
     });
   }
 
-  actualizarArchivo(urlArchivo,id,archivoNombre){
+  actualizarArchivo(urlArchivo, id, archivoNombre) {
     const db = getDatabase();
 
     let objeto = {};
     objeto[archivoNombre] = urlArchivo;
 
-    set(ref(db, 'solicitudes/' + id),objeto);
+    set(ref(db, 'solicitudes/' + id), objeto);
   }
-  
+
 }
