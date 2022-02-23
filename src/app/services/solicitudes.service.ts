@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2'
 import { AuthenticationService } from './auth.services';
 import firebase from '@firebase/app-compat';
+import { getDatabase, ref, set } from "firebase/database";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +22,7 @@ export class SolicitudesService {
       
   }
 
-  getSolicitudes(): Observable<any[]>
+  getSolicitudes(id): Observable<any[]>
   {
 
     this.blogRef = this.db.list('solicitudes');
@@ -30,28 +32,31 @@ export class SolicitudesService {
     data.forEach(solicitud =>{
         let a = solicitud.payload.toJSON();
         a['key'] = solicitud.key;
+        if(a['digitador'] == id)
         this.listaSolicitudes.push(a);
     })
     return this.listaSolicitudes;
     }))
   }
 
-  postSolicitud(descripcionCaso, nombrePaciente, comentario, ciudad, queSolicita, estudioSE, archivoSolicitud, hojaCompromiso, archivoAdicional, imagen1, imagen2)
+  postSolicitud(descripcionCaso, nombrePaciente, comentario, comentariosPresidencia, ciudad, queSolicita, estudioSE, archivoSolicitud, hojaCompromiso, archivoAdicional, imagen1, imagen2, fecha)
   {
     let solicitud = {
-      "descripcionCaso": descripcionCaso,
-      "usuario": this.user.email,
+      "descripcion": descripcionCaso,
+      "digitador": this.auth.userDetails.uid,
       "nombrePaciente": nombrePaciente,
       "estado": "En espera",
-      "comentarios": [comentario],
+      "comentario": comentario,
+      "comentariosPresidencia": comentariosPresidencia,
       "ciudad": ciudad,
-      "solicitud": queSolicita,
-      "estudioSocioeconomico": estudioSE,
-      "archivoSolicitud": archivoSolicitud,
+      "queSolicita": queSolicita,
+      "estudioSE": estudioSE,
+      "solicitudDonacion": archivoSolicitud,
       "hojaCompromiso": hojaCompromiso,
-      "archivoAdicional": archivoAdicional,
+      "otros": archivoAdicional,
       "imagen1": imagen1,
       "imagen2": imagen2,
+      "fecha": fecha
     };
       
     this.db.list(`solicitudes`).push(solicitud).then((data) =>
@@ -59,6 +64,15 @@ export class SolicitudesService {
       solicitud["id"] = data.key;
       this.db.object(`solicitudes/${data.key}`).set(solicitud);
     });
+  }
+
+  actualizarArchivo(urlArchivo,id,archivoNombre){
+    const db = getDatabase();
+
+    let objeto = {};
+    objeto[archivoNombre] = urlArchivo;
+
+    set(ref(db, 'solicitudes/' + id),objeto);
   }
   
 }
