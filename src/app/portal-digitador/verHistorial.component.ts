@@ -29,7 +29,5 @@ export class verHistorialComponent implements OnInit {
         this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
             this.recordList = records;
         });
-
-        console.log(this.service.userDetails.uid)
     }
 }
