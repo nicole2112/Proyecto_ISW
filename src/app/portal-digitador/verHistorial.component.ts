@@ -74,8 +74,18 @@ export class verHistorialComponent implements OnInit {
     
       onSelect(selectedItem: any){
         document.getElementById("nombre").setAttribute('value', selectedItem.nombrePaciente);
-        document.getElementById("solicitud").innerHTML = selectedItem.queSolicita;
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
+        document.getElementById("estado").setAttribute('value', selectedItem.estado);
+        document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
+        document.getElementById("fecha").innerHTML = selectedItem.fecha;
+        document.getElementById("hoja").setAttribute('href', selectedItem.hojaCompromiso);
+        document.getElementById("otros").setAttribute('href', selectedItem.otros);
+        document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
+        document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
+        (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
+        (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
+        (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
+        console.log(selectedItem);
         
       }
 
