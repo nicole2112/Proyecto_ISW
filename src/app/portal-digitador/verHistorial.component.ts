@@ -26,6 +26,7 @@ export class verHistorialComponent implements OnInit {
         'En espera',
         'Aprobada',
         'Denegada',
+        'Falta más información',
     ];
 
     closeResult: string;
