@@ -57,6 +57,7 @@ export class ContactUsComponent {
           }).then(
             message => console.log(message)
           );
+          this.form.reset();
     }
 }
 
