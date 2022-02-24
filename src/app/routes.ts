@@ -35,8 +35,8 @@ export const AppRoutes: Routes = [
   { path: 'testimonies', component: TestimoniesComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'blog-post/:blogId', component: BlogPostComponent },
-  {path: 'login', component: LoginComponent },
-  {path: 'heroes-admin', component: HeroesAdminComponent, canActivate: [AdminConfGuard]},
+  { path: 'login', component: LoginComponent },
+  { path: 'heroes-admin', component: HeroesAdminComponent, canActivate: [AdminConfGuard] },
   {
     path: 'portal-admin/registro',
     component: RegistroComponent,
@@ -44,9 +44,9 @@ export const AppRoutes: Routes = [
   },
   { path: 'portal-admin/perfil', component: EditUserProfileComponent, canActivate: [AdminConfGuard] },
   { path: 'portal-admin', component: PortalAdminComponent, canActivate: [AdminConfGuard] },
-  {path: 'no-email-confirmation', component: NoConfirmationComponent},
+  { path: 'no-email-confirmation', component: NoConfirmationComponent },
   { path: 'portal-digitador/perfil', component: EditUserProfileComponent, canActivate: [DigitadorConfGuard] },
-  { path: 'portal-digitador', component: PortalDigitadorComponent, canActivate: [DigitadorConfGuard]},
+  { path: 'portal-digitador', component: PortalDigitadorComponent, canActivate: [DigitadorConfGuard] },
   { path: 'portal-pw-reset', component: PwResetComponent },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];

@@ -176,3 +176,10 @@ h1 {
     margin-right: 7px
 }
 
+.fb-share-button
+{
+    color:black;
+    display: inline-block;
+    position: absolute;
+}
+

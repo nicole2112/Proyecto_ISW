@@ -3,6 +3,9 @@
   <h1 class="sectionTitleText" >Blog</h1>
 </div>
 
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v13.0" nonce="ri1LD30O"></script>
+
 <br><br>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +43,9 @@
                   </div>
                 <div class="footer">
                     <p><button type="button" class="btn btn-light" style="background-color: #5F2E74; color:white;box-shadow: 0 0 10px gray;" [routerLink]="['/blog-post', blog?.id]">Leer más</button></p>
+                    <br>
+                    <div class="fb-share-button" data-href="https://www.youtube.com/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.youtube.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir en Facebook</a></div>
+                    <br>
                     <p class="txt3"><i class="far fa-clock"></i>{{blog?.fechaCreacion}}</p>
                 </div>
             </div>

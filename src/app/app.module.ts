@@ -54,6 +54,9 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //t
 import { verArticulosComponent } from './portal-admin/verArticulos.component';
 import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
 import { ViewPdfsComponent } from './view-pdfs/view-pdfs.component';
+import { verHistorialComponent } from './portal-digitador/verHistorial.component';
+import { verFormulariosComponent } from './portal-digitador/verFormularios.component';
+import { agregarSolicitudComponent } from './portal-digitador/agregarSolicitud.component';
 
 
 @NgModule({
@@ -91,7 +94,10 @@ import { ViewPdfsComponent } from './view-pdfs/view-pdfs.component';
     NoConfirmationComponent,
     verArticulosComponent,
     AgregarArticuloComponent,
-    ViewPdfsComponent
+    ViewPdfsComponent,
+    verHistorialComponent,
+    verFormulariosComponent,
+    agregarSolicitudComponent
   ],
   imports: [
     BrowserModule,
