@@ -80,7 +80,7 @@ export class verHistorialComponent implements OnInit {
         document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
         document.getElementById("fecha").innerHTML = selectedItem.fecha;
         document.getElementById("hoja").setAttribute('href', selectedItem.hojaCompromiso);
-        document.getElementById("otros").setAttribute('href', selectedItem.otros);
+        if(selectedItem.otros != '') document.getElementById("otros").setAttribute('href', selectedItem.otros);
         document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
         document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
