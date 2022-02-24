@@ -126,12 +126,14 @@
         id="contenido"
         [init]="{
            base_url: '/tinymce',
+           language: 'es_MX',
+           language_url : '../../assets/js/langs/es_MX.js',
            suffix: '.min',
            height: 500,
-           menubar: false,
+           menubar: 'false',
            plugins: [
              'advlist autolink lists link image charmap print preview anchor codesample',
-             'searchreplace visualblocks code fullscreen image imagetools',
+             'searchreplace visualblocks code fullscreen image imagetools paste',
              'insertdatetime media table paste code help wordcount'
            ],
           codesample_languages: [
@@ -140,8 +142,12 @@
             { text: 'HTML/XML', value: 'markup' },
             { text: 'CSS', value: 'css' }
           ],
+          paste_data_images: true,
+          automatic_uploads: true,
+          file_picker_types: 'image',
+          images_upload_handler: tinyImageUpload,
            toolbar:
-             'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image codesample'
+             'undo redo paste | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image codesample'
          }"
       ></editor>
     </div>
