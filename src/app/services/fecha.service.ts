@@ -1,8 +1,14 @@
-import {DatePipe} from '@angular/common'
+import { DatePipe } from '@angular/common';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+
+    providedIn:'root',
+    
+    })
 export class FechaService{
    
-    constructor(private datePipe: DatePipe){}
+    constructor(public datePipe: DatePipe){}
 
     ObtenerFecha(){
         let fecha = this.datePipe.transform((new Date), 'yyyy/MM/dd');

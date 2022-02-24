@@ -17,7 +17,7 @@
           [(ngModel)]="NombrePdf"
           type="text"
           class="form-control"
-          id="floatingInput"
+          id="floating"
           name="NombrePdf"
           placeholder="Nombre del PDF"
           required
@@ -50,7 +50,6 @@
         >
           <select
             [(ngModel)]="AreaSeleccionada"
-            id = "floating input"
             class="form-select"
             id="floatingInput"
             name="AreaSeleccionada"
@@ -78,6 +77,8 @@
       <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="col-md-8">
         <label class="custom-file-upload">Adjuntar PDF</label>
         <input
+          id ="ingresoPdf"
+          placeholder="ingrese pdf"
           class="form-control"
           (change)="onChange($event)"
           type="file"

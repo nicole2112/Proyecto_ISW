@@ -58,6 +58,8 @@ import { verHistorialComponent } from './portal-digitador/verHistorial.component
 import { verFormulariosComponent } from './portal-digitador/verFormularios.component';
 import { agregarSolicitudComponent } from './portal-digitador/agregarSolicitud.component';
 import { DocumentsComponent } from './about-us/documents.component';
+import { FechaService } from './services/fecha.service';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -90,7 +92,6 @@ import { DocumentsComponent } from './about-us/documents.component';
     UsersAdminComponent,
     ShowHeroesAdminComponent,
     PwResetComponent,
-    NoConfirmationComponent,
     AddPdfComponent,
     NoConfirmationComponent,
     verArticulosComponent,
@@ -122,6 +123,8 @@ import { DocumentsComponent } from './about-us/documents.component';
   providers: [
     ModalService,
     PdfServices,
+    FechaService,
+    DatePipe,
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
   bootstrap: [AppComponent]

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { SolicitudesService } from "../services/solicitudes.service";
 //import { Correo } from "../services/email.service";
 import {EnviarCorreo} from "../services/email.service";
+import { FechaService } from "../services/fecha.service";
 
 
 @Component({
@@ -34,7 +35,7 @@ export class agregarSolicitudComponent implements OnInit{
 
     static $inject = ['$http', '$q'];
     
-    constructor(public service: AuthenticationService, private solicitudservice: SolicitudesService) {}
+    constructor(public service: AuthenticationService, private solicitudservice: SolicitudesService, public fechaService: FechaService) {}
 
     @Output() historialRedirect = new EventEmitter<boolean>();
 
@@ -109,11 +110,11 @@ export class agregarSolicitudComponent implements OnInit{
                     }
                 });
                 
-                var hoy = new Date();
-                hoy.setHours(0, 0, 0, 0);
-                this.solicitudservice.postSolicitud(this.descripcion, this.nombre, "", "", this.ciudad, this.solicitud, this.socioeconomico, this.solDonacion, this.hojaComp,this.otros, this.imgCasa1, this.imgCasa2, hoy.toDateString());
+                var hoy = this.fechaService.ObtenerFecha();
+                this.solicitudservice.postSolicitud(this.descripcion, this.nombre, "", "", this.ciudad, this.solicitud, this.socioeconomico, this.solDonacion, this.hojaComp,this.otros, this.imgCasa1, this.imgCasa2, hoy);
                 EnviarCorreo(this.nombre, this.solicitud, this.descripcion);
                 this.historialRedirectFunc();
+                this.callSendFunction();
         });
 
         
@@ -141,5 +142,17 @@ export class agregarSolicitudComponent implements OnInit{
             }
             );
         })
-      }  
+      }
+
+    callSendFunction(){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Solicitud enviada con éxito!',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
+
 }

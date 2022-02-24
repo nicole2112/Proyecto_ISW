@@ -4,7 +4,7 @@
 
 
 <div class="banner" >
-    <img src="{{blog?.imagenPreview}}">
+    <img src="{{blog?.imagenPreview}}" alt="Imagen">
 </div>
     <div class="blog">
         <h1 class="title">{{blog?.titulo}}</h1>
@@ -13,7 +13,7 @@
         <div class ="descripcion">{{blog?.descripcion}}</div>
         <p class="categoria"><span class="tag tag-teal">{{blog?.categorias}}</span></p>
         
-        <div class="article" [innerHTML]="blog?.contenido"> 
+        <div class="article" [innerHTML]="sanitizar(blog?.contenido)"> 
         </div>
     </div>
 </div>
