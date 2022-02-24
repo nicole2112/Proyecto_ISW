@@ -1,4 +1,4 @@
- import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 import { AuthenticationService } from "./auth.services";
 
 export class PdfServices{

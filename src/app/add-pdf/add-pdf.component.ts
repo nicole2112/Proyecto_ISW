@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import Swal from 'sweetalert2';
 import { AuthenticationService } from '../services/auth.services';
+import { FechaService } from '../services/fecha.service';
 import { PdfServices } from '../services/pdf.services';
 
 
@@ -27,7 +28,7 @@ export class AddPdfComponent implements OnInit {
   AreaSeleccionada: string;
 
 
-  constructor(public service: AuthenticationService, public pdfService: PdfServices) { }
+  constructor(public service: AuthenticationService, public pdfService: PdfServices, public fechaService: FechaService) { }
   
   @Output() AddPDFRedirect = new EventEmitter<boolean>();
 
@@ -77,33 +78,33 @@ export class AddPdfComponent implements OnInit {
     this.fileList = files;
   }
 
-  ObtenerFecha(){
-    this.hoy = new Date();
-     this.dia = this.hoy.getDate();
-     this.mes = this.hoy.getMonth() + 1;
-     this.anio = this.hoy.getFullYear();
+  // ObtenerFecha(){
+  //   this.hoy = new Date();
+  //    this.dia = this.hoy.getDate();
+  //    this.mes = this.hoy.getMonth() + 1;
+  //    this.anio = this.hoy.getFullYear();
 
-    if(this.dia < 10){
-      this.dia ='0'+ this.dia;
-    }
+  //   if(this.dia < 10){
+  //     this.dia ='0'+ this.dia;
+  //   }
 
-    if(this.mes < 10){
-      this.mes = '0' + this.mes;
-    }
+  //   if(this.mes < 10){
+  //     this.mes = '0' + this.mes;
+  //   }
 
-   return this.hoy = this.anio + '/' + this.mes + '/' + this.dia;
-  }
+  //  return this.hoy = this.anio + '/' + this.mes + '/' + this.dia;
+  // } //2022/02/23
 
 
   AgregarPDF_Programas(pdfURL){
-   this.fechaPdf = this.ObtenerFecha();
+   this.fechaPdf = this.fechaService.ObtenerFecha();
    console.log(this.fechaPdf);
    this.pdfService.actualizarPDF(pdfURL, this.pdfId, this.NombrePdf, this.fechaPdf);
   }
 
   AgregarPDF_Descargables(pdfURL){
     let PdfDescargable={};
-    this.fechaPdf = this.ObtenerFecha();
+    this.fechaPdf = this.fechaService.ObtenerFecha();
     PdfDescargable={
       "Nombre": this.NombrePdf,
       "Fecha": this.fechaPdf,
