@@ -8,10 +8,12 @@
 </div>
     <div class="blog">
         <h1 class="title">{{blog?.titulo}}</h1>
+        <span class="tag tag-teal" *ngFor="let cat of blog?.categorias">
+            {{ cat }}
+        </span>
         <p class="published"><span>publicado el {{blog?.fechaCreacion}}</span></p>
         
         <div class ="descripcion">{{blog?.descripcion}}</div>
-        <p class="categoria"><span class="tag tag-teal">{{blog?.categorias}}</span></p>
         
         <div class="article" [innerHTML]="sanitizar(blog?.contenido)"> 
         </div>
