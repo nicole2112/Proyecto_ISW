@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import { AuthenticationService } from '../services/auth.services';
 import { FormsModule } from '@angular/forms';
 import { SolicitudesService } from "../services/solicitudes.service";
+//import { Correo } from "../services/email.service";
+import {EnviarCorreo} from "../services/email.service";
 
 
 @Component({
@@ -73,10 +75,6 @@ export class agregarSolicitudComponent implements OnInit{
 
         this.fileList.push(files[0]); //el problema sería al deseleccionar un archivo
         this.descList.push(descArchivo);
-        console.log(files[0]?.name);
-        console.log(files[1]?.name);
-
-        console.log(this.fileList);
     }
 
     guardarSolicitud(){
@@ -86,8 +84,6 @@ export class agregarSolicitudComponent implements OnInit{
             return this.guardarArchivo(file);
         })).then((message) =>
         {
-            console.log(this.descList);
-            console.log(this.urlList);
             this.descList.forEach((item, index, array) =>
                 {
                     switch(item)
@@ -116,6 +112,7 @@ export class agregarSolicitudComponent implements OnInit{
                 var hoy = new Date();
                 hoy.setHours(0, 0, 0, 0);
                 this.solicitudservice.postSolicitud(this.descripcion, this.nombre, "", "", this.ciudad, this.solicitud, this.socioeconomico, this.solDonacion, this.hojaComp,this.otros, this.imgCasa1, this.imgCasa2, hoy.toDateString());
+                EnviarCorreo(this.nombre, this.solicitud, this.descripcion);
                 this.historialRedirectFunc();
         });
 
@@ -136,7 +133,6 @@ export class agregarSolicitudComponent implements OnInit{
             }).then(
             ()=>{
                 getDownloadURL(storageRef).then(data =>{
-                console.log(data);
                 this.urlList.push(data);
                 resolve(data);
                 }).catch((error)=>{
@@ -145,25 +141,5 @@ export class agregarSolicitudComponent implements OnInit{
             }
             );
         })
-
-    // let filename = nuevoArchivo.name;
-    
-    //     const storage = getStorage();
-    //     const storageRef = ref(storage, filename);
-    
-    //     await uploadBytes(storageRef, nuevoArchivo).then((snapshot) => {
-        
-        
-    //     }).then(
-    //     ()=>{
-    //         getDownloadURL(storageRef).then(data =>{
-    //         console.log(data);
-    //         this.urlList.push(data);
-    //         return data;
-    //         }).catch((error)=>{
-                
-    //         });
-    //     }
-    //     );
       }  
 }
