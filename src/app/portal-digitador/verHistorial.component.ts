@@ -22,12 +22,30 @@ import { SolicitudesService } from '../services/solicitudes.service';
 export class verHistorialComponent implements OnInit {
     recordsList: any;
     recordList = [];
+    filteredRecordList = [];
+    states = [
+        'En espera',
+        'Aprobada',
+        'Denegada',
+    ];
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService) { }
 
     ngOnInit() {
         this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
             this.recordList = records;
+            this.filteredRecordList = records;
         });
+    }
+
+    onSelectedChange(event:any){
+        const state = event.target.value;
+        if (state === "all") {
+            this.filteredRecordList = this.recordList;
+        } else {
+            this.filteredRecordList = this.recordList.filter(record => {
+                return record.estado == state;
+            });
+        }
     }
 }

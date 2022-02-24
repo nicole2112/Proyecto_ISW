@@ -1,4 +1,8 @@
-<div class="container historial">
+<div class="container historial py-3">
+    <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required>
+        <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>
+    </select>
+    
     <table class="table table-striped table-bordered">
         <thead class="table-header">
             <tr>
@@ -11,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let record of recordList" class="userRowHover">
+            <tr *ngFor="let record of filteredRecordList" class="userRowHover">
                 <td class="rowInfo">{{record?.nombrePaciente}}</td>
                 <td class="rowInfo">{{record?.ciudad}}</td>
                 <td class="rowInfo">{{record?.queSolicita}}</td>
