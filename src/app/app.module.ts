@@ -57,6 +57,7 @@ import { ViewPdfsComponent } from './view-pdfs/view-pdfs.component';
 import { verHistorialComponent } from './portal-digitador/verHistorial.component';
 import { verFormulariosComponent } from './portal-digitador/verFormularios.component';
 import { agregarSolicitudComponent } from './portal-digitador/agregarSolicitud.component';
+import { DocumentsComponent } from './about-us/documents.component';
 
 
 @NgModule({
@@ -97,7 +98,8 @@ import { agregarSolicitudComponent } from './portal-digitador/agregarSolicitud.c
     ViewPdfsComponent,
     verHistorialComponent,
     verFormulariosComponent,
-    agregarSolicitudComponent
+    agregarSolicitudComponent,
+    DocumentsComponent
   ],
   imports: [
     BrowserModule,
