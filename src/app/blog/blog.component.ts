@@ -26,8 +26,12 @@ export class BlogComponent{
 
     ngOnInit(): void {
         this.blogService.getArticulos().subscribe((item) => {
-            this.blogList = item;
-            this.filteredBlogList = item;
+            this.blogList = item.sort((a, b) => {
+                let dateA = new Date(b.fechaCreacion), dateB = new Date(a.fechaCreacion)
+                return +dateA - +dateB;
+            });
+            console.log(new Date);
+            this.filteredBlogList = this.blogList;
         });
 
 
