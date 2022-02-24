@@ -6,7 +6,7 @@ import { AuthenticationService } from "../services/auth.services";
 import Swal from "sweetalert2";
 import { AngularFireList } from "@angular/fire/compat/database";
 import { Categoria } from "../models/blog";
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadString } from 'firebase/storage';
 import { Router } from "@angular/router";
 
 
@@ -160,7 +160,6 @@ export class AgregarArticuloComponent{
 		}
 
         this.imageList = files;
-        console.log(files[0]?.name);
 
         //for displaying image in form
         var reader = new FileReader();
@@ -196,6 +195,27 @@ export class AgregarArticuloComponent{
                 this.viewArticulosRedirectFunc();
             }).catch((error)=>{
                 console.log(error);
+            });
+        }
+        );
+    }
+
+    tinyImageUpload(blobInfo, success, failure, progress)
+    {
+        let filename = blobInfo.blob().name
+        
+        const storage = getStorage();
+        const storageRef = ref(storage, filename);
+
+        uploadString(storageRef, blobInfo.base64(), 'base64').then((snapshot) => {
+        
+        
+        }).then(
+        ()=>{
+            getDownloadURL(storageRef).then(data =>{
+                success(data);
+            }).catch((error)=>{
+        
             });
         }
         );

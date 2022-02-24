@@ -19,11 +19,12 @@ export class HomeComponent {
 
     ngOnInit(): void {
         this.blogService.getArticulos().subscribe((item) => {
-            this.fullList = item;
-
+            this.fullList = item.sort((a, b) => {
+                let dateA = new Date(b.fechaCreacion), dateB = new Date(a.fechaCreacion)
+                return +dateA - +dateB;
+            });
+            console.log(new Date);
         });
-        
-
     }
 
     getCategorias(blog){

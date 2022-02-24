@@ -53,6 +53,13 @@ import { PdfServices } from './services/pdf.services';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //tiny mce
 import { verArticulosComponent } from './portal-admin/verArticulos.component';
 import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
+import { ViewPdfsComponent } from './view-pdfs/view-pdfs.component';
+import { verHistorialComponent } from './portal-digitador/verHistorial.component';
+import { verFormulariosComponent } from './portal-digitador/verFormularios.component';
+import { agregarSolicitudComponent } from './portal-digitador/agregarSolicitud.component';
+import { DocumentsComponent } from './about-us/documents.component';
+import { FechaService } from './services/fecha.service';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -85,11 +92,15 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
     UsersAdminComponent,
     ShowHeroesAdminComponent,
     PwResetComponent,
-    NoConfirmationComponent,
     AddPdfComponent,
     NoConfirmationComponent,
     verArticulosComponent,
-    AgregarArticuloComponent
+    AgregarArticuloComponent,
+    ViewPdfsComponent,
+    verHistorialComponent,
+    verFormulariosComponent,
+    agregarSolicitudComponent,
+    DocumentsComponent
   ],
   imports: [
     BrowserModule,
@@ -112,6 +123,8 @@ import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.compone
   providers: [
     ModalService,
     PdfServices,
+    FechaService,
+    DatePipe,
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
   bootstrap: [AppComponent]

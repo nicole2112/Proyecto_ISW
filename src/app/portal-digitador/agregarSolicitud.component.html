@@ -1,0 +1,247 @@
+<div class="container styleSolicitud">
+  <div class="d-flex justify-content-center">
+    <h1 style="margin-bottom: 2%; margin-top: 2%;">Agregar Solicitud de Donación</h1>
+  </div>
+  <form #claseForm="ngForm" action="/">
+
+    <div class="row mt-3 d-flex justify-content-center">
+      <!-- Ingreso nombre -->
+      <div
+        class="form-floating sm-3 col-md-6"
+        [ngClass]="{
+          error:
+            claseForm.controls.nombre?.invalid &&
+            claseForm.controls.nombre?.touched
+        }">
+        <input
+          [(ngModel)]="nombre"
+          [pattern]="namePattern"
+          type="text"
+          class="form-control"
+          id="nombre"
+          name="nombre"
+          placeholder="Nombre completo"
+          required
+        />
+        <label for="nombre" style="margin-left: 2%;">Nombre del Paciente</label>
+        <em
+          class="text-danger"
+          *ngIf="
+            claseForm.controls.nombre?.invalid &&
+            claseForm.controls.nombre?.touched
+          "
+          >*Nombre válido es requerido
+        </em>
+      </div>
+      <!--Ingreso de Ciudad-->
+      <div
+        class="form-floating sm-3 col-md-2"
+        [ngClass]="{
+          error:
+            claseForm.controls.ciudad?.invalid &&
+            claseForm.controls.ciudad?.touched
+        }"
+      >
+        <input
+          [(ngModel)]="ciudad"
+          type="text"
+          class="form-control"
+          id="ciudad"
+          name="ciudad"
+          placeholder="Ciudad"
+          required
+        />
+        <label for="ciudad" style="margin-left: 4%;">Ciudad</label>
+        <em
+          class="text-danger"
+          *ngIf="
+            claseForm.controls.ciudad?.invalid &&
+            claseForm.controls.ciudad?.touched
+          "
+          >*Ciudad es requerida</em
+        >
+      </div>
+    </div>
+
+    <!-- Ingreso de Solicitud -->
+    <div class="d-flex justify-content-center styleFormElem">
+        <div
+          class="form-floating sm-3 col-md-8"
+          [ngClass]="{
+            error:
+              claseForm.controls.solicitud?.invalid &&
+              claseForm.controls.solicitud?.touched
+          }"
+        >
+          <textarea
+            [(ngModel)]="solicitud"
+            type="text"
+            class="form-control"
+            id="solicitud"
+            name="solicitud"
+            rows="4" 
+            placeholder="Solicitud"
+            required
+          ></textarea>
+          <label for="solicitud">Solicitud</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.solicitud?.invalid &&
+              claseForm.controls.solicitud?.touched
+            "
+            >*Una solicitud es requerida</em
+          >
+        </div>
+      </div>
+
+      <!-- Ingreso de Descripcion -->
+    <div class="d-flex justify-content-center styleFormElem">
+        <div
+          class="form-floating sm-3 col-md-8"
+          [ngClass]="{
+            error:
+              claseForm.controls.descripcion?.invalid &&
+              claseForm.controls.descripcion?.touched
+          }"
+        >
+          <textarea
+            [(ngModel)]="descripcion"
+            type="text"
+            class="form-control"
+            id="descripcion"
+            name="descripcion"
+            rows="4" 
+            placeholder="Descripcion"
+            required
+          ></textarea>
+          <label for="descripcion">Descripción del caso</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.descripcion?.invalid &&
+              claseForm.controls.descripcion?.touched
+            "
+            >*Una descripción del caso es requerida</em
+          >
+        </div>
+    </div>
+
+    <!-- Sección de respaldos -->
+    <br>
+    <div class="d-flex justify-content-center">
+      <h4>Sección de respaldos</h4>
+    </div>
+    <div class="d-flex justify-content-center">
+      <em>Nota: Solo los formatos con * son obligatorios.</em>
+    </div>
+
+    <!-- Adjuntar Estudio socioeconómico. -->
+    <div class="d-flex justify-content-center styleFormElem">
+      <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="sm-3 col-md-8">
+        <label class="form-label">Adjuntar estudio socioeconómico*</label>
+        <input 
+          [(ngModel)]="socioeconomico"
+          class="form-control"
+          (change)="onChange($event)" 
+          name="socioeconomico"
+          type="file" 
+          accept=".pdf"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Adjuntar Solicitud de Donación. -->
+    <div class="d-flex justify-content-center styleFormElem">
+      <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="sm-3 col-md-8">
+        <label class="form-label">Adjuntar solicitud de donación*</label>
+        <input 
+          [(ngModel)]="solDonacion"
+          class="form-control"
+          (change)="onChange($event)" 
+          name="solDonacion"
+          type="file" 
+          accept=".pdf"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Adjuntar Hoja de Compromiso del paciente -->
+    <div class="d-flex justify-content-center styleFormElem">
+      <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="sm-3 col-md-8">
+        <label class="form-label">Adjuntar hoja de compromiso del paciente*</label>
+        <input 
+          [(ngModel)]="hojaComp"
+          class="form-control"
+          (change)="onChange($event)" 
+          name="hojaComp"
+          type="file" 
+          accept=".pdf"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Ingreso "otros". -->
+    <div class="d-flex justify-content-center styleFormElem">
+      <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="sm-3 col-md-8">
+        <label class="form-label">Adjuntar archivo adicional</label>
+        <input 
+          [(ngModel)]="otros"
+          class="form-control"
+          (change)="onChange($event)" 
+          name="otros"
+          type="file" 
+          accept=".pdf"
+        />
+      </div>
+    </div>
+
+    <!-- Ingreso de Fotografías de la casa del paciente -->
+    <div class="d-flex justify-content-center styleFormElem">
+      <h6>Fotografías de casa del paciente</h6>
+    </div>
+    <div class="row mt-3 d-flex justify-content-center">
+      <!--Primera imagen-->
+      <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+        <label class="form-label">Primera imagen*</label>
+        <input 
+          [(ngModel)]="imgCasa1"
+          class="form-control" 
+          (change)="onChange($event)" 
+          name="imgCasa1"
+          type="file" 
+          accept="image/png, image/jpeg"
+          required
+        />
+      </div>
+      <!--Segunda imagen-->
+      <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+        <label class="form-label">Segunda imagen</label>
+        <input 
+          [(ngModel)]="imgCasa2"
+          class="form-control" 
+          (change)="onChange($event)" 
+          name="imgCasa2"
+          type="file" 
+          accept="image/png, image/jpeg"
+        />
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <button
+        style="margin-top: 30px;"
+        type="submit"
+        [disabled]="claseForm.invalid"
+        class="btn button1"
+        (click)="guardarSolicitud();"
+      >
+        Enviar
+      </button>
+    </div>
+    <br>
+  </form>
+</div>

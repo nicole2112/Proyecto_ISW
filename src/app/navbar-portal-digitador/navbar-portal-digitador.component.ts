@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
-import { faUserCircle, faDollyFlatbed, faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faDollyFlatbed, faHandHoldingUsd, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +13,10 @@ import { Router } from '@angular/router';
 export class NavbarPortalDigitadorComponent {
 
     constructor( public service: AuthenticationService, private eRef: ElementRef, private router: Router) { }
+    @Input() isShow: boolean;
+    @Output() viewHistorialClick: EventEmitter<boolean> = new EventEmitter();
+    @Output() viewFormulariosClick: EventEmitter<boolean> = new EventEmitter();
+    @Output() viewSolicitudesClick: EventEmitter<boolean> = new EventEmitter();
 
     ngOnInit(): void {
       this.isLogged();
@@ -39,8 +43,19 @@ export class NavbarPortalDigitadorComponent {
       this.service.logout();
     }
 
+    showHistorial(){
+      this.viewHistorialClick.emit(true);
+    }
+
+    showFormularios(){
+      this.viewFormulariosClick.emit(true);
+    }
+
+    addSolicitud(){
+      this.viewSolicitudesClick.emit(true);
+    }
     faUserCircle = faUserCircle;
     faDollyFlatbed = faDollyFlatbed;
     faHandHoldingUsd = faHandHoldingUsd;
-
+    faFilePdf = faFilePdf;
 }

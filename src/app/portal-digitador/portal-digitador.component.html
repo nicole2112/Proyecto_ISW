@@ -1,5 +1,14 @@
-<app-navbar-portal-digitador></app-navbar-portal-digitador>
-<div class="container">
-    
+<app-navbar-portal-digitador (viewHistorialClick)="toggleSolicitudes = false; toggleFormularios = false; toggleHistorial = true;"
+(viewSolicitudesClick)="toggleSolicitudes = true; toggleFormularios = false; toggleHistorial = false; "
+(viewFormulariosClick)="toggleSolicitudes = false; toggleFormularios = true; toggleHistorial = false; " >
+</app-navbar-portal-digitador>
+
+<div class="container table-users">
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">    
+    <app-add-Solicitud-digitador *ngIf="toggleSolicitudes" (historialRedirect)="toggleHistorial=true; toggleSolicitudes=false; toggleFormularios=false"></app-add-Solicitud-digitador>
+    <app-view-Historial-admin *ngIf="toggleHistorial"></app-view-Historial-admin>
+    <app-view-formularios-digitador *ngIf="toggleFormularios"></app-view-formularios-digitador>
+  </div>
 </div>
+
 <img class="imagen_opaca" src="assets/images/bg-art.png" alt="">

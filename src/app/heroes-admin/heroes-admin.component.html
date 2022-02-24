@@ -171,12 +171,17 @@
       </div>
   
       <!-- Ingreso de imagen -->
-      <div class="card" style="margin-top: 3%;">
+      <div class="d-flex justify-content-center" style="margin-top: 3%;">
+        <img *ngIf="urlI" src="{{urlI}}" style="max-height: 400px; max-width: 400px; margin-right: 10px;">
         <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
-          <label class="custom-file-upload">
-            <input (change)="onChange($event)" type="file" accept="image/png, image/jpeg"/>
-            Agregar imagen...
-          </label>
+          <label class="custom-file-upload">Adjuntar Imagen</label>
+          <input 
+            class="form-control" 
+            (change)="onChange($event)" 
+            type="file" 
+            accept="image/png, image/jpeg"
+            required
+          />
         </div>
       </div>
   
