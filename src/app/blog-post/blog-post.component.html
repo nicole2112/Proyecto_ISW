@@ -1,7 +1,5 @@
 <navbar></navbar>
 
-
-
 <div class ="sectionTitle">
 
 
@@ -11,7 +9,10 @@
     <div class="blog">
         <h1 class="title">{{blog?.titulo}}</h1>
         <p class="published"><span>publicado el {{blog?.fechaCreacion}}</span></p>
-
+        
+        <div class ="descripcion">{{blog?.descripcion}}</div>
+        <p class="categoria"><span class="tag tag-teal">{{blog?.categorias}}</span></p>
+        
         <div class="article" [innerHTML]="blog?.contenido"> 
         </div>
     </div>
