@@ -19,30 +19,11 @@ export class DocumentsComponent {
     constructor(private service: AuthenticationService){}
 
     ngOnInit(): void {
-        this.service.db.list('PDF-Descargables').valueChanges().subscribe((pdfs) => {
-            this.pdfList = pdfs;
-            
-            this.pdfList.forEach((pdfs) =>
-            {
-
-                var parts =pdfs.Fecha.split('/');
-                var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                pdfs.Fecha=mydate.toLocaleString('es-ES',{ month: 'long', day:'2-digit',year:'numeric' });
-                this.pdfFecha.push(pdfs);
-                    
-            });
-
-            this.pdfFecha.sort((a,b) => {
+        this.service.db.list('PDF-Descargables').valueChanges().subscribe((pdfs:any) => {
+            this.pdfFecha = pdfs.sort((a,b) => {
                 let dateA = new Date(b.Fecha), dateB = new Date(a.Fecha)
             return +dateA - +dateB;; 
             });
-
         });
-
-        
-
     }
-
-    
-
 }
