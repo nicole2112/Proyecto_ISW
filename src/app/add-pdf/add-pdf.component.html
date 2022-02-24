@@ -1,32 +1,102 @@
-<app-navbar-portal-admin></app-navbar-portal-admin>
-<div class="container PDF">
+<div class="container PDF" style="background-color: white;">
   <div class="d-flex justify-content-center">
-    <h1 style="margin-bottom: 2%; margin-top: 2%;">Actualizar PDF</h1>
+    <h1 style="margin-bottom: 2%; margin-top: 2%;">Agregar PDF</h1>
   </div>
   <form #claseForm="ngForm" action="/">
-
-      <!-- Ingreso de pdf -->
-      <div class="card" style="margin-top: 3%;">
-        <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
-          <label class="custom-file-upload">
-            <input (change)="onChange($event)" type="file" accept=".pdf"/>
-            Agregar pdf...
-          </label>
-        </div>
-      </div>
-  
-      <div class="d-flex justify-content-center">
-        <button
-          style="margin-top: 30px;"
-          type="submit"
-          [disabled]="claseForm.invalid"
-          class="btn button1"
-          (click)="savePDF();"
+    <!-- Ingreso de Nombre de Pdf -->
+    <div class="d-flex justify-content-center" style="margin-top: 20px">
+      <div
+        class="form-floating sm-3 col-md-8"
+        [ngClass]="{
+          error:
+            claseForm.controls.NombrePdf?.invalid &&
+            claseForm.controls.NombrePdf?.touched
+        }"
+      >
+        <input
+          [(ngModel)]="NombrePdf"
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          name="NombrePdf"
+          placeholder="Nombre del PDF"
+          required
+        />
+        <label for="floatingInput">Nombre a mostrar del PDF</label>
+        <em
+          class="text-danger"
+          *ngIf="
+            claseForm.controls.NombrePdf?.invalid &&
+            claseForm.controls.NombrePdf?.touched
+          "
+          >*Nombre válido es requerido</em
         >
-          Actualizar PDF
-        </button>
       </div>
-      <br>
-      <br>
+    </div>
+    <br>
+    <br>
+    <!-- Seleccion de area -->
+    <div class="d-flex justify-content-center">
+      <div class="form-floating sm-3 col-md-4">
+        <em>Nota: Área de programas solo contiene un PDF, el cual se actualizará si se selecciona dicha área.</em>
+      </div>
+      <div
+        class="form-floating sm-3 col-md-4"
+        [ngClass]="{
+          error:
+            claseForm.controls.AreaSeleccionada?.invalid &&
+            claseForm.controls.AreaSeleccionada?.touched
+        }"
+        >
+          <select 
+            [(ngModel)]="AreaSeleccionada"
+            id = "floating input" 
+            class="form-select"
+            id="floatingInput"
+            name="AreaSeleccionada"
+            placeholder="Area"
+            required
+          >
+            <option value="Programas">Programas</option>
+            <option value="Descargables">Descargables</option>
+          </select>
+
+          <label for="floatingInput" style="margin-left: 3%;">Área</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              claseForm.controls.AreaSeleccionada?.invalid &&
+              claseForm.controls.AreaSeleccionada?.touched
+            "
+            >*Área es requerida</em
+          >
+        </div>
+    </div>
+
+    <!-- Ingreso de pdf -->
+    <div class="d-flex justify-content-center styleFormElem" style="margin-top: 3%;">
+      <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="col-md-8">
+        <label class="custom-file-upload">Adjuntar PDF</label>
+        <input 
+          class="form-control" 
+          (change)="onChange($event)" 
+          type="file" 
+          accept=".pdf"/>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <button
+        style="margin-top: 30px;"
+        type="submit"
+        [disabled]="claseForm.invalid"
+        class="btn button1"
+        (click)="savePDF();"
+      >
+        Actualizar PDF
+      </button>
+    </div>
+    <br>
+    <br>
   </form>
 </div>

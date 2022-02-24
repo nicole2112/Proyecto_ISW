@@ -160,7 +160,6 @@ export class AgregarArticuloComponent{
 		}
 
         this.imageList = files;
-        console.log(files[0]?.name);
 
         //for displaying image in form
         var reader = new FileReader();

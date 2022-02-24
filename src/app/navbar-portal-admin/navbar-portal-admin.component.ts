@@ -15,9 +15,12 @@ export class NavbarPortalAdminComponent implements OnInit {
   @Output() viewUsersClick: EventEmitter<boolean> = new EventEmitter();
   @Output() viewTestimoniesClick = new EventEmitter();
   @Output() showTestimoniesClick = new EventEmitter();
+
   @Output() viewHeroesClick = new EventEmitter<boolean>();
   @Output() showHeroesClick = new EventEmitter<boolean>();
+
   @Output() viewPDFClick = new EventEmitter<boolean>();
+  @Output() showPDFClick = new EventEmitter<boolean>();
 
   @Output() showArticulosClick = new EventEmitter<boolean>();
   @Output() viewArticulosClick = new EventEmitter<boolean>();
@@ -50,8 +53,11 @@ export class NavbarPortalAdminComponent implements OnInit {
     this.viewTestimoniesClick.emit(true);
   }
 
-  //PDF
-  addPDF(){
+  //PDFs
+  showPDF(){ //ver pdfs
+    this.showPDFClick.emit(true);
+  }
+  viewPDF(){ //agregar pdfs
     this.viewPDFClick.emit(true);
   }
 

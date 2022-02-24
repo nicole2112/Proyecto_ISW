@@ -22,6 +22,7 @@ export class HeroesAdminComponent implements OnInit {
 
   fileList: any[];
 
+  urlI:any; //para mostrar imagen al seleccionarla
 
   constructor(public service: AuthenticationService, public adminComp: PortalAdminComponent) {}
 
@@ -36,22 +37,37 @@ export class HeroesAdminComponent implements OnInit {
   onDragOver(event) {
     event.preventDefault();
   }
-
   // From drag and drop
   onDropSuccess(event) {
-      event.preventDefault();
+    event.preventDefault();
 
-      this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
+    this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
   }
-
   // From attachment link
   onChange(event) {
-      this.onFileChange(event.target.files);    // "target" is correct here
+    this.onFileChange(event.target.files);    // "target" is correct here
   }
-
   private onFileChange(files: File[]) {
+    if(!files[0]) {
+			Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Debe seleccionar una imagen de portada.',
+          showConfirmButton: false,
+          timer: 1500
+      })
+      this.urlI = null;
+			return;
+		}
     this.fileList = files;
-    console.log(files[0].name);
+    
+    //for displaying image in form
+    var reader = new FileReader();
+		reader.readAsDataURL(files[0]);
+		
+		reader.onload = (_event) => {
+			this.urlI = reader.result; 
+		}
   }
 
   getHeroeItemID(url){

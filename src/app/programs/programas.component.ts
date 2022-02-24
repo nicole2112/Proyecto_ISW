@@ -18,7 +18,7 @@ export class ProgramasComponent implements OnInit{
     constructor(private service: AuthenticationService){}
 
     ngOnInit(){
-        this.service.db.list('PDFS').valueChanges().subscribe(
+        this.service.db.list('PDF-Programas').valueChanges().subscribe(
             pdf =>{
                 this.pdfList = pdf;
                 console.log(this.pdfList);
