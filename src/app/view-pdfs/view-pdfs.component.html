@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let descargables of PdfDescargables" class="userRowHover">
+          <tr *ngFor="let descargables of PdfDescargables" class="userRowHover" (click)="open(content, descargables.$key, descargables.Nombre, descargables.Fecha, descargables.archivo, 'descargable'); onSelect(descargables, descargables.Nombre)" >
             <td class="rowInfo">{{ descargables?.Nombre }}</td>
             <td class="rowInfo">{{ descargables?.Fecha }}</td>
             <td class="rowInfo"><a href="{{descargables.archivo}}" target="_blank" rel="noopener noreferrer">{{descargables.Nombre}}</a></td>
@@ -21,9 +21,9 @@
       </table>
     </div>
   </div>
-      
+
   <br>
-      
+
 <!-- Mostrar datos de PDF-Programas -->
   <div class="container table-heroes">
     <h3>Área de Programas</h3>
@@ -37,7 +37,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let programas of PdfProgramas" class="userRowHover">
+          <tr *ngFor="let programas of PdfProgramas" class="userRowHover" (click)="open(content, programas.$key, programas.Nombre, programas.Fecha, programas.archivo, 'programa'); onSelect(programas, programas.Nombre)">
             <td class="rowInfo">{{ programas?.Nombre }}</td>
             <td class="rowInfo">{{ programas?.Fecha }}</td>
             <td class="rowInfo"><a href="{{programas.archivo}}" target="_blank" rel="noopener noreferrer">{{programas.Nombre}}</a></td>
@@ -48,3 +48,64 @@
   </div>
   <br>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Editar PDF</h4>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+   <form>
+          <div class="form-group">
+             <label for="titulo">Nombre PDF</label>
+             <div class="input-group">
+                 <input id="titulo" type="text" class="form-control" placeholder="titulo" name="dp">
+             </div>
+          </div>
+          <br>
+           <div class="form-group">
+             <div class="input-group">
+               <label>Url PDF </label>
+                 <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+                     <label class="custom-file-upload">
+                       <input (change)="onChangeFile($event)" type="file" id="url" accept="image/png, image/jpeg"/>
+                       Agregar PDF...
+                     </label>
+                   </div>
+             </div>
+         </div>
+   </form>
+   <div class="modal-footer">
+     <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, pdfSelectedId, pdfSelectedNombre, pdfSelectedFecha, pdfSelectedArchivo, pdfSelectedType); onDeleteConfirmation(pdfSelectedNombre); modal.close('Delete Click');">Eliminar</button>
+     <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); savePDF();">Guardar</button>
+   </div>
+  </div>
+</ng-template>
+
+<ng-template #confirmation let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el PDF?</h4>
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <input id="nameDelete" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
+          <div class="input-group-append">
+            <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-danger pull-left" (click)="deletePDF(); modal.close('Delete Click'); ">Eliminar</button>
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancelar</button>
+  </div>
+</ng-template>
+

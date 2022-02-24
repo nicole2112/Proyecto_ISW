@@ -48,9 +48,9 @@
             claseForm.controls.AreaSeleccionada?.touched
         }"
         >
-          <select 
+          <select
             [(ngModel)]="AreaSeleccionada"
-            id = "floating input" 
+            id = "floating input"
             class="form-select"
             id="floatingInput"
             name="AreaSeleccionada"
@@ -77,10 +77,10 @@
     <div class="d-flex justify-content-center styleFormElem" style="margin-top: 3%;">
       <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="col-md-8">
         <label class="custom-file-upload">Adjuntar PDF</label>
-        <input 
-          class="form-control" 
-          (change)="onChange($event)" 
-          type="file" 
+        <input
+          class="form-control"
+          (change)="onChange($event)"
+          type="file"
           accept=".pdf"/>
       </div>
     </div>

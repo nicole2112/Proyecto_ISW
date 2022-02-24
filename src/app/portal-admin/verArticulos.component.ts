@@ -11,6 +11,8 @@ import { runInThisContext } from 'vm';
 import { AuthenticationService } from "../services/auth.services";
 import { Categoria } from "../models/blog";
 import { ThrowStmt } from '@angular/compiler';
+import { EditorComponent } from '@tinymce/tinymce-angular';
+import { faTemperatureLow } from '@fortawesome/free-solid-svg-icons';
 
 @Component ({
     selector: 'app-view-articulos-admin',
@@ -82,25 +84,29 @@ export class verArticulosComponent {
     })
 
     this.blogService.getArticulos().subscribe((item) => {
-       
+
       this.articulos = item;
   });
 
-  
+
   this.getCategorias();
   }
 
   open(content, id: string, name: string, descripcion: string, fecha: Date, categorias: any){
 
-    this.categorias = [];
+    const selectCats = categorias.split("-").filter(String);
 
+    this.categorias = selectCats;
+    // this.categorias.filter(String);
+
+    console.log(this.categorias);
     this.articuloSelectedId = id;
     this.articuloSelectedName = name;
     this.articuloSelectedDescription = descripcion;
     this.articuloSelectedfecha = fecha;
     this.articuloSelectedCategorias = categorias;
 
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
+    this.modalService.open(content, { size: 'xl', backdrop: 'static', ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
       console.log(`Closed with: ${result}`);
     }, (reason)=>{
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
@@ -110,9 +116,61 @@ export class verArticulosComponent {
   onSelect(selectedItem: any, img: string){
     this.articuloSelectedImg = selectedItem.imagenPreview;
     document.getElementById("titulo").setAttribute('value', selectedItem.titulo);
-    //document.getElementById("contenido").innerHTML = selectedItem.contenido;
+    // document.getElementById("contenido").setContent(selectedItem.contenido);
+    console.log(selectedItem.contenido)
     document.getElementById("descripcion").innerHTML = selectedItem.descripcion;
     document.getElementById("fechaCreacion").setAttribute('value', selectedItem.fechaCreacion);
+    document.getElementById("image_preview").setAttribute('src', selectedItem.imagenPreview);
+    tinymce.init({
+      selector: 'editor',
+      height: "500",
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor codesample',
+        'searchreplace visualblocks code fullscreen image imagetools',
+        'insertdatetime media table paste code help wordcount'
+      ],
+      codesample_languages: [
+        { text: 'TypeScript', value: 'typescript' },
+        { text: 'JavaScript', value: 'javascript' },
+        { text: 'HTML/XML', value: 'markup' },
+        { text: 'CSS', value: 'css' }
+      ],
+      toolbar1: 'insertfile undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify',
+      toolbar2: 'link image| bullist numlist outdent indent',
+      image_title: true,
+      automatic_uploads: true,
+      file_picker_types: 'image',
+
+      image_advtab: true,
+
+      file_picker_callback : function(cb, value, meta) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+
+        input.onchange = function() {
+          var file = input.files[0];
+
+          var reader = new FileReader();
+          reader.onload = function() {
+            var id = 'blobid' + (new Date()).getTime();
+            var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+            var result1 = reader.result as string;
+            var base64 = result1.split(',')[1];
+            var blobInfo = blobCache.create(id, file, base64);
+            blobCache.add(blobInfo);
+
+            cb(blobInfo.blobUri(), { title: file.name});
+          };
+          reader.readAsDataURL(file);
+        };
+        input.click();
+      },
+
+      init_instance_callback : function(editor) {
+        editor.setContent(selectedItem.contenido);
+      }
+    });
   }
 
   deleteArticulo(){
@@ -230,11 +288,11 @@ agregarCategoria()
 
     articuloItem={
       "imagenPreview": imageUrl,
-      // "contenido": this.contenido,
+      "contenido": this.contenido,
       "fechaCreacion": this.fechaCreacion,
       "titulo": this.titulo,
       "descripcion": this.descripcion,
-      // "categorias": this.categorias
+      "categorias": this.categorias
     }
 
     userRef.update(articuloItem)
@@ -269,14 +327,14 @@ agregarCategoria()
     let filename = this.fileList[0].name;
     const storage = getStorage();
     const storageRef = ref(storage, filename);
-    
-    
+
+
       uploadBytes(storageRef, this.fileList[0]).then((snapshot) => {
 
       }).then(
          ()=>{
           getDownloadURL(storageRef).then(data =>{
-            this.writeArticleData(data, this.articuloSelectedId) 
+            this.writeArticleData(data, this.articuloSelectedId)
           }).catch((error)=>{
             console.log(error)
           });
@@ -285,6 +343,6 @@ agregarCategoria()
     }else{
       this.writeArticleData(this.articuloSelectedImg, this.articuloSelectedId)
     }
-  }  
-    
+  }
+
 }

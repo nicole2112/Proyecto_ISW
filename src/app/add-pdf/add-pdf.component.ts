@@ -117,7 +117,7 @@ export class AddPdfComponent implements OnInit {
 
   savePDF() {
     let filename = this.fileList[0].name;
-    
+
     const storage = getStorage();
     const storageRef = ref(storage, filename);
 
@@ -138,14 +138,14 @@ export class AddPdfComponent implements OnInit {
           }else{
             this.AgregarPDF_Descargables(data);
           }
-                   
+
           this.addPDFFunc();
         }).catch((error)=>{
-    
+
         });
       }
     );
-  }  
+  }
 
 
 }
