@@ -1,5 +1,6 @@
 <div class="container historial py-3">
     <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required>
+        <option [ngValue]="'all'">Todos</option>
         <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>
     </select>
     

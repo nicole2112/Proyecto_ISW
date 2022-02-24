@@ -33,14 +33,17 @@ export class verHistorialComponent implements OnInit {
 
     ngOnInit() {
         this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
-            this.recordList = records;
-            this.filteredRecordList = records;
+            this.recordList = records.sort((a, b) => {
+                let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
+                return +dateA - +dateB;
+            });
+            this.filteredRecordList = this.recordList;
         });
     }
 
     onSelectedChange(event:any){
         const state = event.target.value;
-        if (state === "all") {
+        if (state == "Todos") {
             this.filteredRecordList = this.recordList;
         } else {
             this.filteredRecordList = this.recordList.filter(record => {
