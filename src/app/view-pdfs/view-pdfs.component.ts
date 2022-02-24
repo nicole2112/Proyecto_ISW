@@ -7,7 +7,6 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angula
 import { PdfServices } from '../services/pdf.services';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-view-pdfs-admin',
@@ -27,7 +26,7 @@ export class ViewPdfsComponent implements OnInit {
   nombre: any;
   fechaActual: any;
   constructor(public service: AuthenticationService, private modalService: NgbModal, private db: AngularFireDatabase, public pdfService: PdfServices, private datePipe: DatePipe) {
-    let fecha = this.datePipe.transform((new Date), 'dd/MM/yyyy');
+    let fecha = this.datePipe.transform((new Date), 'yyyy/MM/dd');
     this.fechaActual = fecha;
   }
 
@@ -74,6 +73,8 @@ export class ViewPdfsComponent implements OnInit {
     this.pdfSelectedFecha = fecha;
     this.pdfSelectedArchivo = archivo;
     this.pdfSelectedType = tipo;
+
+    console.log(this.pdfSelectedId + ' ' + this.pdfSelectedNombre);
 
     console.log('Type: ' + this.pdfSelectedType);
     // console.log(this.fechaActual);
@@ -123,9 +124,13 @@ export class ViewPdfsComponent implements OnInit {
       }).then(
          ()=>{
           getDownloadURL(storageRef).then(data =>{
+            // console.log("aca 11");
             if(this.pdfSelectedType === 'descargable'){
+              // console.log("aca");
               this.writePDFData(data, this.pdfSelectedId)
             }else{
+              // console.log("aca 2");
+              // console.log(this.pdfSelectedNombre);
               this.AgregarPDF_Programas(data);
             }
           }).catch((error)=>{
@@ -134,13 +139,21 @@ export class ViewPdfsComponent implements OnInit {
         }
       );
     }else{
-      this.writePDFData(this.pdfSelectedArchivo ,this.pdfSelectedId)
+      if(this.pdfSelectedType === 'descargable'){
+        // console.log("Leo2")
+        this.writePDFData(this.pdfSelectedArchivo ,this.pdfSelectedId)
+      } else {
+        // console.log("Leo")
+        // console.log(this.pdfSelectedNombre)
+        this.AgregarPDF_Programas(this.pdfSelectedArchivo);
+      }
     }
   }
 
   AgregarPDF_Programas(pdfURL){
     this.pdfSelectedFecha = new Date().toLocaleDateString();
-    this.pdfService.actualizarPDF(pdfURL, this.pdfSelectedId, this.pdfSelectedNombre, this.pdfSelectedFecha);
+    this.pdfService.actualizarPDF(pdfURL, this.pdfSelectedId, this.nombre, this.fechaActual);
+    this.callUpdateNotification();
    }
 
   private getDismissReason(reason: any): string {
