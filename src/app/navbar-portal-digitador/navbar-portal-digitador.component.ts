@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthenticationService } from '../services/auth.services';
 import firebase from '@firebase/app-compat';
-import { faUserCircle, faDollyFlatbed, faHandHoldingUsd, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faDollyFlatbed, faHandHoldingUsd, faFilePdf, faHospitalUser } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,9 +14,12 @@ export class NavbarPortalDigitadorComponent {
 
     constructor( public service: AuthenticationService, private eRef: ElementRef, private router: Router) { }
     @Input() isShow: boolean;
-    @Output() viewHistorialClick: EventEmitter<boolean> = new EventEmitter();
+    @Output() viewRequestHistoryClick: EventEmitter<boolean> = new EventEmitter();
+    @Output() addRequestClick: EventEmitter<boolean> = new EventEmitter();
     @Output() viewFormulariosClick: EventEmitter<boolean> = new EventEmitter();
-    @Output() viewSolicitudesClick: EventEmitter<boolean> = new EventEmitter();
+    @Output() viewPatientsClick: EventEmitter<boolean> = new EventEmitter();
+    @Output() addPatientClick: EventEmitter<boolean> = new EventEmitter();
+    @Output() viewPatientHistoryClick: EventEmitter<boolean> = new EventEmitter();
 
     ngOnInit(): void {
       this.isLogged();
@@ -43,19 +46,36 @@ export class NavbarPortalDigitadorComponent {
       this.service.logout();
     }
 
+    //Solicitudes de donación
     showHistorial(){
-      this.viewHistorialClick.emit(true);
+      this.viewRequestHistoryClick.emit(true);
     }
 
+    addSolicitud(){
+      this.addRequestClick.emit(true);
+    }
+
+    //Formularios
     showFormularios(){
       this.viewFormulariosClick.emit(true);
     }
 
-    addSolicitud(){
-      this.viewSolicitudesClick.emit(true);
+    //Pacientes
+    viewPatients(){
+      this.viewPatientsClick.emit(true);
     }
+
+    addPatient(){
+      this.addPatientClick.emit(true);
+    }
+
+    viewPatientHistory(){
+      this.viewPatientHistoryClick.emit(true);
+    }
+
     faUserCircle = faUserCircle;
     faDollyFlatbed = faDollyFlatbed;
     faHandHoldingUsd = faHandHoldingUsd;
     faFilePdf = faFilePdf;
+    faHospitalUser = faHospitalUser;
 }

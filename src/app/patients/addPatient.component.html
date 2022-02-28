@@ -1,0 +1,64 @@
+
+<div class="container stylePatientAdd">
+    <div class="d-flex justify-content-center">
+      <h1 style="margin-bottom: 2%; margin-top: 2%;">Ingreso de Paciente</h1>
+    </div>
+    <form #patientForm="ngForm">
+
+      <div class="row mt-3 d-flex justify-content-center">
+        <!-- Ingreso nombre -->
+        <div
+          class="form-floating sm-3 col-md-6"
+          [ngClass]="{
+            error:
+              patientForm.controls.nombre?.invalid && patientForm.controls.nombre?.touched}">
+          <input
+            [(ngModel)]="nombre"
+            [pattern]="namePattern"
+            type="text"
+            class="form-control"
+            id="nombre"
+            name="nombre"
+            placeholder="Nombre completo"
+            required
+          />
+          <label for="nombre" style="margin-left: 2%;">Nombre del Paciente</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              patientForm.controls.nombre?.invalid &&
+              patientForm.controls.nombre?.touched
+            "
+            >*Nombre válido es requerido
+          </em>
+        </div>
+        <!--Ingreso de Ciudad-->
+        <div
+          class="form-floating sm-3 col-md-2"
+          [ngClass]="{
+            error:
+              patientForm.controls.ciudad?.invalid && patientForm.controls.ciudad?.touched }" >
+          <input
+            [(ngModel)]="ciudad"
+            type="text"
+            class="form-control"
+            id="ciudad"
+            name="ciudad"
+            placeholder="Ciudad"
+            required
+          />
+          <label for="ciudad" style="margin-left: 4%;">Ciudad</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              patientForm.controls.ciudad?.invalid &&
+              patientForm.controls.ciudad?.touched
+            "
+            >*Ciudad es requerida</em
+          >
+        </div>
+      </div>
+
+      <br>
+    </form>
+</div>
