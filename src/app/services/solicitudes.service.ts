@@ -38,22 +38,19 @@ export class SolicitudesService {
     }))
   }
 
-  postSolicitud(descripcionCaso, nombrePaciente, comentario, comentariosPresidencia, ciudad, queSolicita, estudioSE, archivoSolicitud, hojaCompromiso, archivoAdicional, imagen1, imagen2, fecha) {
+  postSolicitud(descripcionCaso, IDPaciente, prioridad, comentariosPresidencia, queSolicita, estudioSE, archivoSolicitud, archivoAdicional, fecha) {
     let solicitud = {
       "descripcion": descripcionCaso,
       "digitador": this.auth.userDetails.uid,
-      "nombrePaciente": nombrePaciente,
+      "IDPaciente": IDPaciente,
       "estado": "En espera",
-      "comentario": comentario,
+      "prioridad": prioridad,
       "comentariosPresidencia": comentariosPresidencia,
-      "ciudad": ciudad,
       "queSolicita": queSolicita,
       "estudioSE": estudioSE,
       "solicitudDonacion": archivoSolicitud,
-      "hojaCompromiso": hojaCompromiso,
       "otros": archivoAdicional,
-      "imagen1": imagen1,
-      "imagen2": imagen2,
+      "archivado": 0,
       "fecha": fecha
     };
 
