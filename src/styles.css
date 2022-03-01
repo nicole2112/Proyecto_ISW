@@ -207,5 +207,5 @@ button.button1{
  
 /*Para errores en los forms*/
 input.error{
-  border: 0.5px solid red;
+  border: solid red;
 }
