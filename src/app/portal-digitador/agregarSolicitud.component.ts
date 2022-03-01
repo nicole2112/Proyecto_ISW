@@ -18,8 +18,10 @@ import { FechaService } from "../services/fecha.service";
 
 export class agregarSolicitudComponent implements OnInit{
 
-    nombre: any="";
+    IDPaciente: any="";
+    prioridad: any=3;
     ciudad: any=""; 
+    nombre: any=""; 
     solicitud: any="";
     descripcion: any="";
     socioeconomico: any="";
@@ -95,24 +97,15 @@ export class agregarSolicitudComponent implements OnInit{
                         case "solDonacion":
                             this.solDonacion = message[index];
                             break;
-                        case "hojaComp":
-                            this.hojaComp = message[index];
-                            break;
                         case "otros":
                             this.otros = message[index];
                             break;
-                        case "imgCasa1":
-                            this.imgCasa1 = message[index];
-                            break;  
-                        case "imgCasa2":
-                            this.imgCasa2 = message[index];
-                            break;  
                     }
                 });
                 
                 var hoy = this.fechaService.ObtenerFecha();
-                this.solicitudservice.postSolicitud(this.descripcion, this.nombre, "", "", this.ciudad, this.solicitud, this.socioeconomico, this.solDonacion, this.hojaComp,this.otros, this.imgCasa1, this.imgCasa2, hoy);
-                EnviarCorreo(this.nombre, this.solicitud, this.descripcion);
+                this.solicitudservice.postSolicitud(this.descripcion, this.IDPaciente,this.prioridad,"", this.solicitud, this.socioeconomico, this.solDonacion, this.otros, hoy);
+                EnviarCorreo(this.IDPaciente, this.solicitud, this.descripcion);
                 this.historialRedirectFunc();
                 this.callSendFunction();
         });
