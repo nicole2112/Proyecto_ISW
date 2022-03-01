@@ -60,6 +60,7 @@ import { agregarSolicitudComponent } from './portal-digitador/agregarSolicitud.c
 import { DocumentsComponent } from './about-us/documents.component';
 import { FechaService } from './services/fecha.service';
 import { DatePipe } from '@angular/common';
+import { PortalPresidenteComponent } from './portal-presidente/portal-presidente.component.';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { DatePipe } from '@angular/common';
     verHistorialComponent,
     verFormulariosComponent,
     agregarSolicitudComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    PortalPresidenteComponent
   ],
   imports: [
     BrowserModule,

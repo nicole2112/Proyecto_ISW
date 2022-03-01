@@ -1,4 +1,5 @@
-<app-navbar-portal-presidente (viewUsersClick)="toggleShowPDF=false; toggleViewPDF=false; toggleShowHeroes = false; toggleHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulos=false; toggleShowArticulosRedirect=false; toggleShowSolicitudes=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false; toggleUsers = true" 
+
+<!--app-navbar-portal-presidente (viewUsersClick)="toggleShowPDF=false; toggleViewPDF=false; toggleShowHeroes = false; toggleHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulos=false; toggleShowArticulosRedirect=false; toggleShowSolicitudes=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false; toggleUsers = true" 
 (viewHeroesClick)="toggleShowPDF=false; toggleViewPDF=false; toggleShowHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleShowSolicitudes=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false; toggleHeroes = true" 
 (showHeroesClick)="toggleShowPDF=false; toggleViewPDF=false; toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleShowSolicitudes=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false; toggleShowHeroes = true"
 (showTestimoniesClick)="toggleShowPDF=false; toggleViewPDF=false; toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowArticulos=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleShowSolicitudes=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false; toggleShowTestimonies=true;"
@@ -20,10 +21,10 @@
       <app-users-presidente *ngIf="toggleUsers"></app-users-presidente>
       
       <app-heroes-presidente *ngIf="toggleHeroes" (viewHeroesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=false; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = true; toggleAddPDF = false; toggleShowSolicitudes=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false;"></app-heroes-presidente>
-      <app-showHeroes-presidente *ngIf="toggleShowHeroes"></app-showHeroes-presidente>
+      <app-showHeroes-presidente *ngIf="toggleShowHeroes"></app-showHeroes-presidente-->
 
       <!-- <app-showHeroes-presidente *ngIf="toggleShowHeroesRedirect"></app-showHeroes-presidente> -->
-      <app-add-testimonies-presidente *ngIf="toggleViewTestimonies" (viewTestimoniesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=true; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = false ; toggleAddPDF = false; toggleShowSolicitudes=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false;"></app-add-testimonies-presidente>
+      <!--app-add-testimonies-presidente *ngIf="toggleViewTestimonies" (viewTestimoniesRedirect)="toggleHeroes = false; toggleUsers = false; toggleShowTestimonies=true; toggleShowHeroesRedirect=false; toggleViewTestimonies=false; toggleShowHeroes = false ; toggleAddPDF = false; toggleShowSolicitudes=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false;"></app-add-testimonies-presidente>
       <app-view-testimonies-presidente *ngIf="toggleShowTestimonies"></app-view-testimonies-presidente>
       
       <app-view-articulos-presidente *ngIf="toggleShowArticulos"></app-view-articulos-presidente>
@@ -39,4 +40,4 @@
       <app-add-pacientes-presidente *ngIf="toggleViewpacientes" (AddPacientesRedirect)="toggleShowHeroes = false; toggleHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulos=false; toggleUsers=false; toggleViewPDF=false; toggleShowPDF=false; toggleViewSolicitudes=false; toggleViewPacientes=false; toggleShowSolicitudes=false; toggleShowPacientes=true;" ></app-add-solicitudes-presidente>
     </div>
   </div>
-  <img class="imagen_opaca" src="assets/images/bg-art.png" alt="">
+  <img class="imagen_opaca" src="assets/images/bg-art.png" alt=""-->
