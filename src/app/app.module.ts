@@ -63,6 +63,7 @@ import { DatePipe } from '@angular/common';
 import { AddPatientComponent } from './patients/addPatient.component';
 import { ViewPatientsComponent } from './patients/viewPatients.component';
 import { PatientHistoryComponent } from './patients/patientHistory.component';
+import { PacientesService } from './services/pacientes.service';
 
 
 @NgModule({
@@ -130,6 +131,7 @@ import { PatientHistoryComponent } from './patients/patientHistory.component';
     ModalService,
     PdfServices,
     FechaService,
+    PacientesService,
     DatePipe,
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
