@@ -1,17 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand nav-link" onclick="window.location.replace(portal-presidente);" [routerLink]="['/portal-presidente']">Portal presidenteistrativo</a>
+    <a class="navbar-brand nav-link" onclick="window.location.replace(portal-presidente);" [routerLink]="['/portal-presidente']">Portal Presidente</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="dropdown-users">
-      <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>SOLICITUDES   ▼</button>
+      <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Solicitudes   ▼</button>
       <div class="dropdown-content">
         <a [routerLink]="['/portal-presidente']" (click)="showSolicitudes()">Ver Solicitudes</a>
         <a (click)="addSolicitud()">Registrar Solicitud</a>
       </div>
     </div>
     <div class="dropdown-users">
-        <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>PACIENTES   ▼</button>
+        <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Pacientes   ▼</button>
         <div class="dropdown-content">
           <a [routerLink]="['/portal-presidente']" (click)="showPacientes()">Ver Pacientes</a>
           <a (click)="addPaciente()">Registrar Paciente</a>

@@ -41,8 +41,8 @@ import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.compon
 import { PwResetComponent } from './pw-reset/pw-reset.component';
 import { ModalService } from './services/modal.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AgregarTestimoniosComponent } from './portal-admin/agregarTestimonios.component';
-import { VerTestimoniosComponent } from './portal-admin/verTestimonios.component';
+import { AgregarTestimoniosComponent } from './testimonies-admin/agregarTestimonios.component';
+import { VerTestimoniosComponent } from './testimonies-admin/verTestimonios.component';
 import { EditUserProfileComponent } from './profiles/edit-user-profile.component';
 import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from './users-admin/users-admin.component';
@@ -51,8 +51,8 @@ import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirm
 import { AddPdfComponent } from './add-pdf/add-pdf.component';
 import { PdfServices } from './services/pdf.services';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //tiny mce
-import { verArticulosComponent } from './portal-admin/verArticulos.component';
-import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
+import { verArticulosComponent } from './blog-admin/verArticulos.component';
+import { AgregarArticuloComponent } from './blog-admin/agregarArticulo.component';
 import { ViewPdfsComponent } from './view-pdfs/view-pdfs.component';
 import { verHistorialComponent } from './portal-digitador/verHistorial.component';
 import { verFormulariosComponent } from './portal-digitador/verFormularios.component';
@@ -61,6 +61,7 @@ import { DocumentsComponent } from './about-us/documents.component';
 import { FechaService } from './services/fecha.service';
 import { DatePipe } from '@angular/common';
 import { PortalPresidenteComponent } from './portal-presidente/portal-presidente.component.';
+import { NavbarPortalPresidenteComponent } from './navbar-portal-presidente/navbar-portal-presidente.component';
 
 
 @NgModule({
@@ -102,7 +103,8 @@ import { PortalPresidenteComponent } from './portal-presidente/portal-presidente
     verFormulariosComponent,
     agregarSolicitudComponent,
     DocumentsComponent,
-    PortalPresidenteComponent
+    PortalPresidenteComponent,
+    NavbarPortalPresidenteComponent
   ],
   imports: [
     BrowserModule,

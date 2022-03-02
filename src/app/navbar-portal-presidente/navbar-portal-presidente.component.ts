@@ -44,6 +44,12 @@ currentUser: any;
     this.showHeroesClick.emit(true);
   }
 
+  addSolicitud(){
+    //vacio
+  }
+  addPaciente(){
+    //vacio
+  }
   //Blog
   viewArticulos() {
     this.viewArticulosClick.emit(true);

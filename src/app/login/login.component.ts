@@ -38,10 +38,11 @@ export class LoginComponent implements OnInit {
     this.service.customLogin();
   }
   
+  //cambios en el guard y en login para que me agarrara el route de presidente
   logInBack(){
     this.auth.currentUser.then((res) =>{
       this.service.db.object(`usuarios/${res.uid}`).valueChanges().subscribe(item =>{
-        //console.log("entre");
+        console.log("entre");
         if(item['rol'] == 'Presidente'){
           console.log("presi");
           this.router.navigate(['/portal-presidente'])
@@ -52,6 +53,7 @@ export class LoginComponent implements OnInit {
           console.log("digi");
           this.router.navigate(['/portal-digitador'])
         }
+        
       })
     })
   }
