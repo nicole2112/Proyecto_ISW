@@ -209,3 +209,12 @@ button.button1{
 input.error{
   border: solid red;
 }
+
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+.table-header{
+  position: sticky;
+  top: 0px;
+}

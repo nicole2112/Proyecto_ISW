@@ -213,12 +213,12 @@
 
       <!-- Adjuntar imagenes cédula -->
       <div class="d-flex justify-content-center styleFormElem">
-        <h6>Cédula del Paciente</h6>
+        <h6>DNI del Paciente</h6>
       </div>
       <div class="row mt-3 d-flex justify-content-center">
         <!--Primera imagen-->
         <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
-          <label class="form-label">Primera imagen*</label>
+          <label class="form-label">Imagen DNI frontal*</label>
           <input 
             [(ngModel)]="imgCedula1"
             class="form-control" 
@@ -231,7 +231,7 @@
         </div>
         <!--Segunda imagen-->
         <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
-          <label class="form-label">Segunda imagen</label>
+          <label class="form-label">Imagen DNI al revés*</label>
           <input 
             [(ngModel)]="imgCedula2"
             class="form-control" 
@@ -239,6 +239,7 @@
             name="imgCedula2"
             type="file" 
             accept="image/png, image/jpeg"
+            required
           />
         </div>
       </div>
