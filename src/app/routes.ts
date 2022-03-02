@@ -53,7 +53,11 @@ export const AppRoutes: Routes = [
   { path: 'portal-digitador', component: PortalDigitadorComponent, canActivate: [DigitadorConfGuard] },
   { path: 'portal-presidente/perfil', component: EditUserProfileComponent, canActivate: [PresidenteConfGuard]  },
   { path: 'portal-presidente', component: PortalPresidenteComponent, canActivate: [PresidenteConfGuard] },
-
+  {
+    path: 'portal-presidente/registro',
+    component: RegistroComponent,
+    canActivate: [PresidenteConfGuard],
+  },
   { path: 'portal-pw-reset', component: PwResetComponent },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];
