@@ -60,9 +60,9 @@ import { agregarSolicitudComponent } from './portal-digitador/agregarSolicitud.c
 import { DocumentsComponent } from './about-us/documents.component';
 import { FechaService } from './services/fecha.service';
 import { DatePipe } from '@angular/common';
-import { PortalPresidenteComponent } from './portal-presidente/portal-presidente.component.';
+import { PortalPresidenteComponent } from './portal-presidente/portal-presidente.component';
 import { NavbarPortalPresidenteComponent } from './navbar-portal-presidente/navbar-portal-presidente.component';
-
+import { verSolicitudComponent } from './portal-presidente/verSolicitud.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +104,8 @@ import { NavbarPortalPresidenteComponent } from './navbar-portal-presidente/navb
     agregarSolicitudComponent,
     DocumentsComponent,
     PortalPresidenteComponent,
-    NavbarPortalPresidenteComponent
+    NavbarPortalPresidenteComponent,
+    verSolicitudComponent
   ],
   imports: [
     BrowserModule,
