@@ -6,12 +6,33 @@
     <form #patientForm="ngForm">
 
       <div class="row mt-3 d-flex justify-content-center">
+        <!-- Ingreso de ID (Número de identidad)-->
+        <div class="form-floating sm-3 col-md-4">
+            <input
+            [(ngModel)]="id"
+            type="tel"
+            class="form-control"
+            id="id"
+            name="id"
+            placeholder="0501-1985-02001"
+            required
+            [ngClass]="{ error: patientForm.controls.id?.invalid && patientForm.controls.id?.touched}"
+            pattern="[0-9]{4}-[0-9]{4}-[0-9]{5}"
+          />
+          <label for="id" style="margin-left: 2%;">Número de identidad</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              patientForm.controls.id?.invalid &&
+              patientForm.controls.id?.touched
+            "
+            >*Ingrese número de identidad acorde al formato<br>
+          </em>
+          <span>*Formato: 0501-1985-02001</span>
+        </div>
+
         <!-- Ingreso nombre -->
-        <div
-          class="form-floating sm-3 col-md-6"
-          [ngClass]="{
-            error:
-              patientForm.controls.nombre?.invalid && patientForm.controls.nombre?.touched}">
+        <div class="form-floating sm-3 col-md-5">
           <input
             [(ngModel)]="nombre"
             [pattern]="namePattern"
@@ -21,6 +42,7 @@
             name="nombre"
             placeholder="Nombre completo"
             required
+            [ngClass]="{ error: patientForm.controls.nombre?.invalid && patientForm.controls.nombre?.touched}"
           />
           <label for="nombre" style="margin-left: 2%;">Nombre del Paciente</label>
           <em
@@ -32,20 +54,21 @@
             >*Nombre válido es requerido
           </em>
         </div>
+      </div>
+
+      <div class="row mt-3 d-flex justify-content-center">
         <!--Ingreso de Ciudad-->
-        <div
-          class="form-floating sm-3 col-md-2"
-          [ngClass]="{
-            error:
-              patientForm.controls.ciudad?.invalid && patientForm.controls.ciudad?.touched }" >
+        <div class="form-floating sm-3 col-md-3" >
           <input
             [(ngModel)]="ciudad"
+            [pattern]="namePattern"
             type="text"
             class="form-control"
             id="ciudad"
             name="ciudad"
             placeholder="Ciudad"
             required
+            [ngClass]="{ error: patientForm.controls.ciudad?.invalid && patientForm.controls.ciudad?.touched }"
           />
           <label for="ciudad" style="margin-left: 4%;">Ciudad</label>
           <em
@@ -57,6 +80,212 @@
             >*Ciudad es requerida</em
           >
         </div>
+        <!--Ingreso de Domicilio-->
+        <div class="form-floating sm-3 col-md-3">
+          <input
+            [(ngModel)]="domicilio"
+            type="text"
+            class="form-control"
+            id="domicilio"
+            name="domicilio"
+            placeholder="Domicilio"
+          />
+          <label for="domicilio" style="margin-left: 4%;">Domicilio</label>  
+        </div>
+        <!--Ingreso de Teléfono-->
+        <div class="form-floating sm-3 col-md-3" >
+          <input
+            [(ngModel)]="telefono"
+            pattern="[0-9]{8}"
+            type="tel"
+            class="form-control"
+            id="telefono"
+            name="telefono"
+            placeholder="Teléfono"
+            required
+            [ngClass]="{ error: patientForm.controls.telefono?.invalid && patientForm.controls.telefono?.touched }"
+          />
+          <label for="ciudad" style="margin-left: 4%;">Número telefónico</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              patientForm.controls.telefono?.invalid &&
+              patientForm.controls.telefono?.touched
+            "
+          >*Ingrese número telefónico válido <br></em>
+          <span>*Formato: 95632334</span>
+        </div>
+      </div>
+
+      <!--Notas-->
+      <div class="row mt-3 d-flex justify-content-center styleFormElem">
+        <div class="form-floating sm-3 col-md-9">
+          <textarea
+            [(ngModel)]="notas"
+            type="text"
+            class="form-control"
+            id="notas"
+            name="notas"
+            rows="4" 
+            placeholder="notas"
+          ></textarea>
+          <label for="notas" style="margin-left: 10px;">Notas</label>
+        </div>
+      </div>
+      
+      <!-- Contacto de paciente -->
+      <div class="d-flex justify-content-center styleFormElem">
+        <h6>Datos de Contacto de Paciente</h6>
+      </div>
+
+      <div class="row mt-3 d-flex justify-content-center">
+        <!-- Ingreso nombre de contacto -->
+        <div class="form-floating sm-3 col-md-5">
+          <input
+            [(ngModel)]="contacto"
+            [pattern]="namePattern"
+            type="text"
+            class="form-control"
+            id="contacto"
+            name="contacto"
+            placeholder="Nombre"
+            required
+            [ngClass]="{ error: patientForm.controls.contacto?.invalid && patientForm.controls.contacto?.touched}"
+          />
+          <label for="contacto" style="margin-left: 2%;">Nombre</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              patientForm.controls.contacto?.invalid &&
+              patientForm.controls.contacto?.touched
+            "
+            >*Ingrese nombre de contacto válido
+          </em>
+        </div>
+        <!--Ingreso de Teléfono del Contacto-->
+        <div class="form-floating sm-3 col-md-4" >
+          <input
+            [(ngModel)]="contactoTel"
+            pattern="[0-9]{8}"
+            type="tel"
+            class="form-control"
+            id="contactoTel"
+            name="contactoTel"
+            placeholder="Teléfono"
+            required
+            [ngClass]="{ error: patientForm.controls.contactoTel?.invalid && patientForm.controls.contactoTel?.touched }"
+          />
+          <label for="ciudad" style="margin-left: 4%;">Número telefónico</label>
+          <em
+            class="text-danger"
+            *ngIf="
+              patientForm.controls.contactoTel?.invalid &&
+              patientForm.controls.contactoTel?.touched
+            "
+          >*Ingrese número telefónico válido <br></em>
+          <span>*Formato: 95632334</span>
+        </div>
+      </div>
+
+      <!-- Documentos del paciente -->
+      <div class="d-flex justify-content-center styleFormElem">
+        <h4>Documentos del Paciente</h4>
+      </div>
+      <div class="d-flex justify-content-center">
+        <em>Nota: Solo los formatos con * son obligatorios.</em>
+      </div>
+
+      <!-- Adjuntar Hoja de Compromiso del paciente -->
+      <div class="d-flex justify-content-center styleFormElem">
+        <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="sm-3 col-md-8">
+          <label class="form-label">Adjuntar hoja de compromiso del paciente*</label>
+          <input 
+            [(ngModel)]="hojaComp"
+            class="form-control"
+            (change)="onChange($event)" 
+            name="hojaComp"
+            type="file" 
+            accept=".pdf"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Adjuntar imagenes cédula -->
+      <div class="d-flex justify-content-center styleFormElem">
+        <h6>DNI del Paciente</h6>
+      </div>
+      <div class="row mt-3 d-flex justify-content-center">
+        <!--Primera imagen-->
+        <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+          <label class="form-label">Imagen DNI frontal*</label>
+          <input 
+            [(ngModel)]="imgCedula1"
+            class="form-control" 
+            (change)="onChange($event)" 
+            name="imgCedula1"
+            type="file" 
+            accept="image/png, image/jpeg"
+            required
+          />
+        </div>
+        <!--Segunda imagen-->
+        <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+          <label class="form-label">Imagen DNI al revés*</label>
+          <input 
+            [(ngModel)]="imgCedula2"
+            class="form-control" 
+            (change)="onChange($event)" 
+            name="imgCedula2"
+            type="file" 
+            accept="image/png, image/jpeg"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Ingreso de Fotografías de la casa del paciente -->
+      <div class="d-flex justify-content-center styleFormElem">
+        <h6>Fotografías de casa del paciente</h6>
+      </div>
+      <div class="row mt-3 d-flex justify-content-center">
+        <!--Primera imagen-->
+        <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+          <label class="form-label">Primera imagen*</label>
+          <input 
+            [(ngModel)]="imgCasa1"
+            class="form-control" 
+            (change)="onChange($event)" 
+            name="imgCasa1"
+            type="file" 
+            accept="image/png, image/jpeg"
+            required
+          />
+        </div>
+        <!--Segunda imagen-->
+        <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+          <label class="form-label">Segunda imagen</label>
+          <input 
+            [(ngModel)]="imgCasa2"
+            class="form-control" 
+            (change)="onChange($event)" 
+            name="imgCasa2"
+            type="file" 
+            accept="image/png, image/jpeg"
+          />
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button
+          style="margin-top: 30px;"
+          type="submit"
+          [disabled]="patientForm.invalid"
+          class="btn button1"
+          (click)="savePatient();"
+        >
+          Enviar
+        </button>
       </div>
 
       <br>
