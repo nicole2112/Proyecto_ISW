@@ -30,7 +30,7 @@ export class BlogComponent{
                 let dateA = new Date(b.fechaCreacion), dateB = new Date(a.fechaCreacion)
                 return +dateA - +dateB;
             });
-            console.log(new Date);
+           // console.log(new Date);
             this.filteredBlogList = this.blogList;
         });
 
