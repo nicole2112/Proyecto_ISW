@@ -24,7 +24,7 @@ import { AdminConfGuard } from './email-conf/guard/admin-conf.guard';
 import { DigitadorConfGuard } from './email-conf/guard/digitador-conf.guard';
 import { BlogPostComponent } from './blog-post/blog-post.component';
 import { DocumentsComponent } from './about-us/documents.component';
-import { PortalPresidenteComponent } from './portal-presidente/portal-presidente.component.';
+import { PortalPresidenteComponent } from './portal-presidente/portal-presidente.component';
 import { PresidenteConfGuard } from './email-conf/guard/presidente-conf.guard';
 
 export const AppRoutes: Routes = [

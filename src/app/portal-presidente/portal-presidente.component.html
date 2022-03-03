@@ -32,6 +32,8 @@
 
   <app-view-pdfs-admin *ngIf="toggleShowPDF"></app-view-pdfs-admin>
   <app-add-pdf-admin *ngIf="toggleViewPDF" (AddPDFRedirect)="toggleShowHeroes = false; toggleHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulos=false; toggleUsers=false; toggleViewPDF=false; toggleShowPDF=true" ></app-add-pdf-admin>
-</div>
+
+  <app-view-Solicitud-presidente *ngIf="toggleShowSolicitudes"></app-view-Solicitud-presidente>
+  </div>
 </div>
 <img class="imagen_opaca" src="assets/images/bg-art.png" alt="">
