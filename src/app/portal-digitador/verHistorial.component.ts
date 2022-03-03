@@ -30,7 +30,20 @@ export class verHistorialComponent implements OnInit {
     ];
 
     closeResult: string;
-    fileList: any;
+    IDPaciente: any="";
+    prioridad: any=3;
+    archivado: any=0;
+    solicitud: any="";
+    estado: any="";
+    descripcion: any="";
+    socioeconomico: any="";
+    solDonacion: any="";
+    otros:any="";
+    fileList: any[] = [];
+    urlList: any[] = [];
+    descList: any[] = [];
+    namePattern = '^[a-zA-Z ]*$';
+    
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService, private modalService: NgbModal) { }
 
@@ -98,16 +111,66 @@ export class verHistorialComponent implements OnInit {
       onDropSuccess(event) {
           event.preventDefault();
     
-          this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
+          this.onFileChange(event.dataTransfer.files, event.target.name);    // notice the "dataTransfer" used instead of "target"
       }
     
       // From attachment link
       onChangeFile(event) {
-          this.onFileChange(event.target.files);    // "target" is correct here
+          this.onFileChange(event.target.files, event.target.name);    // "target" is correct here
       }
     
-      private onFileChange(files: File[]) {
-        this.fileList = files;
+      private onFileChange(files: File[], descArchivo) {
+        this.fileList.push(files[0]);
+        this.descList.push(descArchivo);
       }
+
+      editarSolicitud(id){
+        
+        Promise.all(this.fileList.map( async (file) =>
+        {
+            return this.guardarArchivo(file);
+        })).then((message) =>
+        {
+          this.descList.forEach((item, index, array) =>
+          {
+              switch(item)
+              {
+                case "socioeconomico":
+                    this.socioeconomico = message[index];
+                    break;
+                case "solDonacion":
+                    this.solDonacion = message[index];
+                    break;
+                case "otros":
+                    this.otros = message[index];
+                    break;
+              }
+          });
+          this.recordService.editarSolicitud(id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
+        });
+    }
+
+    async guardarArchivo(nuevoArchivo){
+      return new Promise(async (resolve, reject) =>
+      {
+          let filename = nuevoArchivo.name;
+      
+          const storage = getStorage();
+          const storageRef = ref(storage, filename);
+      
+          uploadBytes(storageRef, nuevoArchivo).then((snapshot) => {
+          
+          
+          }).then(
+          ()=>{
+              getDownloadURL(storageRef).then(data =>{
+              resolve(data);
+              }).catch((error)=>{
+                  reject(error);
+              });
+          }
+          );
+      })
+    }
     
 }
