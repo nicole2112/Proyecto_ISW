@@ -136,11 +136,11 @@
 <br>
 <div class="container-fluid content-row">
   <h1 class="title" style="font-size:350%; color:#852E88;">Nuestro Blog</h1>
-  <div class="row" style="min-height: 550%; margin-left: 5%; margin-right: 5%;">
+  <div class="row">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let blog of fullList.slice(0, 3);">
+        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let blog of fullList.slice(0,3);">
             <div class="cardcontainer">
                 <div class="photo"><img src="{{blog?.imagenPreview}}" alt="">
                     <div class="photos"></div>
