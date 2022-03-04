@@ -23,9 +23,11 @@ export class verSolicitudComponent implements OnInit {
     recordList = [];
     filteredRecordList = [];
     states = [
-        'Prioridad',
-        'Fecha',
-    ];
+      'En espera',
+      'Aprobada',
+      'Denegada',
+      'Falta más información',
+  ];
 
     closeResult: string;
     fileList: any;
@@ -34,10 +36,23 @@ export class verSolicitudComponent implements OnInit {
 
     ngOnInit() {
         this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
-            this.recordList = records.sort((a, b) => {
+          this.recordList = records.sort((a, b) => {
                 let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
                 return +dateA - +dateB;
             });
+            
+            this.recordList = records.sort((a, b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
+            
+            this.recordList.forEach(element =>{
+              if(element.prioridad == 1){
+                element.prioridad ="Alta";
+              }else if (element.prioridad == 2){
+                element.prioridad = "Media";
+              }else if(element.prioridad == 3){
+                element.prioridad = "Baja"
+            }
+            });
+            
             this.filteredRecordList = this.recordList;
         });
     }
