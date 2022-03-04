@@ -17,7 +17,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pac of Pacientes" class="userRowHover" (click)="open(pac,content); onSelect(pac)">
+          <tr *ngFor="let pac of Pacientes" class="userRowHover" (click)="open(pac, content, pac.$key); onSelect(pac)">
             <td class="rowInfo">{{pac?.id}}</td>
             <td class="rowInfo">{{pac?.nombre}}</td>
             <td class="rowInfo">{{pac?.ciudad}}</td>
@@ -32,7 +32,8 @@
   </div>
   <br>
 </div>
-  
+
+<!-- MODAL -->
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Detalle de Paciente</h4>
@@ -226,6 +227,6 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-success" (click)="modal.close('Save click');">Guardar Cambios</button>
+    <button type="submit" class="btn btn-success" (click)="modal.close('Save click'); modificarPaciente() ">Guardar Cambios</button>
   </div>
 </ng-template>

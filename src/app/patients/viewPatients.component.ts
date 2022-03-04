@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { AngularFireList } from '@angular/fire/compat/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { take } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { threadId } from 'worker_threads';
 import { Pacientes } from '../models/pacientes';
 import { AuthenticationService } from '../services/auth.services';
 import { PacientesService } from '../services/pacientes.service';
@@ -29,6 +28,7 @@ export class ViewPatientsComponent {
   imgCedula2: any;
   estado: any;
 
+  pacienteSelectedKey: any;
   newHojaComp: any;
   newImgCasa1: any;
   newImgCasa2: any;
@@ -44,7 +44,9 @@ export class ViewPatientsComponent {
   constructor(
     public service: AuthenticationService,
     public pacientes: PacientesService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public pacienteService: PacientesService,
+    private db:AngularFireDatabase
   ) {}
 
 
@@ -66,7 +68,8 @@ export class ViewPatientsComponent {
   }
 
   //Funciones para el modal
-  open(paciente:Pacientes, content){
+  open(paciente:Pacientes, content, key: string){
+    this.pacienteSelectedKey = key;
     this.id = paciente.id;
     this.nombre = paciente.nombre;
     this.ciudad = paciente.ciudad;
@@ -108,15 +111,6 @@ export class ViewPatientsComponent {
     estados.appendChild(estadoOp2);
   }
 
-  /*Para la selección de archivos
-  onDragOver(event) {
-    event.preventDefault();
-  }
-  // From drag and drop
-  onDropSuccess(event) {
-    event.preventDefault();
-    this.onFileChange(event.dataTransfer.files, event.target.name); // notice the "dataTransfer" used instead of "target"
-  }*/
   // From attachment link
   onChange(event) {
     this.onFileChange(event.target.files, event.target.name); // "target" is correct here
@@ -135,7 +129,98 @@ export class ViewPatientsComponent {
   
     this.fileList.push(files[0]);
     this.descList.push(descArchivo);
-    console.log(this.fileList);
   }
 
+  modificarPaciente(){
+    this.getValues();
+    Promise.all(this.fileList.map(async (file) => {
+      return this.pacienteService.guardarArchivos(file);
+    })).then((message) =>{
+      this.descList.forEach((item, index) =>{
+        switch (item) {
+          case 'newImgCasa1':
+            console.log(index);
+            this.imgCasa1 = message[index];
+            break;
+          case 'newImgCasa2':
+            this.imgCasa2 = message[index];
+            break;
+          case 'newImgCedula1':
+            this.imgCedula1 = message[index];
+            break;
+          case 'newImgCedula2':
+            this.imgCedula2 = message[index];
+            break;
+        }
+      });
+      this.actualizarPaciente(this.pacienteSelectedKey, this.hojaComp, this.imgCasa1, this.imgCasa2, this.imgCedula1, this.imgCedula2);
+      this.callSendFunction();
+    });
+  }
+
+  actualizarPaciente(key, hojaComp, imgCasa1, imgCasa2, imgCedula1, imgCedula2){
+    let pacienteItem={};
+    const userRef = this.db.object('pacientes/' + key);
+
+    console.log(this.estado);
+    
+    
+   pacienteItem ={
+        "nombre" : this.nombre,
+        "ciudad" : this.ciudad,
+        "domicilio" : this.domicilio,
+        "telefono" :this.telefono,
+        "notas" : this.notas,
+        "contacto" : this.contacto,
+        "contactoTel": this.contactoTel,
+        "hojaComp": hojaComp,
+        "imgCasa1": imgCasa1,
+        "imgCasa2": imgCasa2,
+        "imgCedula1" : imgCedula1,
+        "imgCedula2" : imgCedula2,
+        "estado": this.estado
+    }
+    userRef.update(pacienteItem);
+    this.fileList=[];
+    this.descList=[];
+}
+
+
+  getValues(){
+    // var nombreVal = document.getElementById('nombre') as HTMLInputElement;
+    // var ciudadVal = document.getElementById('ciudad') as HTMLInputElement;
+    // var domicilioVal = document.getElementById('domicilio') as HTMLInputElement;
+    // var telefonoVal = document.getElementById('telefono') as HTMLInputElement;
+    // var notasVal = document.getElementById('notas') as HTMLTextAreaElement;
+    // var contactoVal = document.getElementById('contacto') as HTMLInputElement;
+    // var contactoTelVal = document.getElementById('contactoTel') as HTMLInputElement;
+    var estadoVal = document.getElementById('estadoOptions') as HTMLSelectElement;
+
+    // let nombreValue = nombreVal.value;
+    // let ciudadValue = ciudadVal.value;
+    // let domicilioValue = domicilioVal.value;
+    // let telefonoValue = telefonoVal.value;
+    // let notasValue = notasVal.value;
+    // let contactoValue = contactoVal.value;
+    // let contactoTelValue = contactoTelVal.value;
+    let estadoValue = estadoVal.options[estadoVal.selectedIndex].text;
+
+    // this.nombre = nombreValue;
+    // this.ciudad = ciudadValue;
+    // this.domicilio = domicilioValue;
+    // this.telefono = telefonoValue;
+    // this.notas = notasValue;
+    // this.contacto = contactoValue;
+    // this.contactoTel = contactoTelValue;
+    this.estado = estadoValue;
+  }
+  callSendFunction() {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: '¡Paciente actulizado con éxito!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
 }

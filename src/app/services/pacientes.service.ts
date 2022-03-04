@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFireDatabase, AngularFireList } from "@angular/fire/compat/database";
+import { getDatabase, set} from "firebase/database";
+import { getDownloadURL, getStorage, uploadBytes, ref } from "firebase/storage";
 import { data } from "jquery";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
@@ -18,6 +20,9 @@ export class PacientesService{
     pacienteRef: AngularFireList<any>;
     listaPacientes: any[];
     pacientes =[];
+
+    urlList: any[] = [];
+
     constructor(private db: AngularFireDatabase, public service: AuthenticationService){}
 
 
@@ -58,4 +63,26 @@ export class PacientesService{
         };
         this.db.list('pacientes').push(PacienteItem);
     }
+
+    async guardarArchivos(archivo) {
+        return new Promise(async (resolve) => {
+          let filename = archivo.name;
+    
+          const storage = getStorage();
+          const storageRef = ref(storage, filename);
+    
+          uploadBytes(storageRef, archivo)
+            .then((snapshot) => {})
+            .then(() => {
+              getDownloadURL(storageRef)
+                .then((data) => {
+                  this.urlList.push(data);
+                  resolve(data);
+                })
+                .catch();
+            });
+        });
+      }
+
+
 }

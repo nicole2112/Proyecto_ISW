@@ -30,7 +30,6 @@ export class AddPatientComponent {
 
   fileList: any[] = [];
   descList: any[] = [];
-  urlList: any[] = [];
 
   constructor(
     public service: AuthenticationService,
@@ -75,7 +74,7 @@ export class AddPatientComponent {
     Promise.all(
       this.fileList.map(async (file) => {
         console.log('1');
-        return this.guardarArchivos(file);
+        return this.pacienteService.guardarArchivos(file);
       })
     ).then((message) => {
       console.log(message);
@@ -119,27 +118,6 @@ export class AddPatientComponent {
       this.callSendFunction();
     });
 
-  }
-
-  async guardarArchivos(archivo) {
-    return new Promise(async (resolve) => {
-      let filename = archivo.name;
-
-      const storage = getStorage();
-      const storageRef = ref(storage, filename);
-
-      uploadBytes(storageRef, archivo)
-        .then((snapshot) => {})
-        .then(() => {
-          getDownloadURL(storageRef)
-            .then((data) => {
-              this.urlList.push(data);
-              console.log('3');
-              resolve(data);
-            })
-            .catch((error) => [console.log(error)]);
-        });
-    });
   }
 
   callSendFunction() {
