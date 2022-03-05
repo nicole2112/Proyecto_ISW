@@ -29,11 +29,11 @@ export class ViewPatientsComponent {
   estado: any;
 
   pacienteSelectedKey: any;
-  newHojaComp: any;
-  newImgCasa1: any;
-  newImgCasa2: any;
-  newImgCedula1: any;
-  newImgCedula2: any;
+  newHojaComp: any = "";
+  newImgCasa1: any = "";
+  newImgCasa2: any = "";
+  newImgCedula1: any = "";
+  newImgCedula2: any = "";
 
   fileList: any[] = [];
   descList: any[] = [];
@@ -60,7 +60,6 @@ export class ViewPatientsComponent {
       this.Pacientes = [];
       data.forEach((pac) => {
         let a = pac.payload.toJSON();
-        console.log(a);
         a['$key'] = pac.key;
         this.Pacientes.push(a as Pacientes);
       });
@@ -85,7 +84,7 @@ export class ViewPatientsComponent {
     this.imgCedula1 = paciente.imgCedula1;
     this.imgCedula2 = paciente.imgCedula2;
 
-    this.modalService.open(content, { size: 'lg' ,backdrop: 'static', ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
+    this.modalService.open(content, { size: 'lg' ,backdrop: 'static', ariaLabelledBy: 'modal-basic-title', animation: true }).result.then((result)=>{
       console.log(`Closed with: ${result}`);
     }, (reason)=>{
       //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
@@ -109,6 +108,18 @@ export class ViewPatientsComponent {
     
     estados.appendChild(estadoOp1);
     estados.appendChild(estadoOp2);
+  }
+
+  openConfirmation(content){
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
+      //console.log(`Closed with: ${result}`);
+    }, (reason)=>{
+      //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
+    })
+  }
+
+  closeAll(){
+    this.modalService.dismissAll("Changes made");
   }
 
   // From attachment link
@@ -160,10 +171,7 @@ export class ViewPatientsComponent {
 
   actualizarPaciente(key, hojaComp, imgCasa1, imgCasa2, imgCedula1, imgCedula2){
     let pacienteItem={};
-    const userRef = this.db.object('pacientes/' + key);
-
-    console.log(this.estado);
-    
+    const userRef = this.db.object('pacientes/' + key);  
     
    pacienteItem ={
         "nombre" : this.nombre,
@@ -183,6 +191,10 @@ export class ViewPatientsComponent {
     userRef.update(pacienteItem);
     this.fileList=[];
     this.descList=[];
+    this.newImgCasa1 = "";
+    this.newImgCasa2 = "";
+    this.newImgCedula1 = "";
+    this.newImgCedula2 = "";
 }
 
 
@@ -218,7 +230,7 @@ export class ViewPatientsComponent {
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: '¡Paciente actulizado con éxito!',
+      title: '¡Paciente actualizado con éxito!',
       showConfirmButton: false,
       timer: 1500,
     });
