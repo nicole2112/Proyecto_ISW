@@ -2,8 +2,12 @@
   <div class="d-flex justify-content-center">
     <h1 style="margin-bottom: 2%; margin-top: 2%;">Listado de Pacientes</h1>
   </div>
-  <div class="container">
-    <div class="table-wrapper-scroll-y">
+  <div class="container paciente">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <select class="form-select my-4 col-md-9" (change)="onSelectedChange($event)" name="visibilidad" required>
+        <option [ngValue]="'all'">Todos</option>         
+        <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>     
+      </select>
       <table class="table table-striped table-bordered">
         <thead class="table-header" class="userRowHover">
           <tr>
@@ -17,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pac of Pacientes" class="userRowHover" (click)="open(pac, content, pac.$key); onSelect(pac)">
+          <tr *ngFor="let pac of filteredRecordList" class="userRowHover" (click)="open(pac, content, pac.$key); onSelect(pac)">
             <td class="rowInfo">{{pac?.id}}</td>
             <td class="rowInfo">{{pac?.nombre}}</td>
             <td class="rowInfo">{{pac?.ciudad}}</td>

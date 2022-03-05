@@ -41,6 +41,13 @@ export class ViewPatientsComponent {
   pacienteRef: AngularFireList<any>;
   Pacientes = [];
 
+  filteredRecordList = [];
+    states = [
+        'Activo',
+        'Inactivo',
+    ];
+  
+
   constructor(
     public service: AuthenticationService,
     public pacientes: PacientesService,
@@ -61,9 +68,21 @@ export class ViewPatientsComponent {
       data.forEach((pac) => {
         let a = pac.payload.toJSON();
         a['$key'] = pac.key;
-        this.Pacientes.push(a as Pacientes);
+        this.Pacientes.push(a);
       });
+      this.filteredRecordList = this.Pacientes;
     });
+  }
+
+  onSelectedChange(event: any){
+    const state = event.target.value;
+    if(state == "Todos"){
+      this.filteredRecordList = this.Pacientes;
+    }else{
+      this.filteredRecordList = this.Pacientes.filter(record =>{
+        return record.estado == state;
+      })
+    }
   }
 
   //Funciones para el modal
@@ -199,33 +218,12 @@ export class ViewPatientsComponent {
 
 
   getValues(){
-    // var nombreVal = document.getElementById('nombre') as HTMLInputElement;
-    // var ciudadVal = document.getElementById('ciudad') as HTMLInputElement;
-    // var domicilioVal = document.getElementById('domicilio') as HTMLInputElement;
-    // var telefonoVal = document.getElementById('telefono') as HTMLInputElement;
-    // var notasVal = document.getElementById('notas') as HTMLTextAreaElement;
-    // var contactoVal = document.getElementById('contacto') as HTMLInputElement;
-    // var contactoTelVal = document.getElementById('contactoTel') as HTMLInputElement;
     var estadoVal = document.getElementById('estadoOptions') as HTMLSelectElement;
-
-    // let nombreValue = nombreVal.value;
-    // let ciudadValue = ciudadVal.value;
-    // let domicilioValue = domicilioVal.value;
-    // let telefonoValue = telefonoVal.value;
-    // let notasValue = notasVal.value;
-    // let contactoValue = contactoVal.value;
-    // let contactoTelValue = contactoTelVal.value;
     let estadoValue = estadoVal.options[estadoVal.selectedIndex].text;
-
-    // this.nombre = nombreValue;
-    // this.ciudad = ciudadValue;
-    // this.domicilio = domicilioValue;
-    // this.telefono = telefonoValue;
-    // this.notas = notasValue;
-    // this.contacto = contactoValue;
-    // this.contactoTel = contactoTelValue;
     this.estado = estadoValue;
   }
+
+
   callSendFunction() {
     Swal.fire({
       position: 'top-end',
