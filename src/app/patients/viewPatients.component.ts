@@ -29,24 +29,17 @@ export class ViewPatientsComponent {
   estado: any;
 
   pacienteSelectedKey: any;
-  newHojaComp: any = "";
-  newImgCasa1: any = "";
-  newImgCasa2: any = "";
-  newImgCedula1: any = "";
-  newImgCedula2: any = "";
+  newHojaComp: any;
+  newImgCasa1: any;
+  newImgCasa2: any;
+  newImgCedula1: any;
+  newImgCedula2: any;
 
   fileList: any[] = [];
   descList: any[] = [];
 
   pacienteRef: AngularFireList<any>;
   Pacientes = [];
-
-  filteredRecordList = [];
-    states = [
-        'Activo',
-        'Inactivo',
-    ];
-  
 
   constructor(
     public service: AuthenticationService,
@@ -67,22 +60,18 @@ export class ViewPatientsComponent {
       this.Pacientes = [];
       data.forEach((pac) => {
         let a = pac.payload.toJSON();
+        console.log(a);
         a['$key'] = pac.key;
-        this.Pacientes.push(a);
+        this.Pacientes.push(a as Pacientes);
       });
-      this.filteredRecordList = this.Pacientes;
-    });
-  }
 
-  onSelectedChange(event: any){
-    const state = event.target.value;
-    if(state == "Todos"){
-      this.filteredRecordList = this.Pacientes;
-    }else{
-      this.filteredRecordList = this.Pacientes.filter(record =>{
-        return record.estado == state;
-      })
-    }
+      //Ordenamiento por nombre
+      this.Pacientes.sort((a,b) => (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0));
+      
+      //Ordenamiento por numero de cedula
+      this.Pacientes.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
+
+    });
   }
 
   //Funciones para el modal
@@ -103,7 +92,7 @@ export class ViewPatientsComponent {
     this.imgCedula1 = paciente.imgCedula1;
     this.imgCedula2 = paciente.imgCedula2;
 
-    this.modalService.open(content, { size: 'lg' ,backdrop: 'static', ariaLabelledBy: 'modal-basic-title', animation: true }).result.then((result)=>{
+    this.modalService.open(content, { size: 'lg' ,backdrop: 'static', ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
       console.log(`Closed with: ${result}`);
     }, (reason)=>{
       //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
@@ -127,18 +116,6 @@ export class ViewPatientsComponent {
     
     estados.appendChild(estadoOp1);
     estados.appendChild(estadoOp2);
-  }
-
-  openConfirmation(content){
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
-      //console.log(`Closed with: ${result}`);
-    }, (reason)=>{
-      //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
-    })
-  }
-
-  closeAll(){
-    this.modalService.dismissAll("Changes made");
   }
 
   // From attachment link
@@ -190,7 +167,10 @@ export class ViewPatientsComponent {
 
   actualizarPaciente(key, hojaComp, imgCasa1, imgCasa2, imgCedula1, imgCedula2){
     let pacienteItem={};
-    const userRef = this.db.object('pacientes/' + key);  
+    const userRef = this.db.object('pacientes/' + key);
+
+    console.log(this.estado);
+    
     
    pacienteItem ={
         "nombre" : this.nombre,
@@ -210,25 +190,42 @@ export class ViewPatientsComponent {
     userRef.update(pacienteItem);
     this.fileList=[];
     this.descList=[];
-    this.newImgCasa1 = "";
-    this.newImgCasa2 = "";
-    this.newImgCedula1 = "";
-    this.newImgCedula2 = "";
 }
 
 
   getValues(){
+    // var nombreVal = document.getElementById('nombre') as HTMLInputElement;
+    // var ciudadVal = document.getElementById('ciudad') as HTMLInputElement;
+    // var domicilioVal = document.getElementById('domicilio') as HTMLInputElement;
+    // var telefonoVal = document.getElementById('telefono') as HTMLInputElement;
+    // var notasVal = document.getElementById('notas') as HTMLTextAreaElement;
+    // var contactoVal = document.getElementById('contacto') as HTMLInputElement;
+    // var contactoTelVal = document.getElementById('contactoTel') as HTMLInputElement;
     var estadoVal = document.getElementById('estadoOptions') as HTMLSelectElement;
+
+    // let nombreValue = nombreVal.value;
+    // let ciudadValue = ciudadVal.value;
+    // let domicilioValue = domicilioVal.value;
+    // let telefonoValue = telefonoVal.value;
+    // let notasValue = notasVal.value;
+    // let contactoValue = contactoVal.value;
+    // let contactoTelValue = contactoTelVal.value;
     let estadoValue = estadoVal.options[estadoVal.selectedIndex].text;
+
+    // this.nombre = nombreValue;
+    // this.ciudad = ciudadValue;
+    // this.domicilio = domicilioValue;
+    // this.telefono = telefonoValue;
+    // this.notas = notasValue;
+    // this.contacto = contactoValue;
+    // this.contactoTel = contactoTelValue;
     this.estado = estadoValue;
   }
-
-
   callSendFunction() {
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: '¡Paciente actualizado con éxito!',
+      title: '¡Paciente actulizado con éxito!',
       showConfirmButton: false,
       timer: 1500,
     });
