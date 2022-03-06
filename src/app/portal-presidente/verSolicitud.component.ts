@@ -54,10 +54,7 @@ export class verSolicitudComponent implements OnInit {
             });
             
             this.filteredRecordList = this.recordList;
-            console.log(this.filteredRecordList);
-            this.filteredRecordList.forEach(element =>{
-              console.log(element.ciudad);
-            });
+            
         });
     }
 
