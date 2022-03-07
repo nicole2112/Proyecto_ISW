@@ -35,3 +35,6 @@ npm i lodash.clonedeep@4.5.0
 //tiny mce
 npm install --save @tinymce/tinymce-angular@5.0.1
 npm install --save tinymce@5.10.2
+
+//paypal
+npm i creditcardpayments

@@ -64,6 +64,7 @@ import { AddPatientComponent } from './patients/addPatient.component';
 import { ViewPatientsComponent } from './patients/viewPatients.component';
 import { PatientHistoryComponent } from './patients/patientHistory.component';
 import { PacientesService } from './services/pacientes.service';
+import { PayPalComponent } from './donations/paypal.component';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { PacientesService } from './services/pacientes.service';
     DocumentsComponent,
     ViewPatientsComponent,
     AddPatientComponent,
-    PatientHistoryComponent
+    PatientHistoryComponent,
+    PayPalComponent
   ],
   imports: [
     BrowserModule,

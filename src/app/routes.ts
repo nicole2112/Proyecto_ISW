@@ -24,6 +24,7 @@ import { AdminConfGuard } from './email-conf/guard/admin-conf.guard';
 import { DigitadorConfGuard } from './email-conf/guard/digitador-conf.guard';
 import { BlogPostComponent } from './blog-post/blog-post.component';
 import { DocumentsComponent } from './about-us/documents.component';
+import { PayPalComponent } from './donations/paypal.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -33,6 +34,7 @@ export const AppRoutes: Routes = [
   { path: 'pagina-principal', component: HomeComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'donations', component: DonationsComponent },
+  { path: 'donations/paypal', component: PayPalComponent},
   { path: 'programas', component: ProgramasComponent },
   { path: 'testimonies', component: TestimoniesComponent },
   { path: 'blog', component: BlogComponent },
