@@ -12,3 +12,7 @@
     font-style: normal;
     margin-top: 20px;
 }
+
+.rowInfo:hover{
+    color: #9965ac;
+}

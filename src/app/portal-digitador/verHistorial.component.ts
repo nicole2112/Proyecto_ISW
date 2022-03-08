@@ -105,6 +105,16 @@ export class verHistorialComponent implements OnInit {
       onChangeFile(event) {
           this.onFileChange(event.target.files);    // "target" is correct here
       }
+
+      getRequestPriority(priority){
+        const priorities = [
+          "Inmediata",
+          "Alta",
+          "Baja",
+        ];
+
+        return priorities[priority-1]
+      }
     
       private onFileChange(files: File[]) {
         this.fileList = files;
