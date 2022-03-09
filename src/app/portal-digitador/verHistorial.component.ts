@@ -37,8 +37,12 @@ export class verHistorialComponent implements OnInit {
     ngOnInit() {
         this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
             this.recordList = records.sort((a, b) => {
-                let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
-                return +dateA - +dateB;
+                if (a.prioridad === b.prioridad) {
+                  let dateA = new Date(b.fecha), dateB = new Date(a.fecha);
+                  return +dateA - +dateB;
+                } else {
+                  return a.prioridad < b.prioridad ? -1 : 1;
+                }
             });
             this.filteredRecordList = this.recordList;
         });
