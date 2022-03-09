@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import { AuthenticationService } from './auth.services';
 import firebase from '@firebase/app-compat';
 import { getDatabase, ref, set } from "firebase/database";
+import { PacientesService } from './pacientes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +15,19 @@ export class SolicitudesService {
 
   private user: firebase.default.User = null;
 
-  blogRef: AngularFireList<any>;
+  solicitudRef: AngularFireList<any>;
 
   listaSolicitudes: any[];
 
-  constructor(private db: AngularFireDatabase, private auth: AuthenticationService) {
+  constructor(private db: AngularFireDatabase, private auth: AuthenticationService, private pacienteService: PacientesService) {
 
   }
 
   getSolicitudes(id): Observable<any[]> {
 
-    this.blogRef = this.db.list('solicitudes');
+    this.solicitudRef = this.db.list('solicitudes');
 
-    return this.blogRef.snapshotChanges().pipe(map(data => {
+    return this.solicitudRef.snapshotChanges().pipe(map(data => {
       this.listaSolicitudes = [];
       data.forEach(solicitud => {
         let a = solicitud.payload.toJSON();
@@ -40,9 +41,9 @@ export class SolicitudesService {
 
   getSolicitud(idSol): Observable<any[]> {
 
-    this.blogRef = this.db.list('solicitudes');
+    this.solicitudRef = this.db.list('solicitudes');
 
-    return this.blogRef.snapshotChanges().pipe(map(data => {
+    return this.solicitudRef.snapshotChanges().pipe(map(data => {
       let nuevaSol: any;
       this.listaSolicitudes = [];
       data.forEach(solicitud => {
@@ -54,6 +55,37 @@ export class SolicitudesService {
         }
       })
       return nuevaSol;
+    }))
+  }
+
+  getALLSolicitudes(): Observable<any[]>{
+    this.solicitudRef = this.db.list('solicitudes');
+
+    return this.solicitudRef.snapshotChanges().pipe(map(data =>{
+      this.listaSolicitudes =[];
+      data.forEach(solicitud =>{
+        let a = solicitud.payload.toJSON();
+        a['key'] = solicitud.key;
+        this.listaSolicitudes.push(a);
+      })
+      return this.listaSolicitudes;
+    }))
+  }
+
+  getSolicitud_x_Paciente(idPaciente): Observable<any[]>{
+    this.solicitudRef = this.db.list('solicitudes');
+
+    return this.solicitudRef.snapshotChanges().pipe(map(data =>{
+      let pacienteSolicitud: any;
+      this.listaSolicitudes=[];
+      data.forEach(solicitud =>{
+        let a = solicitud.payload.toJSON();
+        a['key'] = solicitud.key;
+        if(a['IDPaciente'] == idPaciente){
+          pacienteSolicitud = a;
+        }
+      })
+      return pacienteSolicitud;
     }))
   }
 
@@ -102,5 +134,4 @@ export class SolicitudesService {
 
     set(ref(db, 'solicitudes/' + id), objeto);
   }
-
 }
