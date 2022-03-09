@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { observable, Observable, of, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 
 @Injectable({
@@ -29,8 +30,24 @@ getUsers(): Observable<User[]>{
             this.User.push(a as User);
         })
         //console.table(this.User);
-    })
+    });
    return of(this.User);
+}
+
+getUser(id): Observable<User>{
+
+    this.FundacionRef = this.db.list('usuarios');
+
+    return this.FundacionRef.snapshotChanges().pipe(map(data =>{
+        let usuario:any;
+        data.forEach(user =>{
+            let a = user.payload.toJSON();
+            if(a['id'] == id)
+                usuario = a;
+        })
+        //console.table(this.User);
+        return usuario;
+    }))
 }
 
 }

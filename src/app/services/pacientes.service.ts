@@ -37,6 +37,38 @@ export class PacientesService{
     
     }
 
+    getPaciente2(identidad): Observable<any>{
+      this.pacienteRef = this.db.list('pacientes');
+
+      let pac:any;
+      
+      return this.pacienteRef.snapshotChanges().pipe(map(data => {
+          this.listaPacientes = [];
+          data.forEach(paciente => {
+            let a = paciente.payload.toJSON();
+            if(a['id'] == identidad){
+              pac = a;
+            }
+          })
+          return pac;
+        }))
+  
+  }
+
+    getTodosPaciente(): Observable<any[]>{
+        this.pacienteRef = this.db.list('pacientes');
+        
+        return this.pacienteRef.snapshotChanges().pipe(map(data => {
+            this.listaPacientes = [];
+            data.forEach(paciente => {
+              let a = paciente.payload.toJSON();
+              this.listaPacientes.push(a);
+            })
+            return this.listaPacientes;
+          }))
+    
+    }
+
 
     agregarPaciente(id, nombre, ciudad, domicilio, telefono, notas, contacto, contactoTel, hojaComp, imgCasa1, imgCasa2, imgCedula1, imgCedula2, estado){
 
