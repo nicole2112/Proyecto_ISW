@@ -111,4 +111,21 @@ export class PacientesService {
         });
     });
   }
+
+  getPaciente2(identidad): Observable<any>{
+    this.pacienteRef = this.db.list('pacientes');
+
+    let pac:any;
+    
+    return this.pacienteRef.snapshotChanges().pipe(map(data => {
+        this.listaPacientes = [];
+        data.forEach(paciente => {
+          let a = paciente.payload.toJSON();
+          if(a['id'] == identidad){
+            pac = a;
+          }
+        })
+        return pac;
+      }))
+}
 }
