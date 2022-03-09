@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { AngularFireList } from '@angular/fire/compat/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { take } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { threadId } from 'worker_threads';
 import { Pacientes } from '../models/pacientes';
 import { AuthenticationService } from '../services/auth.services';
 import { PacientesService } from '../services/pacientes.service';
@@ -29,11 +28,12 @@ export class ViewPatientsComponent {
   imgCedula2: any;
   estado: any;
 
-  newHojaComp: any;
-  newImgCasa1: any;
-  newImgCasa2: any;
-  newImgCedula1: any;
-  newImgCedula2: any;
+  pacienteSelectedKey: any;
+  newHojaComp: any = "";
+  newImgCasa1: any = "";
+  newImgCasa2: any = "";
+  newImgCedula1: any = "";
+  newImgCedula2: any = "";
 
   fileList: any[] = [];
   descList: any[] = [];
@@ -41,10 +41,19 @@ export class ViewPatientsComponent {
   pacienteRef: AngularFireList<any>;
   Pacientes = [];
 
+  filteredRecordList = [];
+  states = [
+      'Activo',
+      'Inactivo',
+  ];
+  
+
   constructor(
     public service: AuthenticationService,
     public pacientes: PacientesService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public pacienteService: PacientesService,
+    private db:AngularFireDatabase
   ) {}
 
 
@@ -58,15 +67,33 @@ export class ViewPatientsComponent {
       this.Pacientes = [];
       data.forEach((pac) => {
         let a = pac.payload.toJSON();
-        console.log(a);
         a['$key'] = pac.key;
-        this.Pacientes.push(a as Pacientes);
+        this.Pacientes.push(a);
       });
+      this.filteredRecordList = this.Pacientes;
+
+      //Ordenamiento por nombre
+      this.Pacientes.sort((a,b) => (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0));
+      
+      //Ordenamiento por numero de cedula
+      this.Pacientes.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
     });
   }
 
+  onSelectedChange(event: any){
+    const state = event.target.value;
+    if(state == "Todos"){
+      this.filteredRecordList = this.Pacientes;
+    }else{
+      this.filteredRecordList = this.Pacientes.filter(record =>{
+        return record.estado == state;
+      })
+    }
+  }
+
   //Funciones para el modal
-  open(paciente:Pacientes, content){
+  open(paciente:Pacientes, content, key: string){
+    this.pacienteSelectedKey = key;
     this.id = paciente.id;
     this.nombre = paciente.nombre;
     this.ciudad = paciente.ciudad;
@@ -82,7 +109,7 @@ export class ViewPatientsComponent {
     this.imgCedula1 = paciente.imgCedula1;
     this.imgCedula2 = paciente.imgCedula2;
 
-    this.modalService.open(content, { size: 'lg' ,backdrop: 'static', ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
+    this.modalService.open(content, { size: 'lg' ,backdrop: 'static', ariaLabelledBy: 'modal-basic-title', animation: true }).result.then((result)=>{
       console.log(`Closed with: ${result}`);
     }, (reason)=>{
       //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
@@ -108,15 +135,18 @@ export class ViewPatientsComponent {
     estados.appendChild(estadoOp2);
   }
 
-  /*Para la selección de archivos
-  onDragOver(event) {
-    event.preventDefault();
+  openConfirmation(content){
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
+      //console.log(`Closed with: ${result}`);
+    }, (reason)=>{
+      //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
+    })
   }
-  // From drag and drop
-  onDropSuccess(event) {
-    event.preventDefault();
-    this.onFileChange(event.dataTransfer.files, event.target.name); // notice the "dataTransfer" used instead of "target"
-  }*/
+
+  closeAll(){
+    this.modalService.dismissAll("Changes made");
+  }
+
   // From attachment link
   onChange(event) {
     this.onFileChange(event.target.files, event.target.name); // "target" is correct here
@@ -135,7 +165,78 @@ export class ViewPatientsComponent {
   
     this.fileList.push(files[0]);
     this.descList.push(descArchivo);
-    console.log(this.fileList);
   }
 
+  modificarPaciente(){
+    this.getValues();
+    Promise.all(this.fileList.map(async (file) => {
+      return this.pacienteService.guardarArchivos(file);
+    })).then((message) =>{
+      this.descList.forEach((item, index) =>{
+        switch (item) {
+          case 'newImgCasa1':
+            console.log(index);
+            this.imgCasa1 = message[index];
+            break;
+          case 'newImgCasa2':
+            this.imgCasa2 = message[index];
+            break;
+          case 'newImgCedula1':
+            this.imgCedula1 = message[index];
+            break;
+          case 'newImgCedula2':
+            this.imgCedula2 = message[index];
+            break;
+        }
+      });
+      this.actualizarPaciente(this.pacienteSelectedKey, this.hojaComp, this.imgCasa1, this.imgCasa2, this.imgCedula1, this.imgCedula2);
+      this.callSendFunction();
+    });
+  }
+
+  actualizarPaciente(key, hojaComp, imgCasa1, imgCasa2, imgCedula1, imgCedula2){
+    let pacienteItem={};
+    const userRef = this.db.object('pacientes/' + key);  
+    
+   pacienteItem ={
+        "nombre" : this.nombre,
+        "ciudad" : this.ciudad,
+        "domicilio" : this.domicilio,
+        "telefono" :this.telefono,
+        "notas" : this.notas,
+        "contacto" : this.contacto,
+        "contactoTel": this.contactoTel,
+        "hojaComp": hojaComp,
+        "imgCasa1": imgCasa1,
+        "imgCasa2": imgCasa2,
+        "imgCedula1" : imgCedula1,
+        "imgCedula2" : imgCedula2,
+        "estado": this.estado
+    }
+    userRef.update(pacienteItem);
+    this.fileList=[];
+    this.descList=[];
+    this.newImgCasa1 = "";
+    this.newImgCasa2 = "";
+    this.newImgCedula1 = "";
+    this.newImgCedula2 = "";
+}
+
+
+  getValues(){
+    var estadoVal = document.getElementById('estadoOptions') as HTMLSelectElement;
+    let estadoValue = estadoVal.options[estadoVal.selectedIndex].text;
+    this.estado = estadoValue;
+  }
+
+
+  callSendFunction() {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: '¡Paciente actualizado con éxito!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
 }
