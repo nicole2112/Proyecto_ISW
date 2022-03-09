@@ -2,4 +2,56 @@
     <div class="d-flex justify-content-center">
       <h1 style="margin-bottom: 2%; margin-top: 2%;">Solicitudes de Paciente</h1>
     </div>
+
+    <div class="container stylePatientHistory">
+      <div class="search-box">
+        <input class="search-txt" type="text" name="" id="num" placeholder="#ID Paciente..">
+        <a class="btn btn-primary" (click)="buscarPaciente()" >Buscar</a>
+    
+      </div>
+    </div>
+
+    <div class="container stylePatientHistory" *ngIf="type==1">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ciudad</th>
+            <th scope="col">Telefono</th>
+          </tr>
+
+          <tr>
+            <th scope="row">{{miPaciente.id}} </th>
+            <td>{{miPaciente.nombre}} </td>
+            <td>{{miPaciente.ciudad}} </td>
+            <td>{{miPaciente.telefono}} </td>
+          </tr>
+        </thead>
+      </table>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Solicitud</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Fecha de Ingreso</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lista of listaOrd" class="userRowHover">
+              <td class="rowInfo">{{lista?.queSolicita}}</td>
+              <td class="rowInfo">{{lista?.descripcion}}</td>
+              <td class="rowInfo">{{lista?.fecha}}</td>
+              <td class="rowInfo">{{lista?.estado}}</td>
+            </tr>
+      </tbody>
+      </table>
+      
+    </div>
+
+    <div class="container stylePatientHistory" *ngIf="type==2">
+      <p class="text-danger">El Paciente que intenta buscar no existe o se ingreso un numero de ID incorrecto, ingrese otro numero de identidad o agregue un nuevo paciente con este numero de ID</p>
+    </div>
 </div>
