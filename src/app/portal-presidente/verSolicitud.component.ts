@@ -28,12 +28,25 @@ export class verSolicitudComponent implements OnInit {
       'Denegada',
       'Falta más información',
   ];
+    state='En espera';
+    descList: any[] = [];
+    socioeconomico: any="";
+    solDonacion: any="";
+    otros:any="";
+    descripcion: any="";
+    estado: any="";
+    archivado: any="";
+    prioridad: any="";
+    solicitud: any="";
+    id: any="";
+    commentP: any="";
 
     closeResult: string;
     fileList: any;
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService, private modalService: NgbModal) { }
 
+    //Jose
     ngOnInit() {
         this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
           this.recordList = records.sort((a, b) => {
@@ -54,6 +67,7 @@ export class verSolicitudComponent implements OnInit {
             });
             
             this.filteredRecordList = this.recordList;
+            //console.log(this.filteredRecordList);
             
         });
     }
@@ -69,6 +83,15 @@ export class verSolicitudComponent implements OnInit {
         }
     }
 
+    //Jose
+
+    onSelectedStateChange(event:any)
+    {
+        this.state = event.target.value;
+    }
+
+
+
     open(content) {
         this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
           console.log(`Closed with: ${result}`);
@@ -76,6 +99,8 @@ export class verSolicitudComponent implements OnInit {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
       }
+
+      
 
       private getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {
@@ -88,41 +113,29 @@ export class verSolicitudComponent implements OnInit {
       }
     
       onSelect(selectedItem: any){
-        document.getElementById("nombre").setAttribute('value', selectedItem.nombrePaciente);
-        document.getElementById("correo").setAttribute('value', selectedItem.correoDigitador);
+        this.id=selectedItem.IDPaciente;
+        document.getElementById("nombrePaciente").setAttribute('value', selectedItem.nombrePaciente);
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
-        document.getElementById("fecha").innerHTML = selectedItem.fecha;
-        document.getElementById("prioridad").setAttribute('value', selectedItem.prioridad);
+        this.descripcion=(<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
         document.getElementById("hoja").setAttribute('href', selectedItem.hojaCompromiso);
-        if(selectedItem.otros != '') document.getElementById("otros").setAttribute('href', selectedItem.otros);
+        document.getElementById("otros").setAttribute('href', selectedItem.otros);
         document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
         document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
-        (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
-        (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
-        (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
-        console.log(selectedItem);
+        if(selectedItem.image_preview != '')document.getElementById("image_preview").setAttribute('src', selectedItem.imagen1);
+        if(selectedItem.image_preview2 != '')document.getElementById("image_preview2").setAttribute('src', selectedItem.imagen2);
         
       }
 
-      onDragOver(event) {
-        event.preventDefault();
-      }
-    
-      // From drag and drop
-      onDropSuccess(event) {
-          event.preventDefault();
-    
-          this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
-      }
-    
-      // From attachment link
-      onChangeFile(event) {
-          this.onFileChange(event.target.files);    // "target" is correct here
-      }
-    
-      private onFileChange(files: File[]) {
-        this.fileList = files;
-      }
+      
+      editarSolicitud(){
+        let solicitudItem={}
+        solicitudItem={
+          "comentarioP": this.commentP,
+          "estado": this.estado,
+        }
+        console.log(this.id);
+      this.recordService.editarSolicitud(this.id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
+    }
     
 }

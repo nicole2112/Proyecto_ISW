@@ -86,7 +86,7 @@ export class verHistorialComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
         (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
         (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
-        console.log(selectedItem);
+        //console.log(selectedItem);
         
       }
 

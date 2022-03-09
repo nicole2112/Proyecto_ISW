@@ -40,7 +40,7 @@ export class AgregarTestimoniosComponent {
     onSelectedPriorityChange(event:any)
     {
         this.prioridad = event.target.value;
-        console.log(this.prioridad);
+        //console.log(this.prioridad);
     }
 
     validarTitulo(nombre:string)

@@ -111,7 +111,7 @@ export class agregarSolicitudComponent implements OnInit{
                 });
                 
                 var hoy = this.fechaService.ObtenerFecha();
-                this.solicitudservice.postSolicitud(this.descripcion, this.nombre, "", "", this.ciudad, this.solicitud, this.socioeconomico, this.solDonacion, this.hojaComp,this.otros, this.imgCasa1, this.imgCasa2, hoy);
+               //this.solicitudservice.postSolicitud(this.descripcion, this.nombre, "", "", this.ciudad, this.solicitud, this.socioeconomico, this.solDonacion, this.hojaComp,this.otros, this.imgCasa1, this.imgCasa2, hoy); 
                 EnviarCorreo(this.nombre, this.solicitud, this.descripcion);
                 this.historialRedirectFunc();
                 this.callSendFunction();

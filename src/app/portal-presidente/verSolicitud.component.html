@@ -18,9 +18,9 @@
             </tr>
         </thead>
         <tbody>
-              <tr *ngFor="let record of filteredRecordList" class="userRowHover">
+              <tr *ngFor="let record of filteredRecordList" class="userRowHover" (click)="open(content); onSelect(record);">
                 <td class="rowInfo">{{record?.nombrePaciente}}</td>
-                <td class="rowInfo">{{record?.Correo}}</td>
+                <td class="rowInfo">{{record?.email}}</td>
                 <td class="rowInfo">{{record?.ciudad}}</td>
                 <td class="rowInfo">{{record?.queSolicita}}</td>
                 <td class="rowInfo">{{record?.fecha}}</td>
@@ -29,4 +29,148 @@
         </tbody>
       </table>
     </div>
+</div>
+
+  <!-- MODAL -->
+  
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        Detalle Solicitud
+      </h4>
+      <div class="fecha">
+        <p id="fecha"></p>
+      </div>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="nombre">Nombre Digitador</label>
+          <div class="input-group">
+            <input disabled id="nombreDigitador" type="text" class="form-control" placeholder="Nombre Digitador" name="dp">
+            <div class="input-group-append">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="nombre">Correo Digitador</label>
+          <div class="input-group">
+            <input disabled id="email" type="text" class="form-control" placeholder="Correo Digitador" name="dp">
+            <div class="input-group-append">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="nombre">Nombre Paciente</label>
+          <div class="input-group">
+            <input disabled id="nombrePaciente" type="text" class="form-control" placeholder="Nombre Paciente" name="dp">
+            <div class="input-group-append">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="ciudad">Ciudad</label>
+            <div class="input-group">
+              <input disabled id="ciudad" type="text" class="form-control" placeholder="Ciudad Paciente" name="dp">
+              <div class="input-group-append">
+                <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="solicitud">Solicitud</label>
+            <div class="input-group">
+              <input disabled id="solicitud" type="text" class="form-control" placeholder="Solicitud" name="dp">
+              <div class="input-group-append">
+                <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+              </div>
+            </div>
+          </div>
+        <div class="form-group">
+            <label for="descripcion">Descripcion</label>
+            <div class="input-group">
+              <textarea disabled name="descripcion" class="form-control" id="descripcion" cols="60" rows="7" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
+              <div class="input-group-append">
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="hoja">Hoja de Compromiso</label>
+            <br>
+            <a class="btn btn-primary" id="hoja" href="" target="_blank">
+              Ver Documento
+            </a>
+          </div>
+          <div class="form-group">
+            <label for="estudio">Estudio Socioecónomico </label>
+            <br>
+            <a class="btn btn-primary" id="estudio" href="" target="_blank">
+              Ver Documento
+            </a>
+          </div>
+          <div class="form-group">
+            <label for="donacion">Solicitud de Donación</label>
+            <br>
+            <a class="btn btn-primary" id="donacion" href="" target="_blank">
+              Ver Documento
+            </a>
+          </div>
+          <div class="form-group">
+            <label for="otros">Otros</label>
+            <br>
+            <a class="btn btn-primary" id="otros" target="_blank">
+              Ver Documento
+            </a>
+          </div>
+          <div class="form-group">
+            <label for="image_preview">Fotografía 1</label>
+            <div><img id="image_preview" class="float-child" width="150" height="150" alt=""></div>
+          </div>
+          <div class="form-group">
+            <label for="image_preview2">Fotografía 2</label>
+            <div><img id="image_preview2" class="float-child" width="150" height="150" alt=""></div>
+          </div>
+
+      </form>
+
+      <br>
+      <h5 style="color: red;">Espacio solo para Presidencia</h5>
+      <div class="form-group">
+        <label for="comentarioP">Comentarios de Presidencia</label>
+        <div class="input-group">
+          <textarea name="comentarioP" class="form-control" id="comentarioP" cols="40" rows="3" placeholder="Escribe un comentario sobre la solicitud." style="resize: none; margin-bottom: 1em;"></textarea>
+          <div class="input-group-append">
+            <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <div class="input-group">
+          <!--em class="text-danger" *ngIf="stateform.invalid && (stateForm.dirty || stateForm.touched)">*Estado es requerido</em-->
+          <select class="form-select" (change)="onSelectedStateChange($event)" name="estado" required>
+            <option *ngFor="let st of states" [ngValue]="st">{{st}}</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="modal-footer">
+        <button
+          type="submit"
+          id="saveBtn"
+          class="btn btn-outline-dark"
+          (click)="modal.close('Save click');"
+        >
+          Guardar
+        </button>
+    </div>  
+  </ng-template>
+  
+ 
 </div>
