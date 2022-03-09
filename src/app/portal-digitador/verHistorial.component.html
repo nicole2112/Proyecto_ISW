@@ -1,64 +1,94 @@
-<div style="background-color: white;">
-    <div class="container historial">
-      <div class="table-wrapper-scroll-y my-custom-scrollbar">
-        <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required>         
-          <option [ngValue]="'all'">Todos</option>         
-          <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>     
-        </select>
+<div style="background-color: white">
+  <div class="container historial">
+    <div class="d-flex justify-content-center">
+      <h3 style="margin-bottom: 2%; margin-top: 2%">Mis Solicitudes</h3>
+    </div>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <select
+        class="form-select my-3"
+        (change)="onSelectedChange($event)"
+        name="visibilidad"
+        required
+      >
+        <option [ngValue]="'all'">Todos</option>
+        <option *ngFor="let state of states" [ngValue]="state">
+          {{ state }}
+        </option>
+      </select>
       <table class="table table-striped table-bordered">
         <thead class="table-header" class="userRowHover">
-
-            <tr>
-                <th>Nombre del paciente</th>
-                <th>Ciudad</th>
-                <th>Solicitud</th>
-                <th>Fecha</th>
-                <th>Estado</th>
-                <th>Comentarios</th>
-            </tr>
+          <tr>
+            <th>Nombre del paciente</th>
+            <th>Ciudad</th>
+            <th>Solicitud</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Comentarios</th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let record of filteredRecordList" class="userRowHover" (click)="open(content); onSelect(record);">
-                <td class="rowInfo">{{record?.nombrePaciente}}</td>
-                <td class="rowInfo">{{record?.ciudad}}</td>
-                <td class="rowInfo">{{record?.queSolicita}}</td>
-                <td class="rowInfo">{{record?.fecha}}</td>
-                <td class="rowInfo">{{record?.estado}}</td>
-                <td class="rowInfo">{{record?.comentariosPresidencia}}</td>
-              </tr>
+          <tr
+            *ngFor="let record of filteredRecordList"
+            class="userRowHover"
+            (click)="open(content); onSelect(record)"
+          >
+            <td class="rowInfo">{{ record?.nombrePaciente }}</td>
+            <td class="rowInfo">{{ record?.ciudad }}</td>
+            <td class="rowInfo">{{ record?.queSolicita }}</td>
+            <td class="rowInfo">{{ record?.fecha }}</td>
+            <td class="rowInfo">{{ record?.estado }}</td>
+            <td class="rowInfo">{{ record?.comentariosPresidencia }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-  <!-- MODAL -->
-  
-  <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">
-        Detalle Solicitud
-      </h4>
-      <div class="fecha">
-        <p id="fecha"></p>
+    <!-- MODAL -->
+
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Detalle Solicitud</h4>
+        <div class="fecha">
+          <p id="fecha"></p>
+        </div>
+        <button
+          type="button"
+          class="btn btn-danger"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="nombre">Nombre del paciente</label>
-          <div class="input-group">
-            <input disabled id="nombre" type="text" class="form-control" placeholder="nombre apellido" name="dp">
-            <div class="input-group-append">
-              <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nombre">Nombre del paciente</label>
+            <div class="input-group">
+              <input
+                disabled
+                id="nombre"
+                type="text"
+                class="form-control"
+                placeholder="nombre apellido"
+                name="dp"
+              />
+              <div class="input-group-append">
+                <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-group">
+          <div class="form-group">
             <label for="ciudad">Ciudad</label>
             <div class="input-group">
-              <input disabled id="ciudad" type="text" class="form-control" placeholder="ciudad" name="dp">
+              <input
+                disabled
+                id="ciudad"
+                type="text"
+                class="form-control"
+                placeholder="ciudad"
+                name="dp"
+              />
               <div class="input-group-append">
                 <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
               </div>
@@ -67,7 +97,14 @@
           <div class="form-group">
             <label for="solicitud">Solicitud</label>
             <div class="input-group">
-              <input disabled id="solicitud" type="text" class="form-control" placeholder="solicitud" name="dp">
+              <input
+                disabled
+                id="solicitud"
+                type="text"
+                class="form-control"
+                placeholder="solicitud"
+                name="dp"
+              />
               <div class="input-group-append">
                 <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
               </div>
@@ -76,16 +113,32 @@
           <div class="form-group">
             <label for="estado">Estado</label>
             <div class="input-group">
-              <input disabled id="estado" type="text" class="form-control" placeholder="estado" name="dp">
+              <input
+                disabled
+                id="estado"
+                type="text"
+                class="form-control"
+                placeholder="estado"
+                name="dp"
+              />
               <div class="input-group-append">
                 <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
               </div>
             </div>
           </div>
-        <div class="form-group">
+          <div class="form-group">
             <label for="descripcion">Descripcion</label>
             <div class="input-group">
-              <textarea disabled name="descripcion" class="form-control" id="descripcion" cols="60" rows="7" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
+              <textarea
+                disabled
+                name="descripcion"
+                class="form-control"
+                id="descripcion"
+                cols="60"
+                rows="7"
+                placeholder="Lorem Ipsum"
+                style="resize: none; margin-bottom: 1em"
+              ></textarea>
               <div class="input-group-append">
                 <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
               </div>
@@ -94,7 +147,16 @@
           <div class="form-group">
             <label for="comentario">Comentarios</label>
             <div class="input-group">
-              <textarea disabled name="comentario" class="form-control" id="comentario" cols="60" rows="3" placeholder="No hay comentarios" style="resize: none; margin-bottom: 1em;"></textarea>
+              <textarea
+                disabled
+                name="comentario"
+                class="form-control"
+                id="comentario"
+                cols="60"
+                rows="3"
+                placeholder="No hay comentarios"
+                style="resize: none; margin-bottom: 1em"
+              ></textarea>
               <div class="input-group-append">
                 <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
               </div>
@@ -103,7 +165,16 @@
           <div class="form-group">
             <label for="comentarioP">Comentarios de Presidencia</label>
             <div class="input-group">
-              <textarea disabled name="comentarioP" class="form-control" id="comentarioP" cols="40" rows="3" placeholder="No hay comentarios de presidencia" style="resize: none; margin-bottom: 1em;"></textarea>
+              <textarea
+                disabled
+                name="comentarioP"
+                class="form-control"
+                id="comentarioP"
+                cols="40"
+                rows="3"
+                placeholder="No hay comentarios de presidencia"
+                style="resize: none; margin-bottom: 1em"
+              ></textarea>
               <div class="input-group-append">
                 <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
               </div>
@@ -111,61 +182,129 @@
           </div>
           <div class="form-group">
             <label for="hoja">Hoja de Compromiso</label>
-            <br>
+            <br />
             <a class="btn btn-primary" id="hoja" href="" target="_blank">
               Ver Documento
             </a>
           </div>
           <div class="form-group">
             <label for="estudio">Estudio Socioecónomico </label>
-            <br>
+            <br />
             <a class="btn btn-primary" id="estudio" href="" target="_blank">
               Ver Documento
             </a>
           </div>
           <div class="form-group">
             <label for="donacion">Solicitud de Donación</label>
-            <br>
+            <br />
             <a class="btn btn-primary" id="donacion" href="" target="_blank">
               Ver Documento
             </a>
           </div>
           <div class="form-group">
             <label for="otros">Otros</label>
-            <br>
+            <br />
             <a class="btn btn-primary" id="otros" target="_blank">
               Ver Documento
             </a>
           </div>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
+    </ng-template>
 
-      </form>
-    </div>
-    <div class="modal-footer">
-      
-    </div>  
-  </ng-template>
-  
-  <ng-template #confirmation let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el Héroe?</h4>
-      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <div class="input-group">
-            <input id="nameDelete" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
-            <div class="input-group-append">
+    <ng-template #confirmation let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">
+          ¿Seguro que desea eliminar el Héroe?
+        </h4>
+        <button
+          type="button"
+          class="btn btn-danger"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <div class="input-group">
+              <input
+                id="nameDelete"
+                class="form-control"
+                placeholder="ejemplo@gmail.com"
+                name="dp"
+                readonly
+              />
+              <div class="input-group-append"></div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-
-    </div>
-  </ng-template>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
+    </ng-template>
+  </div>
 </div>
-</div> <!--DIV PRINCIPAL-->
+<!--DIV PRINCIPAL-->
+<br /><br /><br />
+<div style="background-color: white">
+  <div class="d-flex justify-content-center">
+    <h3 style="margin-bottom: 2%; margin-top: 2%">
+      Buscar Solicitudes de Paciente
+    </h3>
+  </div>
+  <div class="container BuscaPaciente">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <select
+        class="form-select my-4 col-md-6"
+        (change)="onSelectedChangeBuscarPaciente($event)"
+        nambe="busqueda"
+        required
+      >
+        <option [ngValue]="'all'">Todos</option>
+        <option *ngFor="let filter of filtro" [ngValue]="filter">
+          {{ filter }}
+        </option>
+      </select>
+      <div class="form-floating sm-3 col-md-3">
+        <input
+          [(ngModel)]="CedulaPaciente"
+          type="text"
+          class="form-control"
+          id="CedulaPaciente"
+          name="CedulaPaciente"
+          placeholder="Id de Paciente a Buscar"
+        />
+        <label for="CedulaPaciente" style="margin-left: 2%"
+          >Id de Paciente a buscar</label
+        >
+        <button type="submit" class="btn button1" (click)="getSolicitudesXpaciente()">Buscar Paciente</button>
+      </div>
+
+      <!-- Tabla -->
+      <table class="table table-striped table-bordered">
+        <thead class="table-header" class="userRowHover">
+          <tr>
+            <th style="text-align: center">Solicitud</th>
+            <th style="text-align: center">Descripción</th>
+            <th style="text-align: center">Fecha de ingreso</th>
+            <th style="text-align: center">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let soli of listSoliPacienteFiltered"
+            class="userRowHover"
+          >
+            <td class="rowInfo">{{ soli.queSolicita}}</td>
+            <td class="rowInfo">{{ soli.descripcion}}</td>
+            <td class="rowInfo">{{ soli.fecha}}</td>
+            <td class="rowInfo">{{ soli.estado}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

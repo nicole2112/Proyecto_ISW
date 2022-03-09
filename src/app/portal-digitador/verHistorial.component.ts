@@ -11,6 +11,7 @@ import { runInThisContext } from 'vm';
 import { AuthenticationService } from "../services/auth.services";
 import { ThrowStmt } from '@angular/compiler';
 import { SolicitudesService } from '../services/solicitudes.service';
+import { PacientesService } from '../services/pacientes.service';
 
 @Component({
     selector: 'app-view-Historial-admin',
@@ -43,9 +44,20 @@ export class verHistorialComponent implements OnInit {
     urlList: any[] = [];
     descList: any[] = [];
     namePattern = '^[a-zA-Z ]*$';
+
+    //Variables para obtener solicitudes por paciente
+    solicitudesPacientesList :any[] =[];
+    listSoliPacienteFiltered :any[]=[];
+    CedulaPaciente: any;
+
+    filtro=[
+      'Aprobada',
+      'Denegada'
+    ];
+
     
 
-    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private modalService: NgbModal) { }
+    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private modalService: NgbModal, private pacienteService: PacientesService) { }
 
     ngOnInit() {
         this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
@@ -57,6 +69,34 @@ export class verHistorialComponent implements OnInit {
         });
     }
 
+    
+    getSolicitudesXpaciente(){
+      this.recordService.getALLSolicitudes().subscribe(data =>{
+        this.solicitudesPacientesList =[];
+        console.log(data);
+        data.forEach(soli =>{
+          let a = soli.payload.toJSON();
+          a['key'] = soli.key;        
+          if(a['IDPaciente'] == this.CedulaPaciente){
+            this.solicitudesPacientesList = a;
+          }else{
+            this.callNotFoundFunction();
+          }
+        })
+        this.filteredRecordList = this.solicitudesPacientesList;
+      })
+    }
+
+    callNotFoundFunction(){
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: '¡Paciente no encontrado!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
     onSelectedChange(event:any){
         const state = event.target.value;
         if (state == "Todos") {
@@ -66,6 +106,19 @@ export class verHistorialComponent implements OnInit {
                 return record.estado == state;
             });
         }
+    }
+
+    onSelectedChangeBuscarPaciente(event: any){
+      //meter la vaina para poder filtrar las solicitudes del paciente
+      const filter = event.target.value;
+      
+      if(filter == "Todos"){
+        this.listSoliPacienteFiltered = this.solicitudesPacientesList;
+      }else{
+        this.listSoliPacienteFiltered = this.solicitudesPacientesList.filter(record =>{
+          return record.estado == filter;
+        });
+      }
     }
 
     open(content) {
@@ -172,5 +225,4 @@ export class verHistorialComponent implements OnInit {
           );
       })
     }
-    
 }
