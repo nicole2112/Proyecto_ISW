@@ -12,6 +12,7 @@ import { AuthenticationService } from "../services/auth.services";
 import { ThrowStmt } from '@angular/compiler';
 import { SolicitudesService } from '../services/solicitudes.service';
 import { PacientesService } from '../services/pacientes.service';
+import { RetrieveUsersService } from '../services/retrieve-users.service';
 
 @Component({
     selector: 'app-view-Historial-admin',
@@ -22,6 +23,7 @@ import { PacientesService } from '../services/pacientes.service';
 export class verHistorialComponent implements OnInit {
     recordsList: any;
     recordList = [];
+    pacientesList = [];
     filteredRecordList = [];
     states = [
         'En espera',
@@ -57,16 +59,40 @@ export class verHistorialComponent implements OnInit {
 
     
 
-    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private modalService: NgbModal, private pacienteService: PacientesService) { }
+    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private pacService: PacientesService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
 
-    ngOnInit() {
-        this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
-            this.recordList = records.sort((a, b) => {
-                let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
-                return +dateA - +dateB;
+    async ngOnInit() {
+
+      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe(records => {
+          this.recordList = records.sort((a, b) => {
+              let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
+              return +dateA - +dateB;
+          });
+          this.filteredRecordList = this.recordList;
+          this.recordList = this.filteredRecordList;
+          this.filteredRecordList = [];
+
+          this.recordList.forEach(item =>
+            {
+              this.pacService.getPaciente2(item['IDPaciente']).subscribe(pac => {
+                pac['id'] = item['id'];
+                item = {...pac, ...item};
+                item['nombrePaciente'] = pac['nombre'];
+
+                this.userService.getUser(item['digitador']).subscribe(usuario =>
+                  {
+                    let userdata = {
+                      "email": usuario['email'],
+                      "nombreDigitador": usuario['nombre'],
+                    };
+
+                    item = {...item, ...userdata};
+                    console.log(item);
+                    this.filteredRecordList.push(item);
+                  });
+              });
             });
-            this.filteredRecordList = this.recordList;
-        });
+      });
     }
 
     

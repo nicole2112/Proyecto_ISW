@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { observable, Observable, of, from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 import Swal from 'sweetalert2'
 import { AuthenticationService } from './auth.services';
 import firebase from '@firebase/app-compat';
@@ -16,34 +16,45 @@ export class SolicitudesService {
   private user: firebase.default.User = null;
 
   solicitudRef: AngularFireList<any>;
+  refer: AngularFireList<any>;
 
-  listaSolicitudes: any[];
+  listaSolicitudes: any[]=[];
+  listaCorrecta: any[]=[];
+  listaPac: any[]=[];
 
   constructor(private db: AngularFireDatabase, private auth: AuthenticationService, private pacienteService: PacientesService) {
 
   }
 
-  getSolicitudes(id): Observable<any[]> {
+  getTodasSolicitudes(id): Observable<any[]> {
 
-    this.solicitudRef = this.db.list('solicitudes');
+    this.refer = this.db.list('solicitudes');
 
-    return this.solicitudRef.snapshotChanges().pipe(map(data => {
-      this.listaSolicitudes = [];
-      data.forEach(solicitud => {
+    return this.refer.snapshotChanges().pipe(map(data => {
+      data.forEach( solicitud => {
         let a = solicitud.payload.toJSON();
         a['key'] = solicitud.key;
-        if (a['digitador'] == id)
+        if (a['digitador'] == id || id == "ZQjKhXkpXPZJQ5UbT14JsFE8rvu2")
           this.listaSolicitudes.push(a);
       })
-      return this.listaSolicitudes;
-    }))
+      return this.listaSolicitudes; 
+    }));
+
   }
 
-  getSolicitud(idSol): Observable<any[]> {
+  async isPresidente()
+  {
+    return this.auth.isPresdente().subscribe(data =>
+      {
+        return data;
+      });
+  }
 
-    this.solicitudRef = this.db.list('solicitudes');
+  getSolicitud(idSol): Observable<any> {
 
-    return this.solicitudRef.snapshotChanges().pipe(map(data => {
+    this.refer = this.db.list('solicitudes');
+
+    return this.refer.snapshotChanges().pipe(map(data => {
       let nuevaSol: any;
       this.listaSolicitudes = [];
       data.forEach(solicitud => {
@@ -113,17 +124,19 @@ export class SolicitudesService {
 
   editarSolicitud(id, descripcionCaso, estado, archivado, prioridad, queSolicita, estudioSE, archivoSolicitud, archivoAdicional) {
     
-    let solicitud = this.getSolicitud(id);
-    solicitud["descripcion"]= descripcionCaso;
-    solicitud["estado"]= estado;
-    solicitud["prioridad"]= prioridad;
-    solicitud["queSolicita"]= queSolicita;
-    solicitud["estudioSE"]= estudioSE;
-    solicitud["solicitudDonacion"]= archivoSolicitud;
-    solicitud["otros"]= archivoAdicional;
-    solicitud["archivado"]= archivado;
+    this.getSolicitud(id).subscribe( solicitud =>
+      {
+        solicitud["descripcion"]= descripcionCaso;
+        solicitud["estado"]= estado;
+        solicitud["prioridad"]= prioridad;
+        solicitud["queSolicita"]= queSolicita;
+        solicitud["estudioSE"]= estudioSE;
+        solicitud["solicitudDonacion"]= archivoSolicitud;
+        solicitud["otros"]= archivoAdicional;
+        solicitud["archivado"]= archivado;
 
-    this.db.object(`solicitudes/${id}`).set(solicitud);
+        this.db.object(`solicitudes/${id}`).set(solicitud);
+      });
   }
 
   actualizarArchivo(urlArchivo, id, archivoNombre) {
