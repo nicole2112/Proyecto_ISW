@@ -149,10 +149,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="estado">Estado</label>
+        <label for="state">Estado</label>
         <div class="input-group">
-          <!--em class="text-danger" *ngIf="stateform.invalid && (stateForm.dirty || stateForm.touched)">*Estado es requerido</em-->
-          <select class="form-select" (change)="onSelectedStateChange($event)" name="estado" required>
+          <select class="form-select" (change)="onSelectedStateChange($event)" name="state" required>
             <option *ngFor="let st of states" [ngValue]="st">{{st}}</option>
           </select>
         </div>
@@ -165,7 +164,7 @@
           type="submit"
           id="saveBtn"
           class="btn btn-outline-dark"
-          (click)="modal.close('Save click');"
+          (click)="modal.close('Save click'); editarSolicitud();"
         >
           Guardar
         </button>

@@ -30,16 +30,16 @@ export class verSolicitudComponent implements OnInit {
   ];
     state='En espera';
     descList: any[] = [];
-    socioeconomico: any="";
-    solDonacion: any="";
-    otros:any="";
-    descripcion: any="";
-    estado: any="";
-    archivado: any="";
-    prioridad: any="";
-    solicitud: any="";
-    id: any="";
-    commentP: any="";
+    socioeconomico;
+    solDonacion;
+    otros;
+    descripcion;
+    estado;
+    archivado;
+    prioridad;
+    solicitud;
+    id;
+    commentP;
 
     closeResult: string;
     fileList: any;
@@ -48,7 +48,7 @@ export class verSolicitudComponent implements OnInit {
 
     //Jose
     ngOnInit() {
-        this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
+        this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe(records => {
           this.recordList = records.sort((a, b) => {
                 let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
                 return +dateA - +dateB;
@@ -117,25 +117,22 @@ export class verSolicitudComponent implements OnInit {
         document.getElementById("nombrePaciente").setAttribute('value', selectedItem.nombrePaciente);
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
-        this.descripcion=(<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
+        (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
         document.getElementById("hoja").setAttribute('href', selectedItem.hojaCompromiso);
         document.getElementById("otros").setAttribute('href', selectedItem.otros);
         document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
         document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
-        if(selectedItem.image_preview != '')document.getElementById("image_preview").setAttribute('src', selectedItem.imagen1);
-        if(selectedItem.image_preview2 != '')document.getElementById("image_preview2").setAttribute('src', selectedItem.imagen2);
-        
+        document.getElementById("image_preview").setAttribute('src', selectedItem.imagen1); //Pendiente
+        if(selectedItem.image_preview2 != '')document.getElementById("image_preview2").setAttribute('src', selectedItem.imagen2); //Pendiente
+      
       }
 
-      
       editarSolicitud(){
-        let solicitudItem={}
-        solicitudItem={
-          "comentarioP": this.commentP,
-          "estado": this.estado,
-        }
+        this.commentP= (<HTMLInputElement>document.getElementById('comentarioP')).value;
         console.log(this.id);
-      this.recordService.editarSolicitud(this.id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
-    }
+        console.log(this.state);
+        console.log(this.commentP);
+        this.recordService.editarSolicitudPresidencia(this.id,this.state,this.commentP);
+   }
     
 }

@@ -35,7 +35,7 @@ export class verHistorialComponent implements OnInit {
     constructor(private service: AuthenticationService, private recordService: SolicitudesService, private modalService: NgbModal) { }
 
     ngOnInit() {
-        this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
+        this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe(records => {
             this.recordList = records.sort((a, b) => {
                 let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
                 return +dateA - +dateB;
