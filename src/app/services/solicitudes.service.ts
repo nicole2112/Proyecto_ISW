@@ -38,22 +38,38 @@ export class SolicitudesService {
     }))
   }
 
-  postSolicitud(descripcionCaso, nombrePaciente, comentario, comentariosPresidencia, ciudad, queSolicita, estudioSE, archivoSolicitud, hojaCompromiso, archivoAdicional, imagen1, imagen2, fecha) {
+  getSolicitud(idSol): Observable<any[]> {
+
+    this.blogRef = this.db.list('solicitudes');
+
+    return this.blogRef.snapshotChanges().pipe(map(data => {
+      let nuevaSol: any;
+      this.listaSolicitudes = [];
+      data.forEach(solicitud => {
+        let a = solicitud.payload.toJSON();
+        a['key'] = solicitud.key;
+        if (a['id'] == idSol)
+        {
+          nuevaSol = a;
+        }
+      })
+      return nuevaSol;
+    }))
+  }
+
+  postSolicitud(descripcionCaso, IDPaciente, prioridad, comentariosPresidencia, queSolicita, estudioSE, archivoSolicitud, archivoAdicional, fecha) {
     let solicitud = {
       "descripcion": descripcionCaso,
       "digitador": this.auth.userDetails.uid,
-      "nombrePaciente": nombrePaciente,
+      "IDPaciente": IDPaciente,
       "estado": "En espera",
-      "comentario": comentario,
+      "prioridad": prioridad,
       "comentariosPresidencia": comentariosPresidencia,
-      "ciudad": ciudad,
       "queSolicita": queSolicita,
       "estudioSE": estudioSE,
       "solicitudDonacion": archivoSolicitud,
-      "hojaCompromiso": hojaCompromiso,
       "otros": archivoAdicional,
-      "imagen1": imagen1,
-      "imagen2": imagen2,
+      "archivado": 0,
       "fecha": fecha
     };
 
@@ -61,6 +77,21 @@ export class SolicitudesService {
       solicitud["id"] = data.key;
       this.db.object(`solicitudes/${data.key}`).set(solicitud);
     });
+  }
+
+  editarSolicitud(id, descripcionCaso, estado, archivado, prioridad, queSolicita, estudioSE, archivoSolicitud, archivoAdicional) {
+
+    let solicitud = this.getSolicitud(id);
+    solicitud["descripcion"]= descripcionCaso;
+    solicitud["estado"]= estado;
+    solicitud["prioridad"]= prioridad;
+    solicitud["queSolicita"]= queSolicita;
+    solicitud["estudioSE"]= estudioSE;
+    solicitud["solicitudDonacion"]= archivoSolicitud;
+    solicitud["otros"]= archivoAdicional;
+    solicitud["archivado"]= archivado;
+
+    this.db.object(`solicitudes/${id}`).set(solicitud);
   }
 
   actualizarArchivo(urlArchivo, id, archivoNombre) {

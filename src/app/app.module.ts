@@ -60,6 +60,10 @@ import { agregarSolicitudComponent } from './portal-digitador/agregarSolicitud.c
 import { DocumentsComponent } from './about-us/documents.component';
 import { FechaService } from './services/fecha.service';
 import { DatePipe } from '@angular/common';
+import { AddPatientComponent } from './patients/addPatient.component';
+import { ViewPatientsComponent } from './patients/viewPatients.component';
+import { PatientHistoryComponent } from './patients/patientHistory.component';
+import { PacientesService } from './services/pacientes.service';
 
 
 @NgModule({
@@ -100,7 +104,10 @@ import { DatePipe } from '@angular/common';
     verHistorialComponent,
     verFormulariosComponent,
     agregarSolicitudComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    ViewPatientsComponent,
+    AddPatientComponent,
+    PatientHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -124,6 +131,7 @@ import { DatePipe } from '@angular/common';
     ModalService,
     PdfServices,
     FechaService,
+    PacientesService,
     DatePipe,
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],

@@ -3,12 +3,14 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <!--
     <div class="dropdown-users">
       <button class="dropbtn"><fa-icon class="icons" [icon]="faDollyFlatbed"></fa-icon>Inventarios   ▼</button>
       <div class="dropdown-content">
         <a>Ingresar Inventario</a>
       </div>
     </div>
+    -->
     <div class="dropdown-users">
       <button class="dropbtn"><fa-icon class="icons" [icon]="faHandHoldingUsd"></fa-icon>Solicitudes  ▼</button>
       <div class="dropdown-content">
@@ -18,6 +20,14 @@
     </div>
     <div class="dropdown-users">
       <button class="dropbtn" (click)="showFormularios()" [routerLink]="['/portal-digitador']"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Formularios</button>
+    </div>
+    <div class="dropdown-users">
+      <button class="dropbtn"><fa-icon class="icons" [icon]="faHospitalUser"></fa-icon>Pacientes ▼</button>
+      <div class="dropdown-content">
+        <a (click)="viewPatients()" [routerLink]="['/portal-digitador']">Ver Pacientes</a>
+        <a (click)="addPatient()" [routerLink]="['/portal-digitador']">Ingresar Paciente</a>
+        <a (click)="viewPatientHistory()" [routerLink]="['/portal-digitador']">Solicitudes de Paciente</a>
+      </div>
     </div>
     <div class="dropdownx navbar-nav ms-auto">
       <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>

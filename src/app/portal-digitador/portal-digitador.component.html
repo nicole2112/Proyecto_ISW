@@ -1,13 +1,21 @@
-<app-navbar-portal-digitador (viewHistorialClick)="toggleSolicitudes = false; toggleFormularios = false; toggleHistorial = true;"
-(viewSolicitudesClick)="toggleSolicitudes = true; toggleFormularios = false; toggleHistorial = false; "
-(viewFormulariosClick)="toggleSolicitudes = false; toggleFormularios = true; toggleHistorial = false; " >
+<app-navbar-portal-digitador 
+(viewRequestHistoryClick)="toggleAddSolicitud = false; toggleHistorial = true; toggleFormularios = false; toggleViewPatients = false; toggleAddPatient = false; togglePatientHistory = false"
+(addRequestClick)="toggleAddSolicitud = true; toggleHistorial = false; toggleFormularios = false; toggleViewPatients = false; toggleAddPatient = false; togglePatientHistory = false"
+(viewFormulariosClick)="toggleAddSolicitud = false; toggleHistorial = false; toggleFormularios = true; toggleViewPatients = false; toggleAddPatient = false; togglePatientHistory = false" 
+(viewPatientsClick)="toggleAddSolicitud = false; toggleHistorial = false; toggleFormularios = false; toggleViewPatients = true; toggleAddPatient = false; togglePatientHistory = false"
+(addPatientClick)="toggleAddSolicitud = false; toggleHistorial = false; toggleFormularios = false; toggleViewPatients = false; toggleAddPatient = true; togglePatientHistory = false"
+(viewPatientHistoryClick)="toggleAddSolicitud = false; toggleHistorial = false; toggleFormularios = false; toggleViewPatients = false; toggleAddPatient = false; togglePatientHistory = true"
+>
 </app-navbar-portal-digitador>
 
 <div class="container table-users">
   <div class="table-wrapper-scroll-y my-custom-scrollbar">    
-    <app-add-Solicitud-digitador *ngIf="toggleSolicitudes" (historialRedirect)="toggleHistorial=true; toggleSolicitudes=false; toggleFormularios=false"></app-add-Solicitud-digitador>
+    <app-add-Solicitud-digitador *ngIf="toggleAddSolicitud" (historialRedirect)="toggleAddSolicitud = false; toggleHistorial = true;"></app-add-Solicitud-digitador>
     <app-view-Historial-admin *ngIf="toggleHistorial"></app-view-Historial-admin>
     <app-view-formularios-digitador *ngIf="toggleFormularios"></app-view-formularios-digitador>
+    <app-view-patients *ngIf="toggleViewPatients"></app-view-patients>
+    <app-add-patient *ngIf="toggleAddPatient" (viewPatientsRedirect)="toggleAddPatient = false; toggleViewPatients = true"></app-add-patient>
+    <app-patient-history *ngIf="togglePatientHistory"></app-patient-history>
   </div>
 </div>
 

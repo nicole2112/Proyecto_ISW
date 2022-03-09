@@ -31,7 +31,24 @@ export class verHistorialComponent implements OnInit {
     ];
 
     closeResult: string;
-    fileList: any;
+    IDPaciente: any="";
+    prioridad: any=3;
+    archivado: any=0;
+    solicitud: any="";
+    estado: any="";
+    descripcion: any="";
+    socioeconomico: any="";
+    solDonacion: any="";
+    otros:any="";
+    fileList: any[] = [];
+    urlList: any[] = [];
+    descList: any[] = [];
+    namePattern = '^[a-zA-Z ]*$';
+
+    solicitudSelectedId: any;
+
+    nombre: any;
+    ciudad: any;
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService, private patientService: RetrievePatientService, private modalService: NgbModal) { }
 
@@ -81,10 +98,11 @@ export class verHistorialComponent implements OnInit {
 
       onSelect(selectedItem: any){
         this.getPacienteData(selectedItem.IDPaciente);
-
-        if(selectedItem.estado === "Necesita mas informacion"){
-          (document.getElementById("nombre") as any).disabled = false;
-          (document.getElementById("ciudad") as any).disabled = false;
+        console.log(selectedItem.key);
+        this.solicitudSelectedId = selectedItem.key;
+        if(selectedItem.estado === "En espera"){
+          // (document.getElementById("nombre") as any).disabled = false;
+          // (document.getElementById("ciudad") as any).disabled = false;
           (document.getElementById("solicitud") as any).disabled = false;
           (document.getElementById("descripcion") as any).disabled = false;
           (document.getElementById("prioridadOptions") as any).disabled = false;
@@ -114,14 +132,14 @@ export class verHistorialComponent implements OnInit {
 
         if(selectedItem.prioridad == 1)
         {
-          optionPrioridad1.innerHTML = "Alta";
+          optionPrioridad1.innerHTML = "Inmediata";
           optionPrioridad1.selected = true;
 
-          optionPrioridad2.innerHTML = "Media"
+          optionPrioridad2.innerHTML = "Alta"
           optionPrioridad3.innerHTML = "Baja"
 
         }else if(selectedItem.prioridad == 2){
-          optionPrioridad1.innerHTML = "Media";
+          optionPrioridad1.innerHTML = "Inmediata";
           optionPrioridad1.selected = true;
 
           optionPrioridad2.innerHTML = "Alta"
@@ -130,8 +148,8 @@ export class verHistorialComponent implements OnInit {
           optionPrioridad1.innerHTML = "Baja";
           optionPrioridad1.selected = true;
 
-          optionPrioridad2.innerHTML = "Alta"
-          optionPrioridad3.innerHTML = "Media"
+          optionPrioridad2.innerHTML = "Inmediata"
+          optionPrioridad3.innerHTML = "Alta"
         }
         selectorPrioridad.appendChild(optionPrioridad1);
         selectorPrioridad.appendChild(optionPrioridad2);
@@ -149,16 +167,88 @@ export class verHistorialComponent implements OnInit {
       onDropSuccess(event) {
           event.preventDefault();
 
-          this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
+          this.onFileChange(event.dataTransfer.files, event.target.name);    // notice the "dataTransfer" used instead of "target"
       }
 
       // From attachment link
       onChangeFile(event) {
-          this.onFileChange(event.target.files);    // "target" is correct here
+          this.onFileChange(event.target.files, event.target.name);    // "target" is correct here
       }
 
-      private onFileChange(files: File[]) {
-        this.fileList = files;
+      private onFileChange(files: File[], descArchivo) {
+        this.fileList.push(files[0]);
+        this.descList.push(descArchivo);
       }
+
+      getValues(){
+        var nombreVal = document.getElementById('nombre') as HTMLInputElement;
+        var ciudadVal = document.getElementById('ciudad') as HTMLInputElement;
+        var solicitudVal = document.getElementById('solicitud') as HTMLInputElement;
+        var descripcionVal = document.getElementById('descripcion') as HTMLTextAreaElement;
+
+        let nombreValue = nombreVal.value;
+        let ciudadValue = ciudadVal.value;
+        let solicitudValue = solicitudVal.value;
+        let descripcionValue = descripcionVal.value;
+
+        var prioridadSend;
+        let updateValue = {};
+
+        this.nombre = nombreValue;
+        this.descripcion =  descripcionValue;
+        this.ciudad = ciudadValue;
+        this.solicitud = solicitudValue;
+        this.prioridad= prioridadSend;
+      }
+
+      editarSolicitud(id){
+        console.log("ID ACA: ");
+        console.log(id);
+        Promise.all(this.fileList.map( async (file) =>
+        {
+            return this.guardarArchivo(file);
+        })).then((message) =>
+        {
+          this.descList.forEach((item, index, array) =>
+          {
+              switch(item)
+              {
+                case "socioeconomico":
+                    this.socioeconomico = message[index];
+                    break;
+                case "solDonacion":
+                    this.solDonacion = message[index];
+                    break;
+                case "otros":
+                    this.otros = message[index];
+                    break;
+              }
+          });
+          this.recordService.editarSolicitud(id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
+        });
+    }
+
+    async guardarArchivo(nuevoArchivo){
+      return new Promise(async (resolve, reject) =>
+      {
+          let filename = nuevoArchivo.name;
+
+          const storage = getStorage();
+          const storageRef = ref(storage, filename);
+
+          uploadBytes(storageRef, nuevoArchivo).then((snapshot) => {
+
+
+          }).then(
+          ()=>{
+              getDownloadURL(storageRef).then(data =>{
+              resolve(data);
+              }).catch((error)=>{
+                  reject(error);
+              });
+          }
+          );
+      })
+    }
 
 }
