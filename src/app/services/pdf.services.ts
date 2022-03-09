@@ -7,7 +7,6 @@ export class PdfServices{
 
     actualizarPDF(urlPDF, id, NombrePdf, fechaPdf){
         const db = getDatabase();
-
        set(ref(db, 'PDF-Programas/' + id),{
            "Nombre": NombrePdf,
            "Fecha" : fechaPdf,

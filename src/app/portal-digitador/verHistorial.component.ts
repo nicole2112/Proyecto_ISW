@@ -11,6 +11,7 @@ import { runInThisContext } from 'vm';
 import { AuthenticationService } from "../services/auth.services";
 import { ThrowStmt } from '@angular/compiler';
 import { SolicitudesService } from '../services/solicitudes.service';
+import { RetrievePatientService } from '../services/retrieve-pacient.service';
 
 @Component({
     selector: 'app-view-Historial-admin',
@@ -32,7 +33,7 @@ export class verHistorialComponent implements OnInit {
     closeResult: string;
     fileList: any;
 
-    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private modalService: NgbModal) { }
+    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private patientService: RetrievePatientService, private modalService: NgbModal) { }
 
     ngOnInit() {
         this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
@@ -42,6 +43,11 @@ export class verHistorialComponent implements OnInit {
             });
             this.filteredRecordList = this.recordList;
         });
+    }
+
+    getPacienteData(id) {
+      let patient = this.patientService.getPacientById(id);
+      console.log(patient);
     }
 
     onSelectedChange(event:any){
@@ -56,7 +62,7 @@ export class verHistorialComponent implements OnInit {
     }
 
     open(content) {
-        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.modalService.open(content, { size: 'xl', backdrop: 'static', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
           console.log(`Closed with: ${result}`);
         }, (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -72,8 +78,19 @@ export class verHistorialComponent implements OnInit {
           return `with: ${reason}`;
         }
       }
-    
+
       onSelect(selectedItem: any){
+        this.getPacienteData(selectedItem.IDPaciente);
+
+        if(selectedItem.estado === "Necesita mas informacion"){
+          (document.getElementById("nombre") as any).disabled = false;
+          (document.getElementById("ciudad") as any).disabled = false;
+          (document.getElementById("solicitud") as any).disabled = false;
+          (document.getElementById("descripcion") as any).disabled = false;
+          (document.getElementById("prioridadOptions") as any).disabled = false;
+        }
+
+        document.getElementById("id-paciente").setAttribute('value', selectedItem.IDPaciente);
         document.getElementById("nombre").setAttribute('value', selectedItem.nombrePaciente);
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("estado").setAttribute('value', selectedItem.estado);
@@ -84,30 +101,64 @@ export class verHistorialComponent implements OnInit {
         document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
         document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
-        (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
+        // (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
         (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
+
+        var selectorPrioridad = document.getElementById("prioridadOptions");
+        var optionPrioridad1 = document.createElement("option");
+        var optionPrioridad2 = document.createElement("option");
+        var optionPrioridad3 = document.createElement("option");
+
+        console.log("Prioridad");
+        console.log(selectedItem.prioridad);
+
+        if(selectedItem.prioridad == 1)
+        {
+          optionPrioridad1.innerHTML = "Alta";
+          optionPrioridad1.selected = true;
+
+          optionPrioridad2.innerHTML = "Media"
+          optionPrioridad3.innerHTML = "Baja"
+
+        }else if(selectedItem.prioridad == 2){
+          optionPrioridad1.innerHTML = "Media";
+          optionPrioridad1.selected = true;
+
+          optionPrioridad2.innerHTML = "Alta"
+          optionPrioridad3.innerHTML = "Baja"
+        }else{
+          optionPrioridad1.innerHTML = "Baja";
+          optionPrioridad1.selected = true;
+
+          optionPrioridad2.innerHTML = "Alta"
+          optionPrioridad3.innerHTML = "Media"
+        }
+        selectorPrioridad.appendChild(optionPrioridad1);
+        selectorPrioridad.appendChild(optionPrioridad2);
+        selectorPrioridad.appendChild(optionPrioridad3);
+
         console.log(selectedItem);
-        
+
       }
 
       onDragOver(event) {
         event.preventDefault();
       }
-    
+
       // From drag and drop
       onDropSuccess(event) {
           event.preventDefault();
-    
+
           this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
       }
-    
+
       // From attachment link
       onChangeFile(event) {
           this.onFileChange(event.target.files);    // "target" is correct here
       }
-    
+
       private onFileChange(files: File[]) {
         this.fileList = files;
       }
-    
+
 }
