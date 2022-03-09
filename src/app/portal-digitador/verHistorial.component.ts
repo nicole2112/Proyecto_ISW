@@ -70,7 +70,7 @@ export class verHistorialComponent implements OnInit {
             {
               this.pacService.getPaciente2(item['IDPaciente']).subscribe(pac => {
                 pac['id'] = item['id'];
-                item = {...item, ...pac};
+                item = {...pac, ...item};
                 item['nombrePaciente'] = pac['nombre'];
 
                 this.userService.getUser(item['digitador']).subscribe(usuario =>
