@@ -30,15 +30,7 @@ export class verSolicitudComponent implements OnInit {
   ];
     state='En espera';
     descList: any[] = [];
-    socioeconomico;
-    solDonacion;
-    otros;
-    descripcion;
-    estado;
-    archivado;
-    prioridad;
-    solicitud;
-    id;
+    solicitudSelectedId: any;
     commentP;
 
     closeResult: string;
@@ -113,7 +105,7 @@ export class verSolicitudComponent implements OnInit {
       }
     
       onSelect(selectedItem: any){
-        this.id=selectedItem.IDPaciente;
+        this.solicitudSelectedId = selectedItem.key;
         document.getElementById("nombrePaciente").setAttribute('value', selectedItem.nombrePaciente);
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
@@ -127,12 +119,17 @@ export class verSolicitudComponent implements OnInit {
       
       }
 
-      editarSolicitud(){
+      editarSolicitud(id){
         this.commentP= (<HTMLInputElement>document.getElementById('comentarioP')).value;
-        console.log(this.id);
-        console.log(this.state);
-        console.log(this.commentP);
-        this.recordService.editarSolicitudPresidencia(this.id,this.state,this.commentP);
+        
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Solicitud Modificada!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.recordService.editarSolicitudPresidencia(id,this.state,this.commentP);
    }
     
 }
