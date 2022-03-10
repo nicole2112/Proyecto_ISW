@@ -37,7 +37,7 @@ export class SolicitudesService {
         if (a['digitador'] == id || id == "ZQjKhXkpXPZJQ5UbT14JsFE8rvu2")
           this.listaSolicitudes.push(a);
       })
-      return this.listaSolicitudes; 
+      return this.listaSolicitudes;
     }));
 
   }
@@ -108,7 +108,7 @@ export class SolicitudesService {
   }
 
   editarSolicitud(id, descripcionCaso, estado, archivado, prioridad, queSolicita, estudioSE, archivoSolicitud, archivoAdicional) {
-    
+
     this.getSolicitud(id).subscribe( solicitud =>
       {
         console.log(solicitud);

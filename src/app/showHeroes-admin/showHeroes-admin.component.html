@@ -24,11 +24,11 @@
       </tbody>
     </table>
   </div>
-  
+
 
 
   <!-- MODAL -->
-  
+
   <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Editar Héroe</h4>
@@ -97,7 +97,7 @@
                       Agregar imagen...
                     </label>
                   </div>
-              
+
             </div>
         </div>
       </form>
@@ -105,9 +105,9 @@
     <div class="modal-footer">
       <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, heroeSelectedId, heroeSelectedName); onDeleteConfirmation(heroeSelectedName); modal.close('Delete Click');">Eliminar</button>
       <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); saveHeroe();">Guardar</button>
-    </div>  
+    </div>
   </ng-template>
-  
+
   <ng-template #confirmation let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el Héroe?</h4>
