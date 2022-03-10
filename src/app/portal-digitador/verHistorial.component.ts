@@ -13,6 +13,8 @@ import { ThrowStmt } from '@angular/compiler';
 import { SolicitudesService } from '../services/solicitudes.service';
 import { PacientesService } from '../services/pacientes.service';
 import { RetrieveUsersService } from '../services/retrieve-users.service';
+import { combineLatest, forkJoin, Observable } from 'rxjs';
+import { map, take, takeWhile } from 'rxjs/operators';
 
 @Component({
     selector: 'app-view-Historial-admin',
@@ -50,37 +52,58 @@ export class verHistorialComponent implements OnInit {
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService, private pacService: PacientesService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
 
-    async ngOnInit() {
+    ngOnInit() {
 
-      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe(records => {
-          this.recordList = records.sort((a, b) => {
+      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
+          let listanueva;
+          listanueva = records.sort((a, b) => {
               let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
               return +dateA - +dateB;
           });
-          this.filteredRecordList = this.recordList;
-          this.recordList = this.filteredRecordList;
-          this.filteredRecordList = [];
 
-          this.recordList.forEach(item =>
+          let observables: Observable<any>[] = [];
+          let observables2: Observable<any>[] = [];
+
+          listanueva.forEach( item =>
+          {
+            observables.push(this.pacService.getPaciente2(item['IDPaciente']))
+          });
+
+          let nuevalista:any = [];
+          combineLatest(observables).pipe(map(pac =>
+          {
+            
+            let item2;
+            listanueva.forEach( (item, index) =>
             {
-              this.pacService.getPaciente2(item['IDPaciente']).subscribe(pac => {
-                pac['id'] = item['id'];
-                item = {...pac, ...item};
-                item['nombrePaciente'] = pac['nombre'];
-
-                this.userService.getUser(item['digitador']).subscribe(usuario =>
-                  {
-                    let userdata = {
-                      "email": usuario['email'],
-                      "nombreDigitador": usuario['nombre'],
-                    };
-
-                    item = {...item, ...userdata};
-                    console.log(item);
-                    this.filteredRecordList.push(item);
-                  });
-              });
+              pac[index]['id'] = item['id'];
+              item2 = {...pac[index], ...item};
+              item2['nombrePaciente'] = pac[index]['nombre'];
+              nuevalista.push(item2);
             });
+
+            nuevalista.forEach( objeto =>
+            {
+              observables2.push(this.userService.getUser(objeto['digitador']));
+              this.userService.getUser(objeto['digitador']).pipe(take(1)).subscribe(usuario =>
+                {
+                  let item3;
+                  let userdata = {
+                    "email": usuario['email'],
+                    "nombreDigitador": usuario['nombre'],
+                  };
+                  item3 = {...objeto, ...userdata};
+                  if(!this.filteredRecordList.includes(item3))
+                  {
+                    this.filteredRecordList.push(item3);
+                    this.recordList.push(item3);
+                  }
+                });
+            });
+        
+          }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
+            this.recordList = [...new Set(this.recordList)];});
+
       });
     }
 
