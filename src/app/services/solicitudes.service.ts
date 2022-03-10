@@ -111,7 +111,6 @@ export class SolicitudesService {
 
     this.getSolicitud(id).subscribe( solicitud =>
       {
-        console.log(solicitud);
         solicitud["descripcion"]= descripcionCaso;
         solicitud["estado"]= estado;
         solicitud["prioridad"]= prioridad;

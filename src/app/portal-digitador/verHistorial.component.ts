@@ -17,6 +17,9 @@ import { RetrieveUsersService } from '../services/retrieve-users.service';
 import { combineLatest, forkJoin, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 
+import '../../assets/js/smtp.js';
+declare const Email: any;
+
 @Component({
     selector: 'app-view-Historial-admin',
     templateUrl: './verHistorial.component.html',
@@ -38,10 +41,12 @@ export class verHistorialComponent implements OnInit {
     closeResult: string;
     IDPaciente: any="";
     prioridad: any=3;
+    prioridadEmail: any="";
     archivado: any=0;
     solicitud: any="";
     estado: any="";
     descripcion: any="";
+    hoja: any="";
     socioeconomico: any="";
     solDonacion: any="";
     otros:any="";
@@ -55,6 +60,9 @@ export class verHistorialComponent implements OnInit {
     nombre: any;
     ciudad: any;
     prioridadString: any;
+
+    digitadorMod: any="";
+    nombrePaciente: any="";
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService, private pacService: PacientesService, private patientService: RetrievePatientService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
 
@@ -113,7 +121,6 @@ export class verHistorialComponent implements OnInit {
 
     getPacienteData(id) {
       let patient = this.patientService.getPacientById(id);
-      // console.log(patient);
     }
 
     onSelectedChange(event:any){
@@ -129,7 +136,6 @@ export class verHistorialComponent implements OnInit {
 
     open(content) {
         this.modalService.open(content, { size: 'xl', backdrop: 'static', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-          console.log(`Closed with: ${result}`);
         }, (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
@@ -147,11 +153,8 @@ export class verHistorialComponent implements OnInit {
 
       onSelect(selectedItem: any){
         this.getPacienteData(selectedItem.IDPaciente);
-        console.table(selectedItem);
         this.solicitudSelectedId = selectedItem.key;
         if(selectedItem.estado === "En espera"){
-          // (document.getElementById("nombre") as any).disabled = false;
-          // (document.getElementById("ciudad") as any).disabled = false;
           (document.getElementById("solicitud") as any).disabled = false;
           (document.getElementById("descripcion") as any).disabled = false;
           (document.getElementById("prioridadOptions") as any).disabled = false;
@@ -170,7 +173,6 @@ export class verHistorialComponent implements OnInit {
         document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
 
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
-        // (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
         (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
         document.getElementById("image_preview").setAttribute('src', selectedItem.imgCasa1);
 
@@ -178,9 +180,6 @@ export class verHistorialComponent implements OnInit {
         var optionPrioridad1 = document.createElement("option");
         var optionPrioridad2 = document.createElement("option");
         var optionPrioridad3 = document.createElement("option");
-
-        // console.log("Prioridad");
-        // console.log(selectedItem.prioridad);
 
         if(selectedItem.prioridad == 1)
         {
@@ -207,7 +206,16 @@ export class verHistorialComponent implements OnInit {
         selectorPrioridad.appendChild(optionPrioridad2);
         selectorPrioridad.appendChild(optionPrioridad3);
 
-        console.log(selectedItem);
+        this.socioeconomico = selectedItem.estudioSE;
+        this.solDonacion = selectedItem.solicitudDonacion;
+        this.otros = selectedItem.otros;
+        this.hoja = selectedItem.hojaComp;
+
+        this.nombrePaciente = selectedItem.nombrePaciente;
+        this.digitadorMod = selectedItem.nombreDigitador;
+
+
+        // console.log(selectedItem);
 
       }
 
@@ -224,14 +232,11 @@ export class verHistorialComponent implements OnInit {
 
       // From attachment link
       onChangeFile(event) {
-        console.log("CHAANGE");
-        console.log(event);
           this.onFileChange(event.target.files, event.target.name);    // "target" is correct here
       }
 
       private onFileChange(files: File[], descArchivo) {
         this.fileList.push(files[0]);
-        console.log(this.fileList);
         this.descList.push(descArchivo);
       }
 
@@ -239,21 +244,22 @@ export class verHistorialComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Héroe ha sido actualizado exitosamente!',
+          title: 'Solicitud ha sido actualizada exitosamente!',
           showConfirmButton: false,
           timer: 1500
         })
       }
 
       getValues(){
+
+        var idPacienteVal = document.getElementById('id-paciente') as HTMLInputElement;
         var nombreVal = document.getElementById('nombre') as HTMLInputElement;
         var ciudadVal = document.getElementById('ciudad') as HTMLInputElement;
         var solicitudVal = document.getElementById('solicitud') as HTMLInputElement;
-
-        var estudioSEVal = document.getElementById('estudioSE') as HTMLInputElement;
         var descripcionVal = document.getElementById('descripcion') as HTMLTextAreaElement;
         var prioridadVal = document.getElementById('prioridadOptions') as HTMLSelectElement;
 
+        let idPacienteValue = idPacienteVal.value;
         let nombreValue = nombreVal.value;
         let ciudadValue = ciudadVal.value;
         let solicitudValue = solicitudVal.value;
@@ -271,36 +277,27 @@ export class verHistorialComponent implements OnInit {
           prioridadSend = 3,
           this.prioridadString ="Baja"
         }
-        let updateValue = {};
 
-        // console.log(nombreValue);
-        // console.log(descripcionValue);
-        // console.log(solicitudValue);
+        this.IDPaciente = idPacienteValue;
         this.nombre = nombreValue;
         this.descripcion =  descripcionValue;
         this.ciudad = ciudadValue;
         this.solicitud = solicitudValue;
         this.prioridad= prioridadSend;
+        this.prioridadEmail = prioridadValue;
         this.estado = "En espera";
+
       }
 
       editarSolicitud(id){
         this.getValues();
         Promise.all(this.fileList.map( async (file) =>
         {
-          console.log("File");
-          console.log(file);
             return this.guardarArchivo(file);
         })).then((message) =>
         {
-          console.log("DESCLIST: ");
-          console.log(this.descList);
           this.descList.forEach((item, index, array) =>
           {
-            console.log("ITEM: ");
-            console.log(item);
-            console.log(message);
-            console.log(index);
               switch(item)
               {
                 case "socioeconomico":
@@ -316,6 +313,15 @@ export class verHistorialComponent implements OnInit {
           });
           this.recordService.editarSolicitud(id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
           this.callUpdateNotification();
+          Email.send({
+            SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
+            To: 'aaron20092009@hotmail.com',
+            From: 'lopez.aaron1022@gmail.com',
+            Subject: `Solicitud Modificada - ${this.solicitud} - Prioridad(${this.prioridadEmail})`,
+            Body: `Paciente ${this.nombrePaciente} con No. Identidad ${this.IDPaciente} \nDescripcion: ${this.descripcion} Modificado por Digitador: ${this.digitadorMod}`
+          }).then(
+            message => console.log(message)
+          );
         });
         this.fileList = [];
     }
