@@ -48,6 +48,9 @@ export class verHistorialComponent implements OnInit {
     namePattern = '^[a-zA-Z ]*$';
 
     //Variables para obtener solicitudes por paciente
+
+    solicitudesRef: AngularFireList<any>;
+    
     solicitudesPacientesList :any[] =[];
     listSoliPacienteFiltered :any[]=[];
     CedulaPaciente: any;
@@ -87,7 +90,7 @@ export class verHistorialComponent implements OnInit {
                     };
 
                     item = {...item, ...userdata};
-                    console.log(item);
+                    //console.log(item);
                     this.filteredRecordList.push(item);
                   });
               });
@@ -97,19 +100,18 @@ export class verHistorialComponent implements OnInit {
 
     
     getSolicitudesXpaciente(){
-      this.recordService.getALLSolicitudes().subscribe(data =>{
+      this.solicitudesRef =this.service.db.list('solicitudes');
+      this.solicitudesRef.snapshotChanges().subscribe(data =>{
         this.solicitudesPacientesList =[];
-        console.log(data);
-        data.forEach(soli =>{
+        data.forEach((soli) =>{
+          console.log(soli);
           let a = soli.payload.toJSON();
           a['key'] = soli.key;        
           if(a['IDPaciente'] == this.CedulaPaciente){
-            this.solicitudesPacientesList = a;
-          }else{
-            this.callNotFoundFunction();
+            this.solicitudesPacientesList.push(a);
           }
         })
-        this.filteredRecordList = this.solicitudesPacientesList;
+        this.listSoliPacienteFiltered = this.solicitudesPacientesList;
       })
     }
 
@@ -135,9 +137,7 @@ export class verHistorialComponent implements OnInit {
     }
 
     onSelectedChangeBuscarPaciente(event: any){
-      //meter la vaina para poder filtrar las solicitudes del paciente
       const filter = event.target.value;
-      
       if(filter == "Todos"){
         this.listSoliPacienteFiltered = this.solicitudesPacientesList;
       }else{

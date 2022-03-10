@@ -69,34 +69,19 @@ export class SolicitudesService {
     }))
   }
 
-  getALLSolicitudes(): Observable<any[]>{
-    this.solicitudRef = this.db.list('solicitudes');
-
-    return this.solicitudRef.snapshotChanges().pipe(map(data =>{
-      this.listaSolicitudes =[];
-      data.forEach(solicitud =>{
-        let a = solicitud.payload.toJSON();
-        a['key'] = solicitud.key;
-        this.listaSolicitudes.push(a);
-      })
-      return this.listaSolicitudes;
-    }))
-  }
-
   getSolicitud_x_Paciente(idPaciente): Observable<any[]>{
     this.solicitudRef = this.db.list('solicitudes');
 
     return this.solicitudRef.snapshotChanges().pipe(map(data =>{
-      let pacienteSolicitud: any;
       this.listaSolicitudes=[];
       data.forEach(solicitud =>{
         let a = solicitud.payload.toJSON();
         a['key'] = solicitud.key;
         if(a['IDPaciente'] == idPaciente){
-          pacienteSolicitud = a;
+          this.listaSolicitudes.push(a);
         }
       })
-      return pacienteSolicitud;
+      return this.listaSolicitudes;
     }))
   }
 
