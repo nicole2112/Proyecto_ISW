@@ -1,0 +1,44 @@
+#function-list{
+  display: flex;
+  justify-content: left;
+  align-content: space-between;
+}
+
+.float-container {
+display: flex;
+}
+
+.float-child {
+flex: 1;
+}
+
+.float-child:first-child {
+margin-right: 20px;
+}
+
+.list-group{
+  margin: 10px;
+}
+
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+.table-header{
+  position: sticky;
+  top: 0px;
+}
+
+.userRowHover:hover .rowInfo{
+  color: #9965ac;
+}
+
+.error-label{
+  font-size: 0.7em;
+  color: red;
+}
+
+.styleImg img{
+  max-width: 80px;
+  max-height: 80px;
+}

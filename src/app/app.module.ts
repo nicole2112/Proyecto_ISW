@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import {NgSelectizeModule} from 'ng-selectize'; //categorías de blog
 
 import { AppComponent } from './app.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';//firebase
@@ -19,6 +20,7 @@ import { DonationsComponent } from './donations/donations.component';
 import { TestimoniesComponent } from './testimonies/testimonies.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { BlogPostComponent } from './blog-post/blog-post.component';
 
 import { LoginComponent } from './login/login.component';
 import { AngularFireDatabase, AngularFireDatabaseModule, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
@@ -46,6 +48,22 @@ import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from './users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from './showHeroes-admin/showHeroes-admin.component';
 import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirmation.component';
+import { AddPdfComponent } from './add-pdf/add-pdf.component';
+import { PdfServices } from './services/pdf.services';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular'; //tiny mce
+import { verArticulosComponent } from './portal-admin/verArticulos.component';
+import { AgregarArticuloComponent } from './portal-admin/agregarArticulo.component';
+import { ViewPdfsComponent } from './view-pdfs/view-pdfs.component';
+import { verHistorialComponent } from './portal-digitador/verHistorial.component';
+import { verFormulariosComponent } from './portal-digitador/verFormularios.component';
+import { agregarSolicitudComponent } from './portal-digitador/agregarSolicitud.component';
+import { DocumentsComponent } from './about-us/documents.component';
+import { FechaService } from './services/fecha.service';
+import { DatePipe } from '@angular/common';
+import { AddPatientComponent } from './patients/addPatient.component';
+import { ViewPatientsComponent } from './patients/viewPatients.component';
+import { PatientHistoryComponent } from './patients/patientHistory.component';
+import { PacientesService } from './services/pacientes.service';
 
 
 @NgModule({
@@ -61,6 +79,7 @@ import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirm
     DonationsComponent,
     TestimoniesComponent,
     BlogComponent,
+    BlogPostComponent,
     FooterComponent,
     ContactUsComponent,
     LoginComponent,
@@ -77,7 +96,18 @@ import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirm
     UsersAdminComponent,
     ShowHeroesAdminComponent,
     PwResetComponent,
-    NoConfirmationComponent
+    AddPdfComponent,
+    NoConfirmationComponent,
+    verArticulosComponent,
+    AgregarArticuloComponent,
+    ViewPdfsComponent,
+    verHistorialComponent,
+    verFormulariosComponent,
+    agregarSolicitudComponent,
+    DocumentsComponent,
+    ViewPatientsComponent,
+    AddPatientComponent,
+    PatientHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -93,11 +123,17 @@ import { NoConfirmationComponent } from './email-conf/no-confirmation/no-confirm
     FontAwesomeModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbModule
-
+    NgbModule,
+    NgSelectizeModule,
+    EditorModule
   ],
   providers: [
     ModalService,
+    PdfServices,
+    FechaService,
+    PacientesService,
+    DatePipe,
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
   bootstrap: [AppComponent]
 })

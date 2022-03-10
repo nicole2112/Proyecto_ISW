@@ -1,0 +1,23 @@
+<navbar></navbar>
+
+<div class ="sectionTitle">
+
+
+<div class="banner" >
+    <img src="{{blog?.imagenPreview}}" alt="Imagen">
+</div>
+    <div class="blog">
+        <h1 class="title">{{blog?.titulo}}</h1>
+        <span class="tag tag-teal" *ngFor="let cat of blog?.categorias">
+            {{ cat }}
+        </span>
+        <p class="published"><span>publicado el {{blog?.fechaCreacion}}</span></p>
+        
+        <div class ="descripcion">{{blog?.descripcion}}</div>
+        
+        <div class="article" [innerHTML]="sanitizar(blog?.contenido)"> 
+        </div>
+    </div>
+</div>
+
+<footer-comp></footer-comp>

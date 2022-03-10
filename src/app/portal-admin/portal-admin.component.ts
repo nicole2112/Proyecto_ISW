@@ -13,6 +13,7 @@ import { Router } from "@angular/router";
 import { HeroesAdminComponent } from '../heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from '../users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from '../showHeroes-admin/showHeroes-admin.component';
+import {AddPdfComponent} from '../add-pdf/add-pdf.component'
 
 @Component({
   selector: 'app-portal-admin',
@@ -26,14 +27,24 @@ export class PortalAdminComponent implements OnInit {
   closeResult: string;
   User = [];
   userSelectedId : string;
+  
+  toggleUsers = false;
 
   toggleHeroes = false;
-  toggleUsers = false;
   toggleShowHeroes = false;
+  toggleShowHeroesRedirect=false;
+
   toggleShowTestimonies=false;
   toggleViewTestimonies=false;
-  toggleShowHeroesRedirect=false;
   toggleShowTestimoniesRedirect=false;
+  toggleAddPDF=false;
+
+  toggleShowArticulos=false; //para ver artículos
+  toggleViewArticulos=false; //para agregar artículo
+  toggleShowArticulosRedirect=false; //para redireccionar a ver artículos al agregar artículo
+
+  toggleShowPDF=false;
+  toggleViewPDF=false;
 
   constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer, private router: Router) { }
   ShowUsers = false;

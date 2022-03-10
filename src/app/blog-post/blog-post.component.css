@@ -1,0 +1,74 @@
+.blog, .article {
+    position: relative;
+    height: fit-content;
+    padding-bottom: 0;
+}
+
+.article, .title{
+    min-height: auto;
+    height: fit-content;
+    padding: 0 10px;
+    white-space: normal;
+}
+
+.published{
+    margin: 20px 0 60px;
+    padding: 0 10px;
+    text-transform: capitalize;
+    font-style: italic;
+    color: Orgba (0, 0,
+    0,
+    0.5);
+}
+
+.published span{
+    font-weight: 700;
+    font-style: normal;
+}
+
+.article *{
+    margin: 30px 0;
+    color: O#2d2d2d;
+}
+
+.banner >img{
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+}
+
+.descripcion{
+    min-height: auto;
+    height: fit-content;
+    padding: 0 10px;
+    white-space: normal;
+    font-style: italic;
+    font-size: large;
+}
+
+.content {
+    width: 80%;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: -33px
+}
+
+.tag {
+    background-color: #fff;
+    border-radius: 50px;
+    font-size: 18px;
+    color: #fff;
+    margin: 20px 0 60px;
+    padding: 2px 10px;
+    text-transform: uppercase;
+    margin-left: 10px;
+    position: relative;
+    height: fit-content;
+    padding-bottom: 0;
+  }
+  
+  .tag-teal {
+    background-color: #77B6E2;
+  }

@@ -18,9 +18,11 @@ export class HeroesAdminComponent implements OnInit {
   prioridad: any;
   visibilidad:any;
   prioridadInt:any;
+  prioridadString: any;
 
   fileList: any[];
 
+  urlI:any; //para mostrar imagen al seleccionarla
 
   constructor(public service: AuthenticationService, public adminComp: PortalAdminComponent) {}
 
@@ -35,22 +37,37 @@ export class HeroesAdminComponent implements OnInit {
   onDragOver(event) {
     event.preventDefault();
   }
-
   // From drag and drop
   onDropSuccess(event) {
-      event.preventDefault();
+    event.preventDefault();
 
-      this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
+    this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
   }
-
   // From attachment link
   onChange(event) {
-      this.onFileChange(event.target.files);    // "target" is correct here
+    this.onFileChange(event.target.files);    // "target" is correct here
   }
-
   private onFileChange(files: File[]) {
+    if(!files[0]) {
+			Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Debe seleccionar una imagen de portada.',
+          showConfirmButton: false,
+          timer: 1500
+      })
+      this.urlI = null;
+			return;
+		}
     this.fileList = files;
-    console.log(files[0].name);
+    
+    //for displaying image in form
+    var reader = new FileReader();
+		reader.readAsDataURL(files[0]);
+		
+		reader.onload = (_event) => {
+			this.urlI = reader.result; 
+		}
   }
 
   getHeroeItemID(url){
@@ -65,17 +82,20 @@ export class HeroesAdminComponent implements OnInit {
     let heroeItem={};
 
     if(this.prioridad === 'Alta'){
-      this.prioridadInt = 1
+      this.prioridadInt = 1,
+      this.prioridadString = "Alta"
     }else if(this.prioridad === 'Media'){
-      this.prioridadInt = 2
+      this.prioridadInt = 2,
+      this.prioridadString = "Media"
     }else{
-      this.prioridadInt = 3
+      this.prioridadInt = 3,
+      this.prioridadString = "Baja"
     }
 
     if(this.fallecido === 'Fallecido'){
-      this.fallecido = 'si'
+      this.fallecido = 'Fallecido'
     }else{
-      this.fallecido = 'no'
+      this.fallecido = 'Con Vida'
     }
 
     heroeItem={
@@ -84,6 +104,7 @@ export class HeroesAdminComponent implements OnInit {
       "contenido": this.contenido,
       "fallecido" :this.fallecido,
       "prioridad" :this.prioridadInt,
+      "prioridadString": this.prioridadString,
       "visibilidad": this.visibilidad
     }
     this.service.db.list('heroes').push(heroeItem);

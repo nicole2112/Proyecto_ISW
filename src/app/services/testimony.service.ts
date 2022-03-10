@@ -47,8 +47,6 @@ export class TestimonyService {
 
   updateTestimony(testimonio, key)
   {
-    console.log(key);
-    console.log(testimonio);
     this.db.object(`testimonios/${key}`).set(testimonio).then(()=>{
       console.log("success");
     })

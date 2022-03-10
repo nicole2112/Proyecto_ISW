@@ -1,27 +1,34 @@
 <div style="background-color: white;">
-<table class="table table-striped table-bordered">
-    <thead class="table-header">
-      <tr>
-        <th>Nombre</th>
-        <th>Contenido</th>
-        <th>Fallecido</th>
-        <th>Visibilidad</th>
-        <th>Prioridad</th>
-        <th>Imagen</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let heroe of Heroe" class="userRowHover" (click)="open(content, heroe.$key, heroe.nombre); onSelect(heroe, heroe.imageUrl);">
-        <td class="rowInfo">{{heroe.nombre}}</td>
-        <td class="rowInfo">{{heroe.contenido}}</td>
-        <td class="rowInfo">{{heroe.fallecido}}</td>
-        <td >{{heroe.visibilidad}}</td>
-        <td>{{heroe.prioridad}}</td>
-        <td class="styleImg"><img src="{{heroe.imageUrl}}"></td>
-      </tr>
-    </tbody>
-  </table>
-  
+  <div class="container table-heroes">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-striped table-bordered">
+      <thead class="table-header" class="userRowHover">
+        <tr>
+          <th style="text-align: center">Nombre</th>
+          <th style="text-align: center">Contenido</th>
+          <th style="text-align: center">Estado</th>
+          <th style="text-align: center">Visibilidad</th>
+          <th style="text-align: center">Prioridad</th>
+          <th style="text-align: center">Imagen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let heroe of Heroe" class="userRowHover" (click)="open(content, heroe.$key, heroe.nombre); onSelect(heroe, heroe.imageUrl);">
+          <td class="rowInfo">{{heroe?.nombre}}</td>
+          <td class="rowInfo">{{heroe?.contenido}}</td>
+          <td class="rowInfo">{{heroe?.fallecido}}</td>
+          <td >{{heroe?.visibilidad}}</td>
+          <td>{{heroe?.prioridadString}}</td>
+          <td class="styleImg"><img src="{{heroe.imageUrl}}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <!-- MODAL -->
+
   <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Editar Héroe</h4>
@@ -72,7 +79,7 @@
           </div>
         </div>
         <div class="form-group" style="margin-top: 1em;">
-            <label for="fallecidoOptions">Fallecido</label>
+            <label for="fallecidoOptions">Estado</label>
             <div class="input-group">
               <div class="custom-select" style="width:200px;" id="custom-select">
                 <select name="fallecidoOptions" id="fallecidoOptions">
@@ -90,9 +97,9 @@
                       Agregar imagen...
                     </label>
                   </div>
-              
+
             </div>
-          </div>
+        </div>
       </form>
     </div>
     <div class="modal-footer">
@@ -100,7 +107,7 @@
       <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); saveHeroe();">Guardar</button>
     </div>
   </ng-template>
-  
+
   <ng-template #confirmation let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el Héroe?</h4>
@@ -125,5 +132,5 @@
       <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancelar</button>
     </div>
   </ng-template>
-
 </div>
+</div> <!--DIV PRINCIPAL-->

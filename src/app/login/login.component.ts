@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../services/auth.services';
 
 @Component({
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public auth: AngularFireAuth,
-    public service: AuthenticationService
+    public service: AuthenticationService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -29,11 +31,24 @@ export class LoginComponent implements OnInit {
   }
 
   customLogin() {
-   
     this.service.email = this.email;
     this.service.pass = this.pass;
     this.service.nombre = this.nombre;
     this.service.rol = this.rol;
     this.service.customLogin();
+  }
+  
+  logInBack(){
+    this.auth.currentUser.then((res) =>{
+      this.service.db.object(`usuarios/${res.uid}`).valueChanges().subscribe(item =>{
+        if(item['rol'] == 'Admin' || item['rol'] == 'Presidente'){
+          console.log("admin");
+          this.router.navigate(['/portal-admin'])
+        }else{
+          console.log("digi");
+          this.router.navigate(['/portal-digitador'])
+        }
+      })
+    })
   }
 }

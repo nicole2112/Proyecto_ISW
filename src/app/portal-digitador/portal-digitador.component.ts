@@ -11,7 +11,14 @@ import { User } from '../models/user';
 
 export class PortalDigitadorComponent implements OnInit{
 
-    constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private eRef: ElementRef) { }
+  toggleAddSolicitud = false;
+  toggleHistorial = false;
+  toggleFormularios = false;
+  toggleViewPatients = false;
+  toggleAddPatient  = false;
+  togglePatientHistory = false;
+
+  constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private eRef: ElementRef) { }
 
   FundacionRef: AngularFireList<any>;
 

@@ -22,19 +22,23 @@ import { EditUserProfileComponent } from './profiles/edit-user-profile.component
 import { HeroesAdminComponent } from './heroes-admin/heroes-admin.component';
 import { AdminConfGuard } from './email-conf/guard/admin-conf.guard';
 import { DigitadorConfGuard } from './email-conf/guard/digitador-conf.guard';
+import { BlogPostComponent } from './blog-post/blog-post.component';
+import { DocumentsComponent } from './about-us/documents.component';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
   { path: 'que-hacemos', component: QueHacemosComponent },
   { path: 'alianzas', component: AlianzasComponent },
+  { path: 'documentos', component: DocumentsComponent },
   { path: 'pagina-principal', component: HomeComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'donations', component: DonationsComponent },
   { path: 'programas', component: ProgramasComponent },
   { path: 'testimonies', component: TestimoniesComponent },
   { path: 'blog', component: BlogComponent },
-  {path: 'login', component: LoginComponent },
-  {path: 'heroes-admin', component: HeroesAdminComponent, canActivate: [AdminConfGuard]},
+  { path: 'blog-post/:blogId', component: BlogPostComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'heroes-admin', component: HeroesAdminComponent, canActivate: [AdminConfGuard] },
   {
     path: 'portal-admin/registro',
     component: RegistroComponent,
@@ -42,11 +46,9 @@ export const AppRoutes: Routes = [
   },
   { path: 'portal-admin/perfil', component: EditUserProfileComponent, canActivate: [AdminConfGuard] },
   { path: 'portal-admin', component: PortalAdminComponent, canActivate: [AdminConfGuard] },
-  {path: 'no-email-confirmation', component: NoConfirmationComponent},
+  { path: 'no-email-confirmation', component: NoConfirmationComponent },
   { path: 'portal-digitador/perfil', component: EditUserProfileComponent, canActivate: [DigitadorConfGuard] },
-  { path: 'portal-digitador', component: PortalDigitadorComponent, canActivate: [DigitadorConfGuard]},
+  { path: 'portal-digitador', component: PortalDigitadorComponent, canActivate: [DigitadorConfGuard] },
   { path: 'portal-pw-reset', component: PwResetComponent },
-  //{ path: 'agregarTestimonio', component: AgregarTestimoniosComponent, canActivate: [AdminConfGuard] },
-  //{ path: 'verTestimonio', component: VerTestimoniosComponent, canActivate: [AdminConfGuard] },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];

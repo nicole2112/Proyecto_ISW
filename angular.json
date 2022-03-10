@@ -33,14 +33,22 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              { "glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/" }
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.css"
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/selectize/dist/css/selectize.css",
+              "node_modules/selectize/dist/css/selectize.bootstrap3.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/smtp.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/selectize/dist/js/standalone/selectize.min.js",
+              "node_modules/tinymce/tinymce.min.js"
+            ]
           },
           "configurations": {
             "es": {
@@ -52,13 +60,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "4mb",
                   "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "1mb",
-                  "maximumError": "3mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
                 }
               ],
               "fileReplacements": [

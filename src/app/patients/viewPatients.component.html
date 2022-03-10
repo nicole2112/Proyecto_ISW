@@ -1,0 +1,250 @@
+<div class="container stylePatients">
+  <div class="d-flex justify-content-center">
+    <h1 style="margin-bottom: 2%; margin-top: 2%;">Listado de Pacientes</h1>
+  </div>
+  <div class="container paciente">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <select class="form-select my-4 col-md-9" (change)="onSelectedChange($event)" name="visibilidad" required>
+        <option [ngValue]="'all'">Todos</option>         
+        <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>     
+      </select>
+      <table class="table table-striped table-bordered">
+        <thead class="table-header" class="userRowHover">
+          <tr>
+            <th style="text-align: center">Número de Identidad</th>
+            <th style="text-align: center">Nombre</th>
+            <th style="text-align: center">Ciudad</th>
+            <th style="text-align: center">Domicilio</th>
+            <th style="text-align: center">Teléfono</th>
+            <th style="text-align: center">Notas</th>
+            <th style="text-align: center">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pac of filteredRecordList" class="userRowHover" (click)="open(pac, content, pac.$key); onSelect(pac)">
+            <td class="rowInfo">{{pac?.id}}</td>
+            <td class="rowInfo">{{pac?.nombre}}</td>
+            <td class="rowInfo">{{pac?.ciudad}}</td>
+            <td class="rowInfo">{{pac?.domicilio}}</td>
+            <td class="rowInfo">{{pac?.telefono}}</td>
+            <td class="rowInfo">{{pac?.notas}}</td>
+            <td class="rowInfo">{{pac?.estado}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+</div>
+
+<!-- MODAL -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Detalle de Paciente</h4>
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #patientForm="ngForm">
+      <!--ID y Nombre-->
+      <div class="row">
+        <div class="col-md-6">
+          <label for="id">Número de Identidad</label>
+          <input
+            [(ngModel)]="id"
+            class="form-control"
+            id="id"
+            name="id"
+            type="tel"
+            required
+            disabled
+          >
+        </div>
+        <div class="col-md-6">
+          <label for="nombre">Nombre</label>
+          <input
+            [(ngModel)]="nombre"
+            class="form-control"
+            id="nombre"
+            name="nombre"
+            type="text"
+            pattern="^[a-zA-Z ]*$"
+            required
+          >
+        </div>
+      </div>
+      <!--Ciudad y Domicilio-->
+      <div class="row" style="margin-top: 10px;">
+        <div class="col-md-6">
+          <label for="ciudad">Ciudad</label>
+          <input
+            [(ngModel)]="ciudad"
+            class="form-control"
+            id="ciudad"
+            name="ciudad"
+            type="text"
+            pattern="^[a-zA-Z ]*$"
+            required
+          >
+        </div>
+        <div class="col-md-6">
+          <label for="domicilio">Domicilio</label>
+          <input
+            [(ngModel)]="domicilio"
+            class="form-control"
+            id="domicilio"
+            name="domicilio"
+            type="text"
+            placeholder="Domicilio"
+          >
+        </div>
+      </div>
+      <!--Estado-->
+      <div class="row" style="margin-top: 10px;">
+        <div class="col-md-6">
+          <label for="telefono">Teléfono</label>
+          <input
+            [(ngModel)]="telefono"
+            class="form-control"
+            id="telefono"
+            name="telefono"
+            type="tel"
+            placeholder="Teléfono"
+            required
+          >
+        </div>
+        <div class="col-md-6">
+          <label for="estadoOptions">Estado</label>
+          <select class="form-select" name="estadoOptions" id="estadoOptions"></select>
+        </div>
+      </div>
+      <!--Notas-->
+      <div>
+        <label for="notas">Notas</label>
+        <textarea
+            [(ngModel)]="notas"
+            type="text"
+            class="form-control"
+            id="notas"
+            name="notas"
+            rows="4" 
+            placeholder="Notas del paciente"
+          ></textarea>
+      </div>
+      <!--Nombre y # de contacto-->
+      <div style="margin-top: 15px; text-align: center;">
+        <h6>Datos de Contacto</h6>
+      </div>
+      <div class="row" style="margin-top: 5px;">
+        <div class="col-md-6">
+          <label for="contacto">Nombre</label>
+          <input
+            [(ngModel)]="contacto"
+            class="form-control"
+            id="contacto"
+            name="contacto"
+            type="text"
+            pattern="^[a-zA-Z ]*$"
+            placeholder="Nombre de contacto"
+            required
+          >
+        </div>
+        <div class="col-md-6">
+          <label for="contactoTel">Teléfono</label>
+          <input
+            [(ngModel)]="contactoTel"
+            class="form-control"
+            id="contactoTel"
+            name="contactoTel"
+            type="tel"
+            placeholder="Teléfono de contacto"
+          >
+        </div>
+      </div>
+      <div style="margin-top: 15px; text-align: center;">
+        <h6>Documentos del Paciente</h6>
+      </div>
+      <!--Hoja de compromiso-->
+      <div class="row" *ngIf="hojaComp"  style="margin-top: 15px;">
+        <div class="col-md-6">
+          <label for="hojaComp">Hoja de Compromiso</label>
+          <br>
+          <a id="hojaComp" href="{{hojaComp}}" target="_blank">
+            Ver Documento
+          </a>
+        </div>
+        <br>
+      </div>
+      <!--Imágenes de la casa-->
+      <div class="row" *ngIf="imgCasa1" style="margin-top: 15px;">
+        <label>Casa del paciente</label>
+        <div class="col-md-6">
+          <img *ngIf="imgCasa1" src="{{imgCasa1}}"  style="max-height: 200px; max-width: 200px;">
+          <input 
+            [(ngModel)]="newImgCasa1"
+            class="form-control" 
+            (change)="onChange($event)" 
+            name="newImgCasa1"
+            type="file" 
+            accept="image/png, image/jpeg"
+          />
+        </div>
+        <div  class="col-md-6">
+          <img  *ngIf="imgCasa2" src="{{imgCasa2}}" style="max-height: 200px; max-width: 200px;">
+          <input 
+            [(ngModel)]="newImgCasa2"
+            class="form-control" 
+            (change)="onChange($event)" 
+            name="newImgCasa2"
+            type="file" 
+            accept="image/png, image/jpeg"
+          />
+        </div>
+      </div>
+      <!--Imágenes de la cédula-->
+      <div class="row" *ngIf="imgCedula1" style="margin-top: 15px;">
+        <label class="form-label">DNI</label>
+        <div class="col-md-6">
+          <img *ngIf="imgCedula1" src="{{imgCedula1}}"  style="max-height: 200px; max-width: 200px;">
+          <input 
+            [(ngModel)]="newImgCedula1"
+            class="form-control" 
+            (change)="onChange($event)" 
+            name="newImgCedula1"
+            type="file" 
+            accept="image/png, image/jpeg"
+          />
+        </div>
+        <div  class="col-md-6">
+          <img  *ngIf="imgCedula2" src="{{imgCedula2}}" style="max-height: 200px; max-width: 200px;">
+          <input 
+            [(ngModel)]="newImgCedula2"
+            class="form-control" 
+            (change)="onChange($event)" 
+            name="newImgCedula2"
+            type="file" 
+            accept="image/png, image/jpeg"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark" (click)="openConfirmation(confirmation)">Guardar Cambios</button>
+  </div>
+</ng-template>
+
+<ng-template #confirmation let-modal>
+  <div class="modal-header">
+    <h4>Confirmación de Cambios</h4>
+  </div>
+  <div class="modal-body">
+    <p>¿Seguro que desea realizar los cambios en el paciente?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger pull-left" (click)="modificarPaciente(); closeAll(); ">Aceptar</button>
+    <button class="btn btn-outline-dark" (click)="modal.close('Cancel click');">Cancelar</button>
+  </div>
+
+</ng-template>

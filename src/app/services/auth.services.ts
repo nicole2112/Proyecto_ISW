@@ -18,7 +18,7 @@ import Swal from 'sweetalert2'
 export class AuthenticationService {
     private userSubject: BehaviorSubject<User>;
     public user: Observable<User>;
-    private userDetails: firebase.default.User = null;
+    public userDetails: firebase.default.User = null;
     public loggedIn = false;
     email = '';
     pass = '';
