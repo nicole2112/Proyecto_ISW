@@ -11,6 +11,10 @@ import { runInThisContext } from 'vm';
 import { AuthenticationService } from "../services/auth.services";
 import { ThrowStmt } from '@angular/compiler';
 import { SolicitudesService } from '../services/solicitudes.service';
+import { PacientesService } from '../services/pacientes.service';
+import { RetrieveUsersService } from '../services/retrieve-users.service';
+import { combineLatest, forkJoin, Observable } from 'rxjs';
+import { map, take, takeWhile } from 'rxjs/operators';
 
 @Component({
     selector: 'app-view-Historial-admin',
@@ -21,6 +25,7 @@ import { SolicitudesService } from '../services/solicitudes.service';
 export class verHistorialComponent implements OnInit {
     recordsList: any;
     recordList = [];
+    pacientesList = [];
     filteredRecordList = [];
     states = [
         'En espera',
@@ -30,18 +35,117 @@ export class verHistorialComponent implements OnInit {
     ];
 
     closeResult: string;
-    fileList: any;
+    IDPaciente: any="";
+    prioridad: any=3;
+    archivado: any=0;
+    solicitud: any="";
+    estado: any="";
+    descripcion: any="";
+    socioeconomico: any="";
+    solDonacion: any="";
+    otros:any="";
+    fileList: any[] = [];
+    urlList: any[] = [];
+    descList: any[] = [];
+    namePattern = '^[a-zA-Z ]*$';
 
-    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private modalService: NgbModal) { }
+    //Variables para obtener solicitudes por paciente
+
+    solicitudesRef: AngularFireList<any>;
+    
+    solicitudesPacientesList :any[] =[];
+    listSoliPacienteFiltered :any[]=[];
+    CedulaPaciente: any;
+
+    filtro=[
+      'Aprobada',
+      'Denegada'
+    ];
+
+    
+
+    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private pacService: PacientesService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
 
     ngOnInit() {
-        this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
-            this.recordList = records.sort((a, b) => {
-                let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
-                return +dateA - +dateB;
+
+      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
+          let listanueva;
+          listanueva = records.sort((a, b) => {
+              let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
+              return +dateA - +dateB;
+          });
+
+          let observables: Observable<any>[] = [];
+          let observables2: Observable<any>[] = [];
+
+          listanueva.forEach( item =>
+          {
+            observables.push(this.pacService.getPaciente2(item['IDPaciente']))
+          });
+
+          let nuevalista:any = [];
+          combineLatest(observables).pipe(map(pac =>
+          {
+            
+            let item2;
+            listanueva.forEach( (item, index) =>
+            {
+              pac[index]['id'] = item['id'];
+              item2 = {...pac[index], ...item};
+              item2['nombrePaciente'] = pac[index]['nombre'];
+              nuevalista.push(item2);
             });
-            this.filteredRecordList = this.recordList;
-        });
+
+            nuevalista.forEach( objeto =>
+            {
+              observables2.push(this.userService.getUser(objeto['digitador']));
+              this.userService.getUser(objeto['digitador']).pipe(take(1)).subscribe(usuario =>
+                {
+                  let item3;
+                  let userdata = {
+                    "email": usuario['email'],
+                    "nombreDigitador": usuario['nombre'],
+                  };
+                  item3 = {...objeto, ...userdata};
+                  if(!this.filteredRecordList.includes(item3))
+                  {
+                    this.filteredRecordList.push(item3);
+                    this.recordList.push(item3);
+                  }
+                });
+            });
+        
+          }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
+            this.recordList = [...new Set(this.recordList)];});
+
+      });
+    }
+
+    
+    getSolicitudesXpaciente(){
+      this.solicitudesRef =this.service.db.list('solicitudes');
+      this.solicitudesRef.snapshotChanges().subscribe(data =>{
+        this.solicitudesPacientesList =[];
+        data.forEach((soli) =>{
+          console.log(soli);
+          let a = soli.payload.toJSON();
+          a['key'] = soli.key;        
+          if(a['IDPaciente'] == this.CedulaPaciente){
+            this.solicitudesPacientesList.push(a);
+          }
+        })
+        this.listSoliPacienteFiltered = this.solicitudesPacientesList;
+      })
+    }
+
+    callNotFoundFunction(){
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: '¡Paciente no encontrado!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
 
     onSelectedChange(event:any){
@@ -53,6 +157,17 @@ export class verHistorialComponent implements OnInit {
                 return record.estado == state;
             });
         }
+    }
+
+    onSelectedChangeBuscarPaciente(event: any){
+      const filter = event.target.value;
+      if(filter == "Todos"){
+        this.listSoliPacienteFiltered = this.solicitudesPacientesList;
+      }else{
+        this.listSoliPacienteFiltered = this.solicitudesPacientesList.filter(record =>{
+          return record.estado == filter;
+        });
+      }
     }
 
     open(content) {
@@ -98,16 +213,65 @@ export class verHistorialComponent implements OnInit {
       onDropSuccess(event) {
           event.preventDefault();
     
-          this.onFileChange(event.dataTransfer.files);    // notice the "dataTransfer" used instead of "target"
+          this.onFileChange(event.dataTransfer.files, event.target.name);    // notice the "dataTransfer" used instead of "target"
       }
     
       // From attachment link
       onChangeFile(event) {
-          this.onFileChange(event.target.files);    // "target" is correct here
+          this.onFileChange(event.target.files, event.target.name);    // "target" is correct here
       }
     
-      private onFileChange(files: File[]) {
-        this.fileList = files;
+      private onFileChange(files: File[], descArchivo) {
+        this.fileList.push(files[0]);
+        this.descList.push(descArchivo);
       }
-    
+
+      editarSolicitud(id){
+        
+        Promise.all(this.fileList.map( async (file) =>
+        {
+            return this.guardarArchivo(file);
+        })).then((message) =>
+        {
+          this.descList.forEach((item, index, array) =>
+          {
+              switch(item)
+              {
+                case "socioeconomico":
+                    this.socioeconomico = message[index];
+                    break;
+                case "solDonacion":
+                    this.solDonacion = message[index];
+                    break;
+                case "otros":
+                    this.otros = message[index];
+                    break;
+              }
+          });
+          this.recordService.editarSolicitud(id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
+        });
+    }
+
+    async guardarArchivo(nuevoArchivo){
+      return new Promise(async (resolve, reject) =>
+      {
+          let filename = nuevoArchivo.name;
+      
+          const storage = getStorage();
+          const storageRef = ref(storage, filename);
+      
+          uploadBytes(storageRef, nuevoArchivo).then((snapshot) => {
+          
+          
+          }).then(
+          ()=>{
+              getDownloadURL(storageRef).then(data =>{
+              resolve(data);
+              }).catch((error)=>{
+                  reject(error);
+              });
+          }
+          );
+      })
+    }
 }

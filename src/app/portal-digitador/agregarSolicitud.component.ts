@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { AuthenticationService } from '../services/auth.services';
 import { FormsModule } from '@angular/forms';
 import { SolicitudesService } from "../services/solicitudes.service";
+import { PacientesService } from "../services/pacientes.service";
 //import { Correo } from "../services/email.service";
 import {EnviarCorreo} from "../services/email.service";
 import { FechaService } from "../services/fecha.service";
@@ -18,8 +19,11 @@ import { FechaService } from "../services/fecha.service";
 
 export class agregarSolicitudComponent implements OnInit{
 
-    nombre: any="";
+    IDPaciente: any="";
+    prioridad: any;
+    prioridadInt: any;
     ciudad: any=""; 
+    nombre: any=""; 
     solicitud: any="";
     descripcion: any="";
     socioeconomico: any="";
@@ -32,10 +36,14 @@ export class agregarSolicitudComponent implements OnInit{
     urlList: any[] = [];
     descList: any[] = [];
     namePattern = '^[a-zA-Z ]*$';
+    type: any = 0;
+    show:boolean = false;
+    miPaciente:any;
+    estado:any;
 
     static $inject = ['$http', '$q'];
     
-    constructor(public service: AuthenticationService, private solicitudservice: SolicitudesService, public fechaService: FechaService) {}
+    constructor(public service: AuthenticationService, private solicitudservice: SolicitudesService, public fechaService: FechaService, private pacienteService: PacientesService) {}
 
     @Output() historialRedirect = new EventEmitter<boolean>();
 
@@ -78,6 +86,30 @@ export class agregarSolicitudComponent implements OnInit{
         this.descList.push(descArchivo);
     }
 
+    buscarPaciente(){
+        var id = (<HTMLInputElement>document.getElementById("num")).value;
+        
+        this.pacienteService.getPaciente(id).subscribe(paciente => {
+            this.miPaciente = paciente[0];
+            
+            if(this.miPaciente == null)
+            {
+                this.type = 3;
+            }
+            else{
+                if(this.miPaciente.estado == "Activo" )
+                {
+                    this.type=1;
+                }
+                else{
+                    this.type=2;
+                }
+            }  
+        });;
+        
+    }
+
+
     guardarSolicitud(){
         
         Promise.all(this.fileList.map( async (file) =>
@@ -95,24 +127,26 @@ export class agregarSolicitudComponent implements OnInit{
                         case "solDonacion":
                             this.solDonacion = message[index];
                             break;
-                        case "hojaComp":
-                            this.hojaComp = message[index];
-                            break;
                         case "otros":
                             this.otros = message[index];
                             break;
-                        case "imgCasa1":
-                            this.imgCasa1 = message[index];
-                            break;  
-                        case "imgCasa2":
-                            this.imgCasa2 = message[index];
-                            break;  
                     }
                 });
                 
+                if(this.prioridad === 'Inmediata'){
+                    this.prioridadInt = 1;
+                  }
+                  else if(this.prioridad === 'Alta'){
+                    this.prioridadInt = 2;
+                  }
+                  else{
+                    this.prioridadInt = 3;
+                  }
+
+
                 var hoy = this.fechaService.ObtenerFecha();
-                this.solicitudservice.postSolicitud(this.descripcion, this.nombre, "", "", this.ciudad, this.solicitud, this.socioeconomico, this.solDonacion, this.hojaComp,this.otros, this.imgCasa1, this.imgCasa2, hoy);
-                EnviarCorreo(this.nombre, this.solicitud, this.descripcion);
+                this.solicitudservice.postSolicitud(this.descripcion, this.miPaciente.id,this.prioridadInt,"", this.solicitud, this.socioeconomico, this.solDonacion, this.otros, hoy);
+                EnviarCorreo(this.IDPaciente, this.solicitud, this.descripcion);
                 this.historialRedirectFunc();
                 this.callSendFunction();
         });
