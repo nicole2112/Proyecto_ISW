@@ -226,7 +226,7 @@ export class verHistorialComponent implements OnInit {
       onChangeFile(event) {
         console.log("CHAANGE");
         console.log(event);
-          this.onFileChange(event.target.files, event.target.files[0].name);    // "target" is correct here
+          this.onFileChange(event.target.files, event.target.name);    // "target" is correct here
       }
 
       private onFileChange(files: File[], descArchivo) {
