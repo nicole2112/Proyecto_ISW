@@ -36,12 +36,12 @@ export class PatientHistoryComponent {
           }  
       });;
       
-      this.solicitudservice.getTodasSolicitudes(id).subscribe(records => {
+      this.solicitudservice.getSolicitud_x_Paciente(id).subscribe(records => {
         this.listaSolicitudes = records.sort((a, b) => {
             let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
             return +dateA - +dateB;
         });
-        this.listaOrd = this.listaOrd;
+        this.listaOrd = this.listaSolicitudes;
     });
       
   }
