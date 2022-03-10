@@ -38,16 +38,22 @@ export class LoginComponent implements OnInit {
     this.service.customLogin();
   }
   
+  //cambios en el guard y en login para que me agarrara el route de presidente
   logInBack(){
     this.auth.currentUser.then((res) =>{
       this.service.db.object(`usuarios/${res.uid}`).valueChanges().subscribe(item =>{
-        if(item['rol'] == 'Admin' || item['rol'] == 'Presidente'){
+        console.log("entre");
+        if(item['rol'] == 'Presidente'){
+          console.log("presi");
+          this.router.navigate(['/portal-presidente'])
+        }else if(item['rol'] == 'Admin'){
           console.log("admin");
           this.router.navigate(['/portal-admin'])
         }else{
           console.log("digi");
           this.router.navigate(['/portal-digitador'])
         }
+        
       })
     })
   }

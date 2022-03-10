@@ -361,6 +361,14 @@ h1 {
     transition: 0.3s
 }
 
+@media only screen and (max-width: 600px) {
+  .cardcontainer {
+    width: 300px !important;
+    font-size: 10px;
+  }
+}
+
+
 .cardcontainer:hover {
     box-shadow: 0 0 45px gray
 }
@@ -490,4 +498,11 @@ h1 {
 .fa-clock,
 .fa-comments {
     margin-right: 7px
+}
+
+
+@media only screen and (max-width: 600px) {
+  .bgImgMobile {
+    height: 125vh !important;
+  }
 }

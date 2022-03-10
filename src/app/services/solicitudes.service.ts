@@ -81,6 +81,20 @@ export class SolicitudesService {
           this.listaSolicitudes.push(a);
         }
       })
+      return nuevaSol;
+    }))
+  }
+
+  getALLSolicitudes(): Observable<any[]>{
+    this.solicitudRef = this.db.list('solicitudes');
+
+    return this.solicitudRef.snapshotChanges().pipe(map(data =>{
+      this.listaSolicitudes =[];
+      data.forEach(solicitud =>{
+        let a = solicitud.payload.toJSON();
+        a['key'] = solicitud.key;
+        this.listaSolicitudes.push(a);
+      })
       return this.listaSolicitudes;
     }))
   }
@@ -133,4 +147,22 @@ export class SolicitudesService {
 
     set(ref(db, 'solicitudes/' + id), objeto);
   }
+}
+
+
+  editarSolicitudPresidencia(id, estado, comentariosPresidencia=null) {
+    this.getSolicitud(id).subscribe( solicitud =>
+      {
+        console.log(solicitud);
+        solicitud["estado"]= estado;
+        if(comentariosPresidencia!=null)
+        {
+          solicitud["comentariosPresidencia"]=comentariosPresidencia;
+        }
+    
+        this.db.object(`solicitudes/${id}`).set(solicitud);
+      });
+ 
+  }
+
 }

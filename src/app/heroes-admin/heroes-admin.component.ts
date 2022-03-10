@@ -24,7 +24,7 @@ export class HeroesAdminComponent implements OnInit {
 
   urlI:any; //para mostrar imagen al seleccionarla
 
-  constructor(public service: AuthenticationService, public adminComp: PortalAdminComponent) {}
+  constructor(public service: AuthenticationService) {}
 
   @Output() viewHeroesRedirect = new EventEmitter<boolean>();
 
