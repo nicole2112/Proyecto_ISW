@@ -374,7 +374,9 @@ export class verHistorialComponent implements OnInit {
             To: 'aaron20092009@hotmail.com',
             From: 'lopez.aaron1022@gmail.com',
             Subject: `Solicitud Modificada - ${this.solicitud} - Prioridad(${this.prioridadEmail})`,
-            Body: `Paciente ${this.nombrePaciente} con No. Identidad ${this.IDPaciente} \nDescripcion: ${this.descripcion} Modificado por Digitador: ${this.digitadorMod}`
+            Body: `Paciente ${this.nombrePaciente} con No. Identidad ${this.IDPaciente}
+                  <br>Descripcion: ${this.descripcion}
+                  <br>Modificado por Digitador: ${this.digitadorMod}`
           }).then(
             message => console.log(message)
           );

@@ -8,7 +8,7 @@ declare const Email: any;
 
 @Component({
     selector: 'contact-us-form',
-    templateUrl: './contact-us.component.html', 
+    templateUrl: './contact-us.component.html',
     styleUrls: ['contact-us.component.css']
 })
 
@@ -56,7 +56,9 @@ export class ContactUsComponent {
             To: 'aaron20092009@hotmail.com',
             From: 'lopez.aaron1022@gmail.com',
             Subject: `Consulta - ${this.asunto.value}`,
-            Body: `${this.name.value}` + ` -${this.correo.value}- `+ '\n' + `${this.mensaje.value}`
+            Body: `Nombre: ${this.name.value} <br>
+                   Correo: ${this.correo.value}<br><br>
+                   ${this.mensaje.value}`
           }).then(
             message => console.log(message)
           );
@@ -68,9 +70,3 @@ export class ContactUsComponent {
         this.alert = false;
     }
 }
-
-// export class ContactUsComponent{
-//     //form = new ContactUsForm('','','','');
-//     submitted = false;
-//     onSubmit() { this.submitted = true; }
-// }
