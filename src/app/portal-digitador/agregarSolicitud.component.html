@@ -1,9 +1,19 @@
-<div class="container">
-  <div class="search-box">
-    <input class="search-txt" type="text" name="" id="num" placeholder="#ID Paciente..">
-    <a class="btn btn-primary" (click)="buscarPaciente(); show=false" >Buscar</a>
 
+<div class="container stylePaciente">
+  <div class="d-flex justify-content-center">
+    <h3 style="margin-bottom: 2%; margin-top: 2%">
+      Ingresar Solicitud de Paciente
+    </h3>
   </div>
+  <div class="search-box row justify-content-center">
+    <div class="col-md-5">
+      <input class="search-txt form-control" type="text" name="num" id="num" placeholder="Número de Identidad">
+    </div>
+    <div class="col-md-3">
+      <a class="btn button1" (click)="buscarPaciente(); show=false" >Buscar</a>
+    </div>
+  </div>
+  <br>
 </div>
 
 
@@ -25,7 +35,7 @@
           </tr>
         </thead>
       </table>
-      <button class="btn btn-primary" (click)="show=true"> Agregar Solicitud </button>
+      <button class="btn button1" (click)="show=true"> Agregar Solicitud </button>
 </div>
 
 

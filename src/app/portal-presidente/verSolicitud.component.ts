@@ -150,7 +150,7 @@ export class verSolicitudComponent implements OnInit {
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
-        if(selectedItem.hojaCompromiso != '' || selectedItem.hojaCompromiso != '/')document.getElementById("hoja").setAttribute('href', selectedItem.hojaCompromiso);
+        if(selectedItem.hojaCompromiso != '' || selectedItem.hojaCompromiso != '/')document.getElementById("hoja").setAttribute('href', selectedItem.hojaComp);
         if(selectedItem.otros != '' || selectedItem.otros != '/')document.getElementById("otros").setAttribute('href', selectedItem.otros);
         document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
         document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
