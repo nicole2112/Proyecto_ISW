@@ -81,7 +81,7 @@ export class SolicitudesService {
           this.listaSolicitudes.push(a);
         }
       })
-      return nuevaSol;
+      return this.listaSolicitudes;
     }))
   }
 
@@ -147,7 +147,6 @@ export class SolicitudesService {
 
     set(ref(db, 'solicitudes/' + id), objeto);
   }
-}
 
 
   editarSolicitudPresidencia(id, estado, comentariosPresidencia=null) {

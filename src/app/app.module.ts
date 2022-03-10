@@ -109,7 +109,10 @@ import { verSolicitudComponent } from './portal-presidente/verSolicitud.componen
     DocumentsComponent,
     PortalPresidenteComponent,
     NavbarPortalPresidenteComponent,
-    verSolicitudComponent
+    verSolicitudComponent,
+    PatientHistoryComponent,
+    ViewPatientsComponent,
+    AddPatientComponent
   ],
   imports: [
     BrowserModule,

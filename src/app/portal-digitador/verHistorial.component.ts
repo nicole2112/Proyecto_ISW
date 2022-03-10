@@ -50,22 +50,6 @@ export class verHistorialComponent implements OnInit {
     descList: any[] = [];
     namePattern = '^[a-zA-Z ]*$';
 
-    //Variables para obtener solicitudes por paciente
-
-    solicitudesRef: AngularFireList<any>;
-    
-    solicitudesPacientesList :any[] =[];
-    listSoliPacienteFiltered :any[]=[];
-    CedulaPaciente: any;
-
-    filtro=[
-      'Aprobada',
-      'Denegada'
-    ];
-
-    
-
-    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private pacService: PacientesService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
     solicitudSelectedId: any;
 
     nombre: any;
@@ -128,33 +112,6 @@ export class verHistorialComponent implements OnInit {
       });
     }
 
-    
-    getSolicitudesXpaciente(){
-      this.solicitudesRef =this.service.db.list('solicitudes');
-      this.solicitudesRef.snapshotChanges().subscribe(data =>{
-        this.solicitudesPacientesList =[];
-        data.forEach((soli) =>{
-          console.log(soli);
-          let a = soli.payload.toJSON();
-          a['key'] = soli.key;        
-          if(a['IDPaciente'] == this.CedulaPaciente){
-            this.solicitudesPacientesList.push(a);
-          }
-        })
-        this.listSoliPacienteFiltered = this.solicitudesPacientesList;
-      })
-    }
-
-    callNotFoundFunction(){
-      Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        title: '¡Paciente no encontrado!',
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-
     getPacienteData(id) {
       let patient = this.patientService.getPacientById(id);
       console.log(patient);
@@ -169,17 +126,6 @@ export class verHistorialComponent implements OnInit {
                 return record.estado == state;
             });
         }
-    }
-
-    onSelectedChangeBuscarPaciente(event: any){
-      const filter = event.target.value;
-      if(filter == "Todos"){
-        this.listSoliPacienteFiltered = this.solicitudesPacientesList;
-      }else{
-        this.listSoliPacienteFiltered = this.solicitudesPacientesList.filter(record =>{
-          return record.estado == filter;
-        });
-      }
     }
 
     open(content) {
@@ -308,8 +254,6 @@ export class verHistorialComponent implements OnInit {
       }
 
       editarSolicitud(id){
-        console.log("ID ACA: ");
-        console.log(id);
         Promise.all(this.fileList.map( async (file) =>
         {
             return this.guardarArchivo(file);

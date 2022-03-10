@@ -185,44 +185,12 @@
             <div class="input-group-append">
             </div>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer"></div>
-    </ng-template>
-  </div>
-</div>
-<!--DIV PRINCIPAL-->
-<br /><br /><br />
-
-<!-- Tabla para buscar solicitudes por paciente -->
-<div style="background-color: white">
-  <div class="d-flex justify-content-center">
-    <h3 style="margin-bottom: 2%; margin-top: 2%">
-      Buscar Solicitudes de Paciente
-    </h3>
-  </div>
-  <div class="container BuscaPaciente">
-    <form #historialForm="ngForm">
-      <div class="row justify-content-md-center">
-        <div class="col col-lg-2">
-          <select
-            class="form-select my-4 col-md-6"
-            (change)="onSelectedChangeBuscarPaciente($event)"
-            nambe="busqueda"
-            required
-          >
-            <option [ngValue]="'all'">Todos</option>
-            <option *ngFor="let filter of filtro" [ngValue]="filter">
-              {{ filter }}
-            </option>
-          </select>
         </div>
-      </form>
+        </form>
+      <div class="modal-footer"></div>
     </div>
-    <div class="modal-footer">
-      <!-- <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, articuloSelectedId, articuloSelectedName); onDeleteConfirmation(heroeSelectedName); modal.close('Delete Click');">Eliminar</button> -->
-      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
-    </div>
+  </ng-template>
   </div>
-</div>
-</div> <!--DIV PRINCIPAL-->
+<!--DIV PRINCIPAL-->
+
+
