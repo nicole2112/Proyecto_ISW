@@ -48,7 +48,7 @@ currentUser: any;
     //vacio
   }
   addPaciente(){
-    //vacio
+    this.viewPacientesClick.emit(true);
   }
   //Blog
   viewArticulos() {
@@ -87,7 +87,7 @@ currentUser: any;
     this.showPacientesClick.emit(true);
   }
   viewPacientes(){
-    this.viewPacientesClick.emit(true);
+    
   }
 
   ngOnInit(): void {
@@ -109,6 +109,8 @@ currentUser: any;
   addUser(){
     this.router.navigateByUrl(`portal-presidente/registro`);
   }
+
+  
 
   fnEditUserProfile(){
     this.router.navigateByUrl(`portal-presidente/perfil`);

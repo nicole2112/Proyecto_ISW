@@ -10,7 +10,7 @@
 (viewPDFClick)="toggleShowHeroes = false; toggleHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulos=false; toggleUsers=false; toggleShowPDF=false; toggleShowSolicitudes=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false; toggleViewPDF=true"
 (showSolicitudesClick)="toggleShowPDF=false; toggleViewPDF=false; toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleViewSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false; toggleShowArticulos=false; toggleShowSolicitudes=true;"
 (viewSolicitudesClick)="toggleShowPDF=false; toggleViewPDF=false; toggleUsers = false; toggleHeroes = false; toggleShowHeroes = false; toggleShowHeroesRedirect = false; toggleShowTestimonies = false; toggleViewTestimonies = false; toggleShowTestimoniesRedirect = false; toggleShowArticulos = false; toggleShowArticulosRedirect=false; toggleShowSolicitudes=false; toggleShowPacientes=false; toggleViewPacientes=false; toggleViewArticulos = false; toggleViewSolicitudes=true;"
-(showPacientesClick)="toggleShowPDF=false; toggleViewPDF=false; toggleHeroes = false; toggleUsers = false;toggleShowHeroes = false; toggleShowHeroesRedirect=false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulosRedirect=false; toggleViewSolicitudes=false; toggleViewPacientes=false; toggleShowArticulos=false; toggleShowSolicitudes=false; toggleShowPacientes=true;"
+(showPacientesClick)="toggleShowPDF=false; toggleViewPDF=false; toggleUsers = false; toggleHeroes = false; toggleShowHeroes = false; toggleShowHeroesRedirect = false; toggleShowTestimonies = false; toggleViewTestimonies = false; toggleShowTestimoniesRedirect = false; toggleShowArticulos = false; toggleShowArticulosRedirect=false; toggleShowSolicitudes=false; toggleShowPacientes=true; toggleViewArticulos = false; toggleViewSolicitudes=false; toggleViewPacientes=false;"
 (viewPacientesClick)="toggleShowPDF=false; toggleViewPDF=false; toggleUsers = false; toggleHeroes = false; toggleShowHeroes = false; toggleShowHeroesRedirect = false; toggleShowTestimonies = false; toggleViewTestimonies = false; toggleShowTestimoniesRedirect = false; toggleShowArticulos = false; toggleShowArticulosRedirect=false; toggleShowSolicitudes=false; toggleShowPacientes=false; toggleViewArticulos = false; toggleViewSolicitudes=false; toggleViewPacientes=true;"
 >
 
@@ -32,6 +32,10 @@
 
   <app-view-pdfs-admin *ngIf="toggleShowPDF"></app-view-pdfs-admin>
   <app-add-pdf-admin *ngIf="toggleViewPDF" (AddPDFRedirect)="toggleShowHeroes = false; toggleHeroes = false; toggleShowTestimonies=false; toggleViewTestimonies=false; toggleViewArticulos = false; toggleShowArticulos=false; toggleUsers=false; toggleViewPDF=false; toggleShowPDF=true" ></app-add-pdf-admin>
+
+  <app-view-patients *ngIf="toggleShowPacientes"></app-view-patients>  
+
+  <app-add-patient *ngIf="toggleViewPacientes" (viewPacientesRedirect)="toggleShowPDF=false; toggleViewPDF=false; toggleUsers = false; toggleHeroes = false; toggleShowHeroes = false; toggleShowHeroesRedirect = false; toggleShowTestimonies = false; toggleViewTestimonies = false; toggleShowTestimoniesRedirect = false; toggleShowArticulos = false; toggleShowArticulosRedirect=false; toggleShowSolicitudes=false; toggleShowPacientes=true; toggleViewArticulos = false; toggleViewSolicitudes=false; toggleViewPacientes=false;"></app-add-patient>
 
   <app-view-Solicitud-presidente *ngIf="toggleShowSolicitudes"></app-view-Solicitud-presidente>
   </div>
