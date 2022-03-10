@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand nav-link" onclick="window.location.replace(portal-presidente);" [routerLink]="['/portal-presidente']">Portal Presidente</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="dropdown-users">
+      <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Solicitudes   ▼</button>
+      <div class="dropdown-content">
+        <a [routerLink]="['/portal-presidente']" (click)="showSolicitudes()">Ver Solicitudes</a>
+        <a (click)="addSolicitud()">Registrar Solicitud</a>
+      </div>
+    </div>
+    <div class="dropdown-users">
+        <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Pacientes   ▼</button>
+        <div class="dropdown-content">
+          <a [routerLink]="['/portal-presidente']" (click)="showPacientes()">Ver Pacientes</a>
+          <a (click)="addPaciente()">Registrar Paciente</a>
+        </div>
+      </div>
+    <div class="dropdown-users">
+      <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Usuarios   ▼</button>
+      <div class="dropdown-content">
+        <a [routerLink]="['/portal-presidente']" (click)="showUsers()">Ver Usuarios</a>
+        <a (click)="addUser()">Registrar Usuario</a>
+      </div>
+    </div>
+    <div class="dropdown-users">
+      <button class="dropbtn"><fa-icon class="icons" [icon]="faComments"></fa-icon>Testimonios  ▼</button>
+      <div class="dropdown-content">
+        <a [routerLink]="['/portal-presidente']" (click)="showTestimonies()">Ver Testimonios</a>
+        <a [routerLink]="['/portal-presidente']" (click)="viewTestimonies()">Agregar Testimonios</a>
+      </div>
+    </div>
+    <div class="dropdown-users">
+      <button class="dropbtn"><fa-icon class="icons" [icon]="faHandSparkles"></fa-icon>Héroes  ▼</button>
+      <div class="dropdown-content">
+        <a [routerLink]="['/portal-presidente']" (click)="showHeroes()">Ver Héroes</a>
+        <a [routerLink]="['/portal-presidente']" (click)="viewHeroes()">Agregar Héroe</a>
+      </div>
+    </div>
+    <div class="dropdown-users">
+      <button class="dropbtn"><fa-icon class="icons" [icon]="faBlog"></fa-icon>Blog   ▼</button>
+      <div class="dropdown-content">
+        <a [routerLink]="['/portal-presidente']" (click)="showArticulos()">Ver Artículos</a>
+        <a [routerLink]="['/portal-presidente']" (click)="viewArticulos()">Agregar Artículo</a>
+      </div>
+    </div>
+    <div class="dropdown-users">
+      <button class="dropbtn"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Documentos  ▼</button>
+      <div class="dropdown-content">
+        <a [routerLink]="['/portal-presidente']"  (click)="showPDF()">Ver PDFS</a>
+        <a [routerLink]="['/portal-presidente']"  (click)="viewPDF()">Agregar PDF</a>
+      </div>
+    </div>
+    <div class="dropdownx navbar-nav ms-auto">
+      <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here  ▼</button>
+      <div class="dropdown-content">
+        <a (click)="fnEditUserProfile()">Editar</a>
+        <a (click)="logOut()">Cerrar Sesión</a>
+      </div>
+    </div>
+  </nav>

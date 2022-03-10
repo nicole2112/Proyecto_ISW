@@ -143,4 +143,20 @@ export class SolicitudesService {
     set(ref(db, 'solicitudes/' + id), objeto);
   }
 
+
+  editarSolicitudPresidencia(id, estado, comentariosPresidencia=null) {
+    this.getSolicitud(id).subscribe( solicitud =>
+      {
+        console.log(solicitud);
+        solicitud["estado"]= estado;
+        if(comentariosPresidencia!=null)
+        {
+          solicitud["comentariosPresidencia"]=comentariosPresidencia;
+        }
+    
+        this.db.object(`solicitudes/${id}`).set(solicitud);
+      });
+ 
+  }
+
 }

@@ -1,10 +1,18 @@
 <div style="background-color: white;">
   <div class="container historial">
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
-      <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required>
-        <option [ngValue]="'all'">Todos</option>
-        <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>
-      </select>
+      <div style="height: 69px;">
+        <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required style="float:left">         
+          <option [ngValue]="'all'">Todos</option>         
+          <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>     
+        </select>
+        <div class="h-100 d-flex align-items-center" style="padding-left: 15px;">
+          <label>
+            <input type="checkbox" [value]="showArchived" (change)="onCheckboxChange($event)" />
+            Mostrar archivados
+          </label>
+        </div>
+      </div>
     <table class="table table-striped table-bordered">
       <thead class="table-header" class="userRowHover">
 
@@ -229,3 +237,5 @@
   </div>
 </ng-template>
 </div>
+
+

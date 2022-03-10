@@ -24,3 +24,7 @@ display: flex;
 .float-child:first-child {
 margin-right: 20px;
 }
+
+.userRowHover:hover .rowInfo{
+    color: #9965ac;
+}
