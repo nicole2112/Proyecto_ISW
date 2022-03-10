@@ -125,6 +125,16 @@ export class SolicitudesService {
       });
   }
 
+  archivarSolicitud(id, archivado) {
+    this.getSolicitud(id).subscribe( solicitud =>
+      {
+        console.log(solicitud);
+        solicitud["archivado"]= archivado;
+
+        this.db.object(`solicitudes/${id}`).set(solicitud);
+      });
+  }
+
   actualizarArchivo(urlArchivo, id, archivoNombre) {
     const db = getDatabase();
 
