@@ -1,184 +1,219 @@
 <div style="background-color: white;">
-    <div class="container historial">
-      <div class="table-wrapper-scroll-y my-custom-scrollbar">
-        <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required>
-          <option [ngValue]="'all'">Todos</option>
-          <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>
-        </select>
-      <table class="table table-striped table-bordered">
-        <thead class="table-header" class="userRowHover">
+  <div class="container historial">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required>
+        <option [ngValue]="'all'">Todos</option>
+        <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>
+      </select>
+    <table class="table table-striped table-bordered">
+      <thead class="table-header" class="userRowHover">
 
-            <tr>
-                <th>Nombre del paciente</th>
-                <th>Ciudad</th>
-                <th>Solicitud</th>
-                <th>Fecha</th>
-                <th>Estado</th>
-                <th>Comentarios</th>
+          <tr>
+              <th>Nombre del paciente</th>
+              <th>Ciudad</th>
+              <th>Solicitud</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Comentarios</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let record of filteredRecordList" class="userRowHover" (click)="open(content); onSelect(record);">
+              <td class="rowInfo">{{record?.nombrePaciente}}</td>
+              <td class="rowInfo">{{record?.ciudad}}</td>
+              <td class="rowInfo">{{record?.queSolicita}}</td>
+              <td class="rowInfo">{{record?.fecha}}</td>
+              <td class="rowInfo">{{record?.estado}}</td>
+              <td class="rowInfo">{{record?.comentariosPresidencia}}</td>
             </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let record of filteredRecordList" class="userRowHover" (click)="open(content); onSelect(record);">
-                <td class="rowInfo">{{record?.nombrePaciente}}</td>
-                <td class="rowInfo">{{record?.ciudad}}</td>
-                <td class="rowInfo">{{record?.queSolicita}}</td>
-                <td class="rowInfo">{{record?.fecha}}</td>
-                <td class="rowInfo">{{record?.estado}}</td>
-                <td class="rowInfo">{{record?.comentariosPresidencia}}</td>
-              </tr>
-        </tbody>
-      </table>
-    </div>
+      </tbody>
+    </table>
+  </div>
 
-  <!-- MODAL -->
+<!-- MODAL -->
 
-  <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">
-        Detalle Solicitud
-      </h4>
-      <div class="fecha">
-        <p id="fecha"></p>
-      </div>
-      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Detalle Solicitud
+    </h4>
+    <div class="fecha">
+      <p id="fecha"></p>
     </div>
-    <div class="modal-body">
-      <form>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="nombre">ID Paciente</label>
-              <div class="input-group">
-                <input disabled id="id-paciente" type="text" class="form-control" placeholder="ID Paciente" name="dp">
-              </div>
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="nombre">ID Paciente</label>
+            <div class="input-group">
+              <input disabled id="id-paciente" type="text" class="form-control" placeholder="ID Paciente" name="dp">
             </div>
-            <div class="form-group">
-              <label for="nombre">Nombre del paciente</label>
-              <div class="input-group">
-                <input disabled id="nombre" type="text" class="form-control" placeholder="nombre apellido" name="dp">
-                <div class="input-group-append">
-                  <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-                <label for="ciudad">Ciudad</label>
-                <div class="input-group">
-                  <input disabled id="ciudad" type="text" class="form-control" placeholder="ciudad" name="dp">
-                  <div class="input-group-append">
-                    <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="prioridadOptions">Prioridad</label>
-                <div class="input-group">
-                  <div class="custom-select" style="width:200px;" id="custom-select">
-                    <select disabled name="prioridadOptions" id="prioridadOptions">
-                    </select>
-                  </div>
-                </div>
-                <label class="error-label" id="error-label-prioridad"></label>
-              </div>
-              <div class="form-group">
-                <label for="solicitud">Solicitud</label>
-                <div class="input-group">
-                  <input disabled id="solicitud" type="text" class="form-control" placeholder="solicitud" name="dp">
-                  <div class="input-group-append">
-                    <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="estado">Estado</label>
-                <div class="input-group">
-                  <input disabled id="estado" type="text" class="form-control" placeholder="estado" name="dp">
-                  <div class="input-group-append">
-                    <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
-                  </div>
-                </div>
-              </div>
-            <div class="form-group">
-                <label for="descripcion">Descripcion</label>
-                <div class="input-group">
-                  <textarea disabled name="descripcion" class="form-control" id="descripcion" cols="60" rows="7" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
-                  <div class="input-group-append">
-                    <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
-                  </div>
-                </div>
-              </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="comentarioP">Comentarios de Presidencia</label>
+          <div class="form-group">
+            <label for="nombre">Nombre del paciente</label>
+            <div class="input-group">
+              <input disabled id="nombre" type="text" class="form-control" placeholder="nombre apellido" name="dp">
+              <div class="input-group-append">
+                <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <label for="ciudad">Ciudad</label>
               <div class="input-group">
-                <textarea disabled name="comentarioP" class="form-control" id="comentarioP" cols="40" rows="3" placeholder="No hay comentarios de presidencia" style="resize: none; margin-bottom: 1em;"></textarea>
+                <input disabled id="ciudad" type="text" class="form-control" placeholder="ciudad" name="dp">
                 <div class="input-group-append">
                   <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
                 </div>
               </div>
             </div>
             <div class="form-group">
+              <label for="prioridadOptions">Prioridad</label>
+              <div class="input-group">
+                <div class="custom-select" style="width:200px;" id="custom-select">
+                  <select disabled name="prioridadOptions" id="prioridadOptions">
+                  </select>
+                </div>
+              </div>
+              <label class="error-label" id="error-label-prioridad"></label>
+            </div>
+            <div class="form-group">
+              <label for="solicitud">Solicitud</label>
+              <div class="input-group">
+                <input disabled id="solicitud" type="text" class="form-control" placeholder="solicitud" name="dp">
+                <div class="input-group-append">
+                  <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="estado">Estado</label>
+              <div class="input-group">
+                <input disabled id="estado" type="text" class="form-control" placeholder="estado" name="dp">
+                <div class="input-group-append">
+                  <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+                </div>
+              </div>
+            </div>
+          <div class="form-group">
+              <label for="descripcion">Descripcion</label>
+              <div class="input-group">
+                <textarea disabled name="descripcion" class="form-control" id="descripcion" cols="60" rows="7" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
+                <div class="input-group-append">
+                  <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="comentarioP">Comentarios de Presidencia</label>
+            <div class="input-group">
+              <textarea disabled name="comentarioP" class="form-control" id="comentarioP" cols="40" rows="3" placeholder="No hay comentarios de presidencia" style="resize: none; margin-bottom: 1em;"></textarea>
+              <div class="input-group-append">
+                <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+              </div>
+            </div>
+          </div>
+          <div class="form-group float-container">
+            <div>
               <label for="hoja">Hoja de Compromiso</label>
               <br>
               <a class="btn btn-primary" id="hoja" href="" target="_blank">
                 Ver Documento
               </a>
             </div>
-            <div class="form-group">
+            <div class="input-group float-child">
+              <label>Actualizar Archivo</label>
+                <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+                      <input (change)="onChangeFile($event)" type="file" id="url-hoja-compromiso" accept="application/pdf"/>
+                  </div>
+            </div>
+        </div>
+          <div class="form-group float-container">
+            <div>
               <label for="estudio">Estudio Socioecónomico </label>
               <br>
               <a class="btn btn-primary" id="estudio" href="" target="_blank">
                 Ver Documento
               </a>
             </div>
-            <div class="form-group">
+            <div class="input-group float-child">
+              <label>Actualizar Archivo</label>
+                <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+                      <input (change)="onChangeFile($event)" type="file" id="url-estudio-socioeconomico" accept="application/pdf"/>
+                  </div>
+            </div>
+        </div>
+          <div class="form-group float-container">
+            <div>
               <label for="donacion">Solicitud de Donación</label>
               <br>
               <a class="btn btn-primary" id="donacion" href="" target="_blank">
                 Ver Documento
               </a>
             </div>
-            <div class="form-group">
+            <div class="input-group float-child">
+              <label>Actualizar Archivo</label>
+                <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+                      <input (change)="onChangeFile($event)" type="file" id="url-solicitud-donacion" accept="application/pdf"/>
+                  </div>
+            </div>
+        </div>
+          <div class="form-group float-container">
+            <div>
               <label for="otros">Otros</label>
               <br>
               <a class="btn btn-primary" id="otros" target="_blank">
                 Ver Documento
               </a>
             </div>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
-    </div>
-  </ng-template>
-
-  <ng-template #confirmation let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el Héroe?</h4>
-      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <div class="input-group">
-            <input id="nameDelete" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
-            <div class="input-group-append">
+            <div class="input-group float-child">
+              <label>Actualizar Archivo</label>
+                <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
+                      <input (change)="onChangeFile($event)" type="file" id="url-otros" accept="application/pdf"/>
+                  </div>
             </div>
+        </div>
+          <div class="form-group">
+            <label for="otros">Casa</label>
+            <div><img id="image_preview" class="float-child" width="150" height="150" alt=""></div>
           </div>
         </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <!-- <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, articuloSelectedId, articuloSelectedName); onDeleteConfirmation(heroeSelectedName); modal.close('Delete Click');">Eliminar</button> -->
-      <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
-    </div>
-  </ng-template>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
+  </div>
+</ng-template>
+
+<ng-template #confirmation let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el Héroe?</h4>
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <input id="nameDelete" class="form-control" placeholder="ejemplo@gmail.com" name="dp" readonly>
+          <div class="input-group-append">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, articuloSelectedId, articuloSelectedName); onDeleteConfirmation(heroeSelectedName); modal.close('Delete Click');">Eliminar</button> -->
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
+  </div>
+</ng-template>
 </div>
-</div> <!--DIV PRINCIPAL-->
