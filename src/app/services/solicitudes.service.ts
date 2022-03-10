@@ -15,13 +15,14 @@ export class SolicitudesService {
 
   private user: firebase.default.User = null;
 
+  solicitudRef: AngularFireList<any>;
   refer: AngularFireList<any>;
 
   listaSolicitudes: any[]=[];
   listaCorrecta: any[]=[];
   listaPac: any[]=[];
 
-  constructor(private db: AngularFireDatabase, private auth: AuthenticationService, private pacService: PacientesService) {
+  constructor(private db: AngularFireDatabase, private auth: AuthenticationService, private pacienteService: PacientesService) {
 
   }
 
@@ -68,6 +69,22 @@ export class SolicitudesService {
     }))
   }
 
+  getSolicitud_x_Paciente(idPaciente): Observable<any[]>{
+    this.solicitudRef = this.db.list('solicitudes');
+
+    return this.solicitudRef.snapshotChanges().pipe(map(data =>{
+      this.listaSolicitudes=[];
+      data.forEach(solicitud =>{
+        let a = solicitud.payload.toJSON();
+        a['key'] = solicitud.key;
+        if(a['IDPaciente'] == idPaciente){
+          this.listaSolicitudes.push(a);
+        }
+      })
+      return this.listaSolicitudes;
+    }))
+  }
+
   postSolicitud(descripcionCaso, IDPaciente, prioridad, comentariosPresidencia, queSolicita, estudioSE, archivoSolicitud, archivoAdicional, fecha) {
     let solicitud = {
       "descripcion": descripcionCaso,
@@ -94,6 +111,7 @@ export class SolicitudesService {
 
     this.getSolicitud(id).subscribe( solicitud =>
       {
+        console.log(solicitud);
         solicitud["descripcion"]= descripcionCaso;
         solicitud["estado"]= estado;
         solicitud["prioridad"]= prioridad;
