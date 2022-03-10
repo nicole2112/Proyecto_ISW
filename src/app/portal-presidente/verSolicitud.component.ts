@@ -40,28 +40,36 @@ export class verSolicitudComponent implements OnInit {
 
     //Jose
     ngOnInit() {
-        this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe(records => {
-          this.recordList = records.sort((a, b) => {
-                let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
-                return +dateA - +dateB;
-            });
-            
-            this.recordList = records.sort((a, b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
-            
-            this.recordList.forEach(element =>{
-              if(element.prioridad == 1){
-                element.prioridad ="Alta";
-              }else if (element.prioridad == 2){
-                element.prioridad = "Media";
-              }else if(element.prioridad == 3){
-                element.prioridad = "Baja"
-            }
-            });
-            
-            this.filteredRecordList = this.recordList;
-            //console.log(this.filteredRecordList);
-            
+      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe(records => {
+        this.recordList = records.sort((a, b) => {
+            let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
+            return +dateA - +dateB;
         });
+        this.filteredRecordList = this.recordList;
+        this.recordList = this.filteredRecordList;
+        this.filteredRecordList = [];
+
+        this.recordList.forEach(item =>
+          {
+            this.pacService.getPaciente2(item['IDPaciente']).subscribe(pac => {
+              pac['id'] = item['id'];
+              item = {...pac, ...item};
+              item['nombrePaciente'] = pac['nombre'];
+
+              this.userService.getUser(item['digitador']).subscribe(usuario =>
+                {
+                  let userdata = {
+                    "email": usuario['email'],
+                    "nombreDigitador": usuario['nombre'],
+                  };
+
+                  item = {...item, ...userdata};
+                  console.log(item);
+                  this.filteredRecordList.push(item);
+                });
+            });
+          });
+    });
     }
 
     onSelectedChange(event:any){
@@ -130,6 +138,23 @@ export class verSolicitudComponent implements OnInit {
           timer: 1500
         })
         this.recordService.editarSolicitudPresidencia(id,this.state,this.commentP);
-   }
+      }
+
+      getSolicitudesXpaciente(){
+        this.recordService.getALLSolicitudes().subscribe(data =>{
+          this.solicitudesPacientesList =[];
+          console.log(data);
+          data.forEach(soli =>{
+            let a = soli.payload.toJSON();
+            a['key'] = soli.key;        
+            if(a['IDPaciente'] == this.CedulaPaciente){
+              this.solicitudesPacientesList = a;
+            }else{
+              this.callNotFoundFunction();
+            }
+          })
+          this.filteredRecordList = this.solicitudesPacientesList;
+        })
+      }
     
 }
