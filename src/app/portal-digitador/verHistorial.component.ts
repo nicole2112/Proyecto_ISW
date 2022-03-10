@@ -11,6 +11,7 @@ import { runInThisContext } from 'vm';
 import { AuthenticationService } from "../services/auth.services";
 import { ThrowStmt } from '@angular/compiler';
 import { SolicitudesService } from '../services/solicitudes.service';
+import { faLeaf } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-view-Historial-admin',
@@ -28,6 +29,7 @@ export class verHistorialComponent implements OnInit {
         'Denegada',
         'Falta más información',
     ];
+    showArchived = false;
 
     closeResult: string;
     fileList: any;
@@ -36,15 +38,18 @@ export class verHistorialComponent implements OnInit {
 
     ngOnInit() {
         this.recordService.getSolicitudes(this.service.userDetails.uid).subscribe(records => {
-            this.recordList = records.sort((a, b) => {
-                if (a.prioridad === b.prioridad) {
-                  let dateA = new Date(b.fecha), dateB = new Date(a.fecha);
-                  return +dateA - +dateB;
-                } else {
-                  return a.prioridad < b.prioridad ? -1 : 1;
-                }
-            });
-            this.filteredRecordList = this.recordList;
+          // Sort records 
+          this.recordList = records.sort((a, b) => {
+              if (a.prioridad === b.prioridad) {
+                let dateA = new Date(b.fecha), dateB = new Date(a.fecha);
+                return +dateA - +dateB;
+              } else {
+                return a.prioridad < b.prioridad ? -1 : 1;
+              }
+          });
+
+          // Filter record
+          this.filteredRecordList = this.recordList.filter(record => record.archivado == 0);
         });
     }
 
@@ -57,6 +62,11 @@ export class verHistorialComponent implements OnInit {
                 return record.estado == state;
             });
         }
+    }
+
+    onCheckboxChange(event:any){
+      this.showArchived = event.target.checked;
+      this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
     }
 
     open(content) {
