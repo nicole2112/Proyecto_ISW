@@ -17,6 +17,7 @@ import { RetrieveUsersService } from '../services/retrieve-users.service';
 import { combineLatest, forkJoin, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { faBox, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
+import { faLeaf } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-view-Historial-admin',
@@ -35,6 +36,7 @@ export class verHistorialComponent implements OnInit {
         'Denegada',
         'Falta más información',
     ];
+    showArchived = false;
 
     faBox = faBox;
     faBoxOpen = faBoxOpen;
@@ -67,8 +69,12 @@ export class verHistorialComponent implements OnInit {
       this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
         let listanueva;
         listanueva = records.sort((a, b) => {
-              let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
+            if (a.prioridad === b.prioridad) {
+              let dateA = new Date(b.fecha), dateB = new Date(a.fecha);
               return +dateA - +dateB;
+            } else {
+              return a.prioridad < b.prioridad ? -1 : 1;
+            }
           });
           let observables: Observable<any>[] = [];
           let observables2: Observable<any>[] = [];
@@ -113,6 +119,9 @@ export class verHistorialComponent implements OnInit {
           }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
             this.recordList = [...new Set(this.recordList)];});
             });
+            
+          // Filter record
+          this.filteredRecordList = this.recordList.filter(record => record.archivado == 0);
     }
 
     handleArchive(id){
@@ -173,6 +182,11 @@ export class verHistorialComponent implements OnInit {
                 return record.estado == state;
             });
         }
+    }
+
+    onCheckboxChange(event:any){
+      this.showArchived = event.target.checked;
+      this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
     }
 
     open(content) {
@@ -336,6 +350,16 @@ export class verHistorialComponent implements OnInit {
         this.solicitud = solicitudValue;
         this.prioridad= prioridadSend;
         this.estado = "En espera";
+      }
+      
+      getRequestPriority(priority){
+        const priorities = [
+          "Inmediata",
+          "Alta",
+          "Baja",
+        ];
+
+        return priorities[priority-1]
       }
 
       editarSolicitud(id){
