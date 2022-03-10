@@ -5,7 +5,6 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angula
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { BlogService } from '../services/blog.service';
 import { Blog } from '../models/blog';
-import tinymce from "tinymce";
 import { StringLike } from '@firebase/util';
 import { runInThisContext } from 'vm';
 import { AuthenticationService } from "../services/auth.services";
@@ -14,6 +13,8 @@ import { SolicitudesService } from '../services/solicitudes.service';
 import { PacientesService } from '../services/pacientes.service';
 import { RetrieveUsersService } from '../services/retrieve-users.service';
 import { EnviarCorreoDigi } from '../services/email.service';
+import { map, take, takeWhile } from 'rxjs/operators';
+import { combineLatest, forkJoin, Observable } from 'rxjs';
 
 @Component({
     selector: 'app-view-Solicitud-presidente',
@@ -49,49 +50,56 @@ export class verSolicitudComponent implements OnInit {
 
     //Jose
     ngOnInit() {
-      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe(records => {
-        this.recordList = records.sort((a, b) => {
-          let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
-          return +dateA - +dateB;
-      });
       
-      this.recordList = records.sort((a, b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
-      
-      this.recordList.forEach(element =>{
-        if(element.prioridad == 1){
-          element.prioridad ="Alta";
-        }else if (element.prioridad == 2){
-          element.prioridad = "Media";
-        }else if(element.prioridad == 3){
-          element.prioridad = "Baja"
-      }
-      });
+      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
+        let listanueva;
+        listanueva = records.sort((a, b) => {
+              let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
+              return +dateA - +dateB;
+          });
+          let observables: Observable<any>[] = [];
+          let observables2: Observable<any>[] = [];
 
-        this.filteredRecordList = this.recordList;
-        this.recordList = this.filteredRecordList;
-        this.filteredRecordList = [];
-
-        this.recordList.forEach(item =>
+          listanueva.forEach( item =>
           {
-            this.pacService.getPaciente2(item['IDPaciente']).subscribe(pac => {
-              pac['id'] = item['id'];
-              item = {...pac, ...item};
-              item['nombrePaciente'] = pac['nombre'];
+            observables.push(this.pacService.getPaciente2(item['IDPaciente']))
+          });
 
-              this.userService.getUser(item['digitador']).subscribe(usuario =>
-                {
-                  let userdata = {
-                    "email": usuario['email'],
-                    "nombreDigitador": usuario['nombre'],
-                  };
+          let nuevalista:any = [];
+          combineLatest(observables).pipe(map(pac =>
+          {
 
-                  item = {...item, ...userdata};
-                  //console.log(item);
-                  this.filteredRecordList.push(item);
+            let item2;
+            listanueva.forEach( (item, index) =>
+            {
+              pac[index]['id'] = item['id'];
+              item2 = {...pac[index], ...item};
+              item2['nombrePaciente'] = pac[index]['nombre'];
+              nuevalista.push(item2);
+            });
+
+            nuevalista.forEach( objeto =>
+              {
+                observables2.push(this.userService.getUser(objeto['digitador']));
+                this.userService.getUser(objeto['digitador']).pipe(take(1)).subscribe(usuario =>
+                  {
+                    let item3;
+                    let userdata = {
+                      "email": usuario['email'],
+                      "nombreDigitador": usuario['nombre'],
+                    };
+                    item3 = {...objeto, ...userdata};
+                    if(!this.filteredRecordList.includes(item3))
+                  {
+                    this.filteredRecordList.push(item3);
+                    this.recordList.push(item3);
+                  }
                 });
             });
-          });
-    });
+
+          }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
+            this.recordList = [...new Set(this.recordList)];});
+            });
     }
 
     onSelectedChange(event:any){
