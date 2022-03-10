@@ -176,22 +176,4 @@ export class verSolicitudComponent implements OnInit {
           timer: 1500,
         });
       }
-
-      getSolicitudesXpaciente(){
-        this.recordService.getALLSolicitudes().subscribe(data =>{
-          this.solicitudesPacientesList =[];
-          console.log(data);
-          data.forEach(soli =>{
-            let a = soli.payload.toJSON();
-            a['key'] = soli.key;        
-            if(a['IDPaciente'] == this.CedulaPaciente){
-              this.solicitudesPacientesList = a;
-            }else{
-              this.callNotFoundFunction();
-            }
-          })
-          this.filteredRecordList = this.solicitudesPacientesList;
-        })
-      }
-    
 }
