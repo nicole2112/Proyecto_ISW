@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { observable, Observable, of, from } from 'rxjs';
@@ -16,13 +15,14 @@ export class SolicitudesService {
 
   private user: firebase.default.User = null;
 
+  solicitudRef: AngularFireList<any>;
   refer: AngularFireList<any>;
 
   listaSolicitudes: any[]=[];
   listaCorrecta: any[]=[];
   listaPac: any[]=[];
 
-  constructor(private db: AngularFireDatabase, private auth: AuthenticationService, private pacService: PacientesService) {
+  constructor(private db: AngularFireDatabase, private auth: AuthenticationService, private pacienteService: PacientesService) {
 
   }
 
@@ -69,6 +69,37 @@ export class SolicitudesService {
     }))
   }
 
+  getALLSolicitudes(): Observable<any[]>{
+    this.solicitudRef = this.db.list('solicitudes');
+
+    return this.solicitudRef.snapshotChanges().pipe(map(data =>{
+      this.listaSolicitudes =[];
+      data.forEach(solicitud =>{
+        let a = solicitud.payload.toJSON();
+        a['key'] = solicitud.key;
+        this.listaSolicitudes.push(a);
+      })
+      return this.listaSolicitudes;
+    }))
+  }
+
+  getSolicitud_x_Paciente(idPaciente): Observable<any[]>{
+    this.solicitudRef = this.db.list('solicitudes');
+
+    return this.solicitudRef.snapshotChanges().pipe(map(data =>{
+      let pacienteSolicitud: any;
+      this.listaSolicitudes=[];
+      data.forEach(solicitud =>{
+        let a = solicitud.payload.toJSON();
+        a['key'] = solicitud.key;
+        if(a['IDPaciente'] == idPaciente){
+          pacienteSolicitud = a;
+        }
+      })
+      return pacienteSolicitud;
+    }))
+  }
+
   postSolicitud(descripcionCaso, IDPaciente, prioridad, comentariosPresidencia, queSolicita, estudioSE, archivoSolicitud, archivoAdicional, fecha) {
     let solicitud = {
       "descripcion": descripcionCaso,
@@ -108,6 +139,16 @@ export class SolicitudesService {
       });
   }
 
+  actualizarArchivo(urlArchivo, id, archivoNombre) {
+    const db = getDatabase();
+
+    let objeto = {};
+    objeto[archivoNombre] = urlArchivo;
+
+    set(ref(db, 'solicitudes/' + id), objeto);
+  }
+
+
   editarSolicitudPresidencia(id, estado, comentariosPresidencia=null) {
     this.getSolicitud(id).subscribe( solicitud =>
       {
@@ -123,15 +164,4 @@ export class SolicitudesService {
  
   }
 
-
-  actualizarArchivo(urlArchivo, id, archivoNombre) {
-    const db = getDatabase();
-
-    let objeto = {};
-    objeto[archivoNombre] = urlArchivo;
-
-    set(ref(db, 'solicitudes/' + id), objeto);
-  }
-
 }
-

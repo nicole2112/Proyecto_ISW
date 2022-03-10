@@ -90,6 +90,7 @@ export class PacientesService {
       estado: estado,
     };
     this.db.list('pacientes').push(PacienteItem);
+    //agregar cedula al key
   }
 
   async guardarArchivos(archivo) {
