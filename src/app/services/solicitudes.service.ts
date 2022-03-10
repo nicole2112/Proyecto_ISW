@@ -85,20 +85,6 @@ export class SolicitudesService {
     }))
   }
 
-  getALLSolicitudes(): Observable<any[]>{
-    this.solicitudRef = this.db.list('solicitudes');
-
-    return this.solicitudRef.snapshotChanges().pipe(map(data =>{
-      this.listaSolicitudes =[];
-      data.forEach(solicitud =>{
-        let a = solicitud.payload.toJSON();
-        a['key'] = solicitud.key;
-        this.listaSolicitudes.push(a);
-      })
-      return this.listaSolicitudes;
-    }))
-  }
-
   postSolicitud(descripcionCaso, IDPaciente, prioridad, comentariosPresidencia, queSolicita, estudioSE, archivoSolicitud, archivoAdicional, fecha) {
     let solicitud = {
       "descripcion": descripcionCaso,

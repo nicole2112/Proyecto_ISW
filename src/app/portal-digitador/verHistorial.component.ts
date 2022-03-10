@@ -54,18 +54,18 @@ export class verHistorialComponent implements OnInit {
 
     nombre: any;
     ciudad: any;
+    prioridadString: any;
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService, private pacService: PacientesService, private patientService: RetrievePatientService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
 
-    async ngOnInit() {
+    ngOnInit() {
 
       this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
-          let listanueva;
-          listanueva = records.sort((a, b) => {
+        let listanueva;
+        listanueva = records.sort((a, b) => {
               let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
               return +dateA - +dateB;
           });
-
           let observables: Observable<any>[] = [];
           let observables2: Observable<any>[] = [];
 
@@ -77,7 +77,7 @@ export class verHistorialComponent implements OnInit {
           let nuevalista:any = [];
           combineLatest(observables).pipe(map(pac =>
           {
-            
+
             let item2;
             listanueva.forEach( (item, index) =>
             {
@@ -88,33 +88,32 @@ export class verHistorialComponent implements OnInit {
             });
 
             nuevalista.forEach( objeto =>
-            {
-              observables2.push(this.userService.getUser(objeto['digitador']));
-              this.userService.getUser(objeto['digitador']).pipe(take(1)).subscribe(usuario =>
-                {
-                  let item3;
-                  let userdata = {
-                    "email": usuario['email'],
-                    "nombreDigitador": usuario['nombre'],
-                  };
-                  item3 = {...objeto, ...userdata};
-                  if(!this.filteredRecordList.includes(item3))
+              {
+                observables2.push(this.userService.getUser(objeto['digitador']));
+                this.userService.getUser(objeto['digitador']).pipe(take(1)).subscribe(usuario =>
+                  {
+                    let item3;
+                    let userdata = {
+                      "email": usuario['email'],
+                      "nombreDigitador": usuario['nombre'],
+                    };
+                    item3 = {...objeto, ...userdata};
+                    if(!this.filteredRecordList.includes(item3))
                   {
                     this.filteredRecordList.push(item3);
                     this.recordList.push(item3);
                   }
                 });
             });
-        
+
           }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
             this.recordList = [...new Set(this.recordList)];});
-
-      });
+            });
     }
 
     getPacienteData(id) {
       let patient = this.patientService.getPacientById(id);
-      console.log(patient);
+      // console.log(patient);
     }
 
     onSelectedChange(event:any){
@@ -148,7 +147,7 @@ export class verHistorialComponent implements OnInit {
 
       onSelect(selectedItem: any){
         this.getPacienteData(selectedItem.IDPaciente);
-        console.log(selectedItem.key);
+        console.table(selectedItem);
         this.solicitudSelectedId = selectedItem.key;
         if(selectedItem.estado === "En espera"){
           // (document.getElementById("nombre") as any).disabled = false;
@@ -164,23 +163,24 @@ export class verHistorialComponent implements OnInit {
         document.getElementById("estado").setAttribute('value', selectedItem.estado);
         document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
         document.getElementById("fecha").innerHTML = selectedItem.fecha;
-        document.getElementById("hoja").setAttribute('href', selectedItem.hojaCompromiso);
+
+        document.getElementById("hoja").setAttribute('href', selectedItem.hojaComp);
         if(selectedItem.otros != '') document.getElementById("otros").setAttribute('href', selectedItem.otros);
         document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
         document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
+
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
         // (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
         (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
-        //console.log(selectedItem);
-        
+        document.getElementById("image_preview").setAttribute('src', selectedItem.imgCasa1);
 
         var selectorPrioridad = document.getElementById("prioridadOptions");
         var optionPrioridad1 = document.createElement("option");
         var optionPrioridad2 = document.createElement("option");
         var optionPrioridad3 = document.createElement("option");
 
-        console.log("Prioridad");
-        console.log(selectedItem.prioridad);
+        // console.log("Prioridad");
+        // console.log(selectedItem.prioridad);
 
         if(selectedItem.prioridad == 1)
         {
@@ -224,43 +224,83 @@ export class verHistorialComponent implements OnInit {
 
       // From attachment link
       onChangeFile(event) {
-          this.onFileChange(event.target.files, event.target.name);    // "target" is correct here
+        console.log("CHAANGE");
+        console.log(event);
+          this.onFileChange(event.target.files, event.target.files[0].name);    // "target" is correct here
       }
 
       private onFileChange(files: File[], descArchivo) {
         this.fileList.push(files[0]);
+        console.log(this.fileList);
         this.descList.push(descArchivo);
+      }
+
+      callUpdateNotification(){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Héroe ha sido actualizado exitosamente!',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
 
       getValues(){
         var nombreVal = document.getElementById('nombre') as HTMLInputElement;
         var ciudadVal = document.getElementById('ciudad') as HTMLInputElement;
         var solicitudVal = document.getElementById('solicitud') as HTMLInputElement;
+
+        var estudioSEVal = document.getElementById('estudioSE') as HTMLInputElement;
         var descripcionVal = document.getElementById('descripcion') as HTMLTextAreaElement;
+        var prioridadVal = document.getElementById('prioridadOptions') as HTMLSelectElement;
 
         let nombreValue = nombreVal.value;
         let ciudadValue = ciudadVal.value;
         let solicitudValue = solicitudVal.value;
         let descripcionValue = descripcionVal.value;
+        let prioridadValue = prioridadVal.options[prioridadVal.selectedIndex].text;
 
         var prioridadSend;
+        if(prioridadValue === 'Inmediata'){
+          prioridadSend = 1,
+          this.prioridadString = "Inmediata"
+        }else if(prioridadValue === 'Alta'){
+          prioridadSend = 2,
+          this.prioridadString = "Alta"
+        }else{
+          prioridadSend = 3,
+          this.prioridadString ="Baja"
+        }
         let updateValue = {};
 
+        // console.log(nombreValue);
+        // console.log(descripcionValue);
+        // console.log(solicitudValue);
         this.nombre = nombreValue;
         this.descripcion =  descripcionValue;
         this.ciudad = ciudadValue;
         this.solicitud = solicitudValue;
         this.prioridad= prioridadSend;
+        this.estado = "En espera";
       }
 
       editarSolicitud(id){
+        this.getValues();
         Promise.all(this.fileList.map( async (file) =>
         {
+          console.log("File");
+          console.log(file);
             return this.guardarArchivo(file);
         })).then((message) =>
         {
+          console.log("DESCLIST: ");
+          console.log(this.descList);
           this.descList.forEach((item, index, array) =>
           {
+            console.log("ITEM: ");
+            console.log(item);
+            console.log(message);
+            console.log(index);
               switch(item)
               {
                 case "socioeconomico":
@@ -275,7 +315,9 @@ export class verHistorialComponent implements OnInit {
               }
           });
           this.recordService.editarSolicitud(id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
+          this.callUpdateNotification();
         });
+        this.fileList = [];
     }
 
     async guardarArchivo(nuevoArchivo){
