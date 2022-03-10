@@ -48,6 +48,20 @@ export class verHistorialComponent implements OnInit {
     urlList: any[] = [];
     descList: any[] = [];
     namePattern = '^[a-zA-Z ]*$';
+
+    //Variables para obtener solicitudes por paciente
+
+    solicitudesRef: AngularFireList<any>;
+    
+    solicitudesPacientesList :any[] =[];
+    listSoliPacienteFiltered :any[]=[];
+    CedulaPaciente: any;
+
+    filtro=[
+      'Aprobada',
+      'Denegada'
+    ];
+
     
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService, private pacService: PacientesService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
@@ -107,6 +121,33 @@ export class verHistorialComponent implements OnInit {
       });
     }
 
+    
+    getSolicitudesXpaciente(){
+      this.solicitudesRef =this.service.db.list('solicitudes');
+      this.solicitudesRef.snapshotChanges().subscribe(data =>{
+        this.solicitudesPacientesList =[];
+        data.forEach((soli) =>{
+          console.log(soli);
+          let a = soli.payload.toJSON();
+          a['key'] = soli.key;        
+          if(a['IDPaciente'] == this.CedulaPaciente){
+            this.solicitudesPacientesList.push(a);
+          }
+        })
+        this.listSoliPacienteFiltered = this.solicitudesPacientesList;
+      })
+    }
+
+    callNotFoundFunction(){
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: '¡Paciente no encontrado!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
     onSelectedChange(event:any){
         const state = event.target.value;
         if (state == "Todos") {
@@ -116,6 +157,17 @@ export class verHistorialComponent implements OnInit {
                 return record.estado == state;
             });
         }
+    }
+
+    onSelectedChangeBuscarPaciente(event: any){
+      const filter = event.target.value;
+      if(filter == "Todos"){
+        this.listSoliPacienteFiltered = this.solicitudesPacientesList;
+      }else{
+        this.listSoliPacienteFiltered = this.solicitudesPacientesList.filter(record =>{
+          return record.estado == filter;
+        });
+      }
     }
 
     open(content) {
@@ -222,5 +274,4 @@ export class verHistorialComponent implements OnInit {
           );
       })
     }
-    
 }
