@@ -1,6 +1,7 @@
-<div style="background-color: white;">
-  <table class="table table-striped table-bordered">
-      <thead class="table-header">
+<div class="container" style="background-color: white; ">
+  <div class="table-wrapper-scroll-y">
+    <table class="table table-striped table-bordered">
+      <thead class="table-header" class="userRowHover">
           <tr>
              <th>Título</th>
              <th>Descripción</th>
@@ -18,7 +19,8 @@
               <td class="styleImg"><img src="{{articulo.imagenPreview}}" alt=""></td>
           </tr>
       </tbody>
-  </table>
+    </table>
+  </div>
 
   <ng-template #content let-modal>
      <div class="modal-header">

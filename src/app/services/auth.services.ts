@@ -133,13 +133,16 @@ export class AuthenticationService {
                 this.telefono = item['telefono'];
                 this.direccion = item['direccion'];
                 this.nombre = item['nombre'];
-                if(item['rol'] == 'Admin' || item['rol'] == 'Presidente')
-                {
+
+                if(item['rol'] == 'Presidente'){
                   this.userDetails = res.user;
-                  this.router.navigate(['/portal-admin']);
-                } else{
+                  this.router.navigate(['/portal-presidente'])
+                }else if(item['rol'] == 'Admin'){
                   this.userDetails = res.user;
-                  this.router.navigate(['/portal-digitador']);
+                  this.router.navigate(['/portal-admin'])
+                }else{
+                  this.userDetails = res.user;
+                  this.router.navigate(['/portal-digitador'])
                 }
                 
                 sessionStorage.setItem('rol', item['rol']);

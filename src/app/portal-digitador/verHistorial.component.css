@@ -1,14 +1,30 @@
 .historial{
-    background-color: white;
+  background-color: white;
 }
 
 .form-select {
-    width: 200px;
+  width: 200px;
 }
 
 
 .fecha{
-    font-size: 12;
-    font-style: normal;
-    margin-top: 20px;
+  font-size: 12;
+  font-style: normal;
+  margin-top: 20px;
+}
+
+.float-container {
+display: flex;
+}
+
+.float-child {
+  flex: 1;
+}
+
+.float-child:first-child {
+margin-right: 20px;
+}
+
+.userRowHover:hover .rowInfo{
+    color: #9965ac;
 }

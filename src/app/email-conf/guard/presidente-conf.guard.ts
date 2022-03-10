@@ -37,6 +37,8 @@ export class PresidenteConfGuard implements CanActivate {
           this.router.navigate(['/portal-digitador']);
         else if(this.authservice.isAdmin())
           this.router.navigate(['/portal-admin']);
+          else if (this.authservice.isPresdente())
+          this.router.navigate(['/portal-presidente']);
 
         return false;
       }

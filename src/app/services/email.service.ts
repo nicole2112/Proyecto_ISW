@@ -13,3 +13,15 @@ export function EnviarCorreo(NombrePaciente: any, Solicitud: any, DescripcionCas
         message => console.log(message)
     );
 }
+
+export function EnviarCorreoDigi(NombrePaciente: any, CorreoDigitador:any){
+    Email.send({
+        SecureToken: "735fd14b-47d2-47eb-b64d-6c94daa44421",
+        To: `${CorreoDigitador}`,
+        From: 'angella.falck@unitec.edu', //modificar correo presidencia 'rasodep696@naluzotan.com'
+        Subject: `Actualización de Solicitud`,
+        Body: `Presidencia ha respondido a su solicitud de donación del paciente: ${NombrePaciente}`
+    }).then(
+        message => console.log(message)
+    );
+}

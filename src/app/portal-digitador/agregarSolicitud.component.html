@@ -1,68 +1,75 @@
-<div class="container styleSolicitud">
+
+<div class="container stylePaciente">
+  <div class="d-flex justify-content-center">
+    <h3 style="margin-bottom: 2%; margin-top: 2%">
+      Ingresar Solicitud de Paciente
+    </h3>
+  </div>
+  <div class="search-box row justify-content-center">
+    <div class="col-md-5">
+      <input class="search-txt form-control" type="text" name="num" id="num" placeholder="Número de Identidad">
+    </div>
+    <div class="col-md-3">
+      <a class="btn button1" (click)="buscarPaciente(); show=false" >Buscar</a>
+    </div>
+  </div>
+  <br>
+</div>
+
+
+<div class="container stylePaciente" *ngIf="type==1">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ciudad</th>
+            <th scope="col">Estado</th>
+          </tr>
+
+          <tr>
+            <th scope="row">{{miPaciente.id}} </th>
+            <td>{{miPaciente.nombre}} </td>
+            <td>{{miPaciente.ciudad}} </td>
+            <td>{{miPaciente.estado}} </td>
+          </tr>
+        </thead>
+      </table>
+      <button class="btn button1" (click)="show=true"> Agregar Solicitud </button>
+</div>
+
+
+<div class="container stylePaciente" *ngIf="type==2">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Ciudad</th>
+        <th scope="col">Estado</th>
+      </tr>
+
+      <tr>
+        <th scope="row">{{miPaciente.id}} </th>
+        <td>{{miPaciente.nombre}} </td>
+        <td>{{miPaciente.ciudad}} </td>
+        <td>{{miPaciente.estado}} </td>
+      </tr>
+    </thead>
+  </table>
+  <p class="text-danger">El Paciente esta inactivo, no se puede crear una solicitud</p>
+</div>
+
+<div class="container stylePaciente" *ngIf="type==3">
+  <p class="text-danger">El Paciente que intenta buscar no existe o se ingreso un numero de ID incorrecto, ingrese otro numero de identidad o agregue un nuevo paciente con este numero de ID</p>
+</div>
+
+
+<div id = "form" class="container styleSolicitud" *ngIf = "show">
   <div class="d-flex justify-content-center">
     <h1 style="margin-bottom: 2%; margin-top: 2%;">Agregar Solicitud de Donación</h1>
   </div>
   <form #claseForm="ngForm" action="/">
-
-    <div class="row mt-3 d-flex justify-content-center">
-      <!-- Ingreso nombre -->
-      <div
-        class="form-floating sm-3 col-md-6"
-        [ngClass]="{
-          error:
-            claseForm.controls.nombre?.invalid &&
-            claseForm.controls.nombre?.touched
-        }">
-        <input
-          [(ngModel)]="nombre"
-          [pattern]="namePattern"
-          type="text"
-          class="form-control"
-          id="nombre"
-          name="nombre"
-          placeholder="Nombre completo"
-          required
-        />
-        <label for="nombre" style="margin-left: 2%;">Nombre del Paciente</label>
-        <em
-          class="text-danger"
-          *ngIf="
-            claseForm.controls.nombre?.invalid &&
-            claseForm.controls.nombre?.touched
-          "
-          >*Nombre válido es requerido
-        </em>
-      </div>
-      <!--Ingreso de Ciudad-->
-      <div
-        class="form-floating sm-3 col-md-2"
-        [ngClass]="{
-          error:
-            claseForm.controls.ciudad?.invalid &&
-            claseForm.controls.ciudad?.touched
-        }"
-      >
-        <input
-          [(ngModel)]="ciudad"
-          type="text"
-          class="form-control"
-          id="ciudad"
-          name="ciudad"
-          placeholder="Ciudad"
-          required
-        />
-        <label for="ciudad" style="margin-left: 4%;">Ciudad</label>
-        <em
-          class="text-danger"
-          *ngIf="
-            claseForm.controls.ciudad?.invalid &&
-            claseForm.controls.ciudad?.touched
-          "
-          >*Ciudad es requerida</em
-        >
-      </div>
-    </div>
-
     <!-- Ingreso de Solicitud -->
     <div class="d-flex justify-content-center styleFormElem">
         <div
@@ -127,6 +134,45 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center styleFormElem">
+
+      <!--prioridad-->
+      <div
+        class="form-floating sm-3 col-md-3"
+        [ngClass]="{
+          error:
+            claseForm.controls.prioridad?.invalid &&
+            claseForm.controls.prioridad?.touched
+        }"
+      >
+        <select 
+          [(ngModel)]="prioridad"
+          id = "floating input" 
+          class="form-select"
+          id="floatingInput"
+          name="prioridad"
+          placeholder="Prioridad"
+          required
+        >
+          <option value="Alta">Inmediata</option>
+          <option value="Media">Alta</option>
+          <option value="Baja">Baja</option>
+        </select>
+
+        <label for="floatingInput" style="margin-left: 3%;">Prioridad</label>
+        <em
+          class="text-danger"
+          *ngIf="
+            claseForm.controls.prioridad?.invalid &&
+            claseForm.controls.prioridad?.touched
+          "
+          >*Prioridad válida es requerida</em
+        >
+      </div>
+      
+    </div>
+    
+
     <!-- Sección de respaldos -->
     <br>
     <div class="d-flex justify-content-center">
@@ -168,22 +214,6 @@
       </div>
     </div>
 
-    <!-- Adjuntar Hoja de Compromiso del paciente -->
-    <div class="d-flex justify-content-center styleFormElem">
-      <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="sm-3 col-md-8">
-        <label class="form-label">Adjuntar hoja de compromiso del paciente*</label>
-        <input 
-          [(ngModel)]="hojaComp"
-          class="form-control"
-          (change)="onChange($event)" 
-          name="hojaComp"
-          type="file" 
-          accept=".pdf"
-          required
-        />
-      </div>
-    </div>
-
     <!-- Ingreso "otros". -->
     <div class="d-flex justify-content-center styleFormElem">
       <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)" class="sm-3 col-md-8">
@@ -195,38 +225,6 @@
           name="otros"
           type="file" 
           accept=".pdf"
-        />
-      </div>
-    </div>
-
-    <!-- Ingreso de Fotografías de la casa del paciente -->
-    <div class="d-flex justify-content-center styleFormElem">
-      <h6>Fotografías de casa del paciente</h6>
-    </div>
-    <div class="row mt-3 d-flex justify-content-center">
-      <!--Primera imagen-->
-      <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
-        <label class="form-label">Primera imagen*</label>
-        <input 
-          [(ngModel)]="imgCasa1"
-          class="form-control" 
-          (change)="onChange($event)" 
-          name="imgCasa1"
-          type="file" 
-          accept="image/png, image/jpeg"
-          required
-        />
-      </div>
-      <!--Segunda imagen-->
-      <div class="sm-3 col-md-4" (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
-        <label class="form-label">Segunda imagen</label>
-        <input 
-          [(ngModel)]="imgCasa2"
-          class="form-control" 
-          (change)="onChange($event)" 
-          name="imgCasa2"
-          type="file" 
-          accept="image/png, image/jpeg"
         />
       </div>
     </div>

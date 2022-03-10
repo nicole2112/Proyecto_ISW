@@ -1,0 +1,112 @@
+<!-- Tabla para buscar solicitudes por paciente -->
+<div style="background-color: white">
+  <div class="d-flex justify-content-center">
+    <h3 style="margin-bottom: 2%; margin-top: 2%">
+      Buscar Solicitudes de Paciente
+    </h3>
+  </div>
+  <div class="container BuscaPaciente">
+    <form #historialForm="ngForm">
+      <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
+          <select
+            class="form-select my-4 col-md-6"
+            (change)="onSelectedChangeBuscarPaciente($event)"
+            nambe="busqueda"
+            required
+          >
+            <option [ngValue]="'all'">Todos</option>
+            <option *ngFor="let filter of filtro" [ngValue]="filter">
+              {{ filter }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-auto">
+          <label for="CedulaPaciente" style="margin-left: 3%"
+            >Ingrese número de identidad a buscar</label
+          >
+          <input
+            [(ngModel)]="CedulaPaciente"
+            type="text"
+            class="form-control"
+            id="CedulaPaciente"
+            name="CedulaPaciente"
+            placeholder="0501-1985-02001"
+            pattern="[0-9]{4}-[0-9]{4}-[0-9]{5}"
+          />
+          <em
+            class="text-danger"
+            *ngIf="
+              historialForm.controls.CedulaPaciente?.invalid &&
+              historialForm.controls.CedulaPaciente?.touched
+            "
+            >*Ingrese número de identidad acorde al formato<br />
+          </em>
+          <span>*Formato: 0501-1985-02001</span>
+        </div>
+        <div class="col-md-auto">
+          <button
+            type="submit"
+            style="margin-top: 25px"
+            class="btn button1"
+            [disabled]="historialForm.invalid"
+            (click)="getSolicitudesXpaciente(); buscarPaciente()"
+          >
+            Buscar Paciente
+          </button>
+        </div>
+      </div>
+    </form>
+    <br><br>
+    <!-- Para ver datos del paciente -->
+    <div class="container stylePatientHistory" *ngIf="type==1">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ciudad</th>
+            <th scope="col">Telefono</th>
+          </tr>
+
+          <tr>
+            <th scope="row">{{miPaciente.id}} </th>
+            <td>{{miPaciente.nombre}} </td>
+            <td>{{miPaciente.ciudad}} </td>
+            <td>{{miPaciente.telefono}} </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <!-- Para ver solicitudes del paciente seleccionado -->
+    <div class="table-wrapper-scroll-y my-custom-scrollbar"*ngIf="type==1">
+      <!-- Tabla -->
+      <table class="table table-striped table-bordered">
+        <thead class="table-header" class="userRowHover">
+          <tr>
+            <th style="text-align: center">Solicitud</th>
+            <th style="text-align: center">Descripción</th>
+            <th style="text-align: center">Fecha de ingreso</th>
+            <th style="text-align: center">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let soli of listSoliPacienteFiltered"
+            class="userRowHover"
+          >
+            <td class="rowInfo">{{ soli?.queSolicita }}</td>
+            <td class="rowInfo">{{ soli?.descripcion }}</td>
+            <td class="rowInfo">{{ soli?.fecha }}</td>
+            <td class="rowInfo">{{ soli?.estado }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="container stylePatientHistory" *ngIf="type==2">
+      <p class="text-danger">El Paciente que intenta buscar no existe o se ingreso un numero de ID incorrecto, ingrese otro numero de identidad o agregue un nuevo paciente con este numero de ID</p>
+    </div>
+  </div>
+</div>

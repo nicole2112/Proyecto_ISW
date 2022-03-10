@@ -1,4 +1,6 @@
-<app-navbar-portal-admin></app-navbar-portal-admin>
+<app-navbar-portal-admin *ngIf="rollNav == 'Admin'"></app-navbar-portal-admin>
+<app-navbar-portal-presidente *ngIf="rollNav == 'Presidente'"></app-navbar-portal-presidente>
+
 <form #claseForm="ngForm" action="/">
   <div style="margin-top: 50px">
     <div class="d-flex justify-content-center">

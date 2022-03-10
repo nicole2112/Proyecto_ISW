@@ -15,7 +15,9 @@ export class RegistroComponent implements OnInit {
   email = '';
   nombre = '';
   rol = '';
+  rollNav:any;
   pass = '';
+  userId: any;
   namePattern = '^[a-zA-Z ]*$';
   emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
@@ -24,7 +26,40 @@ export class RegistroComponent implements OnInit {
     public service: AuthenticationService
   ) {}
 
-  ngOnInit(): void {}
+    reload: boolean;
+  
+    ngOnInit() 
+    {
+      this.userId = sessionStorage.getItem('uid');
+      
+      this.service.db
+        .list('usuarios')
+        .valueChanges()
+        .subscribe((usuarios) => {
+          let keys = Object.keys(usuarios);
+          keys.forEach((item) => {
+            if (usuarios[item]['id'] == this.userId) {
+              this.rollNav = usuarios[item]['rol'];
+            }
+          });
+        });
+    }//fin de ngOnInit
+  
+    async obtenerRol(){
+      this.service.db
+        .list('usuarios')
+        .valueChanges()
+        .subscribe((usuarios) => {
+          let keys = Object.keys(usuarios);
+          //console.log(usuarios);
+          keys.forEach((item) => {
+            if (usuarios[item]['id'] == this.userId) {
+              this.rollNav = usuarios[item]['rol'];
+              //console.log(this.rol);
+            }
+          });
+        });
+    }
 
   generarContra(){
     var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -69,5 +104,8 @@ export class RegistroComponent implements OnInit {
     }).then(
       message => console.log(message)
     );
+
+    
   }
+
 }

@@ -24,6 +24,8 @@ import { AdminConfGuard } from './email-conf/guard/admin-conf.guard';
 import { DigitadorConfGuard } from './email-conf/guard/digitador-conf.guard';
 import { BlogPostComponent } from './blog-post/blog-post.component';
 import { DocumentsComponent } from './about-us/documents.component';
+import { PortalPresidenteComponent } from './portal-presidente/portal-presidente.component';
+import { PresidenteConfGuard } from './email-conf/guard/presidente-conf.guard';
 
 export const AppRoutes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
@@ -49,6 +51,13 @@ export const AppRoutes: Routes = [
   { path: 'no-email-confirmation', component: NoConfirmationComponent },
   { path: 'portal-digitador/perfil', component: EditUserProfileComponent, canActivate: [DigitadorConfGuard] },
   { path: 'portal-digitador', component: PortalDigitadorComponent, canActivate: [DigitadorConfGuard] },
+  { path: 'portal-presidente/perfil', component: EditUserProfileComponent, canActivate: [PresidenteConfGuard]  },
+  { path: 'portal-presidente', component: PortalPresidenteComponent, canActivate: [PresidenteConfGuard] },
+  {
+    path: 'portal-presidente/registro',
+    component: RegistroComponent,
+    canActivate: [PresidenteConfGuard],
+  },
   { path: 'portal-pw-reset', component: PwResetComponent },
   { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];
