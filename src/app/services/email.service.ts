@@ -1,7 +1,6 @@
 import '../../assets/js/smtp.js';
 
 declare const Email: any;
-declare const EmailDigi:any;
 
 export function EnviarCorreo(NombrePaciente: any, Solicitud: any, DescripcionCaso: any){
     Email.send({
@@ -16,10 +15,10 @@ export function EnviarCorreo(NombrePaciente: any, Solicitud: any, DescripcionCas
 }
 
 export function EnviarCorreoDigi(NombrePaciente: any, CorreoDigitador:any){
-    EmailDigi.send({
-        SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
-        To: CorreoDigitador,
-        From: 'rasodep696@naluzotan.com', //modificar correo presidencia
+    Email.send({
+        SecureToken: "735fd14b-47d2-47eb-b64d-6c94daa44421",
+        To: `${CorreoDigitador}`,
+        From: 'angella.falck@unitec.edu', //modificar correo presidencia 'rasodep696@naluzotan.com'
         Subject: `Actualización de Solicitud`,
         Body: `Presidencia ha respondido a su solicitud de donación del paciente: ${NombrePaciente}`
     }).then(

@@ -13,6 +13,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { SolicitudesService } from '../services/solicitudes.service';
 import { PacientesService } from '../services/pacientes.service';
 import { RetrieveUsersService } from '../services/retrieve-users.service';
+import { EnviarCorreoDigi } from '../services/email.service';
 
 @Component({
     selector: 'app-view-Solicitud-presidente',
@@ -41,6 +42,8 @@ export class verSolicitudComponent implements OnInit {
     solicitudesPacientesList :any[] =[];
     listSoliPacienteFiltered :any[]=[];
     CedulaPaciente: any;
+    emailDigi:any;
+    patientName:any;
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService,private pacService: PacientesService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
 
@@ -48,9 +51,22 @@ export class verSolicitudComponent implements OnInit {
     ngOnInit() {
       this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe(records => {
         this.recordList = records.sort((a, b) => {
-            let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
-            return +dateA - +dateB;
-        });
+          let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
+          return +dateA - +dateB;
+      });
+      
+      this.recordList = records.sort((a, b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
+      
+      this.recordList.forEach(element =>{
+        if(element.prioridad == 1){
+          element.prioridad ="Alta";
+        }else if (element.prioridad == 2){
+          element.prioridad = "Media";
+        }else if(element.prioridad == 3){
+          element.prioridad = "Baja"
+      }
+      });
+
         this.filteredRecordList = this.recordList;
         this.recordList = this.filteredRecordList;
         this.filteredRecordList = [];
@@ -70,7 +86,7 @@ export class verSolicitudComponent implements OnInit {
                   };
 
                   item = {...item, ...userdata};
-                  console.log(item);
+                  //console.log(item);
                   this.filteredRecordList.push(item);
                 });
             });
@@ -120,21 +136,25 @@ export class verSolicitudComponent implements OnInit {
     
       onSelect(selectedItem: any){
         this.solicitudSelectedId = selectedItem.key;
-        document.getElementById("nombrePaciente").setAttribute('value', selectedItem.nombrePaciente);
+        document.getElementById("nombreDigitador").setAttribute('value', selectedItem.nombreDigitador);
+        document.getElementById("email").setAttribute('value', selectedItem.email);
+        this.patientName=document.getElementById("nombrePaciente").setAttribute('value', selectedItem.nombrePaciente);
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
-        document.getElementById("hoja").setAttribute('href', selectedItem.hojaCompromiso);
-        document.getElementById("otros").setAttribute('href', selectedItem.otros);
+        if(selectedItem.hojaCompromiso != '' || selectedItem.hojaCompromiso != '/')document.getElementById("hoja").setAttribute('href', selectedItem.hojaCompromiso);
+        if(selectedItem.otros != '' || selectedItem.otros != '/')document.getElementById("otros").setAttribute('href', selectedItem.otros);
         document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
         document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
-        document.getElementById("image_preview").setAttribute('src', selectedItem.imagen1); //Pendiente
-        if(selectedItem.image_preview2 != '')document.getElementById("image_preview2").setAttribute('src', selectedItem.imagen2); //Pendiente
-      
+        document.getElementById("image_preview").setAttribute('src', selectedItem.imgCasa1); 
+        if(selectedItem.image_preview2 != '')document.getElementById("image_preview2").setAttribute('src', selectedItem.imgCasa2);
+        
       }
 
       editarSolicitud(id){
         this.commentP= (<HTMLInputElement>document.getElementById('comentarioP')).value;
+        this.patientName=(<HTMLInputElement>document.getElementById('nombrePaciente')).value;
+        this.emailDigi= (<HTMLInputElement>document.getElementById('email')).value;
         
         Swal.fire({
           position: 'top-end',
@@ -144,8 +164,9 @@ export class verSolicitudComponent implements OnInit {
           timer: 1500
         })
         this.recordService.editarSolicitudPresidencia(id,this.state,this.commentP);
+        EnviarCorreoDigi(this.patientName,this.emailDigi);
       }
-      
+
       callNotFoundFunction(){
         Swal.fire({
           position: 'top-end',
