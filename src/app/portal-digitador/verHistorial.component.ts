@@ -126,12 +126,13 @@ export class verHistorialComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
+          this.recordService.archivarSolicitud(id, 1);
           Swal.fire(
             'Solicitud archivada',
             'La solicitud ha sido archivada exitosamente',
             'success'
           );
-          this.recordService.archivarSolicitud(id, 1);
+          this.modalService.dismissAll();
         }
       });
     }
@@ -147,12 +148,13 @@ export class verHistorialComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
+          this.recordService.archivarSolicitud(id, 0);
           Swal.fire(
             'Solicitud desarchivada',
             'La solicitud ha sido desarchivada exitosamente',
             'success'
           );
-          this.recordService.archivarSolicitud(id, 0);
+          this.modalService.dismissAll();
         }
       });
     }
