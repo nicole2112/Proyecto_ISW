@@ -16,6 +16,7 @@ import { PacientesService } from '../services/pacientes.service';
 import { RetrieveUsersService } from '../services/retrieve-users.service';
 import { combineLatest, forkJoin, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
+import { faBox, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 
 import '../../assets/js/smtp.js';
 declare const Email: any;
@@ -37,6 +38,9 @@ export class verHistorialComponent implements OnInit {
         'Denegada',
         'Falta más información',
     ];
+
+    faBox = faBox;
+    faBoxOpen = faBoxOpen;
 
     closeResult: string;
     IDPaciente: any="";
@@ -119,6 +123,50 @@ export class verHistorialComponent implements OnInit {
             });
     }
 
+    handleArchive(id){
+      Swal.fire({
+        title: '¿Seguro que desea archivar la solicitud?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Archivar',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.recordService.archivarSolicitud(id, 1);
+          Swal.fire(
+            'Solicitud archivada',
+            'La solicitud ha sido archivada exitosamente',
+            'success'
+          );
+          this.modalService.dismissAll();
+        }
+      });
+    }
+
+    handleUnarchive(id){
+      Swal.fire({
+        title: '¿Seguro que desea desarchivar la solicitud?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Desarchivar',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.recordService.archivarSolicitud(id, 0);
+          Swal.fire(
+            'Solicitud desarchivada',
+            'La solicitud ha sido desarchivada exitosamente',
+            'success'
+          );
+          this.modalService.dismissAll();
+        }
+      });
+    }
+
     getPacienteData(id) {
       let patient = this.patientService.getPacientById(id);
     }
@@ -158,6 +206,14 @@ export class verHistorialComponent implements OnInit {
           (document.getElementById("solicitud") as any).disabled = false;
           (document.getElementById("descripcion") as any).disabled = false;
           (document.getElementById("prioridadOptions") as any).disabled = false;
+        }
+
+        if (selectedItem.estado === "Aprobada" || selectedItem.estado === "Denegada") {
+          if (selectedItem.archivado === 0) {
+            document.getElementById("btn-box").style.display = "inline";
+          } else {
+            document.getElementById("btn-box-open").style.display = "inline";
+          }
         }
 
         document.getElementById("id-paciente").setAttribute('value', selectedItem.IDPaciente);
