@@ -11,6 +11,8 @@ import { runInThisContext } from 'vm';
 import { AuthenticationService } from "../services/auth.services";
 import { ThrowStmt } from '@angular/compiler';
 import { SolicitudesService } from '../services/solicitudes.service';
+import { PacientesService } from '../services/pacientes.service';
+import { RetrieveUsersService } from '../services/retrieve-users.service';
 
 @Component({
     selector: 'app-view-Solicitud-presidente',
@@ -36,7 +38,11 @@ export class verSolicitudComponent implements OnInit {
     closeResult: string;
     fileList: any;
 
-    constructor(private service: AuthenticationService, private recordService: SolicitudesService, private modalService: NgbModal) { }
+    solicitudesPacientesList :any[] =[];
+    listSoliPacienteFiltered :any[]=[];
+    CedulaPaciente: any;
+
+    constructor(private service: AuthenticationService, private recordService: SolicitudesService,private pacService: PacientesService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
 
     //Jose
     ngOnInit() {
@@ -138,6 +144,16 @@ export class verSolicitudComponent implements OnInit {
           timer: 1500
         })
         this.recordService.editarSolicitudPresidencia(id,this.state,this.commentP);
+      }
+      
+      callNotFoundFunction(){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: '¡Paciente no encontrado!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
 
       getSolicitudesXpaciente(){
