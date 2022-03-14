@@ -68,10 +68,11 @@ export class verHistorialComponent implements OnInit {
 
     ngOnInit() {
 
-      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).pipe(take(1)).subscribe( records => {
+      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
         let listanueva;
         this.filteredRecordList = [];
         this.recordList = [];
+        
         listanueva = records.sort((a, b) => {
             if (a.prioridad === b.prioridad) {
               let dateA = new Date(b.fecha), dateB = new Date(a.fecha);
@@ -83,7 +84,6 @@ export class verHistorialComponent implements OnInit {
         
         this.userService.getDigitadores().pipe(take(1)).subscribe(digitadores =>
         {
-          console.log(digitadores);
           
           listanueva.forEach(item => 
             {
@@ -104,7 +104,6 @@ export class verHistorialComponent implements OnInit {
               if(item.archivado == 0)
                 this.filteredRecordList.push(item);
             });
-            console.log(this.filteredRecordList);
             
         })
         

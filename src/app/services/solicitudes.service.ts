@@ -32,6 +32,8 @@ export class SolicitudesService {
     this.listaSolicitudes = [];
 
     return this.refer.snapshotChanges().pipe(map(data => {
+      this.listaSolicitudes = [];
+
       data.forEach( paciente => {
         let a = paciente.payload.toJSON();
 
@@ -40,6 +42,7 @@ export class SolicitudesService {
           let Solicitudes = a['Solicitudes'];
           let pacienteSinSol = a;
           pacienteSinSol['pacienteEstado'] = pacienteSinSol['estado'];
+          pacienteSinSol['IDPaciente'] = pacienteSinSol['id'];
           pacienteSinSol['nombrePaciente'] = pacienteSinSol['nombre'];
           delete pacienteSinSol['Solicitudes'];
           delete pacienteSinSol['estado'];
@@ -61,6 +64,8 @@ export class SolicitudesService {
             });
         }
       })
+      console.log("service");
+      
       console.log(this.listaSolicitudes);
       return this.listaSolicitudes;
     }));
