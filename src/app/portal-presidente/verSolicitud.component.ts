@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
@@ -13,8 +13,8 @@ import { SolicitudesService } from '../services/solicitudes.service';
 import { PacientesService } from '../services/pacientes.service';
 import { RetrieveUsersService } from '../services/retrieve-users.service';
 import { EnviarCorreoDigi } from '../services/email.service';
-import { map, take, takeWhile } from 'rxjs/operators';
-import { combineLatest, forkJoin, Observable } from 'rxjs';
+import { distinct, map, take, takeUntil, takeWhile } from 'rxjs/operators';
+import { combineLatest, forkJoin, Observable, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-view-Solicitud-presidente',
@@ -22,7 +22,8 @@ import { combineLatest, forkJoin, Observable } from 'rxjs';
     styleUrls: ['verSolicitud.component.css']
 })
 
-export class verSolicitudComponent implements OnInit {
+export class verSolicitudComponent implements OnInit, OnDestroy  {
+  private ngUnsubscribe = new Subject();
     recordsList: any;
     recordList = [];
     filteredRecordList = [];
@@ -35,6 +36,8 @@ export class verSolicitudComponent implements OnInit {
     state='En espera';
     descList: any[] = [];
     solicitudSelectedId: any;
+    solicitudPacienteSelectedId: any;
+    solicitudPreEdicion: any;
     commentP;
 
     closeResult: string;
@@ -45,61 +48,66 @@ export class verSolicitudComponent implements OnInit {
     CedulaPaciente: any;
     emailDigi:any;
     patientName:any;
+    sub:any;
+    sub2:any = new Subject();
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService,private pacService: PacientesService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
 
     //Jose
     ngOnInit() {
-      
-      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
-        let listanueva;
-        listanueva = records.sort((a, b) => {
-              let dateA = new Date(b.fecha), dateB = new Date(a.fecha)
-              return +dateA - +dateB;
-          });
-          let observables: Observable<any>[] = [];
-          let observables2: Observable<any>[] = [];
+      this.filteredRecordList = [];
+      this.recordList = [];
+      let listanueva = [];
+      this.sub2 = this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
+        listanueva = [];
+        
+        records.sort((a, b) => {
+          if (a.prioridad === b.prioridad) {
+            let dateA = new Date(b.fecha), dateB = new Date(a.fecha);
+            return +dateA - +dateB;
+          } else {
+            return a.prioridad < b.prioridad ? -1 : 1;
+          }
+        });
+        
+        this.sub = this.userService.getDigitadores().pipe(take(1)).subscribe(digitadores =>
+        {
+          while(this.filteredRecordList.length > 0) {
+            this.filteredRecordList.pop();
+          }
+          while(this.recordList.length > 0) {
+            this.recordList.pop();
+          }
 
-          listanueva.forEach( item =>
-          {
-            observables.push(this.pacService.getPaciente2(item['IDPaciente']))
-          });
-
-          let nuevalista:any = [];
-          combineLatest(observables).pipe(map(pac =>
-          {
-
-            let item2;
-            listanueva.forEach( (item, index) =>
+          console.log("antes foreach");
+          
+          records.forEach(item => 
             {
-              pac[index]['id'] = item['id'];
-              item2 = {...pac[index], ...item};
-              item2['nombrePaciente'] = pac[index]['nombre'];
-              nuevalista.push(item2);
-            });
-
-            nuevalista.forEach( objeto =>
+              console.log("dentro foreach");
+              digitadores.forEach( usuario =>
               {
-                observables2.push(this.userService.getUser(objeto['digitador']));
-                this.userService.getUser(objeto['digitador']).pipe(take(1)).subscribe(usuario =>
-                  {
-                    let item3;
-                    let userdata = {
-                      "email": usuario['email'],
-                      "nombreDigitador": usuario['nombre'],
-                    };
-                    item3 = {...objeto, ...userdata};
-                    if(!this.filteredRecordList.includes(item3))
-                  {
-                    this.filteredRecordList.push(item3);
-                    this.recordList.push(item3);
-                  }
-                });
-            });
+                if(usuario['digitadorKey'] == item['digitador'])
+                {
+                  let userdata = {
+                    "email": usuario['email'],
+                    "nombreDigitador": usuario['nombre'],
+                  };
+    
+                  item = {...item, ...userdata};
+                }
+              })
 
-          }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
-            this.recordList = [...new Set(this.recordList)];});
+              this.recordList.push(item);
+              if(item.archivado == 0)
+                this.filteredRecordList.push(item);
             });
+            
+        });
+        
+      });
+    }
+
+    ngOnDestroy() {
     }
 
     onSelectedChange(event:any){
@@ -143,7 +151,9 @@ export class verSolicitudComponent implements OnInit {
       }
     
       onSelect(selectedItem: any){
-        this.solicitudSelectedId = selectedItem.key;
+        this.solicitudSelectedId = selectedItem.solicitudKey;
+        this.solicitudPacienteSelectedId = selectedItem.pacienteKey;
+        this.solicitudPreEdicion = selectedItem.rawSolicitud;
         document.getElementById("nombreDigitador").setAttribute('value', selectedItem.nombreDigitador);
         document.getElementById("email").setAttribute('value', selectedItem.email);
         this.patientName=document.getElementById("nombrePaciente").setAttribute('value', selectedItem.nombrePaciente);
@@ -159,7 +169,7 @@ export class verSolicitudComponent implements OnInit {
         
       }
 
-      editarSolicitud(id){
+      editarSolicitud(idPaciente, idSolicitud, solicitudPreEditar){
         this.commentP= (<HTMLInputElement>document.getElementById('comentarioP')).value;
         this.patientName=(<HTMLInputElement>document.getElementById('nombrePaciente')).value;
         this.emailDigi= (<HTMLInputElement>document.getElementById('email')).value;
@@ -171,7 +181,7 @@ export class verSolicitudComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
-        this.recordService.editarSolicitudPresidencia(id,this.state,this.commentP);
+        this.recordService.editarSolicitudPresidencia(idPaciente, idSolicitud, solicitudPreEditar,this.state,this.commentP);
         EnviarCorreoDigi(this.patientName,this.emailDigi);
       }
 

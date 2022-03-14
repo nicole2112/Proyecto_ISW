@@ -56,7 +56,9 @@ export class verHistorialComponent implements OnInit {
     descList: any[] = [];
     namePattern = '^[a-zA-Z ]*$';
 
+    solicitudPreEdicion: any;
     solicitudSelectedId: any;
+    solicitudPacienteSelectedId: any;
 
     nombre: any;
     ciudad: any;
@@ -66,8 +68,10 @@ export class verHistorialComponent implements OnInit {
 
     ngOnInit() {
 
-      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
+      this.recordService.getTodasSolicitudes(this.service.userDetails.uid).pipe(take(1)).subscribe( records => {
         let listanueva;
+        this.filteredRecordList = [];
+        this.recordList = [];
         listanueva = records.sort((a, b) => {
             if (a.prioridad === b.prioridad) {
               let dateA = new Date(b.fecha), dateB = new Date(a.fecha);
@@ -76,52 +80,40 @@ export class verHistorialComponent implements OnInit {
               return a.prioridad < b.prioridad ? -1 : 1;
             }
           });
-          let observables: Observable<any>[] = [];
-          let observables2: Observable<any>[] = [];
-
-          listanueva.forEach( item =>
-          {
-            observables.push(this.pacService.getPaciente2(item['IDPaciente']))
-          });
-
-          let nuevalista:any = [];
-          combineLatest(observables).pipe(map(pac =>
-          {
-
-            let item2;
-            listanueva.forEach( (item, index) =>
+        
+        this.userService.getDigitadores().pipe(take(1)).subscribe(digitadores =>
+        {
+          console.log(digitadores);
+          
+          listanueva.forEach(item => 
             {
-              pac[index]['id'] = item['id'];
-              item2 = {...pac[index], ...item};
-              item2['nombrePaciente'] = pac[index]['nombre'];
-              nuevalista.push(item2);
-            });
-
-            nuevalista.forEach( objeto =>
+              digitadores.forEach( usuario =>
               {
-                observables2.push(this.userService.getUser(objeto['digitador']));
-                this.userService.getUser(objeto['digitador']).pipe(take(1)).subscribe(usuario =>
-                  {
-                    let item3;
-                    let userdata = {
-                      "email": usuario['email'],
-                      "nombreDigitador": usuario['nombre'],
-                    };
-                    item3 = {...objeto, ...userdata};
-                    if(!this.filteredRecordList.includes(item3))
-                  {
-                    this.filteredRecordList.push(item3);
-                    this.recordList.push(item3);
-                  }
-                });
-            });
+                if(usuario['digitadorKey'] == item['digitador'])
+                {
+                  let userdata = {
+                    "email": usuario['email'],
+                    "nombreDigitador": usuario['nombre'],
+                  };
+    
+                  item = {...item, ...userdata};
+                }
+              })
 
-          }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
-            this.recordList = [...new Set(this.recordList)];});
+              this.recordList.push(item);
+              if(item.archivado == 0)
+                this.filteredRecordList.push(item);
             });
+            console.log(this.filteredRecordList);
             
-          // Filter record
-          this.filteredRecordList = this.recordList.filter(record => record.archivado == 0);
+        })
+        
+        //this.recordList = listanueva;
+        // Filter record
+        //this.filteredRecordList = this.recordList.filter(record => record.archivado == 0);
+      });
+            
+      
     }
 
     handleArchive(id){
@@ -210,7 +202,9 @@ export class verHistorialComponent implements OnInit {
       onSelect(selectedItem: any){
         this.getPacienteData(selectedItem.IDPaciente);
         console.table(selectedItem);
-        this.solicitudSelectedId = selectedItem.key;
+        this.solicitudSelectedId = selectedItem.solicitudKey;
+        this.solicitudPacienteSelectedId = selectedItem.pacienteKey;
+        this.solicitudPreEdicion = selectedItem.rawSolicitud;
         if(selectedItem.estado === "En espera"){
           // (document.getElementById("nombre") as any).disabled = false;
           // (document.getElementById("ciudad") as any).disabled = false;
@@ -362,7 +356,7 @@ export class verHistorialComponent implements OnInit {
         return priorities[priority-1]
       }
 
-      editarSolicitud(id){
+      editarSolicitud(pacienteID, solicitudID, solicitud){
         this.getValues();
         Promise.all(this.fileList.map( async (file) =>
         {
@@ -392,7 +386,7 @@ export class verHistorialComponent implements OnInit {
                     break;
               }
           });
-          this.recordService.editarSolicitud(id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
+          this.recordService.editarSolicitud(pacienteID, solicitudID, solicitud, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
           this.callUpdateNotification();
         });
         this.fileList = [];

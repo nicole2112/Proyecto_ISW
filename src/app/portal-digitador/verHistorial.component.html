@@ -209,7 +209,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudPacienteSelectedId, solicitudSelectedId,solicitudPreEdicion)">Guardar</button>
   </div>
 </ng-template>
 
@@ -233,7 +233,7 @@
   </div>
   <div class="modal-footer">
     <!-- <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, articuloSelectedId, articuloSelectedName); onDeleteConfirmation(heroeSelectedName); modal.close('Delete Click');">Eliminar</button> -->
-    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudPacienteSelectedId, solicitudSelectedId,solicitudPreEdicion)">Guardar</button>
   </div>
 </ng-template>
 </div>

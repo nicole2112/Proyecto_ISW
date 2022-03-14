@@ -28,15 +28,40 @@ export class SolicitudesService {
 
   getTodasSolicitudes(id): Observable<any[]> {
 
-    this.refer = this.db.list('solicitudes');
+    this.refer = this.db.list('pacientes');
+    this.listaSolicitudes = [];
 
     return this.refer.snapshotChanges().pipe(map(data => {
-      data.forEach( solicitud => {
-        let a = solicitud.payload.toJSON();
-        a['key'] = solicitud.key;
-        if (a['digitador'] == id || id == "ZQjKhXkpXPZJQ5UbT14JsFE8rvu2")
-          this.listaSolicitudes.push(a);
+      data.forEach( paciente => {
+        let a = paciente.payload.toJSON();
+
+        if(a['Solicitudes'] !== undefined)
+        {
+          let Solicitudes = a['Solicitudes'];
+          let pacienteSinSol = a;
+          pacienteSinSol['pacienteEstado'] = pacienteSinSol['estado'];
+          pacienteSinSol['nombrePaciente'] = pacienteSinSol['nombre'];
+          delete pacienteSinSol['Solicitudes'];
+          delete pacienteSinSol['estado'];
+          delete pacienteSinSol['nombre'];
+          delete pacienteSinSol['id'];
+          Object.keys(Solicitudes).forEach(key =>
+            {
+              let solicitud = Solicitudes[key];
+              solicitud['solicitudKey'] = key;
+              if (solicitud['digitador'] == id || id == "ZQjKhXkpXPZJQ5UbT14JsFE8rvu2")
+              {
+                solicitud['pacienteKey'] = paciente.key;
+                
+                let sol = {...pacienteSinSol, ...solicitud};
+                sol['rawSolicitud'] = solicitud;
+                
+                this.listaSolicitudes.push(sol);
+              }
+            });
+        }
       })
+      console.log(this.listaSolicitudes);
       return this.listaSolicitudes;
     }));
 
@@ -107,22 +132,18 @@ export class SolicitudesService {
     });
   }
 
-  editarSolicitud(id, descripcionCaso, estado, archivado, prioridad, queSolicita, estudioSE, archivoSolicitud, archivoAdicional) {
+  editarSolicitud(idPaciente, idSolicitud, solicitud, descripcionCaso, estado, archivado, prioridad, queSolicita, estudioSE, archivoSolicitud, archivoAdicional) {
 
-    this.getSolicitud(id).subscribe( solicitud =>
-      {
-        console.log(solicitud);
-        solicitud["descripcion"]= descripcionCaso;
-        solicitud["estado"]= estado;
-        solicitud["prioridad"]= prioridad;
-        solicitud["queSolicita"]= queSolicita;
-        solicitud["estudioSE"]= estudioSE;
-        solicitud["solicitudDonacion"]= archivoSolicitud;
-        solicitud["otros"]= archivoAdicional;
-        solicitud["archivado"]= archivado;
+    solicitud["descripcion"]= descripcionCaso;
+    solicitud["estado"]= estado;
+    solicitud["prioridad"]= prioridad;
+    solicitud["queSolicita"]= queSolicita;
+    solicitud["estudioSE"]= estudioSE;
+    solicitud["solicitudDonacion"]= archivoSolicitud;
+    solicitud["otros"]= archivoAdicional;
+    solicitud["archivado"]= archivado;
 
-        this.db.object(`solicitudes/${id}`).set(solicitud);
-      });
+    this.db.object(`pacientes/${idPaciente}/Solicitudes/${idSolicitud}`).set(solicitud).then(algo => console.log(algo));
   }
 
   archivarSolicitud(id, archivado) {
@@ -145,19 +166,10 @@ export class SolicitudesService {
   }
 
 
-  editarSolicitudPresidencia(id, estado, comentariosPresidencia=null) {
-    this.getSolicitud(id).subscribe( solicitud =>
-      {
-        console.log(solicitud);
-        solicitud["estado"]= estado;
-        if(comentariosPresidencia!=null)
-        {
-          solicitud["comentariosPresidencia"]=comentariosPresidencia;
-        }
-    
-        this.db.object(`solicitudes/${id}`).set(solicitud);
-      });
- 
+  editarSolicitudPresidencia(idPaciente, idSolicitud, solicitud, estado, comentariosPresidencia) {
+    solicitud['estado'] = estado;
+    solicitud['comentariosPresidencia'] = comentariosPresidencia;
+    this.db.object(`pacientes/${idPaciente}/Solicitudes/${idSolicitud}`).set(solicitud).then(algo => console.log(algo));
   }
 
 }
