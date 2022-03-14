@@ -114,7 +114,6 @@ export class SolicitudesService {
     let solicitud = {
       "descripcion": descripcionCaso,
       "digitador": this.auth.userDetails.uid,
-      "IDPaciente": IDPaciente,
       "estado": "En espera",
       "prioridad": prioridad,
       "comentariosPresidencia": comentariosPresidencia,
@@ -126,9 +125,9 @@ export class SolicitudesService {
       "fecha": fecha
     };
 
-    this.db.list(`solicitudes`).push(solicitud).then((data) => {
+    this.db.list(`pacientes/${IDPaciente}/Solicitudes`).push(solicitud).then((data) => {
       solicitud["id"] = data.key;
-      this.db.object(`solicitudes/${data.key}`).set(solicitud);
+      this.db.object(`pacientes/${IDPaciente}/Solicitudes/${data.key}`).set(solicitud);
     });
   }
 

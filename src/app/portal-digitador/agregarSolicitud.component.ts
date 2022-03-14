@@ -91,6 +91,7 @@ export class agregarSolicitudComponent implements OnInit{
         
         this.pacienteService.getPaciente(id).subscribe(paciente => {
             this.miPaciente = paciente[0];
+            console.log(paciente[0]);
             
             if(this.miPaciente == null)
             {
@@ -145,7 +146,7 @@ export class agregarSolicitudComponent implements OnInit{
 
 
                 var hoy = this.fechaService.ObtenerFecha();
-                this.solicitudservice.postSolicitud(this.descripcion, this.miPaciente.id,this.prioridadInt,"", this.solicitud, this.socioeconomico, this.solDonacion, this.otros, hoy);
+                this.solicitudservice.postSolicitud(this.descripcion, this.miPaciente.$key,this.prioridadInt,"", this.solicitud, this.socioeconomico, this.solDonacion, this.otros, hoy);
                 EnviarCorreo(this.IDPaciente, this.solicitud, this.descripcion);
                 this.historialRedirectFunc();
                 this.callSendFunction();
