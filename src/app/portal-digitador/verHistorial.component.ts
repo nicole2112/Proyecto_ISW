@@ -168,11 +168,11 @@ export class verHistorialComponent implements OnInit {
     onSelectedChange(event:any){
         const state = event.target.value;
         if (state == "Todos") {
-            this.filteredRecordList = this.recordList;
+            this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
         } else {
             this.filteredRecordList = this.recordList.filter(record => {
                 return record.estado == state;
-            });
+            }).filter(record => record.archivado === +this.showArchived);
         }
     }
 
@@ -221,7 +221,7 @@ export class verHistorialComponent implements OnInit {
           }
         }
 
-        document.getElementById("id-paciente").setAttribute('value', selectedItem.IDPaciente);
+        document.getElementById("id-paciente").setAttribute('value', selectedItem.pacienteKey);
         document.getElementById("nombre").setAttribute('value', selectedItem.nombrePaciente);
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("estado").setAttribute('value', selectedItem.estado);
@@ -230,8 +230,8 @@ export class verHistorialComponent implements OnInit {
 
         document.getElementById("hoja").setAttribute('href', selectedItem.hojaComp);
         if(selectedItem.otros != '') document.getElementById("otros").setAttribute('href', selectedItem.otros);
-        document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
-        document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
+        if(selectedItem.estudioSE != '') document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
+        if(selectedItem.solicitudDonacion != '') document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
 
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
         // (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
@@ -255,10 +255,10 @@ export class verHistorialComponent implements OnInit {
           optionPrioridad3.innerHTML = "Baja"
 
         }else if(selectedItem.prioridad == 2){
-          optionPrioridad1.innerHTML = "Inmediata";
+          optionPrioridad1.innerHTML = "Alta";
           optionPrioridad1.selected = true;
 
-          optionPrioridad2.innerHTML = "Alta"
+          optionPrioridad2.innerHTML = "Inmediata"
           optionPrioridad3.innerHTML = "Baja"
         }else{
           optionPrioridad1.innerHTML = "Baja";
@@ -301,7 +301,7 @@ export class verHistorialComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Héroe ha sido actualizado exitosamente!',
+          title: '¡Solicitud ha sido actualizada exitosamente!',
           showConfirmButton: false,
           timer: 1500
         })
