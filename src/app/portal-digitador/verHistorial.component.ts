@@ -220,7 +220,7 @@ export class verHistorialComponent implements OnInit {
           }
         }
 
-        document.getElementById("id-paciente").setAttribute('value', selectedItem.pacienteKey);
+        document.getElementById("id-paciente").setAttribute('value', selectedItem.IDPaciente);
         document.getElementById("nombre").setAttribute('value', selectedItem.nombrePaciente);
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("estado").setAttribute('value', selectedItem.estado);
