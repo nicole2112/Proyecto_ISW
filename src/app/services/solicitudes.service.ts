@@ -149,7 +149,7 @@ export class SolicitudesService {
 
     this.db.object(`pacientes/${idPaciente}/Solicitudes/${idSolicitud}`).set(solicitud).then(algo => console.log(algo));
   }
-
+  
   archivarSolicitud(id, archivado) {
     this.getSolicitud(id).subscribe( solicitud =>
       {
@@ -159,7 +159,7 @@ export class SolicitudesService {
         this.db.object(`solicitudes/${id}`).set(solicitud);
       });
   }
-
+  
   actualizarArchivo(urlArchivo, id, archivoNombre) {
     const db = getDatabase();
 
