@@ -64,8 +64,8 @@ export class PatientHistoryComponent {
   }
   
   getSolicitudesXpaciente(){
-    this.solicitudesRef =this.service.db.list('pacientes'); //leer aqui la tabla de los pacientes
-    this.service.db.list('pacientes').valueChanges().subscribe(pacientes =>{
+    this.solicitudesRef = this.service.db.list('pacientes'); //leer aqui la tabla de los pacientes
+    this.solicitudesRef.valueChanges().pipe(take(1)).subscribe(pacientes =>{
       this.solicitudesPacientesList =[];
       let keys = Object.keys(pacientes);
       keys.forEach((pac) =>{
