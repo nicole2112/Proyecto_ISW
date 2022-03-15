@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { observable, Observable, of, from } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { concatMap, map, take } from 'rxjs/operators';
 import Swal from 'sweetalert2'
 import { AuthenticationService } from './auth.services';
 import firebase from '@firebase/app-compat';
@@ -30,8 +30,7 @@ export class SolicitudesService {
 
     this.refer = this.db.list('pacientes');
     this.listaSolicitudes = [];
-
-    return this.refer.snapshotChanges().pipe(map(data => {
+    return this.refer.snapshotChanges().pipe(take(1), map(data => {
       this.listaSolicitudes = [];
 
       data.forEach( paciente => {
@@ -64,9 +63,7 @@ export class SolicitudesService {
             });
         }
       })
-      console.log("service");
       
-      console.log(this.listaSolicitudes);
       return this.listaSolicitudes;
     }));
 
