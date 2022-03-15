@@ -204,7 +204,7 @@ export class verHistorialComponent implements OnInit {
         this.solicitudSelectedId = selectedItem.solicitudKey;
         this.solicitudPacienteSelectedId = selectedItem.pacienteKey;
         this.solicitudPreEdicion = selectedItem.rawSolicitud;
-        if(selectedItem.estado === "En espera"){
+        if(selectedItem.estado === "Falta más información"){
           // (document.getElementById("nombre") as any).disabled = false;
           // (document.getElementById("ciudad") as any).disabled = false;
           (document.getElementById("solicitud") as any).disabled = false;
@@ -236,6 +236,8 @@ export class verHistorialComponent implements OnInit {
         // (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
         (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
         document.getElementById("image_preview").setAttribute('src', selectedItem.imgCasa1);
+        document.getElementById("image_preview2").setAttribute('src', selectedItem.imgCasa2);
+        if (selectedItem.imgCasa2 == "") document.getElementById("image_preview2").style.visibility = "hidden";
 
         var selectorPrioridad = document.getElementById("prioridadOptions");
         var optionPrioridad1 = document.createElement("option");
