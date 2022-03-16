@@ -137,7 +137,6 @@ export class ViewPatientsComponent {
 
   openConfirmation(content){
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
-      //console.log(`Closed with: ${result}`);
     }, (reason)=>{
       //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
     })
@@ -175,7 +174,6 @@ export class ViewPatientsComponent {
       this.descList.forEach((item, index) =>{
         switch (item) {
           case 'newImgCasa1':
-            console.log(index);
             this.imgCasa1 = message[index];
             break;
           case 'newImgCasa2':

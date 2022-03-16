@@ -79,11 +79,9 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
             this.recordList.pop();
           }
 
-          console.log("antes foreach");
           
           records.forEach(item => 
             {
-              console.log("dentro foreach");
               digitadores.forEach( usuario =>
               {
                 if(usuario['digitadorKey'] == item['digitador'])

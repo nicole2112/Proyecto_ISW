@@ -107,7 +107,6 @@ export class PatientHistoryComponent {
       keys.forEach((data)=>{
         if(this.listTodasSolicitudes  [data]['estado'] == "Aprobada"){
           this.listSoliPacienteFiltered.push(this.listTodasSolicitudes  [data]);
-          console.log(this.listTodasSolicitudes [data]['estado']);
         }
       })
     }else{
@@ -115,7 +114,6 @@ export class PatientHistoryComponent {
       keys.forEach((data)=>{
         if(this.listTodasSolicitudes  [data]['estado'] == "Denegada"){
           this.listSoliPacienteFiltered.push(this.listTodasSolicitudes  [data]);
-          console.log(this.listTodasSolicitudes [data]['estado']);
         }
       })
     }

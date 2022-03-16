@@ -91,7 +91,6 @@ export class agregarSolicitudComponent implements OnInit{
         
         this.pacienteService.getPaciente(id).subscribe(paciente => {
             this.miPaciente = paciente[0];
-            console.log(paciente[0]);
             
             if(this.miPaciente == null)
             {

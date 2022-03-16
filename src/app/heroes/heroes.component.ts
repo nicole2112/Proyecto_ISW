@@ -23,7 +23,6 @@ export class HeroesComponent implements OnInit{
         this.service.db.list('heroes').valueChanges().subscribe(heroes => {
             this.heroesList = heroes;
             this.heroesList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
-            console.log(this.heroesList);
           });
 
     }
