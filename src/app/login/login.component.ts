@@ -42,15 +42,15 @@ export class LoginComponent implements OnInit {
   logInBack(){
     this.auth.currentUser.then((res) =>{
       this.service.db.object(`usuarios/${res.uid}`).valueChanges().subscribe(item =>{
-        console.log("entre");
+        
         if(item['rol'] == 'Presidente'){
-          console.log("presi");
+          
           this.router.navigate(['/portal-presidente'])
         }else if(item['rol'] == 'Admin'){
-          console.log("admin");
+          
           this.router.navigate(['/portal-admin'])
         }else{
-          console.log("digi");
+          
           this.router.navigate(['/portal-digitador'])
         }
         

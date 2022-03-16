@@ -41,6 +41,9 @@ export class PatientHistoryComponent {
 
     buscarPaciente(){
       var id = this.CedulaPaciente;
+      this.solicitudesPacientesList = [];
+      this.listSoliPacienteFiltered = [];
+      this.listTodasSolicitudes = [];
       
       this.pacienteService.getPaciente(id).subscribe(paciente => {
           this.miPaciente = paciente[0];

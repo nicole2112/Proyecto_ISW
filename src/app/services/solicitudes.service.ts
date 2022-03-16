@@ -35,11 +35,9 @@ export class SolicitudesService {
     this.listaSolicitudes = [];
     return this.refer.snapshotChanges().pipe(map(data => {
       this.listaSolicitudes = [];
-      console.log("antes");
       
       data.forEach( paciente => {
         let a = paciente.payload.toJSON();
-      console.log("dentro");
 
         if(a['Solicitudes'] !== undefined)
         {
@@ -68,7 +66,6 @@ export class SolicitudesService {
             });
         }
       })
-      console.log("fuera");
       return this.listaSolicitudes;
     }));
 

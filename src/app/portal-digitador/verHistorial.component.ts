@@ -37,6 +37,7 @@ export class verHistorialComponent implements OnInit {
         'Falta más información',
     ];
     showArchived = false;
+    actualState = 'Todos';
 
     faBox = faBox;
     faBoxOpen = faBoxOpen;
@@ -152,6 +153,10 @@ export class verHistorialComponent implements OnInit {
             'success'
           );
           this.modalService.dismissAll();
+          this.showArchived = false;
+          (document.getElementById("checkArchived") as any).checked = false;
+          this.actualState = "Todos";
+          (document.getElementById("Todos") as any).selected = "true";
         }
       });
     }
@@ -162,6 +167,7 @@ export class verHistorialComponent implements OnInit {
 
     onSelectedChange(event:any){
         const state = event.target.value;
+        this.actualState = state;
         if (state == "Todos") {
             this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
         } else {
@@ -173,7 +179,13 @@ export class verHistorialComponent implements OnInit {
 
     onCheckboxChange(event:any){
       this.showArchived = event.target.checked;
-      this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
+      if(this.actualState == "Todos"){
+        this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
+      } else {
+        this.filteredRecordList = this.recordList.filter(record => {
+            return record.estado == this.actualState;
+        }).filter(record => record.archivado === +this.showArchived);
+      }
     }
 
     open(content) {
