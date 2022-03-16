@@ -2,9 +2,9 @@
   <div class="container historial">
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
       <div style="height: 69px;">
-        <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required style="float:left">         
-          <option [ngValue]="'all'">Todos</option>         
-          <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>     
+        <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required style="float:left">
+          <option [ngValue]="'all'">Todos</option>
+          <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>
         </select>
         <div class="h-100 d-flex align-items-center" style="padding-left: 15px;">
           <label>
@@ -140,7 +140,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group float-container">
+          <div class="form-group float-container" id="hoja-div" hidden>
             <div>
               <label for="hoja">Hoja de Compromiso</label>
               <br>
@@ -155,7 +155,7 @@
                   </div>
             </div>
         </div>
-          <div class="form-group float-container">
+          <div class="form-group float-container" id="estudio-div" hidden>
             <div>
               <label for="estudio">Estudio Socioecónomico </label>
               <br>
@@ -170,7 +170,7 @@
                   </div>
             </div>
         </div>
-          <div class="form-group float-container">
+          <div class="form-group float-container" id="solicitud-div" hidden>
             <div>
               <label for="donacion">Solicitud de Donación</label>
               <br>
@@ -185,7 +185,7 @@
                   </div>
             </div>
         </div>
-          <div class="form-group float-container">
+          <div class="form-group float-container" id="otros-div" hidden>
             <div>
               <label for="otros">Otros</label>
               <br>
@@ -209,7 +209,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="open(actualizarSolicitud); modal.close('Save click'); getValues(); onEditConfirmation(solicitudSelectedName);">Guardar</button>
   </div>
 </ng-template>
 
@@ -236,6 +236,29 @@
     <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
   </div>
 </ng-template>
+
+<ng-template #actualizarSolicitud let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea guardar los cambios?</h4>
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <input id="solicitudUpdate" class="form-control" name="dp" readonly>
+          <div class="input-group-append">
+            <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary pull-left" (click)="editarSolicitud(solicitudSelectedId); modal.close('Update Click');">Si</button>
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancelar</button>
+  </div>
+</ng-template>
 </div>
-
-

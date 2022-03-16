@@ -62,6 +62,7 @@ export class verHistorialComponent implements OnInit {
     namePattern = '^[a-zA-Z ]*$';
 
     solicitudSelectedId: any;
+    solicitudSelectedName: any;
 
     nombre: any;
     ciudad: any;
@@ -127,7 +128,7 @@ export class verHistorialComponent implements OnInit {
           }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
             this.recordList = [...new Set(this.recordList)];});
             });
-            
+
           // Filter record
           this.filteredRecordList = this.recordList.filter(record => record.archivado == 0);
     }
@@ -216,7 +217,13 @@ export class verHistorialComponent implements OnInit {
       onSelect(selectedItem: any){
         this.getPacienteData(selectedItem.IDPaciente);
         this.solicitudSelectedId = selectedItem.key;
-        if(selectedItem.estado === "En espera"){
+        this.solicitudSelectedName = selectedItem.queSolicita;
+        if(selectedItem.estado === "Falta más información"){
+          (document.getElementById("hoja-div") as any).hidden = false;
+          (document.getElementById("estudio-div") as any).hidden = false;
+          (document.getElementById("solicitud-div") as any).hidden = false;
+          (document.getElementById("otros-div") as any).hidden = false;
+
           (document.getElementById("solicitud") as any).disabled = false;
           (document.getElementById("descripcion") as any).disabled = false;
           (document.getElementById("prioridadOptions") as any).disabled = false;
@@ -289,6 +296,19 @@ export class verHistorialComponent implements OnInit {
 
       }
 
+      actualizarSolicitud(content) {
+        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+          console.log(`Closed with: ${result}`);
+        }, (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+      }
+
+      onEditConfirmation(solicitud: string){
+        console.log(solicitud);
+        document.getElementById("solicitudUpdate").setAttribute('value', solicitud);
+      }
+
       onDragOver(event) {
         event.preventDefault();
       }
@@ -321,14 +341,14 @@ export class verHistorialComponent implements OnInit {
       }
 
       getValues(){
-
+        console.log("Hereeee");
         var idPacienteVal = document.getElementById('id-paciente') as HTMLInputElement;
         var nombreVal = document.getElementById('nombre') as HTMLInputElement;
         var ciudadVal = document.getElementById('ciudad') as HTMLInputElement;
         var solicitudVal = document.getElementById('solicitud') as HTMLInputElement;
         var descripcionVal = document.getElementById('descripcion') as HTMLTextAreaElement;
         var prioridadVal = document.getElementById('prioridadOptions') as HTMLSelectElement;
-
+        console.log(idPacienteVal.value);
         let idPacienteValue = idPacienteVal.value;
         let nombreValue = nombreVal.value;
         let ciudadValue = ciudadVal.value;
@@ -358,7 +378,7 @@ export class verHistorialComponent implements OnInit {
         this.estado = "En espera";
 
       }
-      
+
       getRequestPriority(priority){
         const priorities = [
           "Inmediata",
@@ -370,7 +390,9 @@ export class verHistorialComponent implements OnInit {
       }
 
       editarSolicitud(id){
-        this.getValues();
+        // this.getValues();
+        // console.log(id);
+        // console.log(this.IDPaciente);
         Promise.all(this.fileList.map( async (file) =>
         {
             return this.guardarArchivo(file);
