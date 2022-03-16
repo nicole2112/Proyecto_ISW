@@ -78,7 +78,6 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
           while(this.recordList.length > 0) {
             this.recordList.pop();
           }
-
           
           records.forEach(item => 
             {
@@ -96,7 +95,7 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
               })
 
               this.recordList.push(item);
-              if(item.archivado == 0)
+              //if(item.archivado == 0)
                 this.filteredRecordList.push(item);
             });
             
@@ -158,10 +157,10 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
-        if(selectedItem.hojaCompromiso != '' || selectedItem.hojaCompromiso != '/')document.getElementById("hoja").setAttribute('href', selectedItem.hojaComp);
-        if(selectedItem.otros != '' || selectedItem.otros != '/')document.getElementById("otros").setAttribute('href', selectedItem.otros);
-        document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
-        document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
+        if(selectedItem.hojaCompromiso != '')document.getElementById("hoja").setAttribute('href', selectedItem.hojaComp);
+        if(selectedItem.otros != '') document.getElementById("otros").setAttribute('href', selectedItem.otros);
+        if(selectedItem.estudioSE != '') document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
+        if(selectedItem.solicitudDonacion != '') document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
         document.getElementById("image_preview").setAttribute('src', selectedItem.imgCasa1); 
         if(selectedItem.image_preview2 != '')document.getElementById("image_preview2").setAttribute('src', selectedItem.imgCasa2);
         
@@ -171,7 +170,8 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
         this.commentP= (<HTMLInputElement>document.getElementById('comentarioP')).value;
         this.patientName=(<HTMLInputElement>document.getElementById('nombrePaciente')).value;
         this.emailDigi= (<HTMLInputElement>document.getElementById('email')).value;
-        
+        (document.getElementById("Todos") as any).selected = "true";
+
         Swal.fire({
           position: 'top-end',
           icon: 'success',

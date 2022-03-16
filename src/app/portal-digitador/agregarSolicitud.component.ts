@@ -135,13 +135,13 @@ export class agregarSolicitudComponent implements OnInit{
                 
                 if(this.prioridad === 'Inmediata'){
                     this.prioridadInt = 1;
-                  }
-                  else if(this.prioridad === 'Alta'){
+                }
+                else if(this.prioridad === 'Alta'){
                     this.prioridadInt = 2;
-                  }
-                  else{
+                }
+                else{
                     this.prioridadInt = 3;
-                  }
+                }
 
 
                 var hoy = this.fechaService.ObtenerFecha();
