@@ -83,9 +83,6 @@ export class SolicitudesService {
   }
 
   getSolicitud(idPaciente): Observable<any> {
-    // console.log("Id que mando: ");
-    // console.log(idPaciente);
-    
     this.refer = this.db.list('pacientes');
 
     return this.refer.valueChanges().pipe(map(pacientes =>{
@@ -103,7 +100,7 @@ export class SolicitudesService {
   
   archivarSolicitud(idPaciente: any, idSolicitud: string, keyPaciente: any, archivado: number) {
     let datos;
-    this.getSolicitud(idPaciente).subscribe( solicitud =>
+    this.getSolicitud(idPaciente).pipe(take(1)).subscribe( solicitud =>
       {
         let keys = Object.keys(solicitud);
         keys.forEach(item =>{
