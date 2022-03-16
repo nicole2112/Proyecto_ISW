@@ -22,6 +22,9 @@ export class SolicitudesService {
   listaCorrecta: any[]=[];
   listaPac: any[]=[];
 
+
+  listaSolicitudesPaciente:any[] =[];
+
   constructor(private db: AngularFireDatabase, private auth: AuthenticationService, private pacienteService: PacientesService) {
 
   }
@@ -79,28 +82,45 @@ export class SolicitudesService {
       });
   }
 
-  getSolicitud(idSol): Observable<any> {
+  getSolicitud(idPaciente): Observable<any> {
+    // console.log("Id que mando: ");
+    // console.log(idPaciente);
+    
+    this.refer = this.db.list('pacientes');
 
-    this.refer = this.db.list('solicitudes');
-
-    return this.refer.snapshotChanges().pipe(map(data => {
-      let nuevaSol: any;
-      this.listaSolicitudes = [];
-      data.forEach(solicitud => {
-        let a = solicitud.payload.toJSON();
-        a['key'] = solicitud.key;
-        if (a['id'] == idSol)
-        {
-          nuevaSol = a;
+    return this.refer.valueChanges().pipe(map(pacientes =>{
+      this.listaSolicitudesPaciente=[];
+      let keys = Object.keys(pacientes);
+      
+      keys.forEach((pac)=>{        
+        if(pacientes[pac]['id'] == idPaciente){
+          this.listaSolicitudesPaciente = pacientes[pac]['Solicitudes'];
         }
       })
-      return nuevaSol;
+      return this.listaSolicitudesPaciente;
     }))
   }
+  
+  archivarSolicitud(idPaciente: any, idSolicitud: string, keyPaciente: any, archivado: number) {
+    let datos;
+    this.getSolicitud(idPaciente).subscribe( solicitud =>
+      {
+        let keys = Object.keys(solicitud);
+        keys.forEach(item =>{
+          if(item == idSolicitud){
+             datos ={
+               "archivado": archivado
+             }
+          }
+        })  
+        this.db.object(`pacientes/${keyPaciente}/Solicitudes/${idSolicitud}`).update(datos);
+      });
+  }
+  
 
   getSolicitud_x_Paciente(idPaciente): Observable<any[]>{
     this.solicitudRef = this.db.list('solicitudes');
-
+    
     return this.solicitudRef.snapshotChanges().pipe(map(data =>{
       this.listaSolicitudes=[];
       data.forEach(solicitud =>{
@@ -113,7 +133,7 @@ export class SolicitudesService {
       return this.listaSolicitudes;
     }))
   }
-
+  
   postSolicitud(descripcionCaso, IDPaciente, prioridad, comentariosPresidencia, queSolicita, estudioSE, archivoSolicitud, archivoAdicional, fecha) {
     let solicitud = {
       "descripcion": descripcionCaso,
@@ -149,17 +169,8 @@ export class SolicitudesService {
     await this.db.object(`pacientes/${idPaciente}/Solicitudes/${idSolicitud}`).set(solicitud).then(algo => {return algo});
     return "Solicitud editada";
   }
-
-  archivarSolicitud(id, archivado) {
-    this.getSolicitud(id).subscribe( solicitud =>
-      {
-        console.log(solicitud);
-        solicitud["archivado"]= archivado;
-
-        this.db.object(`solicitudes/${id}`).set(solicitud);
-      });
-  }
-
+  
+  
   actualizarArchivo(urlArchivo, id, archivoNombre) {
     const db = getDatabase();
 

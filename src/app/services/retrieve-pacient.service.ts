@@ -39,10 +39,7 @@ getPatients(): Observable<Patient[]>{
 getPacientById(id): Observable<Patient>{
   this.db.object("/pacientes/"+id).valueChanges().subscribe(data => {
     this.SinglePatient = data;
-    console.log(data);
   })
-  console.log("aca");
-  console.log(this.SinglePatient);
   return of(this.SinglePatient);
 }
 

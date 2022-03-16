@@ -94,13 +94,13 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let soli of listSoliPacienteFiltered"
+            *ngFor="let soli of listSoliPacienteFiltered | keyvalue"
             class="userRowHover"
           >
-            <td class="rowInfo">{{ soli?.queSolicita }}</td>
-            <td class="rowInfo">{{ soli?.descripcion }}</td>
-            <td class="rowInfo">{{ soli?.fecha }}</td>
-            <td class="rowInfo">{{ soli?.estado }}</td>
+            <td class="rowInfo">{{ soli?.value.queSolicita}}</td>
+            <td class="rowInfo">{{ soli?.value.descripcion }}</td>
+            <td class="rowInfo">{{ soli?.value.fecha }}</td>
+            <td class="rowInfo">{{ soli?.value.estado }}</td>
           </tr>
         </tbody>
       </table>

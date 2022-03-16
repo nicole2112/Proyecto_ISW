@@ -49,12 +49,12 @@
       <p id="fecha"></p>
     </div>
     <div>
-      <button id="btn-box" type="button" class="btn btn-success" style="margin-right: 1rem; display: none;" (click)="handleArchive(solicitudSelectedId);">
+      <button id="btn-box" type="button" class="btn btn-success" style="margin-right: 1rem; display: none;" (click)="handleArchive(pacienteSelectedId, solicitudSelectedId,pacienteSelectedKey);">
         <span aria-hidden="true">
           <fa-icon class="icons" [icon]="faBox"></fa-icon>
         </span>
       </button>
-      <button id="btn-box-open" type="button" class="btn btn-success" style="margin-right: 1rem; display: none;" (click)="handleUnarchive(solicitudSelectedId);">
+      <button id="btn-box-open" type="button" class="btn btn-success" style="margin-right: 1rem; display: none;" (click)="handleUnarchive(pacienteSelectedId, solicitudSelectedId, pacienteSelectedKey);">
         <span aria-hidden="true">
           <fa-icon class="icons" [icon]="faBoxOpen"></fa-icon>
         </span>
@@ -205,13 +205,14 @@
           <div class="form-group">
             <label for="otros">Casa</label>
             <div><img id="image_preview" class="float-child" width="150" height="150" alt=""></div>
+            <div><img id="image_preview2" class="float-child" width="150" height="150" alt=""></div>
           </div>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudPacienteSelectedId, solicitudSelectedId,solicitudPreEdicion)">Guardar</button>
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(pacienteSelectedId, solicitudSelectedId,solicitudPreEdicion)">Guardar</button>
   </div>
 </ng-template>
 
@@ -235,7 +236,7 @@
   </div>
   <div class="modal-footer">
     <!-- <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, articuloSelectedId, articuloSelectedName); onDeleteConfirmation(heroeSelectedName); modal.close('Delete Click');">Eliminar</button> -->
-    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudPacienteSelectedId, solicitudSelectedId,solicitudPreEdicion)">Guardar</button>
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(pacienteSelectedId, solicitudSelectedId,solicitudPreEdicion)">Guardar</button>
   </div>
 </ng-template>
 </div>
