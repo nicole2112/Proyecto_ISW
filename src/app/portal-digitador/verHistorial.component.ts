@@ -84,7 +84,7 @@ export class verHistorialComponent implements OnInit {
         
         this.userService.getDigitadores().pipe(take(1)).subscribe(digitadores =>
         {
-          
+          this.filteredRecordList = [];
           listanueva.forEach(item => 
             {
               digitadores.forEach( usuario =>
@@ -106,10 +106,6 @@ export class verHistorialComponent implements OnInit {
             });
             
         })
-        
-        //this.recordList = listanueva;
-        // Filter record
-        //this.filteredRecordList = this.recordList.filter(record => record.archivado == 0);
       });
             
       
@@ -161,7 +157,6 @@ export class verHistorialComponent implements OnInit {
 
     getPacienteData(id) {
       let patient = this.patientService.getPacientById(id);
-      // console.log(patient);
     }
 
     onSelectedChange(event:any){
@@ -200,7 +195,6 @@ export class verHistorialComponent implements OnInit {
 
       onSelect(selectedItem: any){
         this.getPacienteData(selectedItem.IDPaciente);
-        console.table(selectedItem);
         this.solicitudSelectedId = selectedItem.solicitudKey;
         this.solicitudPacienteSelectedId = selectedItem.pacienteKey;
         this.solicitudPreEdicion = selectedItem.rawSolicitud;
@@ -242,9 +236,6 @@ export class verHistorialComponent implements OnInit {
         var optionPrioridad2 = document.createElement("option");
         var optionPrioridad3 = document.createElement("option");
 
-        // console.log("Prioridad");
-        // console.log(selectedItem.prioridad);
-
         if(selectedItem.prioridad == 1)
         {
           optionPrioridad1.innerHTML = "Inmediata";
@@ -285,14 +276,11 @@ export class verHistorialComponent implements OnInit {
 
       // From attachment link
       onChangeFile(event) {
-        console.log("CHAANGE");
-        console.log(event);
           this.onFileChange(event.target.files, event.target.name);    // "target" is correct here
       }
 
       private onFileChange(files: File[], descArchivo) {
         this.fileList.push(files[0]);
-        console.log(this.fileList);
         this.descList.push(descArchivo);
       }
 
@@ -334,9 +322,6 @@ export class verHistorialComponent implements OnInit {
         }
         let updateValue = {};
 
-        // console.log(nombreValue);
-        // console.log(descripcionValue);
-        // console.log(solicitudValue);
         this.nombre = nombreValue;
         this.descripcion =  descripcionValue;
         this.ciudad = ciudadValue;
@@ -359,19 +344,11 @@ export class verHistorialComponent implements OnInit {
         this.getValues();
         Promise.all(this.fileList.map( async (file) =>
         {
-          console.log("File");
-          console.log(file);
             return this.guardarArchivo(file);
         })).then((message) =>
         {
-          console.log("DESCLIST: ");
-          console.log(this.descList);
           this.descList.forEach((item, index, array) =>
           {
-            console.log("ITEM: ");
-            console.log(item);
-            console.log(message);
-            console.log(index);
               switch(item)
               {
                 case "socioeconomico":
@@ -385,8 +362,8 @@ export class verHistorialComponent implements OnInit {
                     break;
               }
           });
-          this.recordService.editarSolicitud(pacienteID, solicitudID, solicitud, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
-          this.callUpdateNotification();
+          this.recordService.editarSolicitud(pacienteID, solicitudID, solicitud, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros).then(() => {this.callUpdateNotification();})
+          
         });
         this.fileList = [];
     }

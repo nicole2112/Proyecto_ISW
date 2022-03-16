@@ -30,11 +30,13 @@ export class SolicitudesService {
 
     this.refer = this.db.list('pacientes');
     this.listaSolicitudes = [];
-    return this.refer.snapshotChanges().pipe(take(1), map(data => {
+    return this.refer.snapshotChanges().pipe(map(data => {
       this.listaSolicitudes = [];
-
+      console.log("antes");
+      
       data.forEach( paciente => {
         let a = paciente.payload.toJSON();
+      console.log("dentro");
 
         if(a['Solicitudes'] !== undefined)
         {
@@ -63,7 +65,7 @@ export class SolicitudesService {
             });
         }
       })
-      
+      console.log("fuera");
       return this.listaSolicitudes;
     }));
 
@@ -133,7 +135,7 @@ export class SolicitudesService {
     });
   }
 
-  editarSolicitud(idPaciente, idSolicitud, solicitud, descripcionCaso, estado, archivado, prioridad, queSolicita, estudioSE, archivoSolicitud, archivoAdicional) {
+  async editarSolicitud(idPaciente, idSolicitud, solicitud, descripcionCaso, estado, archivado, prioridad, queSolicita, estudioSE, archivoSolicitud, archivoAdicional) {
 
     solicitud["descripcion"]= descripcionCaso;
     solicitud["estado"]= estado;
@@ -144,7 +146,8 @@ export class SolicitudesService {
     solicitud["otros"]= archivoAdicional;
     solicitud["archivado"]= archivado;
 
-    this.db.object(`pacientes/${idPaciente}/Solicitudes/${idSolicitud}`).set(solicitud).then(algo => console.log(algo));
+    await this.db.object(`pacientes/${idPaciente}/Solicitudes/${idSolicitud}`).set(solicitud).then(algo => {return algo});
+    return "Solicitud editada";
   }
 
   archivarSolicitud(id, archivado) {
