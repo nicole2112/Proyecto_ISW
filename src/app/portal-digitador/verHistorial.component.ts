@@ -58,7 +58,8 @@ export class verHistorialComponent implements OnInit {
 
     solicitudPreEdicion: any;
     solicitudSelectedId: any;
-    solicitudPacienteSelectedId: any;
+    pacienteSelectedId: any;
+    pacienteSelectedKey: any;
 
     nombre: any;
     ciudad: any;
@@ -106,16 +107,12 @@ export class verHistorialComponent implements OnInit {
             });
             
         })
-        
-        //this.recordList = listanueva;
-        // Filter record
-        //this.filteredRecordList = this.recordList.filter(record => record.archivado == 0);
       });
             
       
     }
 
-    handleArchive(id){
+    handleArchive(idPaciente, idSolicitud, keyPaciente){
       Swal.fire({
         title: '¿Seguro que desea archivar la solicitud?',
         icon: 'warning',
@@ -126,7 +123,7 @@ export class verHistorialComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
-          this.recordService.archivarSolicitud(id, 1);
+          this.recordService.archivarSolicitud(idPaciente,idSolicitud,keyPaciente, 1);
           Swal.fire(
             'Solicitud archivada',
             'La solicitud ha sido archivada exitosamente',
@@ -137,7 +134,7 @@ export class verHistorialComponent implements OnInit {
       });
     }
 
-    handleUnarchive(id){
+    handleUnarchive(idPaciente, idSolicitud, keyPaciente){
       Swal.fire({
         title: '¿Seguro que desea desarchivar la solicitud?',
         icon: 'warning',
@@ -148,7 +145,7 @@ export class verHistorialComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
-          this.recordService.archivarSolicitud(id, 0);
+          this.recordService.archivarSolicitud(idPaciente,idSolicitud, keyPaciente, 0);
           Swal.fire(
             'Solicitud desarchivada',
             'La solicitud ha sido desarchivada exitosamente',
@@ -200,9 +197,11 @@ export class verHistorialComponent implements OnInit {
 
       onSelect(selectedItem: any){
         this.getPacienteData(selectedItem.IDPaciente);
-        console.table(selectedItem);
+        
+        
         this.solicitudSelectedId = selectedItem.solicitudKey;
-        this.solicitudPacienteSelectedId = selectedItem.pacienteKey;
+        this.pacienteSelectedId = selectedItem.IDPaciente; //MANDAR LA CEDULA
+        this.pacienteSelectedKey = selectedItem.pacienteKey;
         this.solicitudPreEdicion = selectedItem.rawSolicitud;
         if(selectedItem.estado === "Falta más información"){
           // (document.getElementById("nombre") as any).disabled = false;
