@@ -82,6 +82,7 @@
 
     <!-- Para ver solicitudes del paciente seleccionado -->
     <div class="table-wrapper-scroll-y my-custom-scrollbar"*ngIf="type==1">
+      <h5 style="text-align: center; margin-top: 10px;">Solicitudes Aprobadas o Denegadas del Paciente</h5>
       <!-- Tabla -->
       <table class="table table-striped table-bordered">
         <thead class="table-header" class="userRowHover">
@@ -94,13 +95,13 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let soli of listSoliPacienteFiltered"
+            *ngFor="let soli of listSoliPacienteFiltered | keyvalue"
             class="userRowHover"
           >
-            <td class="rowInfo">{{ soli?.queSolicita }}</td>
-            <td class="rowInfo">{{ soli?.descripcion }}</td>
-            <td class="rowInfo">{{ soli?.fecha }}</td>
-            <td class="rowInfo">{{ soli?.estado }}</td>
+            <td class="rowInfo">{{ soli?.value.queSolicita}}</td>
+            <td class="rowInfo">{{ soli?.value.descripcion }}</td>
+            <td class="rowInfo">{{ soli?.value.fecha }}</td>
+            <td class="rowInfo">{{ soli?.value.estado }}</td>
           </tr>
         </tbody>
       </table>
@@ -109,4 +110,5 @@
       <p class="text-danger">El Paciente que intenta buscar no existe o se ingreso un numero de ID incorrecto, ingrese otro numero de identidad o agregue un nuevo paciente con este numero de ID</p>
     </div>
   </div>
+  <br>
 </div>

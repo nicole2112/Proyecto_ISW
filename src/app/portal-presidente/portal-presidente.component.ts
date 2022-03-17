@@ -13,6 +13,7 @@ import { Router } from "@angular/router";
 import { HeroesAdminComponent } from '../heroes-admin/heroes-admin.component';
 import { UsersAdminComponent } from '../users-admin/users-admin.component';
 import { ShowHeroesAdminComponent } from '../showHeroes-admin/showHeroes-admin.component';
+import { Pacientes } from '../models/pacientes';
 import {AddPdfComponent} from '../add-pdf/add-pdf.component'
 
 @Component({
@@ -57,7 +58,6 @@ export class PortalPresidenteComponent implements OnInit {
 
   toggleUsersHandler(isShow: boolean){
     this.ShowUsers = true;
-    console.log(this.ShowUsers);
   }
 
   FundacionRef: AngularFireList<any>;

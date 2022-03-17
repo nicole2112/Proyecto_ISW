@@ -66,10 +66,6 @@ export class VerTestimoniosComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        // this.testimService.getTestimonies().subscribe((item) => {
-        //     console.log(item);
-        //     this.testimonyList = item;
-        // });
         this.testimService.getTestimonies().subscribe((item) => {
        
           this.testimonyList = item;
@@ -133,8 +129,6 @@ export class VerTestimoniosComponent implements OnInit{
             "visible" : visible,
             "prioridad": numPrioridad,
         }
-        console.log("HR" + testimonio);
-        //userRef.update(testimonio)
         this.testimService.updateTestimony(testimonio, this.currentKey);
         Swal.fire({
             position: 'top-end',

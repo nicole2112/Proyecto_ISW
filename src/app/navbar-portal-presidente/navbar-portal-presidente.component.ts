@@ -48,7 +48,7 @@ currentUser: any;
     //vacio
   }
   addPaciente(){
-    //vacio
+    this.viewPacientesClick.emit(true);
   }
   //Blog
   viewArticulos() {
@@ -87,7 +87,7 @@ currentUser: any;
     this.showPacientesClick.emit(true);
   }
   viewPacientes(){
-    this.viewPacientesClick.emit(true);
+    
   }
 
   ngOnInit(): void {
@@ -100,7 +100,6 @@ currentUser: any;
       if(user){
         document.getElementById('user-display').innerHTML = '<fa-icon class="fa icons" [icon]="faUserCircle"></fa-icon>' + sessionStorage.getItem("userEmail") + ' ▼';
       }else{
-        //console.log('Error');
       }
     })
     return userexp;
@@ -109,6 +108,8 @@ currentUser: any;
   addUser(){
     this.router.navigateByUrl(`portal-presidente/registro`);
   }
+
+  
 
   fnEditUserProfile(){
     this.router.navigateByUrl(`portal-presidente/perfil`);

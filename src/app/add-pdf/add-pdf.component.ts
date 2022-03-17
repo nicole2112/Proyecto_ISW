@@ -98,7 +98,6 @@ export class AddPdfComponent implements OnInit {
 
   AgregarPDF_Programas(pdfURL){
    this.fechaPdf = this.fechaService.ObtenerFecha();
-   console.log(this.fechaPdf);
    this.pdfService.actualizarPDF(pdfURL, this.pdfId, this.NombrePdf, this.fechaPdf);
   }
 

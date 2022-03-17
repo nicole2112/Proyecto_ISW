@@ -56,7 +56,6 @@ export class EditUserProfileComponent implements OnInit {
       });
     this.nombre = sessionStorage.getItem('nombre');
 
-    //console.log( getAuth().currentUser); //retorna null al recargar página
 
   }//fin de ngOnInit
 
@@ -66,11 +65,9 @@ export class EditUserProfileComponent implements OnInit {
       .valueChanges()
       .subscribe((usuarios) => {
         let keys = Object.keys(usuarios);
-        //console.log(usuarios);
         keys.forEach((item) => {
           if (usuarios[item]['id'] == this.userId) {
             this.rol = usuarios[item]['rol'];
-            console.log(this.rol);
           }
         });
       });
@@ -99,7 +96,6 @@ export class EditUserProfileComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500,
     });
-    console.log(this.rol);
     if(this.rol == "Admin")
       this.router.navigate(['/portal-admin']);
     else if (this.rol == "Digitador")

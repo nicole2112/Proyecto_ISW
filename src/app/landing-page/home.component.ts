@@ -23,7 +23,6 @@ export class HomeComponent {
                 let dateA = new Date(b.fechaCreacion), dateB = new Date(a.fechaCreacion)
                 return +dateA - +dateB;
             });
-            console.log(new Date);
         });
     }
 

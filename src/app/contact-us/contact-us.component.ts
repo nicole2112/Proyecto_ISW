@@ -47,10 +47,6 @@ export class ContactUsComponent {
     }
 
     onSubmit(): void{
-        console.table(this.form.value);
-        console.log("Form is touched: ", this.form.touched);
-        console.log("Is form valid: ", this.form.valid);
-        console.log("Form dirty: ", this.form.dirty);
         Email.send({
             SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
             To: 'aaron20092009@hotmail.com',

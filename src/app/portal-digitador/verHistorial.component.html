@@ -3,12 +3,12 @@
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
       <div style="height: 69px;">
         <select class="form-select my-3" (change)="onSelectedChange($event)" name="visibilidad" required style="float:left">
-          <option [ngValue]="'all'">Todos</option>
+          <option [ngValue]="'all'" id="Todos">Todos</option>
           <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>
         </select>
         <div class="h-100 d-flex align-items-center" style="padding-left: 15px;">
           <label>
-            <input type="checkbox" [value]="showArchived" (change)="onCheckboxChange($event)" />
+            <input type="checkbox" id="checkArchived" [value]="showArchived" (change)="onCheckboxChange($event)" />
             Mostrar archivados
           </label>
         </div>
@@ -18,21 +18,23 @@
 
           <tr>
               <th>Nombre del paciente</th>
-              <th>Ciudad</th>
               <th>Solicitud</th>
-              <th>Fecha</th>
               <th>Estado</th>
               <th>Comentarios</th>
+              <th>Prioridad</th>
+              <th>Fecha</th>
           </tr>
       </thead>
       <tbody>
           <tr *ngFor="let record of filteredRecordList" class="userRowHover" (click)="open(content); onSelect(record);">
               <td class="rowInfo">{{record?.nombrePaciente}}</td>
-              <td class="rowInfo">{{record?.ciudad}}</td>
               <td class="rowInfo">{{record?.queSolicita}}</td>
-              <td class="rowInfo">{{record?.fecha}}</td>
               <td class="rowInfo">{{record?.estado}}</td>
               <td class="rowInfo">{{record?.comentariosPresidencia}}</td>
+              <td class="rowInfo" *ngIf="record?.prioridad == 1">Inmediata</td>
+              <td class="rowInfo" *ngIf="record?.prioridad == 2">Alta</td>
+              <td class="rowInfo" *ngIf="record?.prioridad == 3">Baja</td>
+              <td class="rowInfo">{{record?.fecha}}</td>
             </tr>
       </tbody>
     </table>
@@ -49,12 +51,12 @@
       <p id="fecha"></p>
     </div>
     <div>
-      <button id="btn-box" type="button" class="btn btn-success" style="margin-right: 1rem; display: none;" (click)="handleArchive(solicitudSelectedId);">
+      <button id="btn-box" type="button" class="btn btn-success" style="margin-right: 1rem; display: none;" (click)="handleArchive(pacienteSelectedId, solicitudSelectedId,pacienteSelectedKey);">
         <span aria-hidden="true">
           <fa-icon class="icons" [icon]="faBox"></fa-icon>
         </span>
       </button>
-      <button id="btn-box-open" type="button" class="btn btn-success" style="margin-right: 1rem; display: none;" (click)="handleUnarchive(solicitudSelectedId);">
+      <button id="btn-box-open" type="button" class="btn btn-success" style="margin-right: 1rem; display: none;" (click)="handleUnarchive(pacienteSelectedId, solicitudSelectedId, pacienteSelectedKey);">
         <span aria-hidden="true">
           <fa-icon class="icons" [icon]="faBoxOpen"></fa-icon>
         </span>
@@ -69,7 +71,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="nombre">ID Paciente</label>
+            <label for="nombre">Número de Identidad</label>
             <div class="input-group">
               <input disabled id="id-paciente" type="text" class="form-control" placeholder="ID Paciente" name="dp">
             </div>
@@ -121,7 +123,7 @@
               </div>
             </div>
           <div class="form-group">
-              <label for="descripcion">Descripcion</label>
+              <label for="descripcion">Descripción</label>
               <div class="input-group">
                 <textarea disabled name="descripcion" class="form-control" id="descripcion" cols="60" rows="7" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
                 <div class="input-group-append">
@@ -140,52 +142,54 @@
               </div>
             </div>
           </div>
-          <div class="form-group float-container" id="hoja-div" hidden>
+          <div class="form-group float-container">
             <div>
               <label for="hoja">Hoja de Compromiso</label>
               <br>
-              <a class="btn btn-primary" id="hoja" href="" target="_blank">
+              <a class="btn btn-primary" id="hoja" target="_blank">
                 Ver Documento
               </a>
             </div>
+            <!--
             <div class="input-group float-child">
               <label>Actualizar Archivo</label>
                 <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
                       <input (change)="onChangeFile($event)" type="file" name="hoja" id="url-hoja-compromiso" accept="application/pdf"/>
                   </div>
             </div>
+            -->
         </div>
-          <div class="form-group float-container" id="estudio-div" hidden>
+          <div class="form-group float-container">
             <div>
               <label for="estudio">Estudio Socioecónomico </label>
               <br>
-              <a class="btn btn-primary" id="estudio" href="" target="_blank">
+              <a class="btn btn-primary" id="estudio" target="_blank">
                 Ver Documento
               </a>
             </div>
-            <div class="input-group float-child">
+            <div class="input-group float-child" id="estudio-div" hidden>
               <label>Actualizar Archivo</label>
                 <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
-                      <input (change)="onChangeFile($event)" type="file" name="socioeconomico" id="url-estudio-socioeconomico" accept="application/pdf"/>
+                      <input  class="form-control" (change)="onChangeFile($event)" type="file" name="socioeconomico" id="url-estudio-socioeconomico" accept="application/pdf"/>
                   </div>
             </div>
         </div>
-          <div class="form-group float-container" id="solicitud-div" hidden>
+          <div class="form-group float-container">
             <div>
               <label for="donacion">Solicitud de Donación</label>
               <br>
-              <a class="btn btn-primary" id="donacion" href="" target="_blank">
+              <a class="btn btn-primary" id="donacion" target="_blank">
                 Ver Documento
               </a>
             </div>
-            <div class="input-group float-child">
+            <div class="input-group float-child" id="solicitud-div" hidden>
               <label>Actualizar Archivo</label>
                 <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
-                      <input (change)="onChangeFile($event)" type="file" name="solDonacion" id="url-solicitud-donacion" accept="application/pdf"/>
+                      <input  class="form-control" (change)="onChangeFile($event)" type="file" name="solDonacion" id="url-solicitud-donacion" accept="application/pdf"/>
                   </div>
             </div>
         </div>
-          <div class="form-group float-container" id="otros-div" hidden>
+          <div class="form-group float-container">
             <div>
               <label for="otros">Otros</label>
               <br>
@@ -193,16 +197,17 @@
                 Ver Documento
               </a>
             </div>
-            <div class="input-group float-child">
+            <div class="input-group float-child" id="otros-div" hidden>
               <label>Actualizar Archivo</label>
                 <div (dragover)="onDragOver($event)" (drop)="onDropSuccess($event)">
-                      <input (change)="onChangeFile($event)" type="file" name="otros" id="url-otros" accept="application/pdf"/>
+                      <input  class="form-control" (change)="onChangeFile($event)" type="file" name="otros" id="url-otros" accept="application/pdf"/>
                   </div>
             </div>
         </div>
           <div class="form-group">
             <label for="otros">Casa</label>
             <div><img id="image_preview" class="float-child" width="150" height="150" alt=""></div>
+            <div><img id="image_preview2" class="float-child" width="150" height="150" alt=""></div>
           </div>
         </div>
       </div>
@@ -233,7 +238,7 @@
   </div>
   <div class="modal-footer">
     <!-- <button type="submit" class="btn btn-danger pull-left" (click)="open(confirmation, articuloSelectedId, articuloSelectedName); onDeleteConfirmation(heroeSelectedName); modal.close('Delete Click');">Eliminar</button> -->
-    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(solicitudSelectedId)">Guardar</button>
+    <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click'); editarSolicitud(pacienteSelectedId, solicitudSelectedId,solicitudPreEdicion)">Guardar</button>
   </div>
 </ng-template>
 
@@ -257,7 +262,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-primary pull-left" (click)="editarSolicitud(solicitudSelectedId); modal.close('Update Click');">Si</button>
+    <button type="submit" class="btn btn-primary pull-left" (click)="editarSolicitud(pacienteSelectedId, solicitudSelectedId, solicitudPreEdicion); modal.close('Update Click');">Si</button>
     <button type="submit" id="saveBtn" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancelar</button>
   </div>
 </ng-template>

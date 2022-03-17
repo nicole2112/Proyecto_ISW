@@ -40,6 +40,7 @@ export class verHistorialComponent implements OnInit {
         'Falta más información',
     ];
     showArchived = false;
+    actualState = 'Todos';
 
     faBox = faBox;
     faBoxOpen = faBoxOpen;
@@ -61,8 +62,11 @@ export class verHistorialComponent implements OnInit {
     descList: any[] = [];
     namePattern = '^[a-zA-Z ]*$';
 
+    solicitudPreEdicion: any;
     solicitudSelectedId: any;
     solicitudSelectedName: any;
+    pacienteSelectedId: any;
+    pacienteSelectedKey: any;
 
     nombre: any;
     ciudad: any;
@@ -77,6 +81,9 @@ export class verHistorialComponent implements OnInit {
 
       this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
         let listanueva;
+        this.filteredRecordList = [];
+        this.recordList = [];
+
         listanueva = records.sort((a, b) => {
             if (a.prioridad === b.prioridad) {
               let dateA = new Date(b.fecha), dateB = new Date(a.fecha);
@@ -85,55 +92,36 @@ export class verHistorialComponent implements OnInit {
               return a.prioridad < b.prioridad ? -1 : 1;
             }
           });
-          let observables: Observable<any>[] = [];
-          let observables2: Observable<any>[] = [];
 
-          listanueva.forEach( item =>
-          {
-            observables.push(this.pacService.getPaciente2(item['IDPaciente']))
-          });
-
-          let nuevalista:any = [];
-          combineLatest(observables).pipe(map(pac =>
-          {
-
-            let item2;
-            listanueva.forEach( (item, index) =>
+        this.userService.getDigitadores().pipe(take(1)).subscribe(digitadores =>
+        {
+          this.filteredRecordList = [];
+          listanueva.forEach(item =>
             {
-              pac[index]['id'] = item['id'];
-              item2 = {...pac[index], ...item};
-              item2['nombrePaciente'] = pac[index]['nombre'];
-              nuevalista.push(item2);
-            });
-
-            nuevalista.forEach( objeto =>
+              digitadores.forEach( usuario =>
               {
-                observables2.push(this.userService.getUser(objeto['digitador']));
-                this.userService.getUser(objeto['digitador']).pipe(take(1)).subscribe(usuario =>
-                  {
-                    let item3;
-                    let userdata = {
-                      "email": usuario['email'],
-                      "nombreDigitador": usuario['nombre'],
-                    };
-                    item3 = {...objeto, ...userdata};
-                    if(!this.filteredRecordList.includes(item3))
-                  {
-                    this.filteredRecordList.push(item3);
-                    this.recordList.push(item3);
-                  }
-                });
-            });
+                if(usuario['digitadorKey'] == item['digitador'])
+                {
+                  let userdata = {
+                    "email": usuario['email'],
+                    "nombreDigitador": usuario['nombre'],
+                  };
 
-          }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
-            this.recordList = [...new Set(this.recordList)];});
-            });
+                  item = {...item, ...userdata};
+                }
+              })
 
-          // Filter record
-          this.filteredRecordList = this.recordList.filter(record => record.archivado == 0);
+              this.recordList.push(item);
+              if(item.archivado == 0)
+                this.filteredRecordList.push(item);
+            });
+        })
+      });
+
+
     }
 
-    handleArchive(id){
+    handleArchive(idPaciente, idSolicitud, keyPaciente){
       Swal.fire({
         title: '¿Seguro que desea archivar la solicitud?',
         icon: 'warning',
@@ -144,7 +132,7 @@ export class verHistorialComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
-          this.recordService.archivarSolicitud(id, 1);
+          this.recordService.archivarSolicitud(idPaciente,idSolicitud,keyPaciente, 1);
           Swal.fire(
             'Solicitud archivada',
             'La solicitud ha sido archivada exitosamente',
@@ -155,7 +143,7 @@ export class verHistorialComponent implements OnInit {
       });
     }
 
-    handleUnarchive(id){
+    handleUnarchive(idPaciente, idSolicitud, keyPaciente){
       Swal.fire({
         title: '¿Seguro que desea desarchivar la solicitud?',
         icon: 'warning',
@@ -166,13 +154,17 @@ export class verHistorialComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
-          this.recordService.archivarSolicitud(id, 0);
+          this.recordService.archivarSolicitud(idPaciente,idSolicitud, keyPaciente, 0);
           Swal.fire(
             'Solicitud desarchivada',
             'La solicitud ha sido desarchivada exitosamente',
             'success'
           );
           this.modalService.dismissAll();
+          this.showArchived = false;
+          (document.getElementById("checkArchived") as any).checked = false;
+          this.actualState = "Todos";
+          (document.getElementById("Todos") as any).selected = "true";
         }
       });
     }
@@ -183,18 +175,25 @@ export class verHistorialComponent implements OnInit {
 
     onSelectedChange(event:any){
         const state = event.target.value;
+        this.actualState = state;
         if (state == "Todos") {
-            this.filteredRecordList = this.recordList;
+            this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
         } else {
             this.filteredRecordList = this.recordList.filter(record => {
                 return record.estado == state;
-            });
+            }).filter(record => record.archivado === +this.showArchived);
         }
     }
 
     onCheckboxChange(event:any){
       this.showArchived = event.target.checked;
-      this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
+      if(this.actualState == "Todos"){
+        this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
+      } else {
+        this.filteredRecordList = this.recordList.filter(record => {
+            return record.estado == this.actualState;
+        }).filter(record => record.archivado === +this.showArchived);
+      }
     }
 
     open(content) {
@@ -216,10 +215,16 @@ export class verHistorialComponent implements OnInit {
 
       onSelect(selectedItem: any){
         this.getPacienteData(selectedItem.IDPaciente);
-        this.solicitudSelectedId = selectedItem.key;
+
         this.solicitudSelectedName = selectedItem.queSolicita;
+        this.solicitudSelectedId = selectedItem.solicitudKey;
+        this.pacienteSelectedId = selectedItem.IDPaciente; //MANDAR LA CEDULA
+        this.pacienteSelectedKey = selectedItem.pacienteKey;
+        this.solicitudPreEdicion = selectedItem.rawSolicitud;
         if(selectedItem.estado === "Falta más información"){
-          (document.getElementById("hoja-div") as any).hidden = false;
+          // (document.getElementById("nombre") as any).disabled = false;
+          // (document.getElementById("ciudad") as any).disabled = false;
+          // (document.getElementById("hoja-div") as any).hidden = false;
           (document.getElementById("estudio-div") as any).hidden = false;
           (document.getElementById("solicitud-div") as any).hidden = false;
           (document.getElementById("otros-div") as any).hidden = false;
@@ -246,12 +251,14 @@ export class verHistorialComponent implements OnInit {
 
         document.getElementById("hoja").setAttribute('href', selectedItem.hojaComp);
         if(selectedItem.otros != '') document.getElementById("otros").setAttribute('href', selectedItem.otros);
-        document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
-        document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
+        if(selectedItem.estudioSE != '') document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
+        if(selectedItem.solicitudDonacion != '') document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
 
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
         (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
         document.getElementById("image_preview").setAttribute('src', selectedItem.imgCasa1);
+        document.getElementById("image_preview2").setAttribute('src', selectedItem.imgCasa2);
+        if (selectedItem.imgCasa2 == "") document.getElementById("image_preview2").style.visibility = "hidden";
 
         var selectorPrioridad = document.getElementById("prioridadOptions");
         var optionPrioridad1 = document.createElement("option");
@@ -267,10 +274,10 @@ export class verHistorialComponent implements OnInit {
           optionPrioridad3.innerHTML = "Baja"
 
         }else if(selectedItem.prioridad == 2){
-          optionPrioridad1.innerHTML = "Inmediata";
+          optionPrioridad1.innerHTML = "Alta";
           optionPrioridad1.selected = true;
 
-          optionPrioridad2.innerHTML = "Alta"
+          optionPrioridad2.innerHTML = "Inmediata"
           optionPrioridad3.innerHTML = "Baja"
         }else{
           optionPrioridad1.innerHTML = "Baja";
@@ -334,7 +341,7 @@ export class verHistorialComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Solicitud ha sido actualizada exitosamente!',
+          title: '¡Solicitud ha sido actualizada exitosamente!',
           showConfirmButton: false,
           timer: 1500
         })
@@ -389,10 +396,8 @@ export class verHistorialComponent implements OnInit {
         return priorities[priority-1]
       }
 
-      editarSolicitud(id){
+      editarSolicitud(pacienteID, solicitudID, solicitud){
         // this.getValues();
-        // console.log(id);
-        // console.log(this.IDPaciente);
         Promise.all(this.fileList.map( async (file) =>
         {
             return this.guardarArchivo(file);
@@ -413,19 +418,22 @@ export class verHistorialComponent implements OnInit {
                     break;
               }
           });
-          this.recordService.editarSolicitud(id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
-          this.callUpdateNotification();
-          Email.send({
-            SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
-            To: 'aaron20092009@hotmail.com',
-            From: 'lopez.aaron1022@gmail.com',
-            Subject: `Solicitud Modificada - ${this.solicitud} - Prioridad(${this.prioridadEmail})`,
-            Body: `Paciente ${this.nombrePaciente} con No. Identidad ${this.IDPaciente}
-                  <br>Descripcion: ${this.descripcion}
-                  <br>Modificado por Digitador: ${this.digitadorMod}`
-          }).then(
-            message => console.log(message)
-          );
+          this.recordService.editarSolicitud(pacienteID, solicitudID, solicitud, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros)
+            .then(() => {
+              this.callUpdateNotification();
+              Email.send({
+                SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
+                To: 'aaron20092009@hotmail.com',
+                From: 'lopez.aaron1022@gmail.com',
+                Subject: `Solicitud Modificada - ${this.solicitud} - Prioridad(${this.prioridadEmail})`,
+                Body: `Paciente ${this.nombrePaciente} con No. Identidad ${this.IDPaciente}
+                      <br>Descripcion: ${this.descripcion}
+                      <br>Modificado por Digitador: ${this.digitadorMod}`
+              }).then(
+                message => console.log(message)
+              );
+            })
+
         });
         this.fileList = [];
     }

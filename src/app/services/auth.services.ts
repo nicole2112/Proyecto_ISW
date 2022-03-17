@@ -166,9 +166,7 @@ export class AuthenticationService {
     }
 
     logout() {
-        console.log(`Session storage (auth): ${sessionStorage}`);
         sessionStorage.clear();
-        console.log(`Session storage (auth): ${sessionStorage}`);
 
         this.loggedIn = false;
         this.auth.signOut();
