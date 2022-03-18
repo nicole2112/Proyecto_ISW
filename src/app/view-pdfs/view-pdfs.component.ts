@@ -47,7 +47,6 @@ export class ViewPdfsComponent implements OnInit {
       this.PdfDescargables = [];
       data.forEach(pdf =>{
         let a = pdf.payload.toJSON();
-        console.log(a);
         a['$key'] = pdf.key;
         this.PdfDescargables.push(a as Descargables)
       })
@@ -59,7 +58,6 @@ export class ViewPdfsComponent implements OnInit {
       this.PdfProgramas = [];
       data.forEach(pdf =>{
         let b = pdf.payload.toJSON();
-        console.log(b);
         b['$key'] = pdf.key;
         this.PdfProgramas.push(b as Programas)
       })
@@ -73,11 +71,6 @@ export class ViewPdfsComponent implements OnInit {
     this.pdfSelectedFecha = fecha;
     this.pdfSelectedArchivo = archivo;
     this.pdfSelectedType = tipo;
-
-    console.log(this.pdfSelectedId + ' ' + this.pdfSelectedNombre);
-
-    console.log('Type: ' + this.pdfSelectedType);
-    // console.log(this.fechaActual);
 
     this.modalService.open(content, {backdrop: 'static', ariaLabelledBy: 'modal-basic-title'}).result.then((result)=>{
       console.log(`Closed with: ${result}`);
@@ -124,13 +117,9 @@ export class ViewPdfsComponent implements OnInit {
       }).then(
          ()=>{
           getDownloadURL(storageRef).then(data =>{
-            // console.log("aca 11");
             if(this.pdfSelectedType === 'descargable'){
-              // console.log("aca");
               this.writePDFData(data, this.pdfSelectedId)
             }else{
-              // console.log("aca 2");
-              // console.log(this.pdfSelectedNombre);
               this.AgregarPDF_Programas(data);
             }
           }).catch((error)=>{
@@ -140,11 +129,8 @@ export class ViewPdfsComponent implements OnInit {
       );
     }else{
       if(this.pdfSelectedType === 'descargable'){
-        // console.log("Leo2")
         this.writePDFData(this.pdfSelectedArchivo ,this.pdfSelectedId)
       } else {
-        // console.log("Leo")
-        // console.log(this.pdfSelectedNombre)
         this.AgregarPDF_Programas(this.pdfSelectedArchivo);
       }
     }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { observable, Observable, of, from } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { concatMap, map, take } from 'rxjs/operators';
 import Swal from 'sweetalert2'
 import { AuthenticationService } from './auth.services';
 import firebase from '@firebase/app-compat';
@@ -22,20 +22,49 @@ export class SolicitudesService {
   listaCorrecta: any[]=[];
   listaPac: any[]=[];
 
+
+  listaSolicitudesPaciente:any[] =[];
+
   constructor(private db: AngularFireDatabase, private auth: AuthenticationService, private pacienteService: PacientesService) {
 
   }
 
   getTodasSolicitudes(id): Observable<any[]> {
 
-    this.refer = this.db.list('solicitudes');
-
+    this.refer = this.db.list('pacientes');
+    this.listaSolicitudes = [];
     return this.refer.snapshotChanges().pipe(map(data => {
-      data.forEach( solicitud => {
-        let a = solicitud.payload.toJSON();
-        a['key'] = solicitud.key;
-        if (a['digitador'] == id || id == "ZQjKhXkpXPZJQ5UbT14JsFE8rvu2")
-          this.listaSolicitudes.push(a);
+      this.listaSolicitudes = [];
+
+      data.forEach( paciente => {
+        let a = paciente.payload.toJSON();
+
+        if(a['Solicitudes'] !== undefined)
+        {
+          let Solicitudes = a['Solicitudes'];
+          let pacienteSinSol = a;
+          pacienteSinSol['pacienteEstado'] = pacienteSinSol['estado'];
+          pacienteSinSol['IDPaciente'] = pacienteSinSol['id'];
+          pacienteSinSol['nombrePaciente'] = pacienteSinSol['nombre'];
+          delete pacienteSinSol['Solicitudes'];
+          delete pacienteSinSol['estado'];
+          delete pacienteSinSol['nombre'];
+          delete pacienteSinSol['id'];
+          Object.keys(Solicitudes).forEach(key =>
+            {
+              let solicitud = Solicitudes[key];
+              solicitud['solicitudKey'] = key;
+              if (solicitud['digitador'] == id || id == "ZQjKhXkpXPZJQ5UbT14JsFE8rvu2")
+              {
+                solicitud['pacienteKey'] = paciente.key;
+
+                let sol = {...pacienteSinSol, ...solicitud};
+                sol['rawSolicitud'] = solicitud;
+
+                this.listaSolicitudes.push(sol);
+              }
+            });
+        }
       })
       return this.listaSolicitudes;
     }));
@@ -50,24 +79,38 @@ export class SolicitudesService {
       });
   }
 
-  getSolicitud(idSol): Observable<any> {
+  getSolicitud(idPaciente): Observable<any> {
+    this.refer = this.db.list('pacientes');
 
-    this.refer = this.db.list('solicitudes');
+    return this.refer.valueChanges().pipe(map(pacientes =>{
+      this.listaSolicitudesPaciente=[];
+      let keys = Object.keys(pacientes);
 
-    return this.refer.snapshotChanges().pipe(map(data => {
-      let nuevaSol: any;
-      this.listaSolicitudes = [];
-      data.forEach(solicitud => {
-        let a = solicitud.payload.toJSON();
-        a['key'] = solicitud.key;
-        if (a['id'] == idSol)
-        {
-          nuevaSol = a;
+      keys.forEach((pac)=>{
+        if(pacientes[pac]['id'] == idPaciente){
+          this.listaSolicitudesPaciente = pacientes[pac]['Solicitudes'];
         }
       })
-      return nuevaSol;
+      return this.listaSolicitudesPaciente;
     }))
   }
+
+  archivarSolicitud(idPaciente: any, idSolicitud: string, keyPaciente: any, archivado: number) {
+    let datos;
+    this.getSolicitud(idPaciente).pipe(take(1)).subscribe( solicitud =>
+      {
+        let keys = Object.keys(solicitud);
+        keys.forEach(item =>{
+          if(item == idSolicitud){
+             datos ={
+               "archivado": archivado
+             }
+          }
+        })
+        this.db.object(`pacientes/${keyPaciente}/Solicitudes/${idSolicitud}`).update(datos);
+      });
+  }
+
 
   getSolicitud_x_Paciente(idPaciente): Observable<any[]>{
     this.solicitudRef = this.db.list('solicitudes');
@@ -89,7 +132,6 @@ export class SolicitudesService {
     let solicitud = {
       "descripcion": descripcionCaso,
       "digitador": this.auth.userDetails.uid,
-      "IDPaciente": IDPaciente,
       "estado": "En espera",
       "prioridad": prioridad,
       "comentariosPresidencia": comentariosPresidencia,
@@ -101,39 +143,27 @@ export class SolicitudesService {
       "fecha": fecha
     };
 
-    this.db.list(`solicitudes`).push(solicitud).then((data) => {
+    this.db.list(`pacientes/${IDPaciente}/Solicitudes`).push(solicitud).then((data) => {
       solicitud["id"] = data.key;
-      this.db.object(`solicitudes/${data.key}`).set(solicitud);
+      this.db.object(`pacientes/${IDPaciente}/Solicitudes/${data.key}`).set(solicitud);
     });
   }
 
-  editarSolicitud(id, descripcionCaso, estado, archivado, prioridad, queSolicita, estudioSE, archivoSolicitud, archivoAdicional) {
+  async editarSolicitud(idPaciente, idSolicitud, solicitud, descripcionCaso, estado, archivado, prioridad, queSolicita, estudioSE, archivoSolicitud, archivoAdicional) {
 
-    this.getSolicitud(id).subscribe( solicitud =>
-      {
-        console.log(solicitud);
-        solicitud["descripcion"]= descripcionCaso;
-        solicitud["estado"]= estado;
-        solicitud["prioridad"]= prioridad;
-        solicitud["queSolicita"]= queSolicita;
-        solicitud["estudioSE"]= estudioSE;
-        solicitud["solicitudDonacion"]= archivoSolicitud;
-        solicitud["otros"]= archivoAdicional;
-        solicitud["archivado"]= archivado;
+    solicitud["descripcion"]= descripcionCaso;
+    solicitud["estado"]= estado;
+    solicitud["prioridad"]= prioridad;
+    solicitud["queSolicita"]= queSolicita;
+    solicitud["estudioSE"]= estudioSE;
+    solicitud["solicitudDonacion"]= archivoSolicitud;
+    solicitud["otros"]= archivoAdicional;
+    solicitud["archivado"]= archivado;
 
-        this.db.object(`solicitudes/${id}`).set(solicitud);
-      });
+    await this.db.object(`pacientes/${idPaciente}/Solicitudes/${idSolicitud}`).set(solicitud).then(algo => {return algo});
+    return "Solicitud editada";
   }
 
-  archivarSolicitud(id, archivado) {
-    this.getSolicitud(id).subscribe( solicitud =>
-      {
-        console.log(solicitud);
-        solicitud["archivado"]= archivado;
-
-        this.db.object(`solicitudes/${id}`).set(solicitud);
-      });
-  }
 
   actualizarArchivo(urlArchivo, id, archivoNombre) {
     const db = getDatabase();
@@ -145,19 +175,10 @@ export class SolicitudesService {
   }
 
 
-  editarSolicitudPresidencia(id, estado, comentariosPresidencia=null) {
-    this.getSolicitud(id).subscribe( solicitud =>
-      {
-        console.log(solicitud);
-        solicitud["estado"]= estado;
-        if(comentariosPresidencia!=null)
-        {
-          solicitud["comentariosPresidencia"]=comentariosPresidencia;
-        }
-    
-        this.db.object(`solicitudes/${id}`).set(solicitud);
-      });
- 
+  editarSolicitudPresidencia(idPaciente, idSolicitud, solicitud, estado, comentariosPresidencia) {
+    solicitud['estado'] = estado;
+    solicitud['comentariosPresidencia'] = comentariosPresidencia;
+    this.db.object(`pacientes/${idPaciente}/Solicitudes/${idSolicitud}`).set(solicitud).then(algo => console.log(algo));
   }
 
 }

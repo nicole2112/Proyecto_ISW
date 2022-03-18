@@ -75,7 +75,6 @@ export class verArticulosComponent {
 
         for(var categoria in this.arrCategorias){
           if(this.arrCategorias.hasOwnProperty(categoria)) {
-            console.log(this.arrCategorias.length);
             a['categorias'] += this.arrCategorias[categoria] + "-";
           }
         }
@@ -99,7 +98,6 @@ export class verArticulosComponent {
     this.categorias = selectCats;
     // this.categorias.filter(String);
 
-    console.log(this.categorias);
     this.articuloSelectedId = id;
     this.articuloSelectedName = name;
     this.articuloSelectedDescription = descripcion;
@@ -117,7 +115,6 @@ export class verArticulosComponent {
     this.articuloSelectedImg = selectedItem.imagenPreview;
     document.getElementById("titulo").setAttribute('value', selectedItem.titulo);
     // document.getElementById("contenido").setContent(selectedItem.contenido);
-    console.log(selectedItem.contenido)
     document.getElementById("descripcion").innerHTML = selectedItem.descripcion;
     document.getElementById("fechaCreacion").setAttribute('value', selectedItem.fechaCreacion);
     document.getElementById("image_preview").setAttribute('src', selectedItem.imagenPreview);
@@ -206,7 +203,6 @@ categoriaRef: AngularFireList<any>;
             a['$key'] = articulo.key;
             this.categoriasList.push(a as Categoria);
         })
-        console.log(this.categoriasList);
     })
 }
 

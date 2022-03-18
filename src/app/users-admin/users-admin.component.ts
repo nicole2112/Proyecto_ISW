@@ -141,11 +141,6 @@ export class UsersAdminComponent implements OnInit{
   }
 
   updateUser(){
-    //var selector = document.getElementById('roleOptions') as HTMLSelectElement;
-    //var selectorValue = selector.options[selector.selectedIndex].text;
-
-    console.log("Im here")
-
     const userRef = this.db.object('usuarios/' + this.userSelectedId);
     var updateValue = '';
     if(this.roleOptions === 'Digitador'){
@@ -153,7 +148,6 @@ export class UsersAdminComponent implements OnInit{
     }else{
       updateValue = 'Digitador'
     }
-
     userRef.update({
       rol: updateValue
     })

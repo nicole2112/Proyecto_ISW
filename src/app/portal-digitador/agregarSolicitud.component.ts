@@ -135,17 +135,17 @@ export class agregarSolicitudComponent implements OnInit{
                 
                 if(this.prioridad === 'Inmediata'){
                     this.prioridadInt = 1;
-                  }
-                  else if(this.prioridad === 'Alta'){
+                }
+                else if(this.prioridad === 'Alta'){
                     this.prioridadInt = 2;
-                  }
-                  else{
+                }
+                else{
                     this.prioridadInt = 3;
-                  }
+                }
 
 
                 var hoy = this.fechaService.ObtenerFecha();
-                this.solicitudservice.postSolicitud(this.descripcion, this.miPaciente.id,this.prioridadInt,"", this.solicitud, this.socioeconomico, this.solDonacion, this.otros, hoy);
+                this.solicitudservice.postSolicitud(this.descripcion, this.miPaciente.$key,this.prioridadInt,"", this.solicitud, this.socioeconomico, this.solDonacion, this.otros, hoy);
                 EnviarCorreo(this.IDPaciente, this.solicitud, this.descripcion);
                 this.historialRedirectFunc();
                 this.callSendFunction();

@@ -100,7 +100,6 @@ currentUser: any;
       if(user){
         document.getElementById('user-display').innerHTML = '<fa-icon class="fa icons" [icon]="faUserCircle"></fa-icon>' + sessionStorage.getItem("userEmail") + ' ▼';
       }else{
-        //console.log('Error');
       }
     })
     return userexp;

@@ -73,12 +73,9 @@ export class AddPatientComponent {
   savePatient() {
     Promise.all(
       this.fileList.map(async (file) => {
-        console.log('1');
         return this.pacienteService.guardarArchivos(file);
       })
     ).then((message) => {
-      console.log(message);
-
       this.descList.forEach((item, index) => {
         switch (item) {
           case 'hojaComp':

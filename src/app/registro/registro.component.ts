@@ -51,11 +51,9 @@ export class RegistroComponent implements OnInit {
         .valueChanges()
         .subscribe((usuarios) => {
           let keys = Object.keys(usuarios);
-          //console.log(usuarios);
           keys.forEach((item) => {
             if (usuarios[item]['id'] == this.userId) {
               this.rollNav = usuarios[item]['rol'];
-              //console.log(this.rol);
             }
           });
         });

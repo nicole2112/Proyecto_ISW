@@ -34,6 +34,7 @@ export class PacientesService {
         this.listaPacientes = [];
         data.forEach((paciente) => {
           let a = paciente.payload.toJSON();
+          a['$key'] = paciente.key;
           if (a['id'] == identidad) {
             this.listaPacientes.push(a);
           }
