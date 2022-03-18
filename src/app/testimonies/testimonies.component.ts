@@ -24,7 +24,6 @@ export class TestimoniesComponent implements OnInit
             this.fullList = item;
             this.fullList.forEach((item) =>
             {
-                //console.log(item);
                 if(item.visible)
                     this.testimonyList.push(item);
                     this.testimonyList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));

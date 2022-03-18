@@ -21,7 +21,6 @@ export class ProgramasComponent implements OnInit{
         this.service.db.list('PDF-Programas').valueChanges().subscribe(
             pdf =>{
                 this.pdfList = pdf;
-                console.log(this.pdfList);
             }
         )
     }

@@ -30,7 +30,6 @@ export class BlogComponent{
                 let dateA = new Date(b.fechaCreacion), dateB = new Date(a.fechaCreacion)
                 return +dateA - +dateB;
             });
-           // console.log(new Date);
             this.filteredBlogList = this.blogList;
         });
 
@@ -43,7 +42,6 @@ export class BlogComponent{
     getCategorias(blog){
         let tmpArray = [];
         for (let cat in blog.categorias){
-            // console.log(cat, blog.categorias);
             tmpArray.push(blog.categorias[cat]);
         }
 

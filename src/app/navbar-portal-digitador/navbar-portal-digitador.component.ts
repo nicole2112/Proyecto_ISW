@@ -34,7 +34,6 @@ export class NavbarPortalDigitadorComponent {
           console.log('Error');
         }
       })
-      console.log(userexp);
       return userexp;
     }
 

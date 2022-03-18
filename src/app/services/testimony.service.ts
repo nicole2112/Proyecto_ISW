@@ -48,7 +48,6 @@ export class TestimonyService {
   updateTestimony(testimonio, key)
   {
     this.db.object(`testimonios/${key}`).set(testimonio).then(()=>{
-      console.log("success");
     })
     .catch((err) =>
     {

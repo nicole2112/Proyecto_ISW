@@ -19,6 +19,9 @@ import { map, take, takeWhile } from 'rxjs/operators';
 import { faBox, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 import { faLeaf } from '@fortawesome/free-solid-svg-icons';
 
+import '../../assets/js/smtp.js';
+declare const Email: any;
+
 @Component({
     selector: 'app-view-Historial-admin',
     templateUrl: './verHistorial.component.html',
@@ -37,6 +40,7 @@ export class verHistorialComponent implements OnInit {
         'Falta más información',
     ];
     showArchived = false;
+    actualState = 'Todos';
 
     faBox = faBox;
     faBoxOpen = faBoxOpen;
@@ -44,10 +48,12 @@ export class verHistorialComponent implements OnInit {
     closeResult: string;
     IDPaciente: any="";
     prioridad: any=3;
+    prioridadEmail: any="";
     archivado: any=0;
     solicitud: any="";
     estado: any="";
     descripcion: any="";
+    hoja: any="";
     socioeconomico: any="";
     solDonacion: any="";
     otros:any="";
@@ -56,11 +62,18 @@ export class verHistorialComponent implements OnInit {
     descList: any[] = [];
     namePattern = '^[a-zA-Z ]*$';
 
+    solicitudPreEdicion: any;
     solicitudSelectedId: any;
+    solicitudSelectedName: any;
+    pacienteSelectedId: any;
+    pacienteSelectedKey: any;
 
     nombre: any;
     ciudad: any;
     prioridadString: any;
+
+    digitadorMod: any="";
+    nombrePaciente: any="";
 
     constructor(private service: AuthenticationService, private recordService: SolicitudesService, private pacService: PacientesService, private patientService: RetrievePatientService, private userService: RetrieveUsersService, private modalService: NgbModal) { }
 
@@ -68,6 +81,9 @@ export class verHistorialComponent implements OnInit {
 
       this.recordService.getTodasSolicitudes(this.service.userDetails.uid).subscribe( records => {
         let listanueva;
+        this.filteredRecordList = [];
+        this.recordList = [];
+
         listanueva = records.sort((a, b) => {
             if (a.prioridad === b.prioridad) {
               let dateA = new Date(b.fecha), dateB = new Date(a.fecha);
@@ -76,55 +92,36 @@ export class verHistorialComponent implements OnInit {
               return a.prioridad < b.prioridad ? -1 : 1;
             }
           });
-          let observables: Observable<any>[] = [];
-          let observables2: Observable<any>[] = [];
 
-          listanueva.forEach( item =>
-          {
-            observables.push(this.pacService.getPaciente2(item['IDPaciente']))
-          });
-
-          let nuevalista:any = [];
-          combineLatest(observables).pipe(map(pac =>
-          {
-
-            let item2;
-            listanueva.forEach( (item, index) =>
+        this.userService.getDigitadores().pipe(take(1)).subscribe(digitadores =>
+        {
+          this.filteredRecordList = [];
+          listanueva.forEach(item =>
             {
-              pac[index]['id'] = item['id'];
-              item2 = {...pac[index], ...item};
-              item2['nombrePaciente'] = pac[index]['nombre'];
-              nuevalista.push(item2);
-            });
-
-            nuevalista.forEach( objeto =>
+              digitadores.forEach( usuario =>
               {
-                observables2.push(this.userService.getUser(objeto['digitador']));
-                this.userService.getUser(objeto['digitador']).pipe(take(1)).subscribe(usuario =>
-                  {
-                    let item3;
-                    let userdata = {
-                      "email": usuario['email'],
-                      "nombreDigitador": usuario['nombre'],
-                    };
-                    item3 = {...objeto, ...userdata};
-                    if(!this.filteredRecordList.includes(item3))
-                  {
-                    this.filteredRecordList.push(item3);
-                    this.recordList.push(item3);
-                  }
-                });
-            });
+                if(usuario['digitadorKey'] == item['digitador'])
+                {
+                  let userdata = {
+                    "email": usuario['email'],
+                    "nombreDigitador": usuario['nombre'],
+                  };
 
-          }), takeWhile(() => true)).subscribe(data => {this.filteredRecordList = [...new Set(this.filteredRecordList)];
-            this.recordList = [...new Set(this.recordList)];});
+                  item = {...item, ...userdata};
+                }
+              })
+
+              this.recordList.push(item);
+              if(item.archivado == 0)
+                this.filteredRecordList.push(item);
             });
-            
-          // Filter record
-          this.filteredRecordList = this.recordList.filter(record => record.archivado == 0);
+        })
+      });
+
+
     }
 
-    handleArchive(id){
+    handleArchive(idPaciente, idSolicitud, keyPaciente){
       Swal.fire({
         title: '¿Seguro que desea archivar la solicitud?',
         icon: 'warning',
@@ -135,7 +132,7 @@ export class verHistorialComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
-          this.recordService.archivarSolicitud(id, 1);
+          this.recordService.archivarSolicitud(idPaciente,idSolicitud,keyPaciente, 1);
           Swal.fire(
             'Solicitud archivada',
             'La solicitud ha sido archivada exitosamente',
@@ -146,7 +143,7 @@ export class verHistorialComponent implements OnInit {
       });
     }
 
-    handleUnarchive(id){
+    handleUnarchive(idPaciente, idSolicitud, keyPaciente){
       Swal.fire({
         title: '¿Seguro que desea desarchivar la solicitud?',
         icon: 'warning',
@@ -157,41 +154,50 @@ export class verHistorialComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
-          this.recordService.archivarSolicitud(id, 0);
+          this.recordService.archivarSolicitud(idPaciente,idSolicitud, keyPaciente, 0);
           Swal.fire(
             'Solicitud desarchivada',
             'La solicitud ha sido desarchivada exitosamente',
             'success'
           );
           this.modalService.dismissAll();
+          this.showArchived = false;
+          (document.getElementById("checkArchived") as any).checked = false;
+          this.actualState = "Todos";
+          (document.getElementById("Todos") as any).selected = "true";
         }
       });
     }
 
     getPacienteData(id) {
       let patient = this.patientService.getPacientById(id);
-      // console.log(patient);
     }
 
     onSelectedChange(event:any){
         const state = event.target.value;
+        this.actualState = state;
         if (state == "Todos") {
-            this.filteredRecordList = this.recordList;
+            this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
         } else {
             this.filteredRecordList = this.recordList.filter(record => {
                 return record.estado == state;
-            });
+            }).filter(record => record.archivado === +this.showArchived);
         }
     }
 
     onCheckboxChange(event:any){
       this.showArchived = event.target.checked;
-      this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
+      if(this.actualState == "Todos"){
+        this.filteredRecordList = this.recordList.filter(record => record.archivado === +this.showArchived);
+      } else {
+        this.filteredRecordList = this.recordList.filter(record => {
+            return record.estado == this.actualState;
+        }).filter(record => record.archivado === +this.showArchived);
+      }
     }
 
     open(content) {
         this.modalService.open(content, { size: 'xl', backdrop: 'static', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-          console.log(`Closed with: ${result}`);
         }, (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
@@ -209,11 +215,21 @@ export class verHistorialComponent implements OnInit {
 
       onSelect(selectedItem: any){
         this.getPacienteData(selectedItem.IDPaciente);
-        console.table(selectedItem);
-        this.solicitudSelectedId = selectedItem.key;
-        if(selectedItem.estado === "En espera"){
+
+        this.solicitudSelectedName = selectedItem.queSolicita;
+        this.solicitudSelectedId = selectedItem.solicitudKey;
+        this.pacienteSelectedId = selectedItem.IDPaciente; //MANDAR LA CEDULA
+        this.pacienteSelectedKey = selectedItem.pacienteKey;
+        this.solicitudPreEdicion = selectedItem.rawSolicitud;
+        if(selectedItem.estado === "Falta más información"){
           // (document.getElementById("nombre") as any).disabled = false;
           // (document.getElementById("ciudad") as any).disabled = false;
+          // (document.getElementById("hoja-div") as any).hidden = false;
+          (document.getElementById("estudio-div") as any).hidden = false;
+          (document.getElementById("solicitud-div") as any).hidden = false;
+          (document.getElementById("otros-div") as any).hidden = false;
+          (document.getElementById("guardarBtn") as any).hidden = false;
+
           (document.getElementById("solicitud") as any).disabled = false;
           (document.getElementById("descripcion") as any).disabled = false;
           (document.getElementById("prioridadOptions") as any).disabled = false;
@@ -221,9 +237,9 @@ export class verHistorialComponent implements OnInit {
 
         if (selectedItem.estado === "Aprobada" || selectedItem.estado === "Denegada") {
           if (selectedItem.archivado === 0) {
-            document.getElementById("btn-box").style.display = "inline";  
+            document.getElementById("btn-box").style.display = "inline";
           } else {
-            document.getElementById("btn-box-open").style.display = "inline";  
+            document.getElementById("btn-box-open").style.display = "inline";
           }
         }
 
@@ -236,21 +252,19 @@ export class verHistorialComponent implements OnInit {
 
         document.getElementById("hoja").setAttribute('href', selectedItem.hojaComp);
         if(selectedItem.otros != '') document.getElementById("otros").setAttribute('href', selectedItem.otros);
-        document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
-        document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
+        if(selectedItem.estudioSE != '') document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
+        if(selectedItem.solicitudDonacion != '') document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
 
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
-        // (<HTMLInputElement>document.getElementById("comentario")).value = selectedItem.comentario;
         (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
         document.getElementById("image_preview").setAttribute('src', selectedItem.imgCasa1);
+        document.getElementById("image_preview2").setAttribute('src', selectedItem.imgCasa2);
+        if (selectedItem.imgCasa2 == "") document.getElementById("image_preview2").style.visibility = "hidden";
 
         var selectorPrioridad = document.getElementById("prioridadOptions");
         var optionPrioridad1 = document.createElement("option");
         var optionPrioridad2 = document.createElement("option");
         var optionPrioridad3 = document.createElement("option");
-
-        // console.log("Prioridad");
-        // console.log(selectedItem.prioridad);
 
         if(selectedItem.prioridad == 1)
         {
@@ -261,10 +275,10 @@ export class verHistorialComponent implements OnInit {
           optionPrioridad3.innerHTML = "Baja"
 
         }else if(selectedItem.prioridad == 2){
-          optionPrioridad1.innerHTML = "Inmediata";
+          optionPrioridad1.innerHTML = "Alta";
           optionPrioridad1.selected = true;
 
-          optionPrioridad2.innerHTML = "Alta"
+          optionPrioridad2.innerHTML = "Inmediata"
           optionPrioridad3.innerHTML = "Baja"
         }else{
           optionPrioridad1.innerHTML = "Baja";
@@ -277,6 +291,31 @@ export class verHistorialComponent implements OnInit {
         selectorPrioridad.appendChild(optionPrioridad2);
         selectorPrioridad.appendChild(optionPrioridad3);
 
+        this.socioeconomico = selectedItem.estudioSE;
+        this.solDonacion = selectedItem.solicitudDonacion;
+        this.otros = selectedItem.otros;
+        console.log(this.otros);
+        this.hoja = selectedItem.hojaComp;
+
+        this.nombrePaciente = selectedItem.nombrePaciente;
+        this.digitadorMod = selectedItem.nombreDigitador;
+
+
+        // console.log(selectedItem);
+
+      }
+
+      actualizarSolicitud(content) {
+        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+          console.log(`Closed with: ${result}`);
+        }, (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+      }
+
+      onEditConfirmation(solicitud: string){
+        console.log(solicitud);
+        document.getElementById("solicitudUpdate").setAttribute('value', solicitud);
       }
 
       onDragOver(event) {
@@ -292,14 +331,11 @@ export class verHistorialComponent implements OnInit {
 
       // From attachment link
       onChangeFile(event) {
-        console.log("CHAANGE");
-        console.log(event);
           this.onFileChange(event.target.files, event.target.name);    // "target" is correct here
       }
 
       private onFileChange(files: File[], descArchivo) {
         this.fileList.push(files[0]);
-        console.log(this.fileList);
         this.descList.push(descArchivo);
       }
 
@@ -307,21 +343,22 @@ export class verHistorialComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Héroe ha sido actualizado exitosamente!',
+          title: '¡Solicitud ha sido actualizada exitosamente!',
           showConfirmButton: false,
           timer: 1500
         })
       }
 
       getValues(){
+        console.log("Hereeee");
+        var idPacienteVal = document.getElementById('id-paciente') as HTMLInputElement;
         var nombreVal = document.getElementById('nombre') as HTMLInputElement;
         var ciudadVal = document.getElementById('ciudad') as HTMLInputElement;
         var solicitudVal = document.getElementById('solicitud') as HTMLInputElement;
-
-        var estudioSEVal = document.getElementById('estudioSE') as HTMLInputElement;
         var descripcionVal = document.getElementById('descripcion') as HTMLTextAreaElement;
         var prioridadVal = document.getElementById('prioridadOptions') as HTMLSelectElement;
-
+        console.log(idPacienteVal.value);
+        let idPacienteValue = idPacienteVal.value;
         let nombreValue = nombreVal.value;
         let ciudadValue = ciudadVal.value;
         let solicitudValue = solicitudVal.value;
@@ -339,19 +376,18 @@ export class verHistorialComponent implements OnInit {
           prioridadSend = 3,
           this.prioridadString ="Baja"
         }
-        let updateValue = {};
 
-        // console.log(nombreValue);
-        // console.log(descripcionValue);
-        // console.log(solicitudValue);
+        this.IDPaciente = idPacienteValue;
         this.nombre = nombreValue;
         this.descripcion =  descripcionValue;
         this.ciudad = ciudadValue;
         this.solicitud = solicitudValue;
         this.prioridad= prioridadSend;
+        this.prioridadEmail = prioridadValue;
         this.estado = "En espera";
+
       }
-      
+
       getRequestPriority(priority){
         const priorities = [
           "Inmediata",
@@ -362,38 +398,56 @@ export class verHistorialComponent implements OnInit {
         return priorities[priority-1]
       }
 
-      editarSolicitud(id){
-        this.getValues();
+      editarSolicitud(pacienteID, solicitudID, solicitud){
+        // this.getValues();
         Promise.all(this.fileList.map( async (file) =>
         {
-          console.log("File");
-          console.log(file);
             return this.guardarArchivo(file);
         })).then((message) =>
         {
-          console.log("DESCLIST: ");
           console.log(this.descList);
           this.descList.forEach((item, index, array) =>
           {
-            console.log("ITEM: ");
-            console.log(item);
-            console.log(message);
-            console.log(index);
               switch(item)
               {
                 case "socioeconomico":
-                    this.socioeconomico = message[index];
+                    if(message[index] != undefined)
+                      this.socioeconomico = message[index];
                     break;
                 case "solDonacion":
-                    this.solDonacion = message[index];
+                    if(message[index] != undefined)
+                      this.solDonacion = message[index];
                     break;
                 case "otros":
-                    this.otros = message[index];
+                    console.log(message[index]);
+                    if(message[index] != undefined)
+                      this.otros = message[index];
                     break;
               }
           });
-          this.recordService.editarSolicitud(id, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros);
-          this.callUpdateNotification();
+          console.log("SolDonacion: " + this.solDonacion);
+          console.log("SE: " + this.socioeconomico);
+          console.log("Otros: " + this.otros);
+          console.log("Paciente key: " + this.pacienteSelectedKey);
+
+          this.recordService.editarSolicitud(pacienteID, solicitudID, solicitud, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros)
+            .then(() => {
+              this.actualState = "Todos";
+              (document.getElementById("Todos") as any).selected = "true";
+              this.callUpdateNotification();
+              Email.send({
+                SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
+                To: 'aaron20092009@hotmail.com',
+                From: 'lopez.aaron1022@gmail.com',
+                Subject: `Solicitud Modificada - ${this.solicitud} - Prioridad(${this.prioridadEmail})`,
+                Body: `Paciente ${this.nombrePaciente} con No. Identidad ${this.IDPaciente}
+                      <br>Descripcion: ${this.descripcion}
+                      <br>Modificado por Digitador: ${this.digitadorMod}`
+              }).then(
+                message => console.log(message)
+              );
+            })
+
         });
         this.fileList = [];
     }

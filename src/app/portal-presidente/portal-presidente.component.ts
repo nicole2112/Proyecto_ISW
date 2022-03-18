@@ -58,7 +58,6 @@ export class PortalPresidenteComponent implements OnInit {
 
   toggleUsersHandler(isShow: boolean){
     this.ShowUsers = true;
-    console.log(this.ShowUsers);
   }
 
   FundacionRef: AngularFireList<any>;

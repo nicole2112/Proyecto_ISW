@@ -34,6 +34,22 @@ getUsers(): Observable<User[]>{
    return of(this.User);
 }
 
+getDigitadores(): Observable<any[]>{
+
+    this.FundacionRef = this.db.list('usuarios');
+    let listaDigitadores=[];
+
+    return this.FundacionRef.snapshotChanges().pipe(map(data =>{
+        data.forEach(user =>{
+          let a = user.payload.toJSON();
+          a['digitadorKey'] = user.key;
+          if(a['rol'] === 'Digitador')
+            listaDigitadores.push(a);
+        })
+        return listaDigitadores;
+      }));
+}
+
 getUser(id): Observable<any>{
 
   this.FundacionRef = this.db.list('usuarios');

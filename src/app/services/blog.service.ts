@@ -65,8 +65,6 @@ export class BlogService {
 
 
   updateBlog(articulo, key){
-    console.log(key);
-    console.log(articulo);
     this.db.object(`blogs/${key}`).set(articulo).then(()=>{
     })
     .catch((err)=>{

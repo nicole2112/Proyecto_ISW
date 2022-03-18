@@ -8,7 +8,7 @@ declare const Email: any;
 
 @Component({
     selector: 'contact-us-form',
-    templateUrl: './contact-us.component.html', 
+    templateUrl: './contact-us.component.html',
     styleUrls: ['contact-us.component.css']
 })
 
@@ -47,16 +47,14 @@ export class ContactUsComponent {
     }
 
     onSubmit(): void{
-        console.table(this.form.value);
-        console.log("Form is touched: ", this.form.touched);
-        console.log("Is form valid: ", this.form.valid);
-        console.log("Form dirty: ", this.form.dirty);
         Email.send({
             SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
             To: 'aaron20092009@hotmail.com',
             From: 'lopez.aaron1022@gmail.com',
             Subject: `Consulta - ${this.asunto.value}`,
-            Body: `${this.name.value}` + ` -${this.correo.value}- `+ '\n' + `${this.mensaje.value}`
+            Body: `Nombre: ${this.name.value} <br>
+                   Correo: ${this.correo.value}<br><br>
+                   ${this.mensaje.value}`
           }).then(
             message => console.log(message)
           );
@@ -68,9 +66,3 @@ export class ContactUsComponent {
         this.alert = false;
     }
 }
-
-// export class ContactUsComponent{
-//     //form = new ContactUsForm('','','','');
-//     submitted = false;
-//     onSubmit() { this.submitted = true; }
-// }
