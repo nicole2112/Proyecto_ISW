@@ -228,6 +228,7 @@ export class verHistorialComponent implements OnInit {
           (document.getElementById("estudio-div") as any).hidden = false;
           (document.getElementById("solicitud-div") as any).hidden = false;
           (document.getElementById("otros-div") as any).hidden = false;
+          (document.getElementById("guardarBtn") as any).hidden = false;
 
           (document.getElementById("solicitud") as any).disabled = false;
           (document.getElementById("descripcion") as any).disabled = false;
@@ -293,6 +294,7 @@ export class verHistorialComponent implements OnInit {
         this.socioeconomico = selectedItem.estudioSE;
         this.solDonacion = selectedItem.solicitudDonacion;
         this.otros = selectedItem.otros;
+        console.log(this.otros);
         this.hoja = selectedItem.hojaComp;
 
         this.nombrePaciente = selectedItem.nombrePaciente;
@@ -403,23 +405,35 @@ export class verHistorialComponent implements OnInit {
             return this.guardarArchivo(file);
         })).then((message) =>
         {
+          console.log(this.descList);
           this.descList.forEach((item, index, array) =>
           {
               switch(item)
               {
                 case "socioeconomico":
-                    this.socioeconomico = message[index];
+                    if(message[index] != undefined)
+                      this.socioeconomico = message[index];
                     break;
                 case "solDonacion":
-                    this.solDonacion = message[index];
+                    if(message[index] != undefined)
+                      this.solDonacion = message[index];
                     break;
                 case "otros":
-                    this.otros = message[index];
+                    console.log(message[index]);
+                    if(message[index] != undefined)
+                      this.otros = message[index];
                     break;
               }
           });
+          console.log("SolDonacion: " + this.solDonacion);
+          console.log("SE: " + this.socioeconomico);
+          console.log("Otros: " + this.otros);
+          console.log("Paciente key: " + this.pacienteSelectedKey);
+
           this.recordService.editarSolicitud(pacienteID, solicitudID, solicitud, this.descripcion, this.estado, this.archivado, this.prioridad, this.solicitud, this.socioeconomico, this.solDonacion, this.otros)
             .then(() => {
+              this.actualState = "Todos";
+              (document.getElementById("Todos") as any).selected = "true";
               this.callUpdateNotification();
               Email.send({
                 SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
