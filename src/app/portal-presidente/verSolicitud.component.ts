@@ -179,8 +179,9 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
           showConfirmButton: false,
           timer: 1500
         })
-        this.recordService.editarSolicitudPresidencia(idPaciente, idSolicitud, solicitudPreEditar,this.state,this.commentP);
         EnviarCorreoDigi(this.patientName,this.emailDigi);
+        this.recordService.editarSolicitudPresidencia(idPaciente, idSolicitud, solicitudPreEditar,this.state,this.commentP);
+        
       }
 
       callNotFoundFunction(){
