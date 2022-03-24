@@ -7,7 +7,6 @@
       <button class="dropbtn"><fa-icon class="icons" [icon]="faAddressBook"></fa-icon>Solicitudes   ▼</button>
       <div class="dropdown-content">
         <a [routerLink]="['/portal-presidente']" (click)="showSolicitudes()">Ver Solicitudes</a>
-        <a (click)="addSolicitud()">Registrar Solicitud</a>
       </div>
     </div>
     <div class="dropdown-users">
@@ -15,6 +14,7 @@
         <div class="dropdown-content">
           <a [routerLink]="['/portal-presidente']" (click)="showPacientes()">Ver Pacientes</a>
           <a (click)="addPaciente()">Registrar Paciente</a>
+          <a (click)="viewPatientHistory()" [routerLink]="['/portal-presidente']">Solicitudes de Paciente</a>
         </div>
       </div>
     <div class="dropdown-users">

@@ -31,6 +31,7 @@ currentUser: any;
 
   @Output() showPacientesClick = new EventEmitter<boolean>();
   @Output() viewPacientesClick = new EventEmitter<boolean>();
+  @Output() viewPatientHistoryClick: EventEmitter<boolean> = new EventEmitter();
 
   viewHeroes(){
     this.viewHeroesClick.emit(true);
@@ -42,10 +43,6 @@ currentUser: any;
 
   showHeroes(){
     this.showHeroesClick.emit(true);
-  }
-
-  addSolicitud(){
-    //vacio
   }
   addPaciente(){
     this.viewPacientesClick.emit(true);
@@ -88,6 +85,9 @@ currentUser: any;
   }
   viewPacientes(){
     
+  }
+  viewPatientHistory(){
+    this.viewPatientHistoryClick.emit(true);
   }
 
   ngOnInit(): void {
