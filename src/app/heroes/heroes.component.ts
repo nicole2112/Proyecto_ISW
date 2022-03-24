@@ -25,7 +25,6 @@ export class HeroesComponent implements OnInit{
             this.heroesList = heroes;
             this.heroesList.sort((a,b) => (a.prioridad > b.prioridad) ? 1 : ((b.prioridad > a.prioridad) ? -1 : 0));
             this.fHeroesSize = heroes.filter((heroe:any) => heroe.fallecido == 'Fallecido' && heroe.visibilidad == 'Publico').length;
-            console.log(this.fHeroesSize > 0);
         });
     }
 
