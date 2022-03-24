@@ -188,6 +188,4 @@ export class agregarSolicitudComponent implements OnInit{
             timer: 1500
         })
     }
-
-
 }

@@ -98,7 +98,7 @@
               <label for="prioridadOptions">Prioridad</label>
               <div class="input-group">
                 <div class="custom-select" style="width:200px;" id="custom-select">
-                  <select disabled name="prioridadOptions" id="prioridadOptions">
+                  <select name="prioridadOptions" id="prioridadOptions">
                   </select>
                 </div>
               </div>
@@ -107,7 +107,7 @@
             <div class="form-group">
               <label for="solicitud">Solicitud</label>
               <div class="input-group">
-                <input disabled id="solicitud" type="text" class="form-control" placeholder="solicitud" name="dp">
+                <input  id="solicitud" type="text" class="form-control" placeholder="solicitud" name="dp">
                 <div class="input-group-append">
                   <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
                 </div>
@@ -116,7 +116,7 @@
             <div class="form-group">
               <label for="estado">Estado</label>
               <div class="input-group">
-                <input disabled id="estado" type="text" class="form-control" placeholder="estado" name="dp">
+                <input id="estado" type="text" class="form-control" placeholder="estado" name="dp">
                 <div class="input-group-append">
                   <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
                 </div>
@@ -125,7 +125,7 @@
           <div class="form-group">
               <label for="descripcion">Descripción</label>
               <div class="input-group">
-                <textarea disabled name="descripcion" class="form-control" id="descripcion" cols="60" rows="7" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
+                <textarea name="descripcion" class="form-control" id="descripcion" cols="60" rows="7" placeholder="Lorem Ipsum" style="resize: none; margin-bottom: 1em;"></textarea>
                 <div class="input-group-append">
                   <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
                 </div>
@@ -136,7 +136,7 @@
           <div class="form-group">
             <label for="comentarioP">Comentarios de Presidencia</label>
             <div class="input-group">
-              <textarea disabled name="comentarioP" class="form-control" id="comentarioP" cols="40" rows="3" placeholder="No hay comentarios de presidencia" style="resize: none; margin-bottom: 1em;"></textarea>
+              <textarea name="comentarioP" class="form-control" id="comentarioP" cols="40" rows="3" placeholder="No hay comentarios de presidencia" style="resize: none; margin-bottom: 1em;"></textarea>
               <div class="input-group-append">
                 <!-- <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button> -->
               </div>
@@ -220,7 +220,7 @@
 
 <ng-template #confirmation let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar el Héroe?</h4>
+    <h4 class="modal-title" id="modal-basic-title">¿Seguro que desea eliminar la solicitud?</h4>
     <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
