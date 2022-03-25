@@ -52,6 +52,7 @@ export class PortalPresidenteComponent implements OnInit {
 
   toggleShowPacientes=false;
   toggleViewPacientes=false;
+  togglePatientHistory = false;
 
   constructor(public auth: AngularFireAuth, private db:AngularFireDatabase, private modalService: NgbModal, private _sanitizer: DomSanitizer, private router: Router) { }
   ShowUsers = false;
