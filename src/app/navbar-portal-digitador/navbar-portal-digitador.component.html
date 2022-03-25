@@ -11,29 +11,31 @@
       </div>
     </div>
     -->
-    <div class="dropdown-users">
-      <button class="dropbtn"><fa-icon class="icons" [icon]="faHandHoldingUsd"></fa-icon>Solicitudes  ▼</button>
-      <div class="dropdown-content">
-        <a (click)="showHistorial()" [routerLink]="['/portal-digitador']">Historial</a>
-        <a (click)="addSolicitud()" [routerLink]="['/portal-digitador']">Ingresar Solicitud</a>
+    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+      <div class="dropdown-users">
+        <button class="dropbtn"><fa-icon class="icons" [icon]="faHandHoldingUsd"></fa-icon>Solicitudes  ▼</button>
+        <div class="dropdown-content">
+          <a (click)="showHistorial()" [routerLink]="['/portal-digitador']">Historial</a>
+          <a (click)="addSolicitud()" [routerLink]="['/portal-digitador']">Ingresar Solicitud</a>
+        </div>
       </div>
-    </div>
-    <div class="dropdown-users">
-      <button class="dropbtn" (click)="showFormularios()" [routerLink]="['/portal-digitador']"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Formularios</button>
-    </div>
-    <div class="dropdown-users">
-      <button class="dropbtn"><fa-icon class="icons" [icon]="faHospitalUser"></fa-icon>Pacientes ▼</button>
-      <div class="dropdown-content">
-        <a (click)="viewPatients()" [routerLink]="['/portal-digitador']">Ver Pacientes</a>
-        <a (click)="addPatient()" [routerLink]="['/portal-digitador']">Ingresar Paciente</a>
-        <a (click)="viewPatientHistory()" [routerLink]="['/portal-digitador']">Solicitudes de Paciente</a>
+      <div class="dropdown-users">
+        <button class="dropbtn" (click)="showFormularios()" [routerLink]="['/portal-digitador']"><fa-icon class="icons" [icon]="faFilePdf"></fa-icon>Formularios</button>
       </div>
-    </div>
-    <div class="dropdownx navbar-nav ms-auto">
-      <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>
-      <div class="dropdown-content">
-        <a (click)="fnEditUserProfile()">Editar</a>
-        <a (click)="logOut()">Cerrar Sesión</a>
-      </div>  
+      <div class="dropdown-users">
+        <button class="dropbtn"><fa-icon class="icons" [icon]="faHospitalUser"></fa-icon>Pacientes ▼</button>
+        <div class="dropdown-content">
+          <a (click)="viewPatients()" [routerLink]="['/portal-digitador']">Ver Pacientes</a>
+          <a (click)="addPatient()" [routerLink]="['/portal-digitador']">Ingresar Paciente</a>
+          <a (click)="viewPatientHistory()" [routerLink]="['/portal-digitador']">Solicitudes de Paciente</a>
+        </div>
+      </div>
+      <div class="dropdownx navbar-nav ms-auto">
+        <button class="dropbtn" id="user-display"><fa-icon class="icons" [icon]="faUserCircle"></fa-icon>User Here   ▼</button>
+        <div class="dropdown-content">
+          <a (click)="fnEditUserProfile()">Editar</a>
+          <a (click)="logOut()">Cerrar Sesión</a>
+        </div>  
+      </div>
     </div>
   </nav>
