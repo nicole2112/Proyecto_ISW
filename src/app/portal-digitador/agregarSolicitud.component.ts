@@ -145,8 +145,9 @@ export class agregarSolicitudComponent implements OnInit{
 
 
                 var hoy = this.fechaService.ObtenerFecha();
-                this.solicitudservice.postSolicitud(this.descripcion, this.miPaciente.$key,this.prioridadInt,"", this.solicitud, this.socioeconomico, this.solDonacion, this.otros, hoy);
                 EnviarCorreo(this.IDPaciente, this.solicitud, this.descripcion);
+                this.solicitudservice.postSolicitud(this.descripcion, this.miPaciente.$key,this.prioridadInt,"", this.solicitud, this.socioeconomico, this.solDonacion, this.otros, hoy);
+                
                 this.historialRedirectFunc();
                 this.callSendFunction();
         });
@@ -187,6 +188,4 @@ export class agregarSolicitudComponent implements OnInit{
             timer: 1500
         })
     }
-
-
 }

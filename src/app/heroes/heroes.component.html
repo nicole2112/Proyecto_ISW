@@ -30,32 +30,34 @@
     </tr> 
     <br><br><br>
 
+    <div *ngIf="fHeroesSize > 0">
       <h3 class="d-flex justify-content-center" style="margin: auto;
       width: 60%;
       border: 5px solid #522662;
       padding: 10px;">Héroes en el Cielo</h3>
-      <tr *ngFor="let heroe of heroesList;"> 
-        <div *ngIf="heroe.visibilidad == 'Público'">
-          <div *ngIf="heroe.fallecido == 'Fallecido'">
-                  <div class="col" style="margin: auto;
-                  width: 60%;
-                  padding: 10px;">
-                    <div class="card h-100" style="background-color: #F2F2F2; text-align: center; -webkit-filter: grayscale(100%);
-                    filter: grayscale(100%);">
-                      <img src={{heroe.imageUrl}} style="height: 30%; width: 30%; display: block; margin-left: auto; margin-right: auto;">
-                      <div class="card-body">
-                        <p class="card-text" style="text-align: center; font-size: 150%;">{{heroe.nombre}}</p>
+        <tr *ngFor="let heroe of heroesList;"> 
+          <div *ngIf="heroe.visibilidad == 'Público'">
+            <div *ngIf="heroe.fallecido == 'Fallecido'">
+                    <div class="col" style="margin: auto;
+                    width: 60%;
+                    padding: 10px;">
+                      <div class="card h-100" style="background-color: #F2F2F2; text-align: center; -webkit-filter: grayscale(100%);
+                      filter: grayscale(100%);">
+                        <img src={{heroe.imageUrl}} style="height: 30%; width: 30%; display: block; margin-left: auto; margin-right: auto;">
+                        <div class="card-body">
+                          <p class="card-text" style="text-align: center; font-size: 150%;">{{heroe.nombre}}</p>
+                        </div>
+                        <div class="card-body">
+                          <p class="card-text" style="text-align: center; font-size: 100%;">{{heroe.contenido}}</p>
+                        </div>
+                        
                       </div>
-                      <div class="card-body">
-                        <p class="card-text" style="text-align: center; font-size: 100%;">{{heroe.contenido}}</p>
-                      </div>
-                      
                     </div>
                   </div>
-                </div>
-        </div>
-      
-    </tr>
+          </div>
+        
+      </tr>
+    </div>
     
   </div>
   

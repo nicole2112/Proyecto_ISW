@@ -22,4 +22,5 @@ export class verFormulariosComponent{
 
     constructor() 
 { }
+    openAccordion = [];
 }

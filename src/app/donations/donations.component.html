@@ -43,40 +43,40 @@
     <div class="sectionRectangle"></div>
     <div class="container">
       <h1 class="textDonations" style="margin-top: 5%;">¿Cómo puedes donar?</h1>
-      <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-left: 10%; margin-right: 10%;">
+      <div class="row row-cols-1" style=" margin-left: auto; margin-right: auto; width: 18em">
+    <div class="col">
+          <div class="card h-100" style="text-align: center;">
+            <img src="https://drive.google.com/uc?export=view&id=1UC2vySff_KCMGSe730iDmVye8WAVWUOB" style="display: block; margin-left: auto; margin-right: auto; width: 100%; margin-top: 10%;" alt="...">
+            
+            <div class="card-footer" style="background-color:white">
+              <a class="button2" style="text-align: center;" (click)="open(content);">Depósito Bancario</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+    <div class="sectionRectangle"></div>
+    <div class="container">
+      <h3 class="textDonations" style="margin-top: 5%;">Proximamente</h3>
+      <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-left: 10%; margin-right: 10%;">
+        
         <div class="col">
           <div class="card h-100" style="text-align: center;">
             <img src="https://drive.google.com/uc?export=view&id=1vGbs3xMzA3TX0d6KkdWs3ZO4LQ257iPn" style="display: block; margin-left: auto; margin-right: auto; width: 100%; margin-top: 10%;" alt="...">
-            <div class="card-footer" style="background-color:white">
-              <a class="button2" style="text-align: center;" [routerLink]="['/donations']">GoFundMe.com</a>
-            </div>
+            
           </div>
         </div>
         <div class="col">
           <div class="card h-100" style="text-align: center;">
             <img src="https://drive.google.com/uc?export=view&id=1EdRiywnYhv5JoALQuJPRoCbDbRmeZGX0" style="display: block; margin-left: auto; margin-right: auto; width: 100%; margin-top: 10%;" alt="...">
           
-            <div class="card-footer" style="background-color:white">
-              <a class="button2" style="text-align: center;" [routerLink]="['/donations']">PayPal</a>
-            </div>
           </div>
         </div>
         <div class="col">
           <div class="card h-100" style="text-align: center;">
             <img src="https://drive.google.com/uc?export=view&id=1eKG1w9yV2e03jtG2oGmvVlrWX-48z-gE" style="display: block; margin-left: auto; margin-right: auto; width: 100%; margin-top: 10%;" alt="...">
             
-            <div class="card-footer" style="background-color:white">
-              <a class="button2" style="text-align: center;" [routerLink]="['/donations']">Botón de Pago</a>
-            </div>
-          </div>
-        </div>
-    <div class="col">
-          <div class="card h-100" style="text-align: center;">
-            <img src="https://drive.google.com/uc?export=view&id=1UC2vySff_KCMGSe730iDmVye8WAVWUOB" style="display: block; margin-left: auto; margin-right: auto; width: 100%; margin-top: 10%;" alt="...">
-            
-            <div class="card-footer" style="background-color:white">
-              <a class="button2" style="text-align: center;" [routerLink]="['/donations']">Depósito Bancario</a>
-            </div>
           </div>
         </div>
       </div>
@@ -85,5 +85,24 @@
  
     <br><br>
 </div>
+
+
+  <!-- MODAL -->
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Información Número de Cuenta</h4>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')" style="background-Color: #852E88;">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <img src="https://drive.google.com/uc?export=view&id=1Av2bPBoIRdpH1XrC_UCer7BRYkKzg2j5" style="width: 100%; height: 100%;">
+      <br><br>
+      <h5 style="text-align: center;">Banco Atlántida: 020111011282</h5>
+    </div>
+    
+  </ng-template>
+
 
 <footer-comp></footer-comp>

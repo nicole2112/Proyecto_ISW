@@ -121,6 +121,7 @@ export class verHistorialComponent implements OnInit {
 
     }
 
+
     handleArchive(idPaciente, idSolicitud, keyPaciente){
       Swal.fire({
         title: '¿Seguro que desea archivar la solicitud?',
