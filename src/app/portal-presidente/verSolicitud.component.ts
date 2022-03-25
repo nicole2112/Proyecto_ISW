@@ -38,10 +38,13 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
     solicitudSelectedId: any;
     solicitudPacienteSelectedId: any;
     solicitudPreEdicion: any;
-    commentP;
+    commentP: any;
+    estado: any;
 
     closeResult: string;
     fileList: any;
+    type: any = 0;
+    show: boolean = true;
 
     solicitudesPacientesList :any[] =[];
     listSoliPacienteFiltered :any[]=[];
@@ -148,28 +151,41 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
       }
     
       onSelect(selectedItem: any){
+        
         this.solicitudSelectedId = selectedItem.solicitudKey;
         this.solicitudPacienteSelectedId = selectedItem.pacienteKey;
         this.solicitudPreEdicion = selectedItem.rawSolicitud;
+        //this.estado=document.getElementById("estado").setAttribute('value',selectedItem.estado);
+        if(selectedItem.estado == "En espera") {
+          this.type = 1; 
+          this.show = false;
+        }
+        //this.estado = selectedItem.estado;
+        console.log(selectedItem.estado);
+        console.log(this.type);
         document.getElementById("nombreDigitador").setAttribute('value', selectedItem.nombreDigitador);
         document.getElementById("email").setAttribute('value', selectedItem.email);
         this.patientName=document.getElementById("nombrePaciente").setAttribute('value', selectedItem.nombrePaciente);
         document.getElementById("ciudad").setAttribute('value', selectedItem.ciudad);
         document.getElementById("solicitud").setAttribute('value', selectedItem.queSolicita);
         (<HTMLInputElement>document.getElementById("descripcion")).value = selectedItem.descripcion;
+        (<HTMLInputElement>document.getElementById("comentarioP")).value = selectedItem.comentariosPresidencia;
         if(selectedItem.hojaCompromiso != '')document.getElementById("hoja").setAttribute('href', selectedItem.hojaComp);
         if(selectedItem.otros != '') document.getElementById("otros").setAttribute('href', selectedItem.otros);
         if(selectedItem.estudioSE != '') document.getElementById("estudio").setAttribute('href', selectedItem.estudioSE);
         if(selectedItem.solicitudDonacion != '') document.getElementById("donacion").setAttribute('href', selectedItem.solicitudDonacion);
         document.getElementById("image_preview").setAttribute('src', selectedItem.imgCasa1); 
         if(selectedItem.image_preview2 != '')document.getElementById("image_preview2").setAttribute('src', selectedItem.imgCasa2);
-        
+        //(<HTMLInputElement>document.getElementById("estado")).value = selectedItem.estado;
+        //document.getElementById("estado").setAttribute('value', selectedItem.estado);
       }
 
       editarSolicitud(idPaciente, idSolicitud, solicitudPreEditar){
         this.commentP= (<HTMLInputElement>document.getElementById('comentarioP')).value;
         this.patientName=(<HTMLInputElement>document.getElementById('nombrePaciente')).value;
         this.emailDigi= (<HTMLInputElement>document.getElementById('email')).value;
+        this.type=0;
+        this.show=true;
         (document.getElementById("Todos") as any).selected = "true";
 
         Swal.fire({
