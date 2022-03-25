@@ -48,9 +48,9 @@ export class ContactUsComponent {
 
     onSubmit(): void{
         Email.send({
-            SecureToken: "c4c2a6e5-ad26-49e5-8f8d-4468439ac72c",
-            To: 'aaron20092009@hotmail.com',
-            From: 'lopez.aaron1022@gmail.com',
+            SecureToken: "c0c85b71-1052-45a0-8507-c395d5d555a2",
+            To: 'Patriciamolina@dialisisdehonduras.com',
+            From: 'Patriciamolina@dialisisdehonduras.com',
             Subject: `Consulta - ${this.asunto.value}`,
             Body: `Nombre: ${this.name.value} <br>
                    Correo: ${this.correo.value}<br><br>

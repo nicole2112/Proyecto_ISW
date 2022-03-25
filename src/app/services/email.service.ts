@@ -4,7 +4,7 @@ declare const Email: any;
 
 export function EnviarCorreo(NombrePaciente: any, Solicitud: any, DescripcionCaso: any){
     Email.send({
-        SecureToken: " c0c85b71-1052-45a0-8507-c395d5d555a2",
+        SecureToken: "c0c85b71-1052-45a0-8507-c395d5d555a2",
         To: 'Patriciamolina@dialisisdehonduras.com',
         From: 'Patriciamolina@dialisisdehonduras.com',
         Subject: `Nueva solicitud de Donación - ${NombrePaciente}`,
@@ -16,7 +16,7 @@ export function EnviarCorreo(NombrePaciente: any, Solicitud: any, DescripcionCas
 
 export function EnviarCorreoDigi(NombrePaciente: any, CorreoDigitador:any){
     Email.send({
-        SecureToken: " c0c85b71-1052-45a0-8507-c395d5d555a2",
+        SecureToken: "c0c85b71-1052-45a0-8507-c395d5d555a2",
         To: `${CorreoDigitador}`,
         From: 'Patriciamolina@dialisisdehonduras.com', //modificar correo presidencia 'rasodep696@naluzotan.com'
         Subject: `Actualización de Solicitud`,
