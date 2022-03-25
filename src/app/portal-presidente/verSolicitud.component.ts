@@ -39,9 +39,12 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
     solicitudPacienteSelectedId: any;
     solicitudPreEdicion: any;
     commentP;
+    estado: any;
 
     closeResult: string;
     fileList: any;
+    type: any = 0;
+    show: boolean = true;
 
     solicitudesPacientesList :any[] =[];
     listSoliPacienteFiltered :any[]=[];
@@ -148,9 +151,11 @@ export class verSolicitudComponent implements OnInit, OnDestroy  {
       }
     
       onSelect(selectedItem: any){
+        //if(selectedItem.estado == 'En Espera') this.type = 1; this.show = false;
         this.solicitudSelectedId = selectedItem.solicitudKey;
         this.solicitudPacienteSelectedId = selectedItem.pacienteKey;
         this.solicitudPreEdicion = selectedItem.rawSolicitud;
+        document.getElementById("estado").setAttribute('value', selectedItem.estado);
         document.getElementById("nombreDigitador").setAttribute('value', selectedItem.nombreDigitador);
         document.getElementById("email").setAttribute('value', selectedItem.email);
         this.patientName=document.getElementById("nombrePaciente").setAttribute('value', selectedItem.nombrePaciente);
